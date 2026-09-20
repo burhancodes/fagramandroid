@@ -82,6 +82,8 @@ function svgElementPathData(tag: string, attrs: SvgAttrs): string | null {
 
 export interface SvgShape {
   d: string
+  tag?: string
+  attrs?: SvgAttrs
   fill?: string
   stroke?: string
   strokeWidth?: string
@@ -89,15 +91,29 @@ export interface SvgShape {
   strokeLineJoin?: string
 }
 
+const IGNORED_TAGS = new Set(['defs', 'clippath', 'mask', 'pattern', 'metadata', 'style'])
+
 export function parseSvgBody(body: string): SvgShape[] {
   const shapes: SvgShape[] = []
   const stack: SvgAttrs[] = [{}]
+  let ignoreDepth = 0
   // eslint-disable-next-line regexp/no-super-linear-backtracking
   const tagRe = /<(\/)?([a-z]+)([^>]*)>/gi
   let m: RegExpExecArray | null
   // eslint-disable-next-line no-cond-assign
   while ((m = tagRe.exec(body)) !== null) {
-    const [, closing, tag, rest] = m
+    const [, closing, rawTag, rest] = m
+    const tag = rawTag.toLowerCase()
+    if (IGNORED_TAGS.has(tag)) {
+      if (closing) {
+        if (ignoreDepth > 0) ignoreDepth--
+      } else if (!rest.trimEnd().endsWith('/')) {
+        ignoreDepth++
+      }
+      continue
+    }
+    if (ignoreDepth > 0) continue
+
     if (closing) {
       if (tag === 'g') stack.pop()
       continue
@@ -114,6 +130,8 @@ export function parseSvgBody(body: string): SvgShape[] {
     if (!d) continue
     shapes.push({
       d,
+      tag,
+      attrs,
       fill: merged.fill,
       stroke: merged.stroke,
       strokeWidth: merged['stroke-width'],
@@ -172,7 +190,7 @@ export function svgBodyToVectorDrawable(body: string, width: number, height: num
   const vpW = width - 2 * inset
   const vpH = height - 2 * inset
   const strokeScale = vpW / width
-  const paths = shapes.map(shape => {
+  const paths = shapes.map((shape) => {
     const attrs: string[] = [`android:pathData="${shape.d}"`]
     const fill = resolveFillColor(shape.fill)
     const stroke = resolveStrokeColor(shape.stroke)
