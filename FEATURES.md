@@ -226,6 +226,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 
 ## annoyances
 
+- 🐶 disable ads: sponsored messages, bot ads, search ads, video ads, and proxy sponsor channels
 - hide trending stickers/emoji in egs
 - 🐶 hide ai features
 - hide stories

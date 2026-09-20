@@ -53,6 +53,8 @@
     <string name="InuNoStickerExtraPadding">下の余分な余白を削除</string>
     <string name="InuHideKeyboardOnScroll">スクロール時にキーボードを隠す</string>
     <string name="InuDisablePullToNext">次のチャンネルへの引き下げを無効化</string>
+    <string name="InuDisableAds">広告を無効化</string>
+    <string name="InuDisableAdsInfo">スポンサーメッセージ、ボット広告、検索広告、動画広告を非表示にします</string>
     <string name="InuDisableSensitive">センシティブフィルターを無効化</string>
     <string name="InuDisableChatBackgrounds">カスタムチャット背景を無効化</string>
     <string name="InuDisableChatThemes">カスタムチャットテーマを無効化</string>

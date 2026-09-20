@@ -81,6 +81,8 @@
     <string name="InuNoStickerExtraPadding">Alt boşluğu kaldır</string>
     <string name="InuHideKeyboardOnScroll">Kaydırırken klavyeyi gizle</string>
     <string name="InuDisablePullToNext">Sonraki kanala geçmek için çekmeyi devre dışı bırak</string>
+    <string name="InuDisableAds">Reklamları devre dışı bırak</string>
+    <string name="InuDisableAdsInfo">Sponsorlu mesajları, bot reklamlarını, arama reklamlarını ve video reklamları gizle</string>
     <string name="InuDisableSensitive">Hassas içerik filtresini devre dışı bırak</string>
     <string name="InuDisableQuickShare">Hızlı paylaşımı devre dışı bırak</string>
     <string name="InuDisableQuickShareInfo">Paylaş düğmesine (kanal mesajlarının yanında) uzun basıldığında sık görüşülen kişileri göstermez; onay almadan gönderir</string>

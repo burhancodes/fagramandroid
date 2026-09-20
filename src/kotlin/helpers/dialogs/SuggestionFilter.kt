@@ -23,5 +23,8 @@ object SuggestionFilter {
         if (InuConfig.HIDE_SUGGESTION_CUSTOM.value) {
             res.custom_pending_suggestion = null
         }
+        if (InuConfig.DISABLE_ADS.value && res.proxy) {
+            res.peer = null
+        }
     }
 }

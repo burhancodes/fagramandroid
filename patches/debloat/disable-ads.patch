@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sun, 20 Sep 2026 12:05:11 +0530
+Subject: Disable ads and sponsored messages
+
+---
+ .../src/main/java/org/telegram/messenger/MessageObject.java     | 1 +
+ .../main/java/org/telegram/messenger/MessagesController.java    | 2 ++
+ .../src/main/java/org/telegram/messenger/video/VideoAds.java    | 1 +
+ .../java/org/telegram/ui/Adapters/DialogsSearchAdapter.java     | 2 +-
+ TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java   | 2 ++
+ 5 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java
+@@ -4303,6 +4303,7 @@ public class MessageObject {
+     }
+ 
+     public boolean isSponsored() {
++        if (xie.fa.gram.InuConfig.DISABLE_ADS.getValue()) return false;
+         return sponsoredId != null;
+     }
+ 
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+@@ -21800,6 +21800,7 @@ public class MessagesController extends BaseController implements NotificationCe
+     }
+ 
+     public SponsoredMessagesInfo getSponsoredMessages(long dialogId) {
++        if (xie.fa.gram.InuConfig.DISABLE_ADS.getValue()) return null;
+         SponsoredMessagesInfo info = sponsoredMessages.get(dialogId);
+         if (info != null && (info.loading || Math.abs(SystemClock.elapsedRealtime() - info.loadTime) <= 5 * 60 * 1000)) {
+             return info;
+@@ -24509,6 +24510,7 @@ public class MessagesController extends BaseController implements NotificationCe
+     }
+ 
+     public boolean isSponsoredDisabled() {
++        if (xie.fa.gram.InuConfig.DISABLE_ADS.getValue()) return true;
+         TLRPC.UserFull userFull = getUserFull(getUserConfig().getClientUserId());
+         if (userFull == null) return false;
+         return !userFull.sponsored_enabled;
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.java b/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.java
+@@ -188,6 +188,7 @@ public class VideoAds {
+     private boolean loading, loaded;
+     private void load() {
+         if (loading || loaded) return;
++        if (xie.fa.gram.InuConfig.DISABLE_ADS.getValue()) return;
+ 
+         if (UserConfig.getInstance(currentAccount).isPremium() && MessagesController.getInstance(currentAccount).isSponsoredDisabled()) {
+             return;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Adapters/DialogsSearchAdapter.java b/TMessagesProj/src/main/java/org/telegram/ui/Adapters/DialogsSearchAdapter.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Adapters/DialogsSearchAdapter.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Adapters/DialogsSearchAdapter.java
+@@ -1120,7 +1120,7 @@ public class DialogsSearchAdapter extends RecyclerListView.SelectionAdapter {
+                 ConnectionsManager.getInstance(currentAccount).cancelRequest(sponsoredReqId, true);
+                 sponsoredReqId = 0;
+             }
+-            if (query == null || query.length() < 4 || UserConfig.getInstance(currentAccount).isPremium() && MessagesController.getInstance(currentAccount).isSponsoredDisabled()) {
++            if (query == null || query.length() < 4 || xie.fa.gram.InuConfig.DISABLE_ADS.getValue() || UserConfig.getInstance(currentAccount).isPremium() && MessagesController.getInstance(currentAccount).isSponsoredDisabled()) {
+                 sponsoredQuery = null;
+             } else {
+                 final TLRPC.TL_contacts_getSponsoredPeers req = new TLRPC.TL_contacts_getSponsoredPeers();
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+@@ -25192,6 +25192,7 @@ public class ChatActivity extends BaseFragment implements
+     private Pattern sponsoredUrlPattern;
+     private MessageObject botSponsoredMessage;
+     private void addSponsoredMessages(boolean animated) {
++        if (xie.fa.gram.InuConfig.DISABLE_ADS.getValue()) return;
+         if (sponsoredMessagesAdded || chatMode != 0 || !ChatObject.isChannel(currentChat) && !UserObject.isBot(currentUser) || !forwardEndReached[0] || getUserConfig().isPremium() && getMessagesController().isSponsoredDisabled() || isReport()) {
+             return;
+         }
+@@ -26528,6 +26529,7 @@ public class ChatActivity extends BaseFragment implements
+     }
+ 
+     private int getSponsoredMessagesCount() {
++        if (xie.fa.gram.InuConfig.DISABLE_ADS.getValue()) return 0;
+         int sponsoredMessagesCount = 0;
+         while (sponsoredMessagesCount < messages.size()) {
+             if (!messages.get(sponsoredMessagesCount).isSponsored()) {

@@ -85,6 +85,8 @@
     <string name="InuNoStickerExtraPadding">Remove extra bottom padding</string>
     <string name="InuHideKeyboardOnScroll">Hide keyboard on scroll</string>
     <string name="InuDisablePullToNext">Disable pull to next channel</string>
+    <string name="InuDisableAds">Disable ads</string>
+    <string name="InuDisableAdsInfo">Hide sponsored messages, bot ads, search ads, and video ads</string>
     <string name="InuDisableSensitive">Disable sensitive filter</string>
     <string name="InuDisableQuickShare">Disable quick share</string>
     <string name="InuDisableQuickShareInfo">Don\'t show frequent contacts on long-tapping the share button (next to channel messages); it sends without confirmation</string>

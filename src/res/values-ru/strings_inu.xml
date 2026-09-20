@@ -53,6 +53,8 @@
     <string name="InuNoStickerExtraPadding">Убрать лишний отступ снизу</string>
     <string name="InuHideKeyboardOnScroll">Скрывать клавиатуру при прокрутке</string>
     <string name="InuDisablePullToNext">Отключить переход к следующему каналу</string>
+    <string name="InuDisableAds">Отключить рекламу</string>
+    <string name="InuDisableAdsInfo">Скрывать спонсируемые сообщения, рекламу в ботах, поиске и видео</string>
     <string name="InuDisableSensitive">Отключить фильтр чувствительного контента</string>
     <string name="InuDisableChatBackgrounds">Отключить пользовательские фоны чатов</string>
     <string name="InuDisableChatThemes">Отключить пользовательские темы чатов</string>

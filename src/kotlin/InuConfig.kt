@@ -294,6 +294,9 @@ object InuConfig {
     val DISABLE_PULL_TO_NEXT = BoolItem("disable_pull_to_next", true)
 
     @JvmField
+    val DISABLE_ADS = BoolItem("disable_ads", false)
+
+    @JvmField
     val DISABLE_SENSITIVE = BoolItem("disable_sensitive", false)
 
     @JvmField

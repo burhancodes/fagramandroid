@@ -74,6 +74,14 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
             ).setChecked(InuConfig.HIDE_TRENDING_STICKERS.value)
         )
         items.add(
+            mkTwoLineCheckItem(
+                TOGGLE_DISABLE_ADS,
+                R.string.InuDisableAds,
+                R.string.InuDisableAdsInfo,
+                InuConfig.DISABLE_ADS.value
+            )
+        )
+        items.add(
             UItem.asCheck(
                 TOGGLE_DISABLE_SENSITIVE,
                 LocaleController.getString(R.string.InuDisableSensitive),
@@ -183,6 +191,12 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
             TOGGLE_HIDE_REPOST_TO_STORY -> {
                 val new = InuConfig.HIDE_REPOST_TO_STORY.toggle()
                 (view as? TextCheckCell)?.isChecked = new
+            }
+
+            TOGGLE_DISABLE_ADS -> {
+                val new = InuConfig.DISABLE_ADS.toggle()
+                (view as? NotificationsCheckCell)?.isChecked = new
+                showRestartBulletin()
             }
 
             TOGGLE_DISABLE_SENSITIVE -> {
@@ -324,6 +338,7 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_HIDE_STORIES = InuUtils.generateId()
         private val TOGGLE_HIDE_TRENDING_STICKERS = InuUtils.generateId()
         private val TOGGLE_HIDE_REPOST_TO_STORY = InuUtils.generateId()
+        private val TOGGLE_DISABLE_ADS = InuUtils.generateId()
         private val TOGGLE_DISABLE_SENSITIVE = InuUtils.generateId()
         private val TOGGLE_DISABLE_CHAT_BACKGROUNDS = InuUtils.generateId()
         private val TOGGLE_DISABLE_CHAT_THEMES = InuUtils.generateId()
@@ -349,6 +364,7 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
             entries = listOf(
                 SearchRegistry.Entry("hide-stories", R.string.InuHideStories, TOGGLE_HIDE_STORIES),
                 SearchRegistry.Entry("hide-repost-to-story", R.string.InuHideRepostToStory, TOGGLE_HIDE_REPOST_TO_STORY),
+                SearchRegistry.Entry("disable-ads", R.string.InuDisableAds, TOGGLE_DISABLE_ADS),
                 SearchRegistry.Entry("hide-trending-stickers", R.string.InuHideTrendingStickers, TOGGLE_HIDE_TRENDING_STICKERS),
                 SearchRegistry.Entry("disable-sensitive", R.string.InuDisableSensitive, TOGGLE_DISABLE_SENSITIVE),
                 SearchRegistry.Entry("disable-chat-backgrounds", R.string.InuDisableChatBackgrounds, TOGGLE_DISABLE_CHAT_BACKGROUNDS),

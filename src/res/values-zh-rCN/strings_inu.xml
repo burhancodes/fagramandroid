@@ -53,6 +53,8 @@
     <string name="InuNoStickerExtraPadding">去除底部多余的内边距</string>
     <string name="InuHideKeyboardOnScroll">滚动时隐藏键盘</string>
     <string name="InuDisablePullToNext">禁用下拉到下一个频道</string>
+    <string name="InuDisableAds">禁用广告</string>
+    <string name="InuDisableAdsInfo">隐藏赞助消息、Bot 广告、搜索推荐广告和视频广告</string>
     <string name="InuDisableSensitive">禁用敏感内容过滤</string>
     <string name="InuDisableChatBackgrounds">禁用自定义聊天背景</string>
     <string name="InuDisableChatThemes">禁用自定义聊天主题</string>
