@@ -51,6 +51,13 @@ class DialogsSettingsActivity : SettingsPageActivity() {
                 LocaleController.getString(R.string.InuHideAllChatsTab),
             ).setChecked(InuConfig.HIDE_ALL_CHATS_TAB.value)
         )
+        items.add(
+            UItem.asButton(
+                BUTTON_FOLDERS_BAR_POSITION,
+                LocaleController.getString(R.string.InuFoldersBarPosition),
+                foldersBarPositionLabel(InuConfig.FOLDERS_BAR_POSITION.value),
+            )
+        )
         items.add(UItem.asShadow(null))
         // end folders section
 
@@ -214,6 +221,18 @@ class DialogsSettingsActivity : SettingsPageActivity() {
                     val storage = MessagesStorage.getInstance(i)
                     storage.storageQueue.postRunnable { storage.resetAllUnreadCounters(false) }
                 }
+            }
+
+            BUTTON_FOLDERS_BAR_POSITION -> RadioItemOptions.show(
+                this, view,
+                listOf(
+                    LocaleController.getString(R.string.InuFoldersBarPositionTop),
+                    LocaleController.getString(R.string.InuFoldersBarPositionBottom),
+                ),
+                InuConfig.FOLDERS_BAR_POSITION.value,
+            ) { which ->
+                InuConfig.FOLDERS_BAR_POSITION.value = which
+                showRestartBulletin()
             }
 
             TOGGLE_HIDE_ALL_CHATS_TAB -> {
@@ -387,6 +406,7 @@ class DialogsSettingsActivity : SettingsPageActivity() {
     companion object {
         private val BUTTON_FOLDERS_DISPLAY_MODE = InuUtils.generateId()
         private val BUTTON_FOLDERS_UNREAD_COUNTER_MODE = InuUtils.generateId()
+        private val BUTTON_FOLDERS_BAR_POSITION = InuUtils.generateId()
         private val TOGGLE_BOT_WEBVIEW_BUTTON = InuUtils.generateId()
         private val TOGGLE_OLD_MENTION_INDICATOR = InuUtils.generateId()
         private val BUTTON_PULL_DOWN_ACTION = InuUtils.generateId()
@@ -404,6 +424,11 @@ class DialogsSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_HIDE_ALL_CHATS_TAB = InuUtils.generateId()
         private val BUTTON_COMMUNITY_DISPLAY_MODE = InuUtils.generateId()
         private val BUTTON_TITLE_TEXT = InuUtils.generateId()
+
+        private fun foldersBarPositionLabel(value: Int): String = when (value) {
+            InuConfig.FoldersBarPositionItem.BOTTOM -> LocaleController.getString(R.string.InuFoldersBarPositionBottom)
+            else -> LocaleController.getString(R.string.InuFoldersBarPositionTop)
+        }
 
         private fun titleTextLabel(value: Int): String = when (value) {
             InuConfig.DialogsTitleTextItem.USERNAME -> LocaleController.getString(R.string.Username)
@@ -435,6 +460,7 @@ class DialogsSettingsActivity : SettingsPageActivity() {
             entries = listOf(
                 SearchRegistry.Entry("folders-display-mode", R.string.InuFoldersDisplayMode, BUTTON_FOLDERS_DISPLAY_MODE),
                 SearchRegistry.Entry("folders-unread-counter", R.string.InuFoldersUnreadCounter, BUTTON_FOLDERS_UNREAD_COUNTER_MODE),
+                SearchRegistry.Entry("folders-bar-position", R.string.InuFoldersBarPosition, BUTTON_FOLDERS_BAR_POSITION),
                 SearchRegistry.Entry("hide-all-chats-tab", R.string.InuHideAllChatsTab, TOGGLE_HIDE_ALL_CHATS_TAB),
                 SearchRegistry.Entry("title-text", R.string.InuTitleText, BUTTON_TITLE_TEXT),
                 SearchRegistry.Entry("old-mention-indicator", R.string.InuOldMentionIndicator, TOGGLE_OLD_MENTION_INDICATOR),
