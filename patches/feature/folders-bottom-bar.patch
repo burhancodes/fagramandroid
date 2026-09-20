@@ -1,0 +1,99 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sun, 20 Sep 2026 19:58:28 +0530
+Subject: Allow folder tabs at bottom of dialog list (above bottom tabs) with M3 and classic mode support
+
+---
+ .../java/org/telegram/ui/DialogsActivity.java | 39 +++++++++++++++----
+ 1 file changed, 31 insertions(+), 8 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+@@ -1036,7 +1036,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+                         drawBlurRect(canvas, 0, blurBounds, actionBarSearchPaint, true);
+                     }
+                     if (fragmentSearchField != null && !NonIslandHelper.globalSearch()) {
+-                        fragmentSearchField.setTranslationY(top + actionBarHeight - (actionBar.getHeight() + (filterTabsView != null ? filterTabsView.getMeasuredHeight() : 0)) + getSearchFieldAdditionOffset());
++                        int folderHeightForSearch = (filterTabsView != null && xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() != xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM) ? filterTabsView.getMeasuredHeight() : 0;
++                        fragmentSearchField.setTranslationY(top + actionBarHeight - (actionBar.getHeight() + folderHeightForSearch) + getSearchFieldAdditionOffset());
+                     }
+                 }
+             } else if (!inPreviewMode) {
+@@ -1065,7 +1066,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+                 if (dialogStoriesCellVisible) {
+                     storiesAlpha = 1f - Utilities.clamp(rightSlidingProgress / 0.5f, 1f, 0f);
+                 }
+-                if (filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE) {
++                if (filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE && xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() != xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM) {
+                     tabsYOffset -= (1f - animatorFilterTabsVisible.getFloatValue()) * filterTabsView.getMeasuredHeight();
+                 }
+                 if (fragmentSearchField != null && !NonIslandHelper.globalSearch()) {
+@@ -5259,8 +5260,16 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+             filterTabsViewBackground.setPadding(dp(6.666f));
+             filterTabsView.setPadding(0, dp(7), 0, dp(7));
+             filterTabsView.setBlurredBackground(filterTabsViewBackground);
+-            contentView.addView(filterTabsView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 36 + 7 + 7, Gravity.TOP, 4, 0, 4, 0));
+-            NonIslandHelper.applyFilterTabBar(filterTabsView, contentView);
++            boolean folderBottom = xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() == xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM;
++            int folderGravity = folderBottom ? Gravity.BOTTOM : Gravity.TOP;
++            int folderBottomMargin = folderBottom ? dp(4) : 0;
++            contentView.addView(filterTabsView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 36 + 7 + 7, folderGravity, 4, 0, 4, folderBottomMargin));
++            if (folderBottom) {
++                // At bottom: divider at top of folder bar (separating from list) instead of bottom
++                NonIslandHelper.applyFilterTabBarBottom(filterTabsView, contentView);
++            } else {
++                NonIslandHelper.applyFilterTabBar(filterTabsView, contentView);
++            }
+         }
+ 
+         if (fragmentSearchField != null) {
+@@ -6706,11 +6715,19 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+         float topPanelsVisibility = 0;
+         float fadeViewT = totalOffset;
+ 
++        boolean folderBottom = xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() == xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM;
++
+         if (filterTabsView != null) {
+-            filterTabsView.setTranslationY(totalOffset - (NonIslandHelper.globalSearch() ? 0 : searchOffset) - (NonIslandHelper.foldersBar() ? dp(NonIslandHelper.foldersBarOverlapDp()) * getFilterTabsVisibilityFactor(false) : 0));
+             filtersTabVisibility = filterTabsView.getAlpha();
+             filtersTabHeight = dp(NonIslandHelper.foldersBar() ? NonIslandHelper.foldersBarVisibleHeightDp() : 36 + 7) * filtersTabVisibility;
+-            totalOffset += filtersTabHeight;
++            if (folderBottom) {
++                // Bottom placement: keep folder bar anchored near content bottom; don't push with scroll
++                filterTabsView.setTranslationY(0);
++                // Don't add to totalOffset (folder bar at bottom should not push top content down)
++            } else {
++                filterTabsView.setTranslationY(totalOffset - (NonIslandHelper.globalSearch() ? 0 : searchOffset) - (NonIslandHelper.foldersBar() ? dp(NonIslandHelper.foldersBarOverlapDp()) * getFilterTabsVisibilityFactor(false) : 0));
++                totalOffset += filtersTabHeight;
++            }
+         }
+ 
+         if (topPanelLayout != null) {
+@@ -7318,9 +7335,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+ 
+             @Override
+             public int getTopOffset(int tag) {
++                boolean folderBottom = xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() == xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM;
+                 return (
+                     (actionBar != null ? actionBar.getMeasuredHeight() : 0) +
+-                    (filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE ? filterTabsView.getMeasuredHeight() : 0) +
++                    (filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE && !folderBottom ? filterTabsView.getMeasuredHeight() : 0) +
+                     (topPanelLayout != null ? topPanelLayout.getHeight() : 0) +
+                     (dialogStoriesCell != null && dialogStoriesCellVisible ? (int) ((1f - dialogStoriesCell.getCollapsedProgress()) * dp(DialogStoriesCell.HEIGHT_IN_DP)) : 0) +
+                     (NonIslandHelper.globalSearch() ? 0 : dp(SEARCH_FIELD_HEIGHT))
+@@ -14450,7 +14468,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+         } else if (communityId != 0) {
+             return navigationBarHeight + dp(12 + 48 + 12);
+         } else {
+-            return navigationBarHeight + additionNavigationBarHeight;
++            int bottomPadding = navigationBarHeight + additionNavigationBarHeight;
++            boolean folderBottom = xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() == xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM;
++            if (folderBottom && filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE) {
++                bottomPadding += filterTabsView.getMeasuredHeight() + dp(4);
++            }
++            return bottomPadding;
+         }
+     }
+ 

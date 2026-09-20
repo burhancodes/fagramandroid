@@ -222,6 +222,9 @@
     <string name="InuFoldersUnreadCounterRegular">Regular</string>
     <string name="InuFoldersUnreadCounterExcludeMuted">Exclude muted</string>
     <string name="InuFoldersUnreadCounterExcludeMutedNonDms">Exclude muted non-DMs</string>
+    <string name="InuFoldersBarPosition">Folder bar position</string>
+    <string name="InuFoldersBarPositionTop">Top (stock)</string>
+    <string name="InuFoldersBarPositionBottom">Bottom (above tabs)</string>
     <string name="InuHideAllChatsTab">Hide \"All Chats\" tab</string>
     <string name="InuCommunityDisplayMode">Communities</string>
     <string name="InuCommunityDisplayModeRegular">Regular</string>

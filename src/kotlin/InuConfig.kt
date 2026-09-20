@@ -497,6 +497,16 @@ object InuConfig {
     @JvmField
     val FOLDERS_UNREAD_COUNTER_MODE = FoldersUnreadCounterModeItem()
 
+    class FoldersBarPositionItem : IntItem("folders_bar_position", TOP) {
+        companion object {
+            const val TOP = 0
+            const val BOTTOM = 1
+        }
+    }
+
+    @JvmField
+    val FOLDERS_BAR_POSITION = FoldersBarPositionItem()
+
     @JvmField
     val HIDE_ALL_CHATS_TAB = BoolItem("hide_all_chats_tab", false)
 

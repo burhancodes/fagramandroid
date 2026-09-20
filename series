@@ -320,3 +320,4 @@ feature/minimize-attach-panel.patch
 bugfix/link-scrim-offset.patch
 bugfix/scrim-touch-lock.patch
 debloat/disable-ads.patch
+feature/folders-bottom-bar.patch
