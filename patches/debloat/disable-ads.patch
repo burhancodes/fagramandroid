@@ -9,7 +9,8 @@ Subject: Disable ads and sponsored messages
  .../src/main/java/org/telegram/messenger/video/VideoAds.java    | 1 +
  .../java/org/telegram/ui/Adapters/DialogsSearchAdapter.java     | 2 +-
  TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java   | 2 ++
- 5 files changed, 7 insertions(+), 1 deletion(-)
+ TMessagesProj_Modules/media                                     | 2 +-
+ 6 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java
 index 0000000..0000000 100644
@@ -72,7 +73,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMe
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
-@@ -25192,6 +25192,7 @@ public class ChatActivity extends BaseFragment implements
+@@ -25185,6 +25185,7 @@ public class ChatActivity extends BaseFragment implements
      private Pattern sponsoredUrlPattern;
      private MessageObject botSponsoredMessage;
      private void addSponsoredMessages(boolean animated) {
@@ -80,7 +81,7 @@ index 0000000..0000000 100644
          if (sponsoredMessagesAdded || chatMode != 0 || !ChatObject.isChannel(currentChat) && !UserObject.isBot(currentUser) || !forwardEndReached[0] || getUserConfig().isPremium() && getMessagesController().isSponsoredDisabled() || isReport()) {
              return;
          }
-@@ -26528,6 +26529,7 @@ public class ChatActivity extends BaseFragment implements
+@@ -26521,6 +26522,7 @@ public class ChatActivity extends BaseFragment implements
      }
  
      private int getSponsoredMessagesCount() {
@@ -88,3 +89,10 @@ index 0000000..0000000 100644
          int sponsoredMessagesCount = 0;
          while (sponsoredMessagesCount < messages.size()) {
              if (!messages.get(sponsoredMessagesCount).isSponsored()) {
+diff --git a/TMessagesProj_Modules/media b/TMessagesProj_Modules/media
+index 0000000..0000000 160000
+--- a/TMessagesProj_Modules/media
++++ b/TMessagesProj_Modules/media
+@@ -1 +1 @@
+-Subproject commit c822f1f33d30591fdbbf3919662be258f7cfbfc6
++Subproject commit 2bc207851df311340767e913931ca7b28cab1794

@@ -123,7 +123,7 @@ index 0000000..0000000 100755
  					needSwitchToBluetoothAfterScoActivates = true;
  					AndroidUtilities.runOnUIThread(() -> {
  						try {
-@@ -5501,6 +5519,9 @@ public class VoIPService extends Service implements SensorEventListener, AudioMa
+@@ -5499,6 +5517,9 @@ public class VoIPService extends Service implements SensorEventListener, AudioMa
  	}
  
  	public boolean isBluetoothOn() {

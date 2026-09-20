@@ -4,103 +4,101 @@ Date: Fri, 17 Jul 2026 21:18:03 +0400
 Subject: system-level transient audio focus when playing videos
 
 ---
- .../google/android/exoplayer2/AudioFocusManager.java   | 10 ++++++++--
- .../com/google/android/exoplayer2/ExoPlayerImpl.java   |  6 +++++-
- .../java/org/telegram/ui/Components/VideoPlayer.java   |  9 +++++++++
- .../src/main/java/org/telegram/ui/PhotoViewer.java     |  1 +
- 4 files changed, 23 insertions(+), 3 deletions(-)
+ .../telegram/ui/Components/VideoPlayer.java   | 45 +++++++++++++++++--
+ .../java/org/telegram/ui/PhotoViewer.java     |  1 +
+ 2 files changed, 42 insertions(+), 4 deletions(-)
 
-diff --git a/TMessagesProj/src/main/java/com/google/android/exoplayer2/AudioFocusManager.java b/TMessagesProj/src/main/java/com/google/android/exoplayer2/AudioFocusManager.java
-index 0000000..0000000 100644
---- a/TMessagesProj/src/main/java/com/google/android/exoplayer2/AudioFocusManager.java
-+++ b/TMessagesProj/src/main/java/com/google/android/exoplayer2/AudioFocusManager.java
-@@ -244,6 +244,12 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-     }
-   }
- 
-+  public boolean inu_transientFocus;
-+
-+  private int inu_getFocusGainToRequest() {
-+    return inu_transientFocus && focusGainToRequest == AUDIOFOCUS_GAIN ? AUDIOFOCUS_GAIN_TRANSIENT : focusGainToRequest;
-+  }
-+
-   private void abandonAudioFocusIfHeld() {
-     if (audioFocusState == AUDIO_FOCUS_STATE_NO_FOCUS) {
-       return;
-@@ -260,7 +266,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-     return audioManager.requestAudioFocus(
-         focusListener,
-         Util.getStreamTypeForAudioUsage(checkNotNull(audioAttributes).usage),
--        focusGainToRequest);
-+        inu_getFocusGainToRequest());
-   }
- 
-   @RequiresApi(26)
-@@ -268,7 +274,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-     if (audioFocusRequest == null || rebuildAudioFocusRequest) {
-       AudioFocusRequest.Builder builder =
-           audioFocusRequest == null
--              ? new AudioFocusRequest.Builder(focusGainToRequest)
-+              ? new AudioFocusRequest.Builder(inu_getFocusGainToRequest())
-               : new AudioFocusRequest.Builder(audioFocusRequest);
- 
-       boolean willPauseWhenDucked = willPauseWhenDucked();
-diff --git a/TMessagesProj/src/main/java/com/google/android/exoplayer2/ExoPlayerImpl.java b/TMessagesProj/src/main/java/com/google/android/exoplayer2/ExoPlayerImpl.java
-index 0000000..0000000 100644
---- a/TMessagesProj/src/main/java/com/google/android/exoplayer2/ExoPlayerImpl.java
-+++ b/TMessagesProj/src/main/java/com/google/android/exoplayer2/ExoPlayerImpl.java
-@@ -112,7 +112,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
- import java.util.concurrent.TimeoutException;
- 
- /** The default implementation of {@link ExoPlayer}. */
--/* package */ final class ExoPlayerImpl extends BasePlayer
-+public final class ExoPlayerImpl extends BasePlayer
-     implements ExoPlayer,
-         ExoPlayer.AudioComponent,
-         ExoPlayer.VideoComponent,
-@@ -1424,6 +1424,10 @@ import java.util.concurrent.TimeoutException;
-     listeners.flushEvents();
-   }
- 
-+  public void inu_setTransientAudioFocus(boolean transientFocus) {
-+    audioFocusManager.inu_transientFocus = transientFocus;
-+  }
-+
-   @Override
-   public AudioAttributes getAudioAttributes() {
-     verifyApplicationThread();
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.java
-@@ -271,6 +271,12 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -263,6 +263,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
              }
              player = builder.build();
  
-+            if (handleAudioFocus) {
-+                if (player instanceof com.google.android.exoplayer2.ExoPlayerImpl) {
-+                    ((com.google.android.exoplayer2.ExoPlayerImpl) player).inu_setTransientAudioFocus(true);
-+                }
-+                player.setAudioAttributes(player.getAudioAttributes(), true);
-+            }
++
              player.addAnalyticsListener(this);
              player.addListener(this);
              player.addVideoListener(this);
-@@ -1627,6 +1633,9 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -1337,6 +1338,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+         if (shouldPauseOther) {
+             NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.playerDidStartPlaying);
+         }
++        inu_abandonAudioFocus();
+         playerCounter--;
+     }
+ 
+@@ -1450,6 +1452,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+             audioPlayer.setPlayWhenReady(false);
+         }
+ 
++        inu_abandonAudioFocus();
+         if (audioVisualizerDelegate != null) {
+             audioUpdateHandler.removeCallbacksAndMessages(null);
+             audioVisualizerDelegate.onVisualizerUpdate(false, true, null);
+@@ -1612,10 +1615,39 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+ 
+ 
+     private boolean handleAudioFocus = false;
++    private boolean inu_hasAudioFocus = false;
++    private final AudioManager.OnAudioFocusChangeListener inu_audioFocusListener = focusChange -> {
++        if (focusChange == AudioManager.AUDIOFOCUS_LOSS || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
++            AndroidUtilities.runOnUIThread(this::pause);
++        }
++    };
++
++    private void inu_requestAudioFocus() {
++        if (handleAudioFocus && !inu_hasAudioFocus && !isMuted()) {
++            AudioManager am = (AudioManager) ApplicationLoader.applicationContext.getSystemService(Context.AUDIO_SERVICE);
++            if (am != null) {
++                int res = am.requestAudioFocus(inu_audioFocusListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
++                if (res == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
++                    inu_hasAudioFocus = true;
++                }
++            }
++        }
++    }
++
++    private void inu_abandonAudioFocus() {
++        if (inu_hasAudioFocus) {
++            AudioManager am = (AudioManager) ApplicationLoader.applicationContext.getSystemService(Context.AUDIO_SERVICE);
++            if (am != null) {
++                am.abandonAudioFocus(inu_audioFocusListener);
++            }
++            inu_hasAudioFocus = false;
++        }
++    }
++
      public void handleAudioFocus(boolean handleAudioFocus) {
          this.handleAudioFocus = handleAudioFocus;
-         if (player != null) {
-+            if (handleAudioFocus && player instanceof com.google.android.exoplayer2.ExoPlayerImpl) {
-+                ((com.google.android.exoplayer2.ExoPlayerImpl) player).inu_setTransientAudioFocus(true);
-+            }
-             player.setAudioAttributes(player.getAudioAttributes(), handleAudioFocus);
+-        if (player != null) {
+-            player.setAudioAttributes(player.getAudioAttributes(), handleAudioFocus);
++        if (!handleAudioFocus) {
++            inu_abandonAudioFocus();
          }
      }
+ 
+@@ -1654,8 +1686,13 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+     @Override
+     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+         maybeReportPlayerState();
+-        if (playWhenReady && playbackState == Player.STATE_READY && !isMuted() && shouldPauseOther) {
+-            NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.playerDidStartPlaying, this);
++        if (playWhenReady && playbackState == Player.STATE_READY) {
++            inu_requestAudioFocus();
++            if (!isMuted() && shouldPauseOther) {
++                NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.playerDidStartPlaying, this);
++            }
++        } else if (!playWhenReady || playbackState == Player.STATE_ENDED || playbackState == Player.STATE_IDLE) {
++            inu_abandonAudioFocus();
+         }
+         if (!videoPlayerReady && playbackState == Player.STATE_READY) {
+             videoPlayerReady = true;
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
-@@ -10539,6 +10539,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -10541,6 +10541,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                      }
                  };
                  videoPlayer.setOnQualityChangeListener(this::updateQualityItems);

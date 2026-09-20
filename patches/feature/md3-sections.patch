@@ -587,7 +587,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PeerColorActivity.java 
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/PeerColorActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/PeerColorActivity.java
-@@ -2289,10 +2289,13 @@ public class PeerColorActivity extends BaseFragment implements NotificationCente
+@@ -2535,10 +2535,13 @@ public class PeerColorActivity extends BaseFragment implements NotificationCente
  
          @Override
          protected void dispatchDraw(Canvas canvas) {
@@ -608,7 +608,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProxyListActivity.java 
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ProxyListActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ProxyListActivity.java
-@@ -1008,27 +1008,22 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
+@@ -1002,27 +1002,22 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                      break;
                  case VIEW_TYPE_TEXT_SETTING:
                      view = new TextSettingsCell(mContext);

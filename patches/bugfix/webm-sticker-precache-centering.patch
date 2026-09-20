@@ -12,7 +12,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/utils/BitmapsCac
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/utils/BitmapsCache.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/utils/BitmapsCache.java
-@@ -100,7 +100,7 @@ public class BitmapsCache {
+@@ -96,7 +96,7 @@ public class BitmapsCache {
              fileTmo.mkdir();
              mkdir = true;
          }
