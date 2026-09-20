@@ -102,8 +102,8 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-fagram-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-fagram-ccache-
+          key: fagram-android-ccache-${{ github.run_id }}
+          restore-keys: fagram-android-ccache-
 
       - name: Set up worktree
         run: pnpm run setup -- --no-stgit
@@ -180,7 +180,7 @@ jobs:
         uses: actions/cache/save@v6
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ${{ steps.cache-fagram.outputs.cache-primary-key || format('{0}-fagram-ccache-{1}', runner.os, github.run_id) }}
+          key: ${{ steps.cache-fagram.outputs.cache-primary-key || format('fagram-android-ccache-{0}', github.run_id) }}
 
       - name: Stage artifacts
         env:
