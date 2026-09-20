@@ -193,8 +193,8 @@ object MainTabsHelper {
                 fragment.getParentActivity(),
                 object : Bulletin.Delegate {
                     override fun getBottomOffset(tag: Int): Int {
-                        int bottomOffset = if (isHidden) 0 else dp(mainTabsHeightWithMargins.toFloat());
-                        if (InuConfig.FOLDERS_BAR_POSITION.getValue() == xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM) {
+                        var bottomOffset = if (isHidden) 0 else dp(mainTabsHeightWithMargins.toFloat())
+                        if (InuConfig.FOLDERS_BAR_POSITION.value == InuConfig.FoldersBarPositionItem.BOTTOM) {
                             // Approximate folder bar height at bottom; covers default (50) and foldersBar (44)
                             bottomOffset += dp(50f);
                         }
