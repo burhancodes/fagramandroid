@@ -14,7 +14,7 @@ jobs:
     permissions:
       contents: read
     with:
-      artifact-name: inugram-${{ github.sha }}
+      artifact-name: fagram-${{ github.sha }}
 
   sign:
     needs: build
@@ -27,21 +27,24 @@ jobs:
       artifact-metadata: write
       contents: read
     steps:
-      - uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4
+      - name: Set up Java
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
 
-      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
         with:
           packages: build-tools;36.0.0
 
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - name: Download unsigned artifact
+        uses: actions/download-artifact@v8
         with:
-          name: inugram-${{ github.sha }}-unsigned
+          name: fagram-${{ github.sha }}-unsigned
           path: out
 
-      - name: decode keystore
+      - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
@@ -52,7 +55,7 @@ jobs:
           umask 077
           echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
 
-      - name: apksigner sign
+      - name: Sign APK with apksigner
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
@@ -61,7 +64,7 @@ jobs:
           apksigner=$ANDROID_HOME/build-tools/36.0.0/apksigner
           "$apksigner" sign \
             --ks "$RUNNER_TEMP/release.keystore" \
-            --ks-key-alias inugram \
+            --ks-key-alias "${{ secrets.KEY_ALIAS }}" \
             --ks-pass "pass:$KEYSTORE_PASSWORD" \
             --key-pass "pass:$KEY_PASSWORD" \
             --in "out/$apk" \
@@ -69,18 +72,19 @@ jobs:
           "$apksigner" verify --print-certs "out/$apk.signed"
           mv "out/$apk.signed" "out/$apk"
 
-      - name: wipe keystore
+      - name: Wipe keystore
         if: always()
         run: rm -f "$RUNNER_TEMP/release.keystore"
 
-      - name: attest signed apk
-        uses: actions/attest@281a49d4cbb0a72c9575a50d18f6deb515a11deb # v4
+      - name: Attest signed APK
+        uses: actions/attest@v4
         with:
           subject-path: out/${{ needs.build.outputs.apk-name }}
 
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - name: Upload signed build artifact
+        uses: actions/upload-artifact@v7
         with:
-          name: inugram-${{ github.sha }}
+          name: fagram-${{ github.sha }}
           path: out/*
           if-no-files-found: error
           retention-days: 30
@@ -93,23 +97,32 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
-          name: inugram-${{ github.sha }}
+          sparse-checkout: |
+            .github/scripts/tgupload.py
+          depth: 1
+
+      - name: Download signed artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: fagram-${{ github.sha }}
           path: out
 
       - name: Generate changelog
         env:
           GITHUB_TOKEN: ${{ secrets.BVTOKEN || secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
           REPO="${{ github.repository }}"
           HEAD_SHA="$GITHUB_SHA"
 
           PREV_TAG=$(curl -s -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             "https://api.github.com/repos/$REPO/releases/latest" | jq -r '.tag_name // empty')
+
+          CHANGELOG=""
           if [ -n "$PREV_TAG" ]; then
             COMPARE=$(curl -s -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -121,11 +134,14 @@ jobs:
             CHANGELOG="No new changes"
           fi
           CHANGELOG=$(echo "$CHANGELOG" | head -15)
-          echo "CHANGELOG<<CHANGELOG_EOF" >> $GITHUB_ENV
-          echo "$CHANGELOG" >> $GITHUB_ENV
-          echo "CHANGELOG_EOF" >> $GITHUB_ENV
 
-      - name: create github release
+          {
+            echo "CHANGELOG<<CHANGELOG_EOF"
+            echo "$CHANGELOG"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -138,11 +154,12 @@ jobs:
             "out/$apk"
 
       - name: Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a6ea81b8951a8e # v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+          cache: pip
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: pip install kurigram tgcrypto
 
       - name: Upload APK to Telegram
@@ -156,17 +173,17 @@ jobs:
           APK_FILE="out/${{ needs.build.outputs.apk-name }}"
           SHA256=$(sha256sum "$APK_FILE" | awk '{print $1}')
           python3 .github/scripts/tgupload.py "$APK_FILE" \
-            --chat-id ${{ secrets.CHAT_ID }} \
+            --chat-id "${{ secrets.CHAT_ID }}" \
             --title "FAgram Android ${{ needs.build.outputs.tag }}" \
             --base-version "${{ needs.build.outputs.ver-name }}" \
             --checksum "$SHA256" \
             --build-type "rel" \
             --branch "${{ github.ref_name }}"
 
-      - name: bump INU_BUILD and LAST_RELEASE_SHA variables
+      - name: Bump build number and release SHA
         env:
           GH_TOKEN: ${{ secrets.BVTOKEN }}
         run: |
           next=$((${{ needs.build.outputs.build-num }} + 1))
-          gh variable set INU_BUILD --body "$next"
+          gh variable set FA_BUILD --body "$next"
           gh variable set LAST_RELEASE_SHA --body "$GITHUB_SHA"

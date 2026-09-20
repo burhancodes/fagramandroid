@@ -56,7 +56,7 @@ object UpdateHelper {
         return "${getVersionInfoString()}\nBuilt on: ${BuildVars.BUILD_DATE}"
     }
 
-    private val APK_RE = Regex("^inugram-(.+)-(\\d+)\\.apk$")
+    private val APK_RE = Regex("^fagram-(.+)-(\\d+)\\.apk$")
     private val SHORT_SHA_RE = Regex("-([0-9a-f]{7,40})$")
 
     @Volatile

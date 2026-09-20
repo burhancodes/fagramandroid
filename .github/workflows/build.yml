@@ -39,7 +39,7 @@ concurrency:
 permissions: {}
 
 env:
-  ARTIFACT_NAME: ${{ inputs.artifact-name || format('inugram-build-{0}', github.run_id) }}
+  ARTIFACT_NAME: ${{ inputs.artifact-name || format('fagram-build-{0}', github.run_id) }}
 
 jobs:
   build:
@@ -53,8 +53,8 @@ jobs:
       build-num: ${{ steps.info.outputs.build-num }}
       tag: ${{ steps.info.outputs.tag }}
     steps:
-      - name: free disk space
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # main
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v2.0.0
         with:
           tool-cache: false
           android: false
@@ -63,55 +63,65 @@ jobs:
           large-packages: false
           swap-storage: true
 
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: configure git identity
+      - name: Configure Git identity
         run: |
-          git config --global user.email ci@inugram
-          git config --global user.name 'inugram ci'
+          git config --global user.email ci@fagram
+          git config --global user.name 'fagram ci'
 
-      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4
+      - name: Set up Java
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
 
-      - name: set up ccache
-        uses: hendrikmuhs/ccache-action@e42e6681d2906409c5dde4a315af6214eaa890ee # v1.2
-        with:
-          append-timestamp: true
-          key: ${{ runner.os }}-ndk-27.2-release
-          restore-keys: |
-            ${{ runner.os }}-ndk-27.2-release
-            ${{ runner.os }}-
-          max-size: 5G
-          verbose: 2
-          save: ${{ github.event_name != 'pull_request' }}
+      - name: Set up ccache
+        run: |
+          curl -sSL https://github.com/ccache/ccache/releases/download/v4.13.6/ccache-4.13.6-linux-x86_64-glibc.tar.xz \
+            | sudo tar xJ -C /usr/local/bin --strip-components=1 ccache-4.13.6-linux-x86_64-glibc/ccache
+          echo "CCACHE_DIR=$RUNNER_TEMP/.fagram-cache" >> $GITHUB_ENV
 
-      - name: set up worktree
+      - name: Restore ccache
+        id: cache-fagram
+        uses: actions/cache/restore@v6
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ runner.os }}-fagram-ccache-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-fagram-ccache-
+
+      - name: Set up worktree
         run: pnpm run setup -- --no-stgit
 
-      - name: compute build info
+      - name: Compute build info
         id: info
         env:
-          INU_BUILD: ${{ vars.INU_BUILD || '1' }}
+          FA_BUILD: ${{ vars.FA_BUILD || '1' }}
         run: pnpm tsx scripts/ci/version.ts
 
-      - uses: gradle/actions/setup-gradle@0b6dd653ba04f4f93bf581ec31e66cbd7dcb644d # v4
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
         with:
           gradle-home-cache-cleanup: true
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
-      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
         with:
           packages: >-
             platforms;android-36
@@ -119,36 +129,65 @@ jobs:
             cmake;3.22.1
             ndk;27.2.12479018
 
-      - name: tune gradle
+      - name: Tune Gradle properties
         run: |
-          echo 'org.gradle.caching=true' >> ~/.gradle/gradle.properties
-          echo 'org.gradle.parallel=true' >> ~/.gradle/gradle.properties
-          echo 'org.gradle.jvmargs=-Xmx8192m -Dfile.encoding=UTF-8 -XX:+UseParallelGC' >> ~/.gradle/gradle.properties
-          echo 'android.native.buildOutput=verbose' >> ~/.gradle/gradle.properties
+          mkdir -p ~/.gradle
+          cat << 'EOF' >> ~/.gradle/gradle.properties
+          org.gradle.caching=true
+          org.gradle.parallel=true
+          org.gradle.jvmargs=-Xmx8192m -Dfile.encoding=UTF-8 -XX:+UseParallelGC
+          android.native.buildOutput=verbose
+          EOF
 
-      - name: reset ccache stats
-        run: ccache -z
+      - name: Configure ccache
+        run: |
+          mkdir -p "$CCACHE_DIR"
+          ccache --max-size 5G
+          ccache -z
 
-      - name: build (unsigned, debug-keyed)
+      - name: Build (unsigned, debug-keyed)
         working-directory: worktree
         env:
           COMMIT_ID: ${{ github.sha }}
           INU_BUILD: ${{ steps.info.outputs.build-num }}
+          FA_BUILD: ${{ steps.info.outputs.build-num }}
           INU_BUILD_TYPE: release
+          FA_BUILD_TYPE: release
           CCACHE_COMPILERCHECK: content
           CCACHE_SLOPPINESS: time_macros,file_macro,include_file_mtime,include_file_ctime,locale,system_headers
           CCACHE_BASEDIR: ${{ github.workspace }}/worktree
         run: ./gradlew --no-daemon :TMessagesProj_App:assembleRelease
 
-      - name: show ccache stats
+      - name: Show ccache stats
         if: always()
         run: ccache -s -v
 
-      - name: stage artifacts
+      - name: Count ccache misses
+        id: ccache-stats
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          MISSES=$(ccache --print-stats | sed -n 's/^cache_miss\t//p' | head -1)
+          case "$MISSES" in (*[!0-9]*|'') MISSES=0;; esac
+          echo "misses=$MISSES" >> $GITHUB_OUTPUT
+          echo "ccache misses this run: $MISSES"
+
+      - name: Trim ccache
+        if: github.event_name != 'pull_request' && steps.ccache-stats.outputs.misses != '0'
+        run: ccache --evict-older-than 1d
+
+      - name: Save ccache
+        if: github.event_name != 'pull_request' && steps.ccache-stats.outputs.misses != '0'
+        uses: actions/cache/save@v6
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ steps.cache-fagram.outputs.cache-primary-key || format('{0}-fagram-ccache-{1}', runner.os, github.run_id) }}
+
+      - name: Stage artifacts
         env:
           LAST_UPLOADED_SHA: ${{ vars.LAST_RELEASE_SHA }}
           PUSH_BEFORE: ${{ github.event.before }}
         run: |
+          set -euo pipefail
           mkdir -p out
           apk='${{ steps.info.outputs.apk-name }}'
           cp worktree/TMessagesProj_App/build/outputs/apk/release/app.apk "out/$apk"
@@ -186,7 +225,8 @@ jobs:
             '{verName:$verName,verCode:$verCode,appVerCode:$appVerCode,buildNum:$buildNum,apkFile:$apkFile,commitSha:$commitSha,commits:$commits,repo:$repo}' \
             > out/build-info.json
 
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - name: Upload unsigned build artifact
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.ARTIFACT_NAME }}-unsigned
           path: out/*
