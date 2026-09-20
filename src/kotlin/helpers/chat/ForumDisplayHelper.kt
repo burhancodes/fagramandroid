@@ -1,10 +1,10 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.edit
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.ChatObject
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.MessagesController

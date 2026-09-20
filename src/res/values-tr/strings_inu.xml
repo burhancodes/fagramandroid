@@ -246,7 +246,7 @@
     <string name="InuConfirmReactionText">**%2$s** sohbetine %1$s tepkisi gönderilsin mi?</string>
     <string name="InuNotificationIcon">Bildirim simgesi</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">Inugram</string>
+    <string name="InuNotificationIconInugram">FAgram</string>
     <string name="InuDisableChatBubbles">Android bildirim balonlarını devre dışı bırak</string>
     <string name="InuInPlaceTranslation">Yerinde çeviri</string>
     <string name="InuTranslateWebPreviews">Web önizlemelerini çevir</string>

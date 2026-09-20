@@ -26,7 +26,7 @@ index 0000000..0000000 100644
                  ((ChatAttachAlertRichLayout) chatAttachAlert.getCurrentAttachLayout()).onExternalDocumentPicked(data);
                  return;
              } else if (requestCode == 1) {
-+                if (desu.inugram.helpers.media.MediaPickerHelper.handlePickerResult(this, data)) return;
++                if (xie.fa.gram.helpers.media.MediaPickerHelper.handlePickerResult(this, data)) return;
                  if (data == null || data.getData() == null) {
                      showAttachmentError();
                      return;
@@ -84,7 +84,7 @@ index 0000000..0000000 100644
                  parentAlert.getPhotoPreviewLayout().invalidateGroupsView();
              }
          } else if (id == open_in) {
-+            if (parentAlert.avatarPicker == 0 && desu.inugram.helpers.media.MediaPickerHelper.launchPicker(parentAlert)) {
++            if (parentAlert.avatarPicker == 0 && xie.fa.gram.helpers.media.MediaPickerHelper.launchPicker(parentAlert)) {
 +                return;
 +            }
              try {

@@ -15,7 +15,7 @@ index 0000000..0000000 100644
  import org.telegram.messenger.NotificationCenter;
  import org.telegram.messenger.PasskeysController;
  import org.telegram.messenger.PushListenerController;
-+import desu.inugram.helpers.LoginHelper;
++import xie.fa.gram.helpers.LoginHelper;
  import org.telegram.messenger.R;
  import org.telegram.messenger.SRPHelper;
  import org.telegram.messenger.SharedConfig;

@@ -1,11 +1,11 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 
 import android.content.Context
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.ui.FormattingPopupConfig
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.InuConfig
+import xie.fa.gram.ui.FormattingPopupConfig
+import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.Theme

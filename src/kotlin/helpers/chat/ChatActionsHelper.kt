@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -10,11 +10,11 @@ import android.view.HapticFeedbackConstants
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.edit
-import desu.inugram.InuConfig
-import desu.inugram.helpers.menu.ChatMenuConfig
-import desu.inugram.helpers.menu.reorderByMenu
-import desu.inugram.helpers.translate.TranslateHelper
-import desu.inugram.ui.showInputDialog
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.menu.ChatMenuConfig
+import xie.fa.gram.helpers.menu.reorderByMenu
+import xie.fa.gram.helpers.translate.TranslateHelper
+import xie.fa.gram.ui.showInputDialog
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.ChatObject

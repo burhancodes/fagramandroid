@@ -31,7 +31,7 @@ index 0000000..0000000 100644
  import java.util.concurrent.atomic.AtomicLong;
  import java.util.concurrent.atomic.AtomicReference;
  import java.util.function.Consumer;
-+import desu.inugram.helpers.dialogs.FolderHelper;
++import xie.fa.gram.helpers.dialogs.FolderHelper;
  
  import me.vkryl.core.BitwiseUtils;
  
@@ -155,7 +155,7 @@ index 0000000..0000000 100644
  
  import java.util.ArrayList;
 -import java.util.Map;
-+import desu.inugram.helpers.dialogs.FolderHelper;
++import xie.fa.gram.helpers.dialogs.FolderHelper;
  
  @SuppressLint("ViewConstructor")
  public class FilterTabsView extends FrameLayout {
@@ -456,16 +456,16 @@ index 0000000..0000000 100644
 @@ -279,6 +279,7 @@ import java.util.List;
  import java.util.concurrent.ConcurrentHashMap;
  
- import desu.inugram.InuHooks;
-+import desu.inugram.helpers.dialogs.FolderHelper;
- import desu.inugram.helpers.dialogs.MainTabsHelper;
+ import xie.fa.gram.InuHooks;
++import xie.fa.gram.helpers.dialogs.FolderHelper;
+ import xie.fa.gram.helpers.dialogs.MainTabsHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
 @@ -3683,6 +3684,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                      if (initialDialogsType == DIALOGS_TYPE_FORWARD) {
                          return 0;
                      }
-+                    if (desu.inugram.InuConfig.FOLDERS_UNREAD_COUNTER_MODE.getValue() == desu.inugram.InuConfig.FoldersUnreadCounterModeItem.HIDE) {
++                    if (xie.fa.gram.InuConfig.FOLDERS_UNREAD_COUNTER_MODE.getValue() == xie.fa.gram.InuConfig.FoldersUnreadCounterModeItem.HIDE) {
 +                        return 0;
 +                    }
                      if (tabId == filterTabsView.getDefaultTabId()) {

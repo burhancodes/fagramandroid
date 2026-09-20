@@ -17,7 +17,7 @@ index 0000000..0000000 100644
          protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
              int size = itemInternals.size();
 -            boolean hasArchive = folderId == 0 && dialogsType == 0 && MessagesController.getInstance(currentAccount).dialogs_dict.get(DialogObject.makeFolderDialogId(1)) != null;
-+            boolean hasArchive = folderId == 0 && dialogsType == 0 && MessagesController.getInstance(currentAccount).dialogs_dict.get(DialogObject.makeFolderDialogId(1)) != null && !desu.inugram.helpers.dialogs.PullActionHelper.hideArchiveRow();
++            boolean hasArchive = folderId == 0 && dialogsType == 0 && MessagesController.getInstance(currentAccount).dialogs_dict.get(DialogObject.makeFolderDialogId(1)) != null && !xie.fa.gram.helpers.dialogs.PullActionHelper.hideArchiveRow();
              View parent = (View) getParent();
              int height;
              int blurOffset = 0;
@@ -30,7 +30,7 @@ index 0000000..0000000 100644
              }
              boolean result = super.onTouchEvent(e);
 +            if (parentPage.dialogsType == DIALOGS_TYPE_DEFAULT && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) && inu_hasStandalonePull()) {
-+                desu.inugram.helpers.dialogs.PullActionHelper.onRelease(DialogsActivity.this, parentPage.pullForegroundDrawable);
++                xie.fa.gram.helpers.dialogs.PullActionHelper.onRelease(DialogsActivity.this, parentPage.pullForegroundDrawable);
 +            }
              if (parentPage.dialogsType == DIALOGS_TYPE_DEFAULT && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) && parentPage.archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN && hasHiddenArchive()) {
                  LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
                              disableActionBarScrolling = true;
                              smoothScrollBy(0, diff, CubicBezierInterpolator.EASE_OUT_QUINT);
                              parentPage.archivePullViewState = ARCHIVE_ITEM_STATE_HIDDEN;
-+                        } else if (desu.inugram.helpers.dialogs.PullActionHelper.openArchiveOnPull() && !onlySelect) {
++                        } else if (xie.fa.gram.helpers.dialogs.PullActionHelper.openArchiveOnPull() && !onlySelect) {
 +                            Bundle args = new Bundle();
 +                            args.putInt("folderId", view.getCurrentDialogFolderId());
 +                            presentFragment(new DialogsActivity(args));
@@ -64,7 +64,7 @@ index 0000000..0000000 100644
                          pTop -= dp(DialogStoriesCell.HEIGHT_IN_DP);
                      }
 -                    boolean hasHiddenArchive = !fixScrollYAfterArchiveOpened && viewPage.dialogsType == DIALOGS_TYPE_DEFAULT && !onlySelect && folderId == 0 && communityId == 0 && getMessagesController().hasHiddenArchive() && viewPage.archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN;
-+                    boolean hasHiddenArchive = !fixScrollYAfterArchiveOpened && viewPage.dialogsType == DIALOGS_TYPE_DEFAULT && !onlySelect && folderId == 0 && communityId == 0 && getMessagesController().hasHiddenArchive() && viewPage.archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN && !desu.inugram.helpers.dialogs.PullActionHelper.hideArchiveRow();
++                    boolean hasHiddenArchive = !fixScrollYAfterArchiveOpened && viewPage.dialogsType == DIALOGS_TYPE_DEFAULT && !onlySelect && folderId == 0 && communityId == 0 && getMessagesController().hasHiddenArchive() && viewPage.archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN && !xie.fa.gram.helpers.dialogs.PullActionHelper.hideArchiveRow();
                      if ((hasHiddenArchive || (hasStories && !rightSlidingDialogContainer.hasFragment())) && dy < 0) {
                          viewPage.listView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
                          int currentPosition = viewPage.layoutManager.findFirstVisibleItemPosition();
@@ -74,7 +74,7 @@ index 0000000..0000000 100644
  
 +                    if (viewPage.dialogsType == DIALOGS_TYPE_DEFAULT && inu_hasStandalonePull()) {
 +                        int usedDy = super.scrollVerticallyBy(measuredDy, recycler, state);
-+                        desu.inugram.helpers.dialogs.PullActionHelper.onScrolled(viewPage.pullForegroundDrawable, measuredDy, usedDy, dy, isDragging);
++                        xie.fa.gram.helpers.dialogs.PullActionHelper.onScrolled(viewPage.pullForegroundDrawable, measuredDy, usedDy, dy, isDragging);
 +                        return usedDy;
 +                    }
 +
@@ -86,7 +86,7 @@ index 0000000..0000000 100644
  
              viewPage.archivePullViewState = SharedConfig.archiveHidden ? ARCHIVE_ITEM_STATE_HIDDEN : ARCHIVE_ITEM_STATE_PINNED;
 +            if (viewPage.pullForegroundDrawable == null && inu_hasStandalonePull()) {
-+                viewPage.pullForegroundDrawable = desu.inugram.helpers.dialogs.PullActionHelper.createDrawable(viewPage.listView);
++                viewPage.pullForegroundDrawable = xie.fa.gram.helpers.dialogs.PullActionHelper.createDrawable(viewPage.listView);
 +            }
              if (viewPage.pullForegroundDrawable == null && folderId == 0 && communityId == 0) {
                  viewPage.pullForegroundDrawable = new PullForegroundDrawable(LocaleController.getString(R.string.AccSwipeForArchive), LocaleController.getString(R.string.AccReleaseForArchive)) {
@@ -95,14 +95,14 @@ index 0000000..0000000 100644
      }
  
      public boolean hasHiddenArchive() {
-+        if (desu.inugram.helpers.dialogs.PullActionHelper.hideArchiveRow()) {
++        if (xie.fa.gram.helpers.dialogs.PullActionHelper.hideArchiveRow()) {
 +            return false;
 +        }
          return !onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && communityId == 0 && folderId == 0 && getMessagesController().hasHiddenArchive();
      }
  
 +    public boolean inu_hasStandalonePull() {
-+        return !onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && communityId == 0 && folderId == 0 && desu.inugram.helpers.dialogs.PullActionHelper.isStandalonePull();
++        return !onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && communityId == 0 && folderId == 0 && xie.fa.gram.helpers.dialogs.PullActionHelper.isStandalonePull();
 +    }
 +
      private boolean waitingForDialogsAnimationEnd(ViewPage viewPage) {
@@ -112,8 +112,8 @@ index 0000000..0000000 100644
          }
          MessagesController messagesController = AccountInstance.getInstance(currentAccount).getMessagesController();
          if (dialogsType == DIALOGS_TYPE_DEFAULT) {
-+            if (folderId == 0 && desu.inugram.helpers.dialogs.PullActionHelper.hideArchiveRow()) {
-+                return desu.inugram.helpers.dialogs.PullActionHelper.filterArchiveRow(messagesController.getDialogs(folderId));
++            if (folderId == 0 && xie.fa.gram.helpers.dialogs.PullActionHelper.hideArchiveRow()) {
++                return xie.fa.gram.helpers.dialogs.PullActionHelper.filterArchiveRow(messagesController.getDialogs(folderId));
 +            }
              return messagesController.getDialogs(folderId);
          } else if (dialogsType == DIALOGS_TYPE_WIDGET || dialogsType == DIALOGS_TYPE_IMPORT_HISTORY) {
@@ -122,7 +122,7 @@ index 0000000..0000000 100644
              args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
              presentFragment(new ChatActivity(args));
          });
-+        if (desu.inugram.helpers.dialogs.PullActionHelper.shouldShowArchiveEntry(currentAccount)) {
++        if (xie.fa.gram.helpers.dialogs.PullActionHelper.shouldShowArchiveEntry(currentAccount)) {
 +            io.add(R.drawable.msg_archive, getString(R.string.ArchivedChats), () -> {
 +                Bundle args = new Bundle();
 +                args.putInt("folderId", 1);

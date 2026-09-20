@@ -1,8 +1,8 @@
-package desu.inugram.helpers.cloud
+package xie.fa.gram.helpers.cloud
 
 import android.content.SharedPreferences
 import android.util.Base64
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

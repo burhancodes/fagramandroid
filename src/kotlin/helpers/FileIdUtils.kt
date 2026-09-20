@@ -1,12 +1,12 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
-import desu.inugram.core.fileid.FileIdException
-import desu.inugram.core.fileid.FileType
-import desu.inugram.core.fileid.FullRemoteFileLocation
-import desu.inugram.core.fileid.PhotoSizeSource
-import desu.inugram.core.fileid.RemoteFileLocation
-import desu.inugram.core.fileid.serializeFileId
-import desu.inugram.core.fileid.serializeUniqueFileId
+import xie.fa.gram.core.fileid.FileIdException
+import xie.fa.gram.core.fileid.FileType
+import xie.fa.gram.core.fileid.FullRemoteFileLocation
+import xie.fa.gram.core.fileid.PhotoSizeSource
+import xie.fa.gram.core.fileid.RemoteFileLocation
+import xie.fa.gram.core.fileid.serializeFileId
+import xie.fa.gram.core.fileid.serializeUniqueFileId
 import org.telegram.messenger.DialogObject
 import org.telegram.messenger.FileLoader
 import org.telegram.messenger.FileLog

@@ -16,7 +16,7 @@ index 0000000..0000000 100644
              public void addSpan(GroupCreateSpan span) {
                  super.addSpan(span);
 +                if (!span.isFlag) {
-+                    span.setOnLongClickListener(v -> desu.inugram.helpers.profile.ProfileHelper.openProfileOrChat(GroupCreateActivity.this, v, span.getUid()));
++                    span.setOnLongClickListener(v -> xie.fa.gram.helpers.profile.ProfileHelper.openProfileOrChat(GroupCreateActivity.this, v, span.getUid()));
 +                }
                  updateButtonsVisibility();
              }

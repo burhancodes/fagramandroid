@@ -1,4 +1,4 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.os.Build
 import android.os.LocaleList
@@ -8,7 +8,7 @@ import android.view.textclassifier.TextClassifier
 import android.view.textclassifier.TextSelection
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 
 object TextClassifierHelper {
     private val ALLOWED_ENTITIES = setOf(

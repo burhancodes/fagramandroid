@@ -15,7 +15,7 @@ index 0000000..0000000 100644
      public final StoriesUtilities.AvatarStoryParams storyParams = new StoriesUtilities.AvatarStoryParams(false) {
          @Override
          public boolean isAvatarClickable(long dialogId, TLRPC.Chat chat, TLRPC.User user) {
-+            if (desu.inugram.helpers.dialogs.CommunityDisplayHelper.isInvisible()) {
++            if (xie.fa.gram.helpers.dialogs.CommunityDisplayHelper.isInvisible()) {
 +                return false;
 +            }
              return (chat != null && chat.linked_community_id != 0 || user != null && user.linked_community_id != 0) && !insideCommunityList;
@@ -23,8 +23,8 @@ index 0000000..0000000 100644
  
          @Override
          public boolean onAvatarClick(View view, long dialogId) {
-+            if (!desu.inugram.helpers.dialogs.CommunityDisplayHelper.isRegular()) {
-+                return desu.inugram.helpers.dialogs.CommunityDisplayHelper.handleAvatarClick(DialogCell.this, currentAccount, dialogId);
++            if (!xie.fa.gram.helpers.dialogs.CommunityDisplayHelper.isRegular()) {
++                return xie.fa.gram.helpers.dialogs.CommunityDisplayHelper.handleAvatarClick(DialogCell.this, currentAccount, dialogId);
 +            }
              if (parentFragment != null && !insideCommunityList) {
                  if (dialogId > 0) {
@@ -33,7 +33,7 @@ index 0000000..0000000 100644
              if (delegate == null) {
                  return;
              }
-+            if (desu.inugram.helpers.dialogs.CommunityDisplayHelper.handleAvatarLongPress(DialogCell.this, parentFragment, currentAccount)) {
++            if (xie.fa.gram.helpers.dialogs.CommunityDisplayHelper.handleAvatarLongPress(DialogCell.this, parentFragment, currentAccount)) {
 +                return;
 +            }
              delegate.showChatPreview(DialogCell.this);
@@ -44,7 +44,7 @@ index 0000000..0000000 100644
              }
  
 -            if (!insideCommunityList && (chat != null && chat.linked_community_id != 0 || user != null && user.linked_community_id != 0) && !drawCommunityAvatar && isDialogCell && !isDialogFolder()) {
-+            if (!insideCommunityList && !desu.inugram.helpers.dialogs.CommunityDisplayHelper.isInvisible() && (chat != null && chat.linked_community_id != 0 || user != null && user.linked_community_id != 0) && !drawCommunityAvatar && isDialogCell && !isDialogFolder()) {
++            if (!insideCommunityList && !xie.fa.gram.helpers.dialogs.CommunityDisplayHelper.isInvisible() && (chat != null && chat.linked_community_id != 0 || user != null && user.linked_community_id != 0) && !drawCommunityAvatar && isDialogCell && !isDialogFolder()) {
                  final float ccx = storyParams.originalAvatarRect.centerX() + dp(20.33f);
                  final float ccy = storyParams.originalAvatarRect.centerY() + dp(19);
                  if (communityArrowDrawable == null) {

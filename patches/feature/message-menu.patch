@@ -373,7 +373,7 @@ index 0000000..0000000 100644
  
          @Override
          protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-+            int inu_cols = desu.inugram.InuConfig.REACTIONS_IN_ROW.getValue();
++            int inu_cols = xie.fa.gram.InuConfig.REACTIONS_IN_ROW.getValue();
              int size;
              if (type == TYPE_STORY || type == TYPE_STORY_LIKES || type == TYPE_STICKER_SET_EMOJI) {
                  size = reactionsContainerLayout.getMeasuredWidth();
@@ -430,7 +430,7 @@ index 0000000..0000000 100644
              int n = (AndroidUtilities.displaySize.x - dp(36)) / dp(34);
 -            if (n > 7) {
 -                n = 7;
-+            int inu_max = desu.inugram.InuConfig.REACTIONS_IN_ROW.getValue() - 1;
++            int inu_max = xie.fa.gram.InuConfig.REACTIONS_IN_ROW.getValue() - 1;
 +            if (n > inu_max) {
 +                n = inu_max;
              }
@@ -464,7 +464,7 @@ index 0000000..0000000 100644
              protected void onMeasure(int widthSpec, int heightSpec) {
                  int height = MeasureSpec.getSize(heightSpec);
 -                int listViewTotalHeight = AndroidUtilities.dp(4) + AndroidUtilities.dp(50) * getAdapter().getItemCount();
-+                int inu_cellHeight = desu.inugram.InuConfig.CHAT_VIEWS_BOTTOM.getValue() ? 48 : 50;
++                int inu_cellHeight = xie.fa.gram.InuConfig.CHAT_VIEWS_BOTTOM.getValue() ? 48 : 50;
 +                int listViewTotalHeight = AndroidUtilities.dp(4) + AndroidUtilities.dp(inu_cellHeight) * getAdapter().getItemCount();
  
                  if (listViewTotalHeight > height) {
@@ -474,7 +474,7 @@ index 0000000..0000000 100644
              public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                  int p = parent.getChildAdapterPosition(view);
 -                if (p == users.size() - 1) {
-+                if (desu.inugram.InuConfig.CHAT_VIEWS_BOTTOM.getValue()) {
++                if (xie.fa.gram.InuConfig.CHAT_VIEWS_BOTTOM.getValue()) {
 +                    if (p == 0) {
 +                        outRect.top = AndroidUtilities.dp(4);
 +                    }
@@ -503,7 +503,7 @@ index 0000000..0000000 100644
          this.resourcesProvider = resourcesProvider;
          this.type = type;
 +        if (type == TYPE_REACTIONS || type == TYPE_EXPANDABLE_REACTIONS || type == TYPE_TAGS) {
-+            SPAN_COUNT_FOR_EMOJI = desu.inugram.InuConfig.REACTIONS_IN_ROW.getValue();
++            SPAN_COUNT_FOR_EMOJI = xie.fa.gram.InuConfig.REACTIONS_IN_ROW.getValue();
 +            SPAN_COUNT = SPAN_COUNT_FOR_EMOJI * 5;
 +        }
          this.includeEmpty = includeEmpty;

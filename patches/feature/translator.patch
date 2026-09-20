@@ -22,7 +22,7 @@ index 0000000..0000000 100644
          boolean replyUpdated = replyMessageObject != null && replyMessageObject != this && replyMessageObject.updateTranslation(force);
          TranslateController translateController = MessagesController.getInstance(currentAccount).getTranslateController();
 -        final TLRPC.TL_textWithEntities translatedText = messageOwner != null ? (messageOwner.voiceTranscriptionOpen ? messageOwner.translatedVoiceTranscription : messageOwner.translatedText) : null;
-+        final TLRPC.TL_textWithEntities translatedText = messageOwner != null ? (messageOwner.voiceTranscriptionOpen ? messageOwner.translatedVoiceTranscription : desu.inugram.helpers.translate.TranslateHelper.viewTranslatedText(this, messageOwner.translatedText)) : null;
++        final TLRPC.TL_textWithEntities translatedText = messageOwner != null ? (messageOwner.voiceTranscriptionOpen ? messageOwner.translatedVoiceTranscription : xie.fa.gram.helpers.translate.TranslateHelper.viewTranslatedText(this, messageOwner.translatedText)) : null;
          final TLRPC.TL_textWithEntities summarizedText = messageOwner != null && messageOwner.summarizedOpen ? messageOwner.summaryText : null;
          final TLRPC.TL_textWithEntities summarizeTranslatedText = messageOwner != null && messageOwner.summarizedOpen ? messageOwner.translatedSummaryText : null;
          if (
@@ -30,7 +30,7 @@ index 0000000..0000000 100644
              generateCaption();
              return replyUpdated || true;
          } else if (
-+            desu.inugram.helpers.translate.TranslateHelper.isManualTranslated(this) && messageOwner != null && (translatedText != null || messageOwner.translatedPoll != null) ||
++            xie.fa.gram.helpers.translate.TranslateHelper.isManualTranslated(this) && messageOwner != null && (translatedText != null || messageOwner.translatedPoll != null) ||
              messageOwner != null &&
              TranslateController.isTranslatable(this) &&
              translateController.isTranslatingDialog(getDialogId()) &&
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
          if (linkDescription == null) {
              if (getMedia(messageOwner) instanceof TLRPC.TL_messageMediaWebPage && getMedia(messageOwner).webpage instanceof TLRPC.TL_webPage && getMedia(messageOwner).webpage.description != null) {
 -                linkDescription = Spannable.Factory.getInstance().newSpannable(getMedia(messageOwner).webpage.description);
-+                linkDescription = Spannable.Factory.getInstance().newSpannable(desu.inugram.helpers.translate.TranslateHelper.viewWebPage(this, (TLRPC.TL_webPage) getMedia(messageOwner).webpage).description);
++                linkDescription = Spannable.Factory.getInstance().newSpannable(xie.fa.gram.helpers.translate.TranslateHelper.viewWebPage(this, (TLRPC.TL_webPage) getMedia(messageOwner).webpage).description);
                  String siteName = getMedia(messageOwner).webpage.site_name;
                  if (siteName != null) {
                      siteName = siteName.toLowerCase();
@@ -49,7 +49,7 @@ index 0000000..0000000 100644
              captionTranslated = true;
 -            text = messageOwner.translatedText.text;
 -            entities = messageOwner.translatedText.entities;
-+            TLRPC.TL_textWithEntities inu_tt = desu.inugram.helpers.translate.TranslateHelper.viewTranslatedText(this, messageOwner.translatedText);
++            TLRPC.TL_textWithEntities inu_tt = xie.fa.gram.helpers.translate.TranslateHelper.viewTranslatedText(this, messageOwner.translatedText);
 +            text = inu_tt.text;
 +            entities = inu_tt.entities;
          } else {
@@ -60,7 +60,7 @@ index 0000000..0000000 100644
                  return messageOwner.translatedVoiceTranscription != null ? messageOwner.translatedVoiceTranscription.entities : null;
              } else {
 -                return messageOwner.translatedText != null ? messageOwner.translatedText.entities : null;
-+                TLRPC.TL_textWithEntities inu_tt = desu.inugram.helpers.translate.TranslateHelper.viewTranslatedText(this, messageOwner.translatedText);
++                TLRPC.TL_textWithEntities inu_tt = xie.fa.gram.helpers.translate.TranslateHelper.viewTranslatedText(this, messageOwner.translatedText);
 +                return inu_tt != null ? inu_tt.entities : null;
              }
          }
@@ -73,7 +73,7 @@ index 0000000..0000000 100644
  import org.telegram.ui.LaunchActivity;
  import org.telegram.ui.PremiumPreviewFragment;
  import org.telegram.ui.RestrictedLanguagesSelectActivity;
-+import desu.inugram.helpers.translate.TranslateHelper;
++import xie.fa.gram.helpers.translate.TranslateHelper;
  
  import java.util.ArrayList;
  import java.util.Arrays;
@@ -81,7 +81,7 @@ index 0000000..0000000 100644
          if (messageObject == null || messageObject.messageOwner == null) {
              return;
          }
-+        if (desu.inugram.helpers.translate.TranslateHelper.shouldKeepTranslation(messageObject)) {
++        if (xie.fa.gram.helpers.translate.TranslateHelper.shouldKeepTranslation(messageObject)) {
 +            return;
 +        }
          final long dialogId = messageObject.getDialogId();
@@ -131,7 +131,7 @@ index 0000000..0000000 100644
              pages[index].setType(PageLayout.TYPE_ARTICLE);
              adapter.isRtl = webPage.cached_page.rtl;
              adapter.currentPage = webPage;
-+            desu.inugram.helpers.translate.InstantViewHelper.onPageOpened(this, webPage);
++            xie.fa.gram.helpers.translate.InstantViewHelper.onPageOpened(this, webPage);
  
              int numBlocks = 0;
              int count = webPage.cached_page.blocks.size();
@@ -140,7 +140,7 @@ index 0000000..0000000 100644
              return null;
          }
 +        if (richText == parentRichText) {
-+            CharSequence inu_cached = desu.inugram.helpers.translate.InstantViewHelper.lookupRich(parent instanceof ArticleViewer ? (ArticleViewer) parent : null, richText);
++            CharSequence inu_cached = xie.fa.gram.helpers.translate.InstantViewHelper.lookupRich(parent instanceof ArticleViewer ? (ArticleViewer) parent : null, richText);
 +            if (inu_cached != null) return inu_cached;
 +        }
          if (richText instanceof TL_iv.textFixed) {
@@ -151,7 +151,7 @@ index 0000000..0000000 100644
          CharSequence text;
          if (plainText != null) {
 -            text = plainText;
-+            text = desu.inugram.helpers.translate.InstantViewHelper.translate(parent instanceof ArticleViewer ? (ArticleViewer) parent : null, plainText);
++            text = xie.fa.gram.helpers.translate.InstantViewHelper.translate(parent instanceof ArticleViewer ? (ArticleViewer) parent : null, plainText);
          } else {
              text = getText(parent, parentAdapter, parentView, richText, richText, parentBlock, width);
          }
@@ -170,8 +170,8 @@ index 0000000..0000000 100644
              if (id == WebActionBar.search_item) {
                  actionBar.setHeight(currentHeaderHeight = dp(56));
                  actionBar.showSearch(true, true);
-+            } else if (id == desu.inugram.helpers.translate.InstantViewHelper.MENU_ITEM_ID) {
-+                desu.inugram.helpers.translate.InstantViewHelper.onClick(this);
++            } else if (id == xie.fa.gram.helpers.translate.InstantViewHelper.MENU_ITEM_ID) {
++                xie.fa.gram.helpers.translate.InstantViewHelper.onClick(this);
              } else if (id == WebActionBar.share_item) {
                  String url;
                  if (pages[0].isWeb()) {
@@ -211,7 +211,7 @@ index 0000000..0000000 100644
                  newReply != lastReplyMessage ||
 -                messageObject.translated != lastTranslated;
 +                messageObject.translated != lastTranslated ||
-+                desu.inugram.helpers.chat.ChatHelper.timeAdditionsHash(messageObject) != lastTimeAdditionsHash;
++                xie.fa.gram.helpers.chat.ChatHelper.timeAdditionsHash(messageObject) != lastTimeAdditionsHash;
          boolean groupChanged = groupedMessages != currentMessagesGroup;
          boolean pollChanged = false;
  
@@ -219,7 +219,7 @@ index 0000000..0000000 100644
              linkPreviewY = 0;
              factCheckY = 0;
              lastTranslated = messageObject.translated;
-+            lastTimeAdditionsHash = desu.inugram.helpers.chat.ChatHelper.timeAdditionsHash(messageObject);
++            lastTimeAdditionsHash = xie.fa.gram.helpers.chat.ChatHelper.timeAdditionsHash(messageObject);
              lastSendState = messageObject.messageOwner.send_state;
              lastDeleteDate = messageObject.messageOwner.destroyTime;
              lastViewsCount = messageObject.messageOwner.views;
@@ -228,7 +228,7 @@ index 0000000..0000000 100644
                          linkPreviewAbove = currentMessageObject.messageOwner != null && currentMessageObject.messageOwner.invert_media;
                      } else if (hasLinkPreview) {
 -                        TLRPC.TL_webPage webPage = (TLRPC.TL_webPage) webpage;
-+                        TLRPC.TL_webPage webPage = desu.inugram.helpers.translate.TranslateHelper.viewWebPage(messageObject, (TLRPC.TL_webPage) webpage);
++                        TLRPC.TL_webPage webPage = xie.fa.gram.helpers.translate.TranslateHelper.viewWebPage(messageObject, (TLRPC.TL_webPage) webpage);
                          site_name = webPage.site_name;
                          title = drawInstantViewType != 6 && drawInstantViewType != 7 ? webPage.title : null;
                          if (instantViewTypeIsGiftAuction != null) {
@@ -265,7 +265,7 @@ index 0000000..0000000 100644
  
              AndroidUtilities.rectTmp.set(linkX, linkPreviewY - dp(6), linkX + width, linkPreviewY + linkPreviewHeight + (drawInstantButtonInside && drawInstantView ? dp(42) : 0));
 -            linkLine.setLoading(loading);
-+            linkLine.setLoading(loading || desu.inugram.helpers.translate.TranslateHelper.isWebPageTranslating(currentMessageObject));
++            linkLine.setLoading(loading || xie.fa.gram.helpers.translate.TranslateHelper.isWebPageTranslating(currentMessageObject));
              float rad = (float) Math.floor(SharedConfig.bubbleRadius / (currentMessageObject.isSponsored() ? 2f : 3f));
              linkLine
                  .offsetEmoji(0, drawPhotoImageBefore ? (1f - isSmallImage()) * (dp(18) + photoImage.getImageHeight() + (siteNameLayout != null ? siteNameLayout.getLineBottom(siteNameLayout.getLineCount() - 1) : 0)) : 0)
@@ -283,7 +283,7 @@ index 0000000..0000000 100644
          final TranslateController translateController = MessagesController.getInstance(currentAccount).getTranslateController();
          final boolean translating = translateController.isTranslating(currentMessageObject);
 -        final boolean shouldTranslate = currentMessageObject != null && TranslateController.isTranslatable(currentMessageObject) && translateController.isTranslatingDialog(currentMessageObject.getDialogId());
-+        final boolean shouldTranslate = currentMessageObject != null && (TranslateController.isTranslatable(currentMessageObject) && translateController.isTranslatingDialog(currentMessageObject.getDialogId()) || desu.inugram.helpers.translate.TranslateHelper.isManualTranslated(currentMessageObject, currentMessagesGroup));
++        final boolean shouldTranslate = currentMessageObject != null && (TranslateController.isTranslatable(currentMessageObject) && translateController.isTranslatingDialog(currentMessageObject.getDialogId()) || xie.fa.gram.helpers.translate.TranslateHelper.isManualTranslated(currentMessageObject, currentMessagesGroup));
          final boolean shouldSummarize = currentMessageObject != null && currentMessageObject.messageOwner.summarizedOpen;
          final boolean isFinal = shouldTranslate == (currentMessageObject != null && currentMessageObject.translated) && shouldSummarize == (currentMessageObject != null && currentMessageObject.summarized);
          if (origin == !isFinal) {
@@ -292,7 +292,7 @@ index 0000000..0000000 100644
              timeString = AppGlobalConfig.getInstance(currentAccount).messagePrimaryEditedDate.get() ?
                  LocaleController.formatPmEditedDate(currentMessagesGroup != null ? currentMessagesGroup.getMaxEditDate() : messageObject.messageOwner.edit_date) :
 -                (getString(R.string.EditedMessage) + " " + LocaleController.getInstance().getFormatterDay().format((long) (messageObject.messageOwner.date) * 1000));
-+                ((desu.inugram.InuConfig.COMPACT_EDITED.getValue() ? "" : getString(R.string.EditedMessage) + " ") + LocaleController.getInstance().getFormatterDay().format((long) (messageObject.messageOwner.date) * 1000));
++                ((xie.fa.gram.InuConfig.COMPACT_EDITED.getValue() ? "" : getString(R.string.EditedMessage) + " ") + LocaleController.getInstance().getFormatterDay().format((long) (messageObject.messageOwner.date) * 1000));
          } else if (currentMessageObject.isSaved && currentMessageObject.messageOwner.fwd_from != null && (currentMessageObject.messageOwner.fwd_from.date != 0 || currentMessageObject.messageOwner.fwd_from.saved_date != 0)) {
              int date = currentMessageObject.messageOwner.fwd_from.saved_date;
              if (date == 0) {
@@ -301,8 +301,8 @@ index 0000000..0000000 100644
              }
          }
 -        timeTextWidth = timeWidth = (int) Math.ceil(Theme.chat_timePaint.measureText(currentTimeString, 0, currentTimeString == null ? 0 : currentTimeString.length()));
-+        currentTimeString = desu.inugram.helpers.chat.ChatHelper.timePrefix(currentMessageObject, currentTimeString, edited);
-+        timeTextWidth = timeWidth = (int) Math.ceil(Theme.chat_timePaint.measureText(currentTimeString, 0, currentTimeString == null ? 0 : currentTimeString.length())) + desu.inugram.helpers.chat.ChatHelper.extraTimeWidth(currentMessageObject, edited);
++        currentTimeString = xie.fa.gram.helpers.chat.ChatHelper.timePrefix(currentMessageObject, currentTimeString, edited);
++        timeTextWidth = timeWidth = (int) Math.ceil(Theme.chat_timePaint.measureText(currentTimeString, 0, currentTimeString == null ? 0 : currentTimeString.length())) + xie.fa.gram.helpers.chat.ChatHelper.extraTimeWidth(currentMessageObject, edited);
          if (currentMessageObject.scheduled && currentMessageObject.messageOwner.date == 0x7FFFFFFE || currentMessageObject.notime) {
              timeWidth -= dp(8);
          }
@@ -310,7 +310,7 @@ index 0000000..0000000 100644
          } else {
              signWidth = 0;
          }
-+        currentTimeString = desu.inugram.helpers.chat.ChatHelper.forwardsPrefix(currentMessageObject, currentTimeString);
++        currentTimeString = xie.fa.gram.helpers.chat.ChatHelper.forwardsPrefix(currentMessageObject, currentTimeString);
          if (messageObject.isAnyKindOfSticker() && InuConfig.STICKER_TIME_MODE.isHideTime()) {
              timeWidth -= timeTextWidth;
              timeTextWidth = 0;
@@ -322,7 +322,7 @@ index 0000000..0000000 100644
          touchSlop = ViewConfiguration.get(ApplicationLoader.applicationContext).getScaledTouchSlop();
          selectionPaint.setPathEffect(new CornerPathEffect(cornerRadius = dp(6)));
          selectionPath.setRectsUnionDiffDelta(1f);
-+        desu.inugram.helpers.translate.TranslateHelper.installSelectionTranslate(this);
++        xie.fa.gram.helpers.translate.TranslateHelper.installSelectionTranslate(this);
      }
  
      public void setInvalidateParent() {
@@ -392,7 +392,7 @@ index 0000000..0000000 100644
                  a--;
              }
  
-+            desu.inugram.helpers.translate.TranslateHelper.carryTranslation(old, messageObject);
++            xie.fa.gram.helpers.translate.TranslateHelper.carryTranslation(old, messageObject);
 +
              addToPolls(messageObject, old);
              if (old.richCheckboxEcho && messageObject.type == MessageObject.TYPE_ARTICLE && old.richLayout != null && messageObject.messageOwner != null) {
@@ -564,7 +564,7 @@ index 0000000..0000000 100644
 -                        } else {
 -                            cell.setVisibility(View.GONE);
 -                        }
-+                        desu.inugram.helpers.translate.TranslateHelper.setupTranslateMenuCell(this, cell, selectedObject, selectedObjectGroup, waitForLangDetection, onLangDetectionDone);
++                        xie.fa.gram.helpers.translate.TranslateHelper.setupTranslateMenuCell(this, cell, selectedObject, selectedObjectGroup, waitForLangDetection, onLangDetectionDone);
                      }
                  }
                  if (selectedObject != null && selectedObject.messageOwner != null && selectedObject.messageOwner.video_processing_pending) {
@@ -603,7 +603,7 @@ index 0000000..0000000 100644
                  o.add(R.drawable.msg_openin, getString(R.string.OpenInExternalApp), click.run(open_item));
                  o.add(R.drawable.msg_search, getString(R.string.Search), click.run(search_item));
                  o.addIf(!isLocal, R.drawable.msg_share, getString(R.string.ShareFile), click.run(share_item));
-+                desu.inugram.helpers.translate.InstantViewHelper.addMenuItem(o, click.run(desu.inugram.helpers.translate.InstantViewHelper.MENU_ITEM_ID), inu_getOwnerArticleViewer());
++                xie.fa.gram.helpers.translate.InstantViewHelper.addMenuItem(o, click.run(xie.fa.gram.helpers.translate.InstantViewHelper.MENU_ITEM_ID), inu_getOwnerArticleViewer());
                  o.add(R.drawable.msg_settings_old, getString(R.string.Settings), click.run(settings_item));
              } else if (menuType == ArticleViewer.PageLayout.TYPE_WEB) {
                  if (!isTonsite) {

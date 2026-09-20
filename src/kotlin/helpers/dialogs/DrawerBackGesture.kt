@@ -1,12 +1,12 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import android.os.Build
 import android.view.animation.DecelerateInterpolator
 import android.window.BackEvent
 import android.window.OnBackAnimationCallback
 import androidx.annotation.RequiresApi
-import desu.inugram.InuConfig
-import desu.inugram.ui.drawer.DrawerSwipeController
+import xie.fa.gram.InuConfig
+import xie.fa.gram.ui.drawer.DrawerSwipeController
 import org.telegram.ui.LaunchActivity
 
 /**

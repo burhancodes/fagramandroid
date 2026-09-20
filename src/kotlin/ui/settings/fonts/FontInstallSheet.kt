@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings.fonts
+package xie.fa.gram.ui.settings.fonts
 
 import android.content.Context
 import android.graphics.Typeface
@@ -11,8 +11,8 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
-import desu.inugram.helpers.font.FontLibrary
-import desu.inugram.helpers.font.SfntParser
+import xie.fa.gram.helpers.font.FontLibrary
+import xie.fa.gram.helpers.font.SfntParser
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController

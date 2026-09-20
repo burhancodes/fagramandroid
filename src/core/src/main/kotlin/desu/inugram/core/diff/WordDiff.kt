@@ -1,4 +1,4 @@
-package desu.inugram.core.diff
+package xie.fa.gram.core.diff
 
 enum class DiffKind { EQUAL, INSERT, DELETE }
 

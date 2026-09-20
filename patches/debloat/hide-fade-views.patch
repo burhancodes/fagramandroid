@@ -20,7 +20,7 @@ index 0000000..0000000 100644
  
              @Override
              public void draw(@NonNull Canvas canvas) {
-+                if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
++                if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
                  super.draw(canvas);
                  bottomFadeDrawable.draw(canvas);
              }
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
  
          @Override
          protected void onDraw(@NonNull Canvas canvas) {
-+            if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
++            if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
              gradientProtectionDrawable.setColor(Theme.multAlpha(Theme.getColor(bgKeyColor, resourcesProvider), 0.5f));
              gradientProtectionDrawable.draw(canvas);
              gradientProtectionDrawable2.setColor(Theme.multAlpha(Theme.getColor(bgKeyColor, resourcesProvider), 0.95f));
@@ -40,7 +40,7 @@ index 0000000..0000000 100644
  
      @Override
      protected void onDraw(@NonNull Canvas canvas) {
-+        if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
++        if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
          canvas.drawRect(0, 0, getMeasuredWidth(), fadeStart + fadeHeight, paint);
      }
  }
@@ -52,7 +52,7 @@ index 0000000..0000000 100644
          bottomFadeView = new View(context) {
              @Override
              public void draw(@NonNull Canvas canvas) {
-+                if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
++                if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
                  super.draw(canvas);
                  fadeDrawable.setBounds(0, getMeasuredHeight() - systemInsets.bottom - dp(72), getMeasuredWidth(), getMeasuredHeight());
                  fadeDrawable.draw(canvas);
@@ -64,7 +64,7 @@ index 0000000..0000000 100644
          fadeView = new View(context) {
              @Override
              protected void dispatchDraw(@NonNull Canvas canvas) {
-+                if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
++                if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
                  if (backgroundWithFadeDrawable != null) {
                      backgroundWithFadeDrawable.draw(canvas);
                  }
@@ -76,7 +76,7 @@ index 0000000..0000000 100644
  
      @Override
      protected void onDraw(@NonNull Canvas canvas) {
-+        if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
++        if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return;
          super.onDraw(canvas);
          fadeDrawableTop.draw(canvas);
          fadeDrawableBottom.draw(canvas);
@@ -92,7 +92,7 @@ index 0000000..0000000 100644
 +        tabsViewWrapper = new FrameLayout(context) {
 +            @Override
 +            public boolean onTouchEvent(android.view.MotionEvent event) {
-+                if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) return false;
++                if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) return false;
 +                return super.onTouchEvent(event);
 +            }
 +        };
@@ -103,7 +103,7 @@ index 0000000..0000000 100644
          if (viewPager == null || fadeView == null || MainTabsHelper.isHidden()) {
              return;
          }
-+        if (desu.inugram.helpers.chat.ChatHelper.shouldHideFadeView()) {
++        if (xie.fa.gram.helpers.chat.ChatHelper.shouldHideFadeView()) {
 +            fadeView.setVisibility(View.GONE);
 +            return;
 +        }

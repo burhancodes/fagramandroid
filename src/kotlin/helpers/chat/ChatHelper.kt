@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.Manifest
 import android.content.Context
@@ -23,18 +23,18 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.core.content.edit
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.StickerDownloadHelper
-import desu.inugram.helpers.WebAppHelper
-import desu.inugram.helpers.cloud.SettingsBackupHelper
-import desu.inugram.helpers.font.FontImportHelper
-import desu.inugram.helpers.media.MediaSendDebugHelper
-import desu.inugram.helpers.menu.MessageMenuConfig
-import desu.inugram.helpers.menu.reorderByMenu
-import desu.inugram.helpers.translate.TranslateHelper
-import desu.inugram.ui.MessageDetailsActivity
-import desu.inugram.ui.showInputDialog
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.StickerDownloadHelper
+import xie.fa.gram.helpers.WebAppHelper
+import xie.fa.gram.helpers.cloud.SettingsBackupHelper
+import xie.fa.gram.helpers.font.FontImportHelper
+import xie.fa.gram.helpers.media.MediaSendDebugHelper
+import xie.fa.gram.helpers.menu.MessageMenuConfig
+import xie.fa.gram.helpers.menu.reorderByMenu
+import xie.fa.gram.helpers.translate.TranslateHelper
+import xie.fa.gram.ui.MessageDetailsActivity
+import xie.fa.gram.ui.showInputDialog
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.ChatObject

@@ -12,7 +12,7 @@ export const seriesFile = join(rootDir, 'series')
 export const upstreamCommitFile = join(rootDir, 'upstream-commit')
 export const assetsDir = join(rootDir, 'src/res/assets')
 
-export const debugAppId = 'desu.inugram.beta'
+export const debugAppId = 'xie.fa.gram.beta'
 
 export interface ForkSyncFile {
   source: string
@@ -25,12 +25,12 @@ export const forkSyncFiles: ForkSyncFile[] = [
   // code
   {
     source: 'src/kotlin',
-    target: 'TMessagesProj/src/main/kotlin/desu/inugram',
+    target: 'TMessagesProj/src/main/kotlin/xie/fa/gram',
     directory: true,
   },
   {
     source: 'src/kotlin-app',
-    target: 'TMessagesProj_App/src/main/kotlin/desu/inugram',
+    target: 'TMessagesProj_App/src/main/kotlin/xie/fa/gram',
     directory: true,
   },
   {

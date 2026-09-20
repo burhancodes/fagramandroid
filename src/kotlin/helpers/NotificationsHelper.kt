@@ -1,12 +1,12 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.content.Context
 import androidx.collection.LongSparseArray
 import androidx.core.content.edit
-import desu.inugram.InuConfig
-import desu.inugram.helpers.chat.BlockedMessagesHelper
-import desu.inugram.helpers.security.ParanoiaHelper
-import desu.inugram.helpers.security.PasscodeHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.chat.BlockedMessagesHelper
+import xie.fa.gram.helpers.security.ParanoiaHelper
+import xie.fa.gram.helpers.security.PasscodeHelper
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.MessageObject
 import org.telegram.messenger.R

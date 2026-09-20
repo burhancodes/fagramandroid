@@ -631,7 +631,7 @@
     <string name="InuConfirmReactionText">Отправить реакцию %1$s в **%2$s**?</string>
     <string name="InuNotificationIcon">Иконка уведомления</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">Inugram</string>
+    <string name="InuNotificationIconInugram">FAgram</string>
     <string name="InuNothingToTranslate">Нет сообщений для перевода.</string>
     <string name="InuAlreadyInTargetLanguage">Это сообщение уже на %1$s.</string>
     <string name="InuVoiceRecorder">Запись голоса / кружочков</string>

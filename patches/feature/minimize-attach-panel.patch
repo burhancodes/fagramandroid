@@ -23,7 +23,7 @@ index 0000000..0000000 100644
 +            chatAttachAlert.init();
 +            chatAttachAlert.getCommentView().setText(chatActivityEnterView.getFieldText());
 +        }
-+        desu.inugram.helpers.chat.AttachMinimizeHelper.syncBadge(this);
++        xie.fa.gram.helpers.chat.AttachMinimizeHelper.syncBadge(this);
          chatAttachAlert.parentThemeDelegate = themeDelegate;
          showDialog(chatAttachAlert);
      }
@@ -31,7 +31,7 @@ index 0000000..0000000 100644
      public void onResume() {
          super.onResume();
          checkShowBlur(false);
-+        desu.inugram.helpers.chat.AttachMinimizeHelper.syncBadge(this);
++        xie.fa.gram.helpers.chat.AttachMinimizeHelper.syncBadge(this);
          activityResumeTime = System.currentTimeMillis();
          if (openImport && getSendMessagesHelper().getImportingHistory(dialog_id) != null) {
              ImportingAlert alert = new ImportingAlert(getParentActivity(), null, this, themeDelegate);
@@ -55,7 +55,7 @@ index 0000000..0000000 100644
 +                @Override
 +                protected void onDraw(Canvas canvas) {
 +                    super.onDraw(canvas);
-+                    desu.inugram.helpers.chat.AttachMinimizeHelper.drawBadge(ChatActivityEnterView.this, this, canvas);
++                    xie.fa.gram.helpers.chat.AttachMinimizeHelper.drawBadge(ChatActivityEnterView.this, this, canvas);
 +                }
              };
              attachButton.setScaleType(ImageView.ScaleType.CENTER);
@@ -119,7 +119,7 @@ index 0000000..0000000 100644
 +                    inu_preservedGeneration = inu_selectionGeneration;
 +                    allowPassConfirmationAlert = true;
 +                    dismiss();
-+                    desu.inugram.helpers.chat.AttachMinimizeHelper.syncBadge((ChatActivity) this.baseFragment);
++                    xie.fa.gram.helpers.chat.AttachMinimizeHelper.syncBadge((ChatActivity) this.baseFragment);
 +                });
 +            }
 +            AlertDialog dialog = builder.create();

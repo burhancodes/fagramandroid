@@ -1,4 +1,4 @@
-package desu.inugram.ui
+package xie.fa.gram.ui
 
 import android.content.Context
 import android.content.Intent
@@ -10,11 +10,11 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.FileProvider
-import desu.inugram.core.fileid.FileType
-import desu.inugram.helpers.FileIdUtils
-import desu.inugram.helpers.FileIds
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.WebAppHelper
+import xie.fa.gram.core.fileid.FileType
+import xie.fa.gram.helpers.FileIdUtils
+import xie.fa.gram.helpers.FileIds
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.WebAppHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.ChatObject

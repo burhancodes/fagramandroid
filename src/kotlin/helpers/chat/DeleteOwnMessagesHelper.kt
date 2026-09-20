@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.content.DialogInterface
 import android.content.res.ColorStateList

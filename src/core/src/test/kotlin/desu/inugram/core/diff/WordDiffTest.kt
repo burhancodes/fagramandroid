@@ -1,4 +1,4 @@
-package desu.inugram.core.diff
+package xie.fa.gram.core.diff
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

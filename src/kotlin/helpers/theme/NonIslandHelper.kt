@@ -1,4 +1,4 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.graphics.Canvas
 import android.graphics.Rect
@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
-import desu.inugram.InuConfig
-import desu.inugram.ui.BlurBehindHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.ui.BlurBehindHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.R

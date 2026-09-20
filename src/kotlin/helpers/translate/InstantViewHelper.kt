@@ -1,10 +1,10 @@
-package desu.inugram.helpers.translate
+package xie.fa.gram.helpers.translate
 
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.URLSpan
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LanguageDetector
 import org.telegram.messenger.LocaleController

@@ -164,7 +164,7 @@ index 0000000..0000000 100644
          if (outputMimeType.equals("video/hevc") && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
 -            String encoderName = SharedConfig.findGoodHevcEncoder();
 +            String encoderName = inu_preferHevc
-+                    ? desu.inugram.helpers.media.OriginalVideoQualityHelper.findHevcEncoderName(width, height, framerate)
++                    ? xie.fa.gram.helpers.media.OriginalVideoQualityHelper.findHevcEncoderName(width, height, framerate)
 +                    : SharedConfig.findGoodHevcEncoder();
              if (encoderName != null) {
                  encoder = MediaCodec.createByCodecName(encoderName);
@@ -228,7 +228,7 @@ index 0000000..0000000 100644
          qualityChooseView.setVisibility(View.INVISIBLE);
          qualityChooseView.setBackgroundColor(0x7f000000);
          containerView.addView(qualityChooseView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 70, Gravity.LEFT | Gravity.BOTTOM, 0, 0, 0, 48));
-+        desu.inugram.helpers.media.OriginalVideoQualityHelper.createRow(this, qualityChooseView, resourcesProvider);
++        xie.fa.gram.helpers.media.OriginalVideoQualityHelper.createRow(this, qualityChooseView, resourcesProvider);
  
          Paint pickerBackgroundPaint = new Paint();
          pickerBackgroundPaint.setColor(0x7f000000);
@@ -236,7 +236,7 @@ index 0000000..0000000 100644
          compressItem.setBackground(Theme.createInsetRoundRectDrawable(0x10FFFFFF, dp(22), dp(4), dp(6)));
  
          selectedCompression = selectCompression();
-+        if (inu_originalVideoQualityAvailable() && desu.inugram.helpers.media.OriginalVideoQualityHelper.loadPref()) compressItem.inu_setOriginalState(); else
++        if (inu_originalVideoQualityAvailable() && xie.fa.gram.helpers.media.OriginalVideoQualityHelper.loadPref()) compressItem.inu_setOriginalState(); else
          compressItem.setState(videoConvertSupported && compressionsCount > 1, muteVideo, Math.min(resultWidth, resultHeight));
          compressItem.setContentDescription(getString("AccDescrVideoQuality", R.string.AccDescrVideoQuality));
          itemsLayout.addView(compressItem, LayoutHelper.createLinear(48, 48));
@@ -296,11 +296,11 @@ index 0000000..0000000 100644
 +    }
 +
 +    private boolean inu_canSendVideoAsIs() {
-+        return inu_isOriginalVideoQuality() && desu.inugram.helpers.media.OriginalVideoQualityHelper.canSendAsIs(currentPathObject, inu_videoCodecMime);
++        return inu_isOriginalVideoQuality() && xie.fa.gram.helpers.media.OriginalVideoQualityHelper.canSendAsIs(currentPathObject, inu_videoCodecMime);
 +    }
 +
 +    private boolean inu_encodesToHevc() {
-+        return inu_isOriginalVideoQuality() && desu.inugram.helpers.media.OriginalVideoQualityHelper.isHevc(inu_videoCodecMime);
++        return inu_isOriginalVideoQuality() && xie.fa.gram.helpers.media.OriginalVideoQualityHelper.isHevc(inu_videoCodecMime);
 +    }
  
      private int rotationValue;
@@ -332,7 +332,7 @@ index 0000000..0000000 100644
          SharedPreferences.Editor editor = preferences.edit();
          editor.putInt(String.format("compress_video_%d", compressionsCount), selectedCompression);
          editor.commit();
-+        desu.inugram.helpers.media.OriginalVideoQualityHelper.savePref(inu_originalQualitySelected);
++        xie.fa.gram.helpers.media.OriginalVideoQualityHelper.savePref(inu_originalQualitySelected);
          updateWidthHeightBitrateForCompression();
          updateVideoInfo();
          if (request) {
@@ -429,7 +429,7 @@ index 0000000..0000000 100644
          videoTimelineView.setVideoPath(videoPath, videoPathOffset, start, end, livePhotoTimestampUs);
          videoPreviewMessageObject = null;
          muteVideo = muted || sendPhotoType == SELECT_TYPE_AVATAR;
-+        inu_originalQualitySelected = originalQuality || compressQuality == -1 && desu.inugram.helpers.media.OriginalVideoQualityHelper.loadPref();
++        inu_originalQualitySelected = originalQuality || compressQuality == -1 && xie.fa.gram.helpers.media.OriginalVideoQualityHelper.loadPref();
 +        if (!centerImageIsLivePhoto && inu_isOriginalVideoQuality()) compressItem.inu_setOriginalState();
  
          compressionsCount = -1;
@@ -438,7 +438,7 @@ index 0000000..0000000 100644
                      resultHeight = originalHeight = params[AnimatedFileInfo.PARAM_NUM_HEIGHT];
                      updateCompressionsCount(originalWidth, originalHeight);
                      selectedCompression = compressQuality == -1 ? selectCompression() : compressQuality;
-+                    inu_videoCodecMime = desu.inugram.helpers.media.OriginalVideoQualityHelper.getVideoCodecMime(videoPath);
++                    inu_videoCodecMime = xie.fa.gram.helpers.media.OriginalVideoQualityHelper.getVideoCodecMime(videoPath);
                      prepareRealEncoderBitrate();
                      isH264Video = MediaController.isH264Video(videoPath);
                  }

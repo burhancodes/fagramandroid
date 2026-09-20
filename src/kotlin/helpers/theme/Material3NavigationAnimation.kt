@@ -1,4 +1,4 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -18,7 +18,7 @@ import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import androidx.annotation.RequiresApi
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities.dpf2
 import org.telegram.ui.ActionBar.ActionBarLayout
 import org.telegram.ui.ActionBar.BaseFragment

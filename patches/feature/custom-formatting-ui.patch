@@ -19,7 +19,7 @@ index 0000000..0000000 100644
              extendActionMode(floatingActionMode, floatingActionMode.getMenu());
 -            floatingActionMode.invalidate();
 -            getViewTreeObserver().addOnPreDrawListener(floatingToolbarPreDrawListener);
-+            if (!desu.inugram.ui.FormattingPopup.tryHandle(this, floatingActionMode.getMenu())) {
++            if (!xie.fa.gram.ui.FormattingPopup.tryHandle(this, floatingActionMode.getMenu())) {
 +                floatingActionMode.invalidate();
 +                getViewTreeObserver().addOnPreDrawListener(floatingToolbarPreDrawListener);
 +            }

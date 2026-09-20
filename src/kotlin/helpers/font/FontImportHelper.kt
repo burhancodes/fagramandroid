@@ -1,6 +1,6 @@
-package desu.inugram.helpers.font
+package xie.fa.gram.helpers.font
 
-import desu.inugram.ui.settings.fonts.FontInstallSheet
+import xie.fa.gram.ui.settings.fonts.FontInstallSheet
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController

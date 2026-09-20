@@ -1,9 +1,9 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import androidx.recyclerview.widget.RecyclerView
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.MessageObject
 import org.telegram.ui.Cells.ChatMessageCell

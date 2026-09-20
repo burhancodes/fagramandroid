@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                      }
                  }
              }
-+            if (desu.inugram.InuConfig.SUGGEST_CUSTOM_EMOJI_AFTER.getValue()) {
++            if (xie.fa.gram.InuConfig.SUGGEST_CUSTOM_EMOJI_AFTER.getValue()) {
 +            result.addAll(animatedResult);
 +            } else {
              result.addAll(0, animatedResult);

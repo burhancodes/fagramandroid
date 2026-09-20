@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.content.Context
 import android.graphics.Canvas
@@ -13,7 +13,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

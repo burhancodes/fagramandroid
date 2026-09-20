@@ -16,7 +16,7 @@ index 0000000..0000000 100644
  
      public Boolean isSensitiveCached;
      public boolean isSensitive() {
-+        if (desu.inugram.InuConfig.DISABLE_SENSITIVE.getValue()) return false;
++        if (xie.fa.gram.InuConfig.DISABLE_SENSITIVE.getValue()) return false;
          if (isSensitiveCached != null) return isSensitiveCached;
          if (messageOwner == null) return false;
          if (!canBeSensitive()) return false;
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
      }
  
      public String getRestrictionReason(ArrayList<TLRPC.RestrictionReason> reasons) {
-+        if (desu.inugram.InuConfig.DISABLE_SENSITIVE.getValue()) return null;
++        if (xie.fa.gram.InuConfig.DISABLE_SENSITIVE.getValue()) return null;
          if (reasons.isEmpty()) {
              return null;
          }
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
      }
  
      public boolean isSensitive(ArrayList<TLRPC.RestrictionReason> reasons) {
-+        if (desu.inugram.InuConfig.DISABLE_SENSITIVE.getValue()) return false;
++        if (xie.fa.gram.InuConfig.DISABLE_SENSITIVE.getValue()) return false;
          if (reasons == null || reasons.isEmpty()) {
              return false;
          }

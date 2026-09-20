@@ -17,7 +17,7 @@ index 0000000..0000000 100644
                      req.flags |= 8;
                  }
 -                req.filter = new TLRPC.TL_inputMessagesFilterEmpty();
-+                req.filter = desu.inugram.helpers.search.SearchFilterHelper.filterForGuid(guid);
++                req.filter = xie.fa.gram.helpers.search.SearchFilterHelper.filterForGuid(guid);
                  mergeReqId = getConnectionsManager().sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
                      if (lastMergeDialogId == mergeDialogId) {
                          mergeReqId = 0;
@@ -26,7 +26,7 @@ index 0000000..0000000 100644
          lastReplyMessageId = replyMessageId;
          lastReaction = reaction;
 -        req.limit = 21;
-+        req.limit = desu.inugram.helpers.search.SearchFilterHelper.isOnlyMatchesForGuid(guid) ? 100 : 21;
++        req.limit = xie.fa.gram.helpers.search.SearchFilterHelper.isOnlyMatchesForGuid(guid) ? 100 : 21;
          req.q = query != null ? query : "";
          req.offset_id = max_id;
          if (user != null) {
@@ -35,7 +35,7 @@ index 0000000..0000000 100644
              req.flags |= 8;
          }
 -        req.filter = new TLRPC.TL_inputMessagesFilterEmpty();
-+        req.filter = desu.inugram.helpers.search.SearchFilterHelper.filterForGuid(guid);
++        req.filter = xie.fa.gram.helpers.search.SearchFilterHelper.filterForGuid(guid);
          lastSearchQuery = query;
          long queryWithDialogFinal = queryWithDialog;
          String finalQuery = query;
@@ -44,7 +44,7 @@ index 0000000..0000000 100644
                              }
                          };
 -                        if (isSaved) {
-+                        if (isSaved || desu.inugram.helpers.search.SearchFilterHelper.isOnlyMatchesForGuid(guid)) {
++                        if (isSaved || xie.fa.gram.helpers.search.SearchFilterHelper.isOnlyMatchesForGuid(guid)) {
                              loadReplyMessagesForMessages(messageObjects, dialogId, 0, lastReplyMessageId, done, guid, null);
                          } else {
                              done.run();
@@ -65,7 +65,7 @@ index 0000000..0000000 100644
      private FrameLayout searchContainer;
      private ImageView searchCalendarButton;
      private ImageView searchUserButton;
-+    private desu.inugram.helpers.search.SearchFilterHelper inu_searchFilter;
++    private xie.fa.gram.helpers.search.SearchFilterHelper inu_searchFilter;
      private AnimatedTextView searchCountText;
      private AnimatedTextView searchExpandList;
      private AnimatedTextView searchOtherButton;
@@ -143,7 +143,7 @@ index 0000000..0000000 100644
              searchCalendarButton.setContentDescription(LocaleController.getString(R.string.JumpToDate));
          }
 +
-+        inu_searchFilter = new desu.inugram.helpers.search.SearchFilterHelper(this, searchContainer, searchUserButton != null ? 93.34f : 48f);
++        inu_searchFilter = new xie.fa.gram.helpers.search.SearchFilterHelper(this, searchContainer, searchUserButton != null ? 93.34f : 48f);
      }
  
      private void showSearchShowOther(boolean show) {

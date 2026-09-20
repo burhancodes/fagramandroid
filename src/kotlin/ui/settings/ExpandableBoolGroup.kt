@@ -1,8 +1,8 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.Utilities
 import org.telegram.ui.ActionBar.Theme

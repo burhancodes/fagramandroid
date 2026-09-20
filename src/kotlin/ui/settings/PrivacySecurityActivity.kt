@@ -1,13 +1,13 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.security.BiometricHelper
-import desu.inugram.helpers.security.ParanoiaHelper
-import desu.inugram.helpers.security.PasscodeHelper
-import desu.inugram.helpers.UrlCleanerHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.security.BiometricHelper
+import xie.fa.gram.helpers.security.ParanoiaHelper
+import xie.fa.gram.helpers.security.PasscodeHelper
+import xie.fa.gram.helpers.UrlCleanerHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

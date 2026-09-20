@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.content.Context
 import android.graphics.Canvas
@@ -15,12 +15,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import desu.inugram.InuConfig
-import desu.inugram.helpers.CrashReporter
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.LogsHelper
-import desu.inugram.helpers.SystemInfo
-import desu.inugram.helpers.update.UpdateHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.CrashReporter
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.LogsHelper
+import xie.fa.gram.helpers.SystemInfo
+import xie.fa.gram.helpers.update.UpdateHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader

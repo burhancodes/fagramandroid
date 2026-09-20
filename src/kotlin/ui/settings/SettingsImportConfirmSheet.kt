@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.content.Context
 import android.graphics.Color

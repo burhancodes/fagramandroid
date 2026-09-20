@@ -1,21 +1,21 @@
-package desu.inugram
+package xie.fa.gram
 
 import android.content.Intent
-import desu.inugram.helpers.security.ParanoiaHelper
-import desu.inugram.ui.settings.AnnoyancesSettingsActivity
-import desu.inugram.ui.settings.AppearanceSettingsActivity
-import desu.inugram.ui.settings.BackupSettingsActivity
-import desu.inugram.ui.settings.BehaviorSettingsActivity
-import desu.inugram.ui.settings.ChatsSettingsActivity
-import desu.inugram.ui.settings.DialogsSettingsActivity
-import desu.inugram.ui.settings.InuSettingsActivity
-import desu.inugram.ui.settings.MessagesSettingsActivity
-import desu.inugram.ui.settings.PrivacySecurityActivity
-import desu.inugram.ui.settings.SettingsPageActivity
-import desu.inugram.ui.settings.TranslatorSettingsActivity
-import desu.inugram.ui.settings.UserProfileSettingsActivity
-import desu.inugram.ui.settings.fonts.FontStackActivity
-import desu.inugram.ui.settings.fonts.FontsSettingsActivity
+import xie.fa.gram.helpers.security.ParanoiaHelper
+import xie.fa.gram.ui.settings.AnnoyancesSettingsActivity
+import xie.fa.gram.ui.settings.AppearanceSettingsActivity
+import xie.fa.gram.ui.settings.BackupSettingsActivity
+import xie.fa.gram.ui.settings.BehaviorSettingsActivity
+import xie.fa.gram.ui.settings.ChatsSettingsActivity
+import xie.fa.gram.ui.settings.DialogsSettingsActivity
+import xie.fa.gram.ui.settings.InuSettingsActivity
+import xie.fa.gram.ui.settings.MessagesSettingsActivity
+import xie.fa.gram.ui.settings.PrivacySecurityActivity
+import xie.fa.gram.ui.settings.SettingsPageActivity
+import xie.fa.gram.ui.settings.TranslatorSettingsActivity
+import xie.fa.gram.ui.settings.UserProfileSettingsActivity
+import xie.fa.gram.ui.settings.fonts.FontStackActivity
+import xie.fa.gram.ui.settings.fonts.FontsSettingsActivity
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.BaseFragment
@@ -77,7 +77,7 @@ object SearchRegistry {
     }
 
     fun deepLinkForItemId(itemId: Int): String? =
-        slugByItemId[itemId]?.let { "tg://settings/inu/$it" }
+        slugByItemId[itemId]?.let { "tg://settings/inu/fa/$it" }
 
     @JvmStatic
     fun extendSearchArray(
@@ -95,7 +95,7 @@ object SearchRegistry {
                     pageTitle,
                     LocaleController.getString(R.string.InuSettings),
                     page.iconRes,
-                ) { f.presentFragment(page.factory()) }.withLink("tg://settings/inu/${page.slug}")
+                ) { f.presentFragment(page.factory()) }.withLink("tg://settings/inu/fa/${page.slug}")
             )
             for (entry in page.entries) {
                 val title = LocaleController.getString(entry.titleRes)
@@ -107,7 +107,7 @@ object SearchRegistry {
                         page.iconRes,
                     ) {
                         f.presentFragment(page.factory().withHighlight(entry.itemId))
-                    }.withLink("tg://settings/inu/${entry.slug}")
+                    }.withLink("tg://settings/inu/fa/${entry.slug}")
                 )
             }
         }
@@ -129,7 +129,9 @@ object SearchRegistry {
             else -> return false
         }
         if (segs.size < 2 || segs[0] != "inu") return false
-        val target = targetBySlug[segs[1]] ?: return false
+        val slugIndex = if (segs.size > 2 && segs[1] == "fa") 2 else 1
+        if (segs.size < slugIndex + 1) return false
+        val target = targetBySlug[segs[slugIndex]] ?: return false
         val fragment = target.page.factory()
         target.entry?.let { fragment.withHighlight(it.itemId) }
         activity.actionBarLayout.presentFragment(fragment)

@@ -16,7 +16,7 @@ index 0000000..0000000 100644
          @Override
          public boolean isLivePhoto() {
              if (isVideo || parsedXmp) return isLivePhoto;
-+            if (desu.inugram.InuConfig.DISABLE_MOTION_PHOTOS.getValue()) return false;
++            if (xie.fa.gram.InuConfig.DISABLE_MOTION_PHOTOS.getValue()) return false;
              parsedXmp = true;
              final long start = System.currentTimeMillis();
              try {
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
          if (getMedia(message) instanceof TLRPC.TL_messageMediaWebPage) {
              return isVideoDocument(getMedia(message).webpage.document);
          }
-+        if (getMedia(message) instanceof TLRPC.TL_messageMediaPhoto && getMedia(message).live_photo && desu.inugram.InuConfig.DISABLE_MOTION_PHOTOS.getValue()) {
++        if (getMedia(message) instanceof TLRPC.TL_messageMediaPhoto && getMedia(message).live_photo && xie.fa.gram.InuConfig.DISABLE_MOTION_PHOTOS.getValue()) {
 +            return false;
 +        }
          return getMedia(message) != null && isVideoDocument(getMedia(message).document);
@@ -40,7 +40,7 @@ index 0000000..0000000 100644
      public boolean isDocument() {
 -        return getDocument() != null && !isVideo() && !isMusic() && !isVoice() && !isAnyKindOfSticker();
 +        return getDocument() != null && !isVideo() && !isMusic() && !isVoice() && !isAnyKindOfSticker()
-+            && !(desu.inugram.InuConfig.DISABLE_MOTION_PHOTOS.getValue() && getMedia(this) != null && getMedia(this).live_photo);
++            && !(xie.fa.gram.InuConfig.DISABLE_MOTION_PHOTOS.getValue() && getMedia(this) != null && getMedia(this).live_photo);
      }
  
      public boolean isVoice() {
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
      }
  
      public boolean isLivePhoto() {
-+        if (desu.inugram.InuConfig.DISABLE_MOTION_PHOTOS.getValue()) return false;
++        if (xie.fa.gram.InuConfig.DISABLE_MOTION_PHOTOS.getValue()) return false;
          final TLRPC.MessageMedia media = getMedia(this);
          return media != null && media.live_photo;
      }

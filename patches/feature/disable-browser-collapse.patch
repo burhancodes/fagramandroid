@@ -15,7 +15,7 @@ index 0000000..0000000 100644
              });
              swipeContainer.setTopActionBarOffsetY(dp(sheet != null && !sheet.halfSize() ? 0 : 56) + AndroidUtilities.statusBarHeight);
  //            swipeContainer.setIsKeyboardVisible(obj -> windowView.getKeyboardHeight() >= dp(20));
-+            if (desu.inugram.InuConfig.DISABLE_BROWSER_SWIPE_COLLAPSE.getValue()) {
++            if (xie.fa.gram.InuConfig.DISABLE_BROWSER_SWIPE_COLLAPSE.getValue()) {
 +                swipeContainer.setAllowSwipes(false);
 +            }
              addView(swipeContainer, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));

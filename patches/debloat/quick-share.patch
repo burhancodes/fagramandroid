@@ -17,7 +17,7 @@ index 0000000..0000000 100644
                      pressedSideButton != SIDE_BUTTON_SPONSORED_MORE &&
 -                    pressedSideButton != 3 && pressedSideButton != 2
 +                    pressedSideButton != 3 && pressedSideButton != 2 &&
-+                    !desu.inugram.InuConfig.DISABLE_QUICK_SHARE.getValue()
++                    !xie.fa.gram.InuConfig.DISABLE_QUICK_SHARE.getValue()
                  ) {
                      delegate.didQuickShareStart(this, lastTouchX, lastTouchY);
                      sideButtonPressed = false;

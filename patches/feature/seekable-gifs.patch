@@ -16,7 +16,7 @@ index 0000000..0000000 100644
                  updatePlayerState(videoPlayer.getPlayWhenReady(), videoPlayer.getPlaybackState());
              } else {
 -                videoPlayer = new VideoPlayer() {
-+                final boolean inu_gifAsVideo = desu.inugram.helpers.media.PhotoViewerHelper.gifAsVideo(currentMessageObject);
++                final boolean inu_gifAsVideo = xie.fa.gram.helpers.media.PhotoViewerHelper.gifAsVideo(currentMessageObject);
 +                videoPlayer = new VideoPlayer(!inu_gifAsVideo, inu_gifAsVideo) {
                      @Override
                      public void play() {
@@ -26,7 +26,7 @@ index 0000000..0000000 100644
              videoPlayerSeekbar.setBufferedProgress(0);
  
 -            if (currentMessageObject != null) {
-+            if (currentMessageObject != null && !desu.inugram.helpers.media.PhotoViewerHelper.gifAsVideo(currentMessageObject)) {
++            if (currentMessageObject != null && !xie.fa.gram.helpers.media.PhotoViewerHelper.gifAsVideo(currentMessageObject)) {
                  final int duration = (int) currentMessageObject.getDuration();
                  final String name = currentMessageObject.getFileNameFast();
                  if (!TextUtils.isEmpty(name)) {
@@ -35,7 +35,7 @@ index 0000000..0000000 100644
              }
          }
 -        if (currentMessageObject != null && currentMessageObject.isVideo() || currentBotInlineResult != null && (currentBotInlineResult.type.equals("video") || MessageObject.isVideoDocument(currentBotInlineResult.document)) || (pageBlocksAdapter != null && (pageBlocksAdapter.isVideo(index) || pageBlocksAdapter.isHardwarePlayer(index))) || (sendPhotoType == SELECT_TYPE_NO_SELECT && ((MediaController.PhotoEntry)imagesArrLocals.get(index)).isVideo)) {
-+        if (currentMessageObject != null && currentMessageObject.isVideo() || desu.inugram.helpers.media.PhotoViewerHelper.gifAsVideo(currentMessageObject) || currentBotInlineResult != null && (currentBotInlineResult.type.equals("video") || MessageObject.isVideoDocument(currentBotInlineResult.document)) || (pageBlocksAdapter != null && (pageBlocksAdapter.isVideo(index) || pageBlocksAdapter.isHardwarePlayer(index))) || (sendPhotoType == SELECT_TYPE_NO_SELECT && ((MediaController.PhotoEntry)imagesArrLocals.get(index)).isVideo)) {
++        if (currentMessageObject != null && currentMessageObject.isVideo() || xie.fa.gram.helpers.media.PhotoViewerHelper.gifAsVideo(currentMessageObject) || currentBotInlineResult != null && (currentBotInlineResult.type.equals("video") || MessageObject.isVideoDocument(currentBotInlineResult.document)) || (pageBlocksAdapter != null && (pageBlocksAdapter.isVideo(index) || pageBlocksAdapter.isHardwarePlayer(index))) || (sendPhotoType == SELECT_TYPE_NO_SELECT && ((MediaController.PhotoEntry)imagesArrLocals.get(index)).isVideo)) {
              playerAutoStarted = true;
              onActionClick(false);
          } else if (!imagesArrLocals.isEmpty()) {
@@ -44,7 +44,7 @@ index 0000000..0000000 100644
                      imageReceiver.setImageBitmap(parentActivity.getResources().getDrawable(R.drawable.photoview_placeholder));
                      return;
 -                } else if (messageObject.isVideo()) {
-+                } else if (messageObject.isVideo() || desu.inugram.helpers.media.PhotoViewerHelper.gifAsVideo(messageObject)) {
++                } else if (messageObject.isVideo() || xie.fa.gram.helpers.media.PhotoViewerHelper.gifAsVideo(messageObject)) {
                      if (messageObject.photoThumbs != null && !messageObject.photoThumbs.isEmpty()) {
                          ImageReceiver.BitmapHolder placeHolder = null;
                          if (currentThumb != null && imageReceiver == centerImage) {
@@ -53,8 +53,8 @@ index 0000000..0000000 100644
                  currentAnimation = object.allowTakeAnimation ? object.imageReceiver.getAnimation() : null;
                  if (currentAnimation != null) {
 -                    if (messageObject.isVideo()) {
-+                    if (messageObject.isVideo() || desu.inugram.helpers.media.PhotoViewerHelper.gifAsVideo(messageObject)) {
-+                        if (desu.inugram.helpers.media.PhotoViewerHelper.gifAsVideo(messageObject)) {
++                    if (messageObject.isVideo() || xie.fa.gram.helpers.media.PhotoViewerHelper.gifAsVideo(messageObject)) {
++                        if (xie.fa.gram.helpers.media.PhotoViewerHelper.gifAsVideo(messageObject)) {
 +                            final int durMs = currentAnimation.getDurationMs();
 +                            if (durMs > 0) {
 +                                seekToProgressPending2 = (float) currentAnimation.getCurrentProgressMs() / durMs;

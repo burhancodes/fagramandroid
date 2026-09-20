@@ -16,8 +16,8 @@ index 0000000..0000000 100644
              {-1, -1, -1, -1}
      };
      private Drawable[][] backgroundDrawable = new Drawable[4][4];
-+    private boolean inu_lastBackgroundTails = desu.inugram.InuConfig.BUBBLE_TAILS.getValue();
-+    private boolean inu_lastShadowTails = desu.inugram.InuConfig.BUBBLE_TAILS.getValue();
++    private boolean inu_lastBackgroundTails = xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue();
++    private boolean inu_lastShadowTails = xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue();
      private int[][] backgroundDrawableColor = new int[][]{
              {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff},
              {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff},
@@ -25,7 +25,7 @@ index 0000000..0000000 100644
      }
  
      public Drawable getBackgroundDrawable() {
-+        boolean inu_tails = desu.inugram.InuConfig.BUBBLE_TAILS.getValue();
++        boolean inu_tails = xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue();
 +        if (inu_lastBackgroundTails != inu_tails) {
 +            inu_lastBackgroundTails = inu_tails;
 +            for (int a = 0; a < backgroundDrawable.length; a++) {
@@ -42,7 +42,7 @@ index 0000000..0000000 100644
          if (gradientShader == null && !isSelected && crossfadeFromDrawable == null) {
              return null;
          }
-+        boolean inu_tails = desu.inugram.InuConfig.BUBBLE_TAILS.getValue();
++        boolean inu_tails = xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue();
 +        if (inu_lastShadowTails != inu_tails) {
 +            inu_lastShadowTails = inu_tails;
 +            for (int a = 0; a < currentShadowDrawableRadius.length; a++) {
@@ -56,7 +56,7 @@ index 0000000..0000000 100644
                  int radToUse = botButtonsBottom ? nearRad : rad;
                  if (currentType == TYPE_MEDIA) {
                      path.moveTo(bounds.right - dp(8) - radToUse, bounds.bottom - padding);
-+                } else if (!desu.inugram.InuConfig.BUBBLE_TAILS.getValue()) {
++                } else if (!xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue()) {
 +                    path.moveTo(bounds.right - dp(8) - (isBottomNear ? nearRad : rad), bounds.bottom - padding);
                  } else {
                      path.moveTo(bounds.right - dp(2.6f), bounds.bottom - padding);
@@ -65,7 +65,7 @@ index 0000000..0000000 100644
                  }
              } else {
                  if (drawFullBubble || currentType == TYPE_PREVIEW || customPaint || drawFullBottom) {
-+                    if (!desu.inugram.InuConfig.BUBBLE_TAILS.getValue()) {
++                    if (!xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue()) {
 +                        int radToUse = isBottomNear ? nearRad : rad;
 +                        path.lineTo(bounds.right - dp(8), bounds.bottom - padding - radToUse);
 +                        rect.set(bounds.right - dp(8) - radToUse * 2, bounds.bottom - padding - radToUse * 2, bounds.right - dp(8), bounds.bottom - padding);
@@ -82,7 +82,7 @@ index 0000000..0000000 100644
  
                  if (currentType == TYPE_MEDIA) {
                      path.moveTo(bounds.left + dp(8) + radToUse, bounds.bottom - padding);
-+                } else if (!desu.inugram.InuConfig.BUBBLE_TAILS.getValue()) {
++                } else if (!xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue()) {
 +                    path.moveTo(bounds.left + dp(8) + (isBottomNear || botButtonsBottom ? nearRad : rad), bounds.bottom - padding);
                  } else {
                      path.moveTo(bounds.left + dp(2.6f), bounds.bottom - padding);
@@ -91,7 +91,7 @@ index 0000000..0000000 100644
                  }
              } else {
                  if (drawFullBubble || currentType == TYPE_PREVIEW || customPaint || drawFullBottom) {
-+                    if (!desu.inugram.InuConfig.BUBBLE_TAILS.getValue()) {
++                    if (!xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue()) {
 +                        int radToUse = isBottomNear || botButtonsBottom ? nearRad : rad;
 +                        path.lineTo(bounds.left + dp(8), bounds.bottom - padding - radToUse);
 +                        rect.set(bounds.left + dp(8), bounds.bottom - padding - radToUse * 2, bounds.left + dp(8) + radToUse * 2, bounds.bottom - padding);
@@ -112,7 +112,7 @@ index 0000000..0000000 100644
  
          public boolean invalidatePath(Rect bounds, boolean drawFullBottom, boolean drawFullTop) {
 -            boolean invalidate = lastRect.isEmpty() || lastRect.top != bounds.top || lastRect.bottom != bounds.bottom || lastRect.right != bounds.right || lastRect.left != bounds.left || lastDrawFullTop != drawFullTop || lastDrawFullBottom != drawFullBottom || !drawFullTop || !drawFullBottom;
-+            boolean inu_tails = desu.inugram.InuConfig.BUBBLE_TAILS.getValue();
++            boolean inu_tails = xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue();
 +            boolean invalidate = lastRect.isEmpty() || lastRect.top != bounds.top || lastRect.bottom != bounds.bottom || lastRect.right != bounds.right || lastRect.left != bounds.left || lastDrawFullTop != drawFullTop || lastDrawFullBottom != drawFullBottom || !drawFullTop || !drawFullBottom || inu_lastTails != inu_tails;
              lastDrawFullTop = drawFullTop;
              lastDrawFullBottom = drawFullBottom;
@@ -129,7 +129,7 @@ index 0000000..0000000 100644
                          path.addCircle(rect.centerX(), rect.centerY(), dp(selectorDrawableMaskType[num] == 3 ? 16 : 20), Path.Direction.CW);
                      } else if (selectorDrawableMaskType[num] == 2) {
                          boolean out = currentMessageObject != null && currentMessageObject.isOutOwner();
-+                        boolean inu_tails = desu.inugram.InuConfig.BUBBLE_TAILS.getValue();
++                        boolean inu_tails = xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue();
                          for (int a = 0; a < 4; a++) {
 +                            if (!inu_tails && a == (out ? 2 : 3)) {
 +                                radii[a * 2] = radii[a * 2 + 1] = dp(pinnedBottom ? Math.min(5, SharedConfig.bubbleRadius) : SharedConfig.bubbleRadius);
@@ -152,7 +152,7 @@ index 0000000..0000000 100644
              }
              commentButtonRect.set(
 -                    buttonX - dp((currentMessageObject == null || !currentMessageObject.isOutOwner()) && !drawPinnedBottom && currentPosition == null && (currentMessageObject == null || currentMessageObject.type != MessageObject.TYPE_POLL || pollInstantViewTouchesBottom) ? 6 : 0),
-+                    buttonX - dp(desu.inugram.InuConfig.BUBBLE_TAILS.getValue() && (currentMessageObject == null || !currentMessageObject.isOutOwner()) && !drawPinnedBottom && currentPosition == null && (currentMessageObject == null || currentMessageObject.type != MessageObject.TYPE_POLL || pollInstantViewTouchesBottom) ? 6 : 0),
++                    buttonX - dp(xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue() && (currentMessageObject == null || !currentMessageObject.isOutOwner()) && !drawPinnedBottom && currentPosition == null && (currentMessageObject == null || currentMessageObject.type != MessageObject.TYPE_POLL || pollInstantViewTouchesBottom) ? 6 : 0),
                      (int) buttonY,
                      endX - dp(14),
                      layoutHeight - dp(h) + 1
@@ -161,7 +161,7 @@ index 0000000..0000000 100644
                  instantButtonRect.set(textX, instantY, textX + instantWidth, instantY + dp(44));
                  if (selectorDrawable[0] != null && selectorDrawableMaskType[0] == 2) {
 -                    selectorDrawable[0].setBounds(textX - dp(pollInstantViewTouchesBottom ? 6 : 0), instantY, textX + instantWidth, instantY + dp(44));
-+                    selectorDrawable[0].setBounds(textX - dp(pollInstantViewTouchesBottom && desu.inugram.InuConfig.BUBBLE_TAILS.getValue() ? 6 : 0), instantY, textX + instantWidth, instantY + dp(44));
++                    selectorDrawable[0].setBounds(textX - dp(pollInstantViewTouchesBottom && xie.fa.gram.InuConfig.BUBBLE_TAILS.getValue() ? 6 : 0), instantY, textX + instantWidth, instantY + dp(44));
                      selectorDrawable[0].draw(canvas);
                  }
                  if (currentMessageObject.isPoll() && pollInstantButtonDrawable != null) {

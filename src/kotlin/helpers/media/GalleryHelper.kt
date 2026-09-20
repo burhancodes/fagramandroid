@@ -1,4 +1,4 @@
-package desu.inugram.helpers.media
+package xie.fa.gram.helpers.media
 
 import android.content.ContentResolver
 import android.database.Cursor
@@ -8,7 +8,7 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import com.google.android.exoplayer2.extractor.jpeg.MotionPhotoDescription
 import com.google.android.exoplayer2.extractor.jpeg.XmpMotionPhotoDescriptionParser
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.FileLog

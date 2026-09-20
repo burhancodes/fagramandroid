@@ -1,8 +1,8 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.app.NotificationManager
 import android.os.Build
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.FileLoader

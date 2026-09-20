@@ -1,4 +1,4 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -6,7 +6,7 @@ import android.animation.ValueAnimator
 import android.graphics.Canvas
 import android.view.HapticFeedbackConstants
 import android.view.View
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.DialogObject

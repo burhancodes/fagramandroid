@@ -15,7 +15,7 @@ index 0000000..0000000 100644
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java
 @@ -916,7 +916,7 @@ public class MediaDataController extends BaseController {
          }
-         int limit = desu.inugram.InuConfig.SHOW_ALL_RECENT_STICKERS.getValue() ? arrayList.size() : 20;
+         int limit = xie.fa.gram.InuConfig.SHOW_ALL_RECENT_STICKERS.getValue() ? arrayList.size() : 20;
          ArrayList<TLRPC.Document> result = new ArrayList<>(arrayList.subList(0, Math.min(arrayList.size(), limit)));
 -        if (firstEmpty && !result.isEmpty() && !StickersAlert.DISABLE_STICKER_EDITOR) {
 +        if (firstEmpty && !result.isEmpty() && !StickersAlert.DISABLE_STICKER_EDITOR && !InuConfig.MINIMIZE_STICKERS_CREATOR.getValue()) {
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
  import java.util.Map;
  import java.util.Objects;
  
-+import desu.inugram.InuConfig;
++import xie.fa.gram.InuConfig;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  

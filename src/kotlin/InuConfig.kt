@@ -1,14 +1,14 @@
-package desu.inugram
+package xie.fa.gram
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import desu.inugram.helpers.chat.DoubleTapActionHelper
-import desu.inugram.helpers.chat.PinnedReactionsHelper
-import desu.inugram.helpers.font.FontConfig
-import desu.inugram.helpers.menu.ChatMenuConfig
-import desu.inugram.helpers.menu.MessageMenuConfig
-import desu.inugram.ui.FormattingPopupConfig
+import xie.fa.gram.helpers.chat.DoubleTapActionHelper
+import xie.fa.gram.helpers.chat.PinnedReactionsHelper
+import xie.fa.gram.helpers.font.FontConfig
+import xie.fa.gram.helpers.menu.ChatMenuConfig
+import xie.fa.gram.helpers.menu.MessageMenuConfig
+import xie.fa.gram.ui.FormattingPopupConfig
 
 object InuConfig {
     private const val PREFS_NAME = "inugram"

@@ -1,6 +1,6 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.UserConfig
 
 object AccountOrderHelper {

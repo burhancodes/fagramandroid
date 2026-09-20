@@ -1,8 +1,8 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import androidx.recyclerview.widget.RecyclerView
-import desu.inugram.InuConfig
-import desu.inugram.InuConfig.CommunityDisplayModeItem
+import xie.fa.gram.InuConfig
+import xie.fa.gram.InuConfig.CommunityDisplayModeItem
 import org.telegram.messenger.MessagesController
 import org.telegram.ui.Cells.DialogCell
 import org.telegram.ui.Components.RecyclerListView

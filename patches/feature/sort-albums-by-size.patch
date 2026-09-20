@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                  } else if (o1.bucketId != 0 && o2.bucketId == 0) {
                      return 1;
                  }
-+                if (desu.inugram.InuConfig.SORT_ALBUMS_BY_SIZE.getValue()) {
++                if (xie.fa.gram.InuConfig.SORT_ALBUMS_BY_SIZE.getValue()) {
 +                    return Integer.compare(o2.photos.size(), o1.photos.size());
 +                }
                  int index1 = albums.indexOf(o1);

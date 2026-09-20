@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                      }
                  }
              }
-+            desu.inugram.helpers.InuDatabaseHelper.migrate(MessagesStorage.this);
++            xie.fa.gram.helpers.InuDatabaseHelper.migrate(MessagesStorage.this);
              databaseCreated = true;
          } catch (Exception e) {
              FileLog.e(e);

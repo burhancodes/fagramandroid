@@ -1,12 +1,12 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.ShortcutHelper
-import desu.inugram.helpers.security.ParanoiaHelper
-import desu.inugram.ui.showInputDialog
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.ShortcutHelper
+import xie.fa.gram.helpers.security.ParanoiaHelper
+import xie.fa.gram.ui.showInputDialog
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.AlertDialog

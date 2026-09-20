@@ -1,6 +1,6 @@
-package desu.inugram.helpers.maps
+package xie.fa.gram.helpers.maps
 
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.MessagesController
 
 object MapsHelper {

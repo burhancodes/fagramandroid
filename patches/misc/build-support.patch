@@ -235,7 +235,7 @@ index 0000000..0000000 100644
 +        "mobilesdk_app_id": "1:1058545853294:android:fd3a66d8c6bde26b45177f",
          "android_client_info": {
 -          "package_name": "org.telegram.messenger"
-+          "package_name": "desu.inugram"
++          "package_name": "xie.fa.gram"
          }
        },
 -      "oauth_client": [
@@ -269,7 +269,7 @@ index 0000000..0000000 100644
 +        "mobilesdk_app_id": "1:1058545853294:android:d6b70c9beedf100745177f",
          "android_client_info": {
 -          "package_name": "org.telegram.messenger.beta"
-+          "package_name": "desu.inugram.beta"
++          "package_name": "xie.fa.gram.beta"
          }
        },
 -      "oauth_client": [
@@ -344,7 +344,7 @@ index 0000000..0000000 100644
 +-dontwarn org.bouncycastle.openssl.**
 +-dontwarn org.objectweb.asm.**
 +-dontwarn com.google.crypto.tink.**
-+-keep class desu.inugram.** { *; }
++-keep class xie.fa.gram.** { *; }
 +# /inu
 +
  # Use -keep to explicitly keep any other classes shrinking would remove
@@ -367,7 +367,7 @@ index 0000000..0000000 100644
  
          <receiver android:name=".NotificationDismissReceiver" android:exported="false"/>
  
-+        <receiver android:name="desu.inugram.helpers.update.ApkInstaller$UpdateReceiver" android:exported="false">
++        <receiver android:name="xie.fa.gram.helpers.update.ApkInstaller$UpdateReceiver" android:exported="false">
 +            <intent-filter>
 +                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
 +            </intent-filter>
@@ -534,7 +534,7 @@ index 0000000..0000000 100644
 -            FileLog.e(e);
 -        }
 -        return null;
-+        return desu.inugram.helpers.update.UpdateHelper.getFullVersionInfo();
++        return xie.fa.gram.helpers.update.UpdateHelper.getFullVersionInfo();
      }
  
      @Override
@@ -562,7 +562,7 @@ index 0000000..0000000 100644
      buildToolsVersion '36.0.0'
  
 -    defaultConfig.applicationId = APP_PACKAGE
-+    defaultConfig.applicationId = "desu.inugram"
++    defaultConfig.applicationId = "xie.fa.gram"
  
      sourceSets.main.jniLibs.srcDirs = ['../TMessagesProj/jni/']
  
@@ -767,7 +767,7 @@ index 0000000..0000000 100644
 +        "mobilesdk_app_id": "1:1058545853294:android:fd3a66d8c6bde26b45177f",
          "android_client_info": {
 -          "package_name": "org.telegram.messenger"
-+          "package_name": "desu.inugram"
++          "package_name": "xie.fa.gram"
          }
        },
 -      "oauth_client": [
@@ -801,7 +801,7 @@ index 0000000..0000000 100644
 +        "mobilesdk_app_id": "1:1058545853294:android:d6b70c9beedf100745177f",
          "android_client_info": {
 -          "package_name": "org.telegram.messenger.beta"
-+          "package_name": "desu.inugram.beta"
++          "package_name": "xie.fa.gram.beta"
          }
        },
 -      "oauth_client": [

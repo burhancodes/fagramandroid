@@ -33,7 +33,7 @@ index 0000000..0000000 100644
              AndroidUtilities.cancelRunOnUIThread(searchGlobalRunnable);
              searchGlobalRunnable = null;
          }
-+        desu.inugram.helpers.search.SearchFromHelper.cancel();
++        xie.fa.gram.helpers.search.SearchFromHelper.cancel();
          if (checkAgainRunnable != null) {
              AndroidUtilities.cancelRunOnUIThread(checkAgainRunnable);
              checkAgainRunnable = null;
@@ -41,8 +41,8 @@ index 0000000..0000000 100644
              } else {
                  showUsersResult(newResult, newMap, true);
              }
-+            if (forSearch && desu.inugram.InuConfig.SEARCH_FROM_GLOBAL.getValue()) {
-+                desu.inugram.helpers.search.SearchFromHelper.queryAndMerge(this, currentAccount, usernameString);
++            if (forSearch && xie.fa.gram.InuConfig.SEARCH_FROM_GLOBAL.getValue()) {
++                xie.fa.gram.helpers.search.SearchFromHelper.queryAndMerge(this, currentAccount, usernameString);
 +            }
          } else if (foundType == 1) {
              ArrayList<String> newResult = new ArrayList<>();
@@ -51,8 +51,8 @@ index 0000000..0000000 100644
              }
          }
          searchResultUsernamesMap = newMap;
-+        if (desu.inugram.InuConfig.SEARCH_FROM_GLOBAL.getValue()) {
-+            desu.inugram.helpers.search.SearchFromHelper.mergeCached(this);
++        if (xie.fa.gram.InuConfig.SEARCH_FROM_GLOBAL.getValue()) {
++            xie.fa.gram.helpers.search.SearchFromHelper.mergeCached(this);
 +        }
          if (cancelDelayRunnable != null) {
              AndroidUtilities.cancelRunOnUIThread(cancelDelayRunnable);

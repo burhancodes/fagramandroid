@@ -1,4 +1,4 @@
-package desu.inugram.helpers.profile
+package xie.fa.gram.helpers.profile
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,11 +14,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.collection.LongSparseArray
 import androidx.core.graphics.ColorUtils
-import desu.inugram.InuConfig
-import desu.inugram.helpers.WebAppHelper
-import desu.inugram.helpers.chat.BlockedMessagesHelper
-import desu.inugram.helpers.chat.ChatHelper
-import desu.inugram.helpers.chat.ForumDisplayHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.WebAppHelper
+import xie.fa.gram.helpers.chat.BlockedMessagesHelper
+import xie.fa.gram.helpers.chat.ChatHelper
+import xie.fa.gram.helpers.chat.ForumDisplayHelper
 import org.json.JSONArray
 import org.telegram.messenger.AccountInstance
 import org.telegram.messenger.AndroidUtilities

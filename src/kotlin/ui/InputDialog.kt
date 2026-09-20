@@ -1,4 +1,4 @@
-package desu.inugram.ui
+package xie.fa.gram.ui
 
 import android.content.Context
 import android.content.DialogInterface

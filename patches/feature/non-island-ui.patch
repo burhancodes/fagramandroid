@@ -162,7 +162,7 @@ index 0000000..0000000 100644
                          @Override
                          public void getOutline(View view, Outline outline) {
 -                            final float rTop = dp(29);
-+                            final float rTop = dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 12 : 29);
++                            final float rTop = dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 12 : 29);
                              final float rBottom = dp(12);
                              final float[] radii = new float[] {
                                  rTop, rTop, rTop, rTop,
@@ -174,7 +174,7 @@ index 0000000..0000000 100644
  
          contentView.setOccupyStatusBar(!AndroidUtilities.isTablet());
          contentView.setBackgroundImage(Theme.getCachedWallpaper(), Theme.isWallpaperMotion());
-+        boolean nonIsland = desu.inugram.helpers.theme.NonIslandHelper.chatElements();
++        boolean nonIsland = xie.fa.gram.helpers.theme.NonIslandHelper.chatElements();
 +        actionBar.inu_nonIsland = nonIsland;
          actionBar.setupGlass(glassBackgroundDrawableFactory, BlurredBackgroundProviderImpl.topPanelChatActivity(resourceProvider));
          emptyViewContainer = new FrameLayout(context);
@@ -223,7 +223,7 @@ index 0000000..0000000 100644
  import java.util.regex.Pattern;
  import java.util.stream.Collectors;
  
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  import me.vkryl.core.BitwiseUtils;
@@ -765,7 +765,7 @@ index 0000000..0000000 100644
          emojiButton.setPadding(padding, padding, padding, padding);
          emojiButton.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_glass_defaultIcon), PorterDuff.Mode.SRC_IN));
 -        emojiButton.setBackground(Theme.createInsetRoundRectDrawable(getThemedColor(Theme.key_listSelector), dp(19), dp(1), dp(3)));
-+        emojiButton.setBackground(desu.inugram.helpers.theme.NonIslandHelper.createInputButtonSelector(getThemedColor(Theme.key_listSelector)));
++        emojiButton.setBackground(xie.fa.gram.helpers.theme.NonIslandHelper.createInputButtonSelector(getThemedColor(Theme.key_listSelector)));
          emojiButton.setOnClickListener(v -> {
              if (adjustPanLayoutHelper != null && adjustPanLayoutHelper.animationInProgress()) {
                  return;
@@ -774,7 +774,7 @@ index 0000000..0000000 100644
          deleteRichDraftButton.setImageResource(R.drawable.menu_delete_old);
          deleteRichDraftButton.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_glass_defaultIcon), PorterDuff.Mode.SRC_IN));
 -        deleteRichDraftButton.setBackground(Theme.createInsetRoundRectDrawable(getThemedColor(Theme.key_listSelector), dp(19), dp(1), dp(3)));
-+        deleteRichDraftButton.setBackground(desu.inugram.helpers.theme.NonIslandHelper.createInputButtonSelector(getThemedColor(Theme.key_listSelector)));
++        deleteRichDraftButton.setBackground(xie.fa.gram.helpers.theme.NonIslandHelper.createInputButtonSelector(getThemedColor(Theme.key_listSelector)));
          deleteRichDraftButton.setVisibility(View.GONE);
          deleteRichDraftButton.setContentDescription(getString(R.string.ArticleDeleteDraft));
          deleteRichDraftButton.setOnClickListener(v -> {
@@ -783,7 +783,7 @@ index 0000000..0000000 100644
                      canvas.save();
                      canvas.scale(s, s, backgroundRect.centerX(), backgroundRect.centerY());
 -                    canvas.drawRoundRect(backgroundRect, r, r, paint);
-+                    if (!desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
++                    if (!xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
 +                        canvas.drawRoundRect(backgroundRect, r, r, paint);
 +                    }
                      canvas.restore();
@@ -794,7 +794,7 @@ index 0000000..0000000 100644
          cameraOutline.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_glass_defaultIcon), PorterDuff.Mode.MULTIPLY));
  
 -        audioVideoSendButton = new ChatActivityEnterViewAnimatedIconView(context, 24) {
-+        audioVideoSendButton = new ChatActivityEnterViewAnimatedIconView(context, desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 32 : 24) {
++        audioVideoSendButton = new ChatActivityEnterViewAnimatedIconView(context, xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 32 : 24) {
              private final Rect tmpRectF = new Rect();
              @Override
              public void draw(@NonNull Canvas canvas) {
@@ -810,7 +810,7 @@ index 0000000..0000000 100644
  //        audioVideoSendButton.setFocusable(true);
  //        audioVideoSendButton.setAccessibilityDelegate(mediaMessageButtonsDelegate);
 -        padding = dp(10f);
-+        padding = dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? inu_ICON_PADDING : 10f);
++        padding = dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? inu_ICON_PADDING : 10f);
          audioVideoSendButton.setPadding(padding, padding, padding, padding);
          audioVideoButtonContainer.addView(audioVideoSendButton, LayoutHelper.createFrame(DEFAULT_HEIGHT, DEFAULT_HEIGHT));
  
@@ -819,7 +819,7 @@ index 0000000..0000000 100644
          });
  
 -        sendButton = new SendButton(context, isInScheduleMode() ? R.drawable.input_schedule : R.drawable.send_plane_24, resourcesProvider, true) {
-+        sendButton = new SendButton(context, isInScheduleMode() ? R.drawable.input_schedule : desu.inugram.helpers.theme.NonIslandHelper.chatSendIcon(), resourcesProvider, !desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
++        sendButton = new SendButton(context, isInScheduleMode() ? R.drawable.input_schedule : xie.fa.gram.helpers.theme.NonIslandHelper.chatSendIcon(), resourcesProvider, !xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
              @Override
              public boolean isInScheduleMode() {
                  return ChatActivityEnterView.this.isInScheduleMode();
@@ -837,7 +837,7 @@ index 0000000..0000000 100644
              @Override
              public boolean shouldDrawBackground() {
 -                return shouldDrawBackground;
-+                return shouldDrawBackground || desu.inugram.helpers.theme.NonIslandHelper.chatElements() && inu_isSendButtonLongPressed();
++                return shouldDrawBackground || xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() && inu_isSendButtonLongPressed();
              }
  
              @Override
@@ -845,7 +845,7 @@ index 0000000..0000000 100644
          sendButton.setScaleY(0.1f);
          sendButton.setAlpha(0.0f);
          sendButtonContainer.addView(sendButton, LayoutHelper.createFrame(100, DEFAULT_HEIGHT, Gravity.RIGHT | Gravity.BOTTOM));
-+        desu.inugram.helpers.theme.NonIslandHelper.applySendButtonRipple(sendButton, 100, getThemedColor(Theme.key_listSelector));
++        xie.fa.gram.helpers.theme.NonIslandHelper.applySendButtonRipple(sendButton, 100, getThemedColor(Theme.key_listSelector));
          sendButton.setOnClickListener(view -> {
              if ((messageSendPreview != null && messageSendPreview.isShowing()) || (runningAnimationAudio != null && runningAnimationAudio.isRunning()) || moveToSendStateRunnable != null) {
                  return;
@@ -854,7 +854,7 @@ index 0000000..0000000 100644
              }
              if (child == topView) {
 -                canvas.clipRect(0, 0, getMeasuredWidth(), separatorY);
-+                final float top = desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? Integer.MIN_VALUE : 0;
++                final float top = xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? Integer.MIN_VALUE : 0;
 +                canvas.clipRect(0, top, getMeasuredWidth(), separatorY);
              }
          }
@@ -871,7 +871,7 @@ index 0000000..0000000 100644
          if (isInScheduleMode() || parentFragment != null && parentFragment.getChatMode() == ChatActivity.MODE_QUICK_REPLIES || animatorEphemeralMessageVisibility.getValue()) {
              return false;
 @@ -5800,7 +5808,7 @@ public class ChatActivityEnterView extends FrameLayout implements
-         messageEditText.setMaxLines(desu.inugram.InuConfig.CHAT_INPUT_MAX_LINES.getValue());
+         messageEditText.setMaxLines(xie.fa.gram.InuConfig.CHAT_INPUT_MAX_LINES.getValue());
          messageEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
          messageEditText.setGravity(Gravity.BOTTOM);
 -        messageEditText.setPadding(0, dp(9), 0, dp(10));
@@ -905,7 +905,7 @@ index 0000000..0000000 100644
          LayoutParams layoutParams = (LayoutParams) textFieldContainer.getLayoutParams();
          layoutParams.topMargin = (show ? topView.getLayoutParams().height : 0);
 -        layoutParams.topMargin += dp(9); // for prevent clipping
-+        layoutParams.topMargin += dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 9); // for prevent clipping
++        layoutParams.topMargin += dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 9); // for prevent clipping
          textFieldContainer.setLayoutParams(layoutParams);
  
          resizeForTopViewLastShow = show;
@@ -919,7 +919,7 @@ index 0000000..0000000 100644
          audioVideoButtonContainer.setAlpha(audioVideoButtonContainerForbidden ? 0.5f : 1.0f);
          audioVideoButtonContainer.invalidate();
 -        audioVideoSendButton.setColorFilter(new PorterDuffColorFilter(audioVideoButtonContainerForbidden ?
-+        audioVideoSendButton.setColorFilter(new PorterDuffColorFilter(audioVideoButtonContainerForbidden || desu.inugram.helpers.theme.NonIslandHelper.chatElements() ?
++        audioVideoSendButton.setColorFilter(new PorterDuffColorFilter(audioVideoButtonContainerForbidden || xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ?
              getThemedColor(Theme.key_glass_defaultIcon) : Color.WHITE, PorterDuff.Mode.SRC_IN));
          audioVideoSendButton.invalidate();
          updateFieldHint(false);
@@ -938,8 +938,8 @@ index 0000000..0000000 100644
                      newLayoutParams.gravity = Gravity.BOTTOM;
 -                    newLayoutParams.leftMargin = dp(7);
 -                    newLayoutParams.rightMargin = dp(7);
-+                    newLayoutParams.leftMargin = dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 7);
-+                    newLayoutParams.rightMargin = dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 7);
++                    newLayoutParams.leftMargin = dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 7);
++                    newLayoutParams.rightMargin = dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 7);
                      sizeNotifierLayout.addView(recordedAudioPanel, newLayoutParams);
                      videoTimelineView.setVisibility(GONE);
                  } else {
@@ -948,9 +948,9 @@ index 0000000..0000000 100644
          emojiButton.setBackground(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector)));
          deleteRichDraftButton.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_glass_defaultIcon), PorterDuff.Mode.SRC_IN));
 -        deleteRichDraftButton.setBackground(Theme.createInsetRoundRectDrawable(getThemedColor(Theme.key_listSelector), dp(19), dp(1), dp(3)));
-+        deleteRichDraftButton.setBackground(desu.inugram.helpers.theme.NonIslandHelper.createInputButtonSelector(getThemedColor(Theme.key_listSelector)));
++        deleteRichDraftButton.setBackground(xie.fa.gram.helpers.theme.NonIslandHelper.createInputButtonSelector(getThemedColor(Theme.key_listSelector)));
          sendOutlineView.setColorFilter(getThemedColor(Theme.key_telegram_color), PorterDuff.Mode.SRC_IN);
-+        desu.inugram.helpers.theme.NonIslandHelper.applySendButtonRipple(sendButton, 100, getThemedColor(Theme.key_listSelector));
++        xie.fa.gram.helpers.theme.NonIslandHelper.applySendButtonRipple(sendButton, 100, getThemedColor(Theme.key_listSelector));
      }
  
      private void updateRecordedDeleteIconColors() {
@@ -958,7 +958,7 @@ index 0000000..0000000 100644
              final float appear = this.appear.set(1);
              if (openProgress < 1) {
                  canvas.save();
-+                if (!desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
++                if (!xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
                  canvas.translate(-dp(24) * (1f - appear), dp(24) * (1f - appear));
                  final float s = lerp(0.35f, 1.0f, appear);
                  canvas.scale(s, s, x + drawable.getIntrinsicWidth() / 2f, y + drawable.getIntrinsicHeight() / 2f);
@@ -975,7 +975,7 @@ index 0000000..0000000 100644
 -
 -            topView.setTranslationY(y - topView.getMeasuredHeight() * visibility);
 +            final float topH = topView.getLayoutParams().height;
-+            final float topMargin = visibility > 0 ? (topH + dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 9)) : 0;
++            final float topMargin = visibility > 0 ? (topH + dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : 9)) : 0;
 +            final float fieldDelta = animatorInputFieldHeight.getToFactor() - animatorInputFieldHeight.getFactor();
 +            final float baseY = topMargin + textFieldContainer.getPaddingTop() + fieldDelta;
 +            topView.setTranslationY(baseY - topH * visibility);
@@ -990,7 +990,7 @@ index 0000000..0000000 100644
      private State currentState;
      private TransitState animatingState;
      private final int sizeDp;
-+    public boolean inu_legacy = desu.inugram.helpers.theme.NonIslandHelper.chatElements();
++    public boolean inu_legacy = xie.fa.gram.helpers.theme.NonIslandHelper.chatElements();
 +
 +    private int inu_resource(TransitState state) {
 +        if (inu_legacy) {
@@ -1041,7 +1041,7 @@ index 0000000..0000000 100644
  import org.telegram.ui.ActionBar.Theme;
  import org.telegram.ui.Components.blur3.drawable.BlurredBackgroundDrawable;
  
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import me.vkryl.android.animator.ListAnimator;
  
  public class ChatActivityTopPanelLayout extends AnimatedLinearLayout {
@@ -1116,7 +1116,7 @@ index 0000000..0000000 100644
  import java.util.Locale;
  import java.util.Objects;
  
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  import me.vkryl.android.animator.ListAnimator;
@@ -1135,8 +1135,8 @@ index 0000000..0000000 100644
                  currentAttachLayout.onButtonsTranslationYUpdated();
              }
 +
-+            private final desu.inugram.ui.BlurBehindHelper inu_blurHelper = NonIslandHelper.chatElements()
-+                ? desu.inugram.ui.BlurBehindHelper.create(this, sizeNotifierFrameLayout, Theme.key_dialogBackground, false, NonIslandHelper.ATTACH_TAB_SHADOW_DP, 0f)
++            private final xie.fa.gram.ui.BlurBehindHelper inu_blurHelper = NonIslandHelper.chatElements()
++                ? xie.fa.gram.ui.BlurBehindHelper.create(this, sizeNotifierFrameLayout, Theme.key_dialogBackground, false, NonIslandHelper.ATTACH_TAB_SHADOW_DP, 0f)
 +                : null;
 +
 +            @Override
@@ -1162,7 +1162,7 @@ index 0000000..0000000 100644
          buttonsRecyclerViewWrapper.addView(buttonsRecyclerView, LayoutHelper.createFrameMatchParent());
          containerView.addView(buttonsRecyclerViewWrapper, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 70, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL));
 +        NonIslandHelper.applyChatAttachTabBar(buttonsRecyclerViewWrapper, buttonsRecyclerView);
-+        desu.inugram.helpers.chat.VoiceRecorderHelper.addFab(this, (FrameLayout) containerView, resourcesProvider);
++        xie.fa.gram.helpers.chat.VoiceRecorderHelper.addFab(this, (FrameLayout) containerView, resourcesProvider);
          buttonsRecyclerView.setOnItemClickListener((view, position) -> {
              BaseFragment lastFragment = baseFragment;
              if (lastFragment == null) {
@@ -1182,7 +1182,7 @@ index 0000000..0000000 100644
  
      private boolean glassMode;
      public void setGlassMode() {
-+        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) return;
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) return;
          if (titleTextView != null) {
              titleTextView.setTextSizePx(dp(17.5f));
          }
@@ -1207,7 +1207,7 @@ index 0000000..0000000 100644
  import me.vkryl.android.animator.ListAnimator;
  
  public class DialogsActivityTopPanelLayout extends AnimatedLinearLayout {
-+    public desu.inugram.ui.BlurBehindHelper inu_blurHelper;
++    public xie.fa.gram.ui.BlurBehindHelper inu_blurHelper;
 +
      public DialogsActivityTopPanelLayout(@NonNull Context context) {
          super(context);
@@ -1240,8 +1240,8 @@ index 0000000..0000000 100644
          listView.setSelectorType(9);
          listView.setSelectorRadius(6);
          listView.setSelectorDrawableColor(Theme.getColor(selectorColorKey, resourcesProvider));
-+        if (desu.inugram.helpers.theme.NonIslandHelper.foldersBar()) {
-+            desu.inugram.helpers.theme.NonIslandHelper.applyMd3TabsStyle(selectorDrawable, listView, Theme.getColor(selectorColorKey, resourcesProvider));
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar()) {
++            xie.fa.gram.helpers.theme.NonIslandHelper.applyMd3TabsStyle(selectorDrawable, listView, Theme.getColor(selectorColorKey, resourcesProvider));
 +        }
          listView.setLayoutManager(layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
  
@@ -1253,8 +1253,8 @@ index 0000000..0000000 100644
 -            final int y = height / 2 - dp(14);
 -            selectorDrawable.setBounds((int) (indicatorX - dp(FolderHelper.getTabInternalPadding()) - add), y, (int) (indicatorX + indicatorWidth + dp(FolderHelper.getTabInternalPadding()) + add), y + dp(28));
 -            selectorDrawable.setAlpha(31);
-+            if (desu.inugram.helpers.theme.NonIslandHelper.foldersBar()) {
-+                desu.inugram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, 0f);
++            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar()) {
++                xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, 0f);
 +            } else {
 +                final int y = height / 2 - dp(14);
 +                selectorDrawable.setBounds((int) (indicatorX - dp(FolderHelper.getTabInternalPadding()) - add), y, (int) (indicatorX + indicatorWidth + dp(FolderHelper.getTabInternalPadding()) + add), y + dp(28));
@@ -1266,7 +1266,7 @@ index 0000000..0000000 100644
      }
  
      private final Path clipPath = new Path();
-+    public desu.inugram.ui.BlurBehindHelper inu_blurHelper;
++    public xie.fa.gram.ui.BlurBehindHelper inu_blurHelper;
  
      @Override
      protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -1299,7 +1299,7 @@ index 0000000..0000000 100644
      }
  
      private void showSpeedHint() {
-+        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
 +            return;
 +        }
          if (fragment != null && getParent() instanceof ViewGroup) {
@@ -1393,7 +1393,7 @@ index 0000000..0000000 100644
      private boolean closeButtonForcedVisible;
      public final EditTextBoldCursor editText;
      private BlurredBackgroundDrawable blurredBackgroundDrawable;
-+    public desu.inugram.ui.BlurBehindHelper inu_blurHelper;
++    public xie.fa.gram.ui.BlurBehindHelper inu_blurHelper;
  
      public FragmentSearchField(Context context, Theme.ResourcesProvider resourcesProvider) {
          super(context);
@@ -1429,7 +1429,7 @@ index 0000000..0000000 100644
              sharedMediaLayout.getSearchOptionsItem().setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_windowBackgroundWhiteBlackText), PorterDuff.Mode.SRC_IN));
          }
 -        actionBar.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray));
-+        actionBar.setBackgroundColor(Theme.getColor(desu.inugram.helpers.theme.NonIslandHelper.sharedMediaTabs() ? Theme.key_actionBarDefault : Theme.key_windowBackgroundGray));
++        actionBar.setBackgroundColor(Theme.getColor(xie.fa.gram.helpers.theme.NonIslandHelper.sharedMediaTabs() ? Theme.key_actionBarDefault : Theme.key_windowBackgroundGray));
          actionBar.setItemsColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText), false);
          actionBar.setItemsColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText), true);
          actionBar.setItemsBackgroundColor(Theme.getColor(Theme.key_actionBarActionModeDefaultSelector), false);
@@ -1441,7 +1441,7 @@ index 0000000..0000000 100644
  import org.telegram.ui.PhotoViewer;
  
  import java.util.ArrayList;
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  
  public class MentionsContainerView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
  
@@ -1520,7 +1520,7 @@ index 0000000..0000000 100644
          }
          selectorRect.set(sel.getLeft(), sel.getTop(), sel.getRight(), sel.getBottom() - bottomPadding);
 +        if (selectorType == 42) {
-+            desu.inugram.helpers.theme.NonIslandHelper.adjustMd3TabSelectorRect(selectorRect);
++            xie.fa.gram.helpers.theme.NonIslandHelper.adjustMd3TabSelectorRect(selectorRect);
 +        }
  //        selectorRect.offset((int) sel.getTranslationX(), (int) sel.getTranslationY());
  
@@ -1534,8 +1534,8 @@ index 0000000..0000000 100644
      }
  
 +    public boolean inu_nonIsland;
-+    public desu.inugram.ui.BlurBehindHelper inu_blurBehindHelper;
-+    public void inu_makeNonIsland(desu.inugram.ui.BlurBehindHelper blurBehindHelper) {
++    public xie.fa.gram.ui.BlurBehindHelper inu_blurBehindHelper;
++    public void inu_makeNonIsland(xie.fa.gram.ui.BlurBehindHelper blurBehindHelper) {
 +        inu_nonIsland = true;
 +        inu_blurBehindHelper = blurBehindHelper;
 +        setPadding(0, 0, 0, 0);
@@ -1549,7 +1549,7 @@ index 0000000..0000000 100644
 +        checkBoundsAndClipping();
 +    }
 +
-+    public desu.inugram.ui.TabsPillDrawer inu_pill;
++    public xie.fa.gram.ui.TabsPillDrawer inu_pill;
 +
      public final Path clipPath = new Path();
      private final RectF prevRect = new RectF();
@@ -1574,7 +1574,7 @@ index 0000000..0000000 100644
 -            );
 +            if (inu_nonIsland) {
 +                tab.setBackground(
-+                    new desu.inugram.ui.LabelRippleDrawable(
++                    new xie.fa.gram.ui.LabelRippleDrawable(
 +                        tab,
 +                        Theme.createSelectorDrawable(Theme.multAlpha(processColor(Theme.getColor(activeTextColorKey, resourcesProvider)), .15f), Theme.RIPPLE_MASK_ROUNDRECT_6DP, dp(16)),
 +                        dp(12), dp(6)
@@ -1660,7 +1660,7 @@ index 0000000..0000000 100644
 +                ));
 +                selectorDrawable.setBounds((int) (centerX - half), (int) top, (int) (centerX + half), (int) bottom);
 +            } else if (inu_nonIsland) {
-+                desu.inugram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, getPaddingLeft() + l, r - l, height, 0f);
++                xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, getPaddingLeft() + l, r - l, height, 0f);
 +            } else {
              selectorDrawable.setBounds(
                  getPaddingLeft() + (int) l + dp(4),
@@ -1719,7 +1719,7 @@ index 0000000..0000000 100644
                  canvas.clipPath(clipPath);
                  blurredDrawable.draw(canvas);
                  strokePaint.setColor((resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark()) ? 0x28FFFFFF : 0xFFFFFFFF);
-+                if (desu.inugram.helpers.theme.NonIslandHelper.chatElements() && !(resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark())) {
++                if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() && !(resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark())) {
 +                    strokePaint.setColor(0x1E000000);
 +                }
                  canvas.drawPath(clipPath, strokePaint);
@@ -1733,7 +1733,7 @@ index 0000000..0000000 100644
  import androidx.recyclerview.widget.ItemTouchHelper;
  import androidx.recyclerview.widget.LinearLayoutManager;
  import androidx.recyclerview.widget.RecyclerView;
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  
  import org.telegram.messenger.AndroidUtilities;
  import org.telegram.messenger.AnimationNotificationsLocker;
@@ -1744,8 +1744,8 @@ index 0000000..0000000 100644
 +            if (scrollSlidingTextTabStrip != null && scrollSlidingTextTabStrip.inu_pill != null) {
 +                scrollSlidingTextTabStrip.inu_pill.setDocked(pinnedToTop);
 +            }
-+            if (actionModeLayout instanceof desu.inugram.ui.MediaActionModeLayout) {
-+                ((desu.inugram.ui.MediaActionModeLayout) actionModeLayout).setDocked(pinnedToTop);
++            if (actionModeLayout instanceof xie.fa.gram.ui.MediaActionModeLayout) {
++                ((xie.fa.gram.ui.MediaActionModeLayout) actionModeLayout).setDocked(pinnedToTop);
 +            }
          }
      }
@@ -1776,7 +1776,7 @@ index 0000000..0000000 100644
              sizeNotifierFrameLayout = (SizeNotifierFrameLayout) profileActivity.getFragmentView();
          }
 +        if (NonIslandHelper.sharedMediaTabs()) {
-+            actionModeLayout = new desu.inugram.ui.MediaActionModeLayout(context, sizeNotifierFrameLayout, inu_tabsPillMode(), resourcesProvider) {
++            actionModeLayout = new xie.fa.gram.ui.MediaActionModeLayout(context, sizeNotifierFrameLayout, inu_tabsPillMode(), resourcesProvider) {
 +                @Override
 +                public int processColor(int color) {
 +                    return SharedMediaLayout.this.processColor(color);
@@ -1820,7 +1820,7 @@ index 0000000..0000000 100644
              topPanelLayout.setCallFragmentContextView(fragmentContextView);
              addView(topPanelLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP, 0, 48 -14, 0, 0));
 +            if (inu_flatTabBar()) {
-+                topPanelLayout.inu_blurHelper = desu.inugram.ui.BlurBehindHelper.create(topPanelLayout, sizeNotifierFrameLayout, Theme.key_windowBackgroundWhite);
++                topPanelLayout.inu_blurHelper = xie.fa.gram.ui.BlurBehindHelper.create(topPanelLayout, sizeNotifierFrameLayout, Theme.key_windowBackgroundWhite);
 +                topPanelLayout.setPadding(0, 0, 0, 0);
 +            }
  
@@ -1854,9 +1854,9 @@ index 0000000..0000000 100644
 +            }
 +            if (inu_flatTabBar()) {
 +                scrollSlidingTextTabStrip.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44, Gravity.LEFT | Gravity.TOP, 0, 0, 0, 0));
-+                scrollSlidingTextTabStrip.inu_makeNonIsland(desu.inugram.ui.BlurBehindHelper.create(scrollSlidingTextTabStrip, sizeNotifierFrameLayout, Theme.key_windowBackgroundWhite));
++                scrollSlidingTextTabStrip.inu_makeNonIsland(xie.fa.gram.ui.BlurBehindHelper.create(scrollSlidingTextTabStrip, sizeNotifierFrameLayout, Theme.key_windowBackgroundWhite));
 +            } else if (inu_tabsPillMode()) {
-+                desu.inugram.ui.TabsPillDrawer.attach(scrollSlidingTextTabStrip, sizeNotifierFrameLayout);
++                xie.fa.gram.ui.TabsPillDrawer.attach(scrollSlidingTextTabStrip, sizeNotifierFrameLayout);
 +            }
              searchTagsList = new SearchTagsList(getContext(), profileActivity, profileActivity.getCurrentAccount(), includeSavedDialogs() ? 0 : dialog_id, resourcesProvider) {
                  @Override
@@ -1903,7 +1903,7 @@ index 0000000..0000000 100644
  import java.util.ArrayList;
  import java.util.HashSet;
  
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  import me.vkryl.core.BitwiseUtils;
@@ -2000,7 +2000,7 @@ index 0000000..0000000 100644
      public void updateColors() {
          textView.setTextColor(Theme.getColor(Theme.key_chat_addContact, resourcesProvider));
 -        textView.setBackground(Theme.createInsetRoundRectDrawable(Theme.getColor(Theme.key_chat_addContact, resourcesProvider) & 0x19ffffff, dp(15), dp(3)));
-+        textView.setBackground(desu.inugram.helpers.theme.NonIslandHelper.chatElements()
++        textView.setBackground(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()
 +            ? Theme.createSelectorDrawable(Theme.getColor(Theme.key_chat_addContact, resourcesProvider) & 0x19ffffff, Theme.RIPPLE_MASK_ALL)
 +            : Theme.createInsetRoundRectDrawable(Theme.getColor(Theme.key_chat_addContact, resourcesProvider) & 0x19ffffff, dp(15), dp(3)));
          menuView.setBackground(Theme.createCircleSelectorDrawable(Theme.getColor(Theme.key_listSelector, resourcesProvider), 0, 0));
@@ -2018,7 +2018,7 @@ index 0000000..0000000 100644
 +
 +        public void inu_applyMd3Style() {
 +            inu_md3Tabs = true;
-+            desu.inugram.helpers.theme.NonIslandHelper.applyMd3TabsStyle(selectorDrawable, listView, Theme.getColor(selectorColorKey, resourcesProvider));
++            xie.fa.gram.helpers.theme.NonIslandHelper.applyMd3TabsStyle(selectorDrawable, listView, Theme.getColor(selectorColorKey, resourcesProvider));
 +        }
 +
          public TabsView(Context context, boolean hasStableIds, int tabsSelectorType, Theme.ResourcesProvider resourcesProvider) {
@@ -2030,7 +2030,7 @@ index 0000000..0000000 100644
                          }
 -                        if (selectorType == SELECTOR_TYPE_BUBBLE_STYLE) {
 +                        if (inu_md3Tabs) {
-+                            desu.inugram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, hideProgress);
++                            xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, hideProgress);
 +                            selectorDrawable.draw(canvas);
 +                        } else if (selectorType == SELECTOR_TYPE_BUBBLE_STYLE) {
                              final float TAB_INTERNAL_PADDING = 12.5f;
@@ -2044,7 +2044,7 @@ index 0000000..0000000 100644
          float[] radii, float strokeWidth, boolean isTop,
          Paint paint
      ) {
-+        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
++        if (xie.fa.gram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
  
          final boolean radiiAreSame = isTop ?
              radii[0] == radii[1] && radii[1] == radii[2] && radii[2] == radii[3]:
@@ -2052,7 +2052,7 @@ index 0000000..0000000 100644
  
      public static void drawStroke(Canvas canvas, float left, float top, float right, float bottom,
                                       float radii, float strokeWidth, boolean isTop, Paint paint) {
-+        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
++        if (xie.fa.gram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
          final float strokeHalf = strokeWidth / 2f;
          canvas.save();
          if (isTop) {
@@ -2061,7 +2061,7 @@ index 0000000..0000000 100644
          }
  
 -        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, true);
-+        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, !desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue());
++        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, !xie.fa.gram.InuConfig.DISABLE_GLASS_GLARE.getValue());
          ninePatchDrawable.setBounds(
              boundProps.boundsWithPadding.left - ninePatchDrawablePadding.left,
              boundProps.boundsWithPadding.top - ninePatchDrawablePadding.top,
@@ -2069,7 +2069,7 @@ index 0000000..0000000 100644
      }
  
      private void drawStrokeInternalIfNeeded(Canvas canvas) {
-+        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
++        if (xie.fa.gram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
          final int strokeColorTop = Theme.multAlpha(this.strokeColorTop, alpha / 255f);
          final int strokeColorBottom = Theme.multAlpha(this.strokeColorBottom, alpha / 255f);
  
@@ -2081,7 +2081,7 @@ index 0000000..0000000 100644
  import org.telegram.messenger.UserConfig;
  import org.telegram.messenger.Utilities;
  import org.telegram.ui.ActionBar.Theme;
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundProvider;
  import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundProviderBuilder;
  
@@ -2122,7 +2122,7 @@ index 0000000..0000000 100644
      private BlurredBackgroundDrawable underKeyboardBackgroundDrawable;
      public void setInputIslandBubbleDrawable(BlurredBackgroundDrawable drawable) {
          blurredBackgroundDrawable = drawable;
-+        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
 +            blurredBackgroundDrawable.setStrokeWidth(0, 0);
 +            return;
 +        };
@@ -2134,7 +2134,7 @@ index 0000000..0000000 100644
          underKeyboardBackgroundDrawable = drawable;
          underKeyboardBackgroundDrawable.enableInAppKeyboardOptimization();
 -        underKeyboardBackgroundDrawable.setRadius(dp(INPUT_KEYBOARD_RADIUS), dp(INPUT_KEYBOARD_RADIUS), 0, 0);
-+        final int topRadius = desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(INPUT_KEYBOARD_RADIUS);
++        final int topRadius = xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(INPUT_KEYBOARD_RADIUS);
 +        underKeyboardBackgroundDrawable.setRadius(topRadius, topRadius, 0, 0);
          underKeyboardBackgroundDrawable.setThickness(dp(32));
          underKeyboardBackgroundDrawable.setIntensity(0.4f);
@@ -2144,7 +2144,7 @@ index 0000000..0000000 100644
                  }
              }
 -            underKeyboardBackgroundDrawable.setRadius(dp(INPUT_KEYBOARD_RADIUS), dp(INPUT_KEYBOARD_RADIUS), rightBottomRadius, leftBottomRadius, true);
-+            final int topRadius = desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(INPUT_KEYBOARD_RADIUS);
++            final int topRadius = xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(INPUT_KEYBOARD_RADIUS);
 +            underKeyboardBackgroundDrawable.setRadius(topRadius, topRadius, rightBottomRadius, leftBottomRadius, true);
          }
      }
@@ -2153,7 +2153,7 @@ index 0000000..0000000 100644
          );
          tmpRect.inset(0, -dp(7));
          tmpRect.offset(0, blurTop + (int) bubbleInputTranlationY);
-+        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
 +            tmpRect.top += dp(16);
 +            tmpRect.bottom = getMeasuredHeight();
 +            tmpRect.left = 0;
@@ -2216,7 +2216,7 @@ index 0000000..0000000 100644
  
  import java.util.HashSet;
  
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  
@@ -2313,7 +2313,7 @@ index 0000000..0000000 100644
          tab.colorSelected = Theme.getColor(Theme.key_glass_tabSelected, resourcesProvider);
          tab.colorSelectedText = Theme.getColor(Theme.key_glass_tabSelectedText, resourcesProvider);
          tab.updateColors();
-+        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) tab.inu_radiusOverride = dp(16);
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) tab.inu_radiusOverride = dp(16);
          return tab;
      }
  
@@ -2321,7 +2321,7 @@ index 0000000..0000000 100644
          tab.colorSelected = Theme.getColor(Theme.key_glass_tabSelected, resourcesProvider);
          tab.colorSelectedText = Theme.getColor(Theme.key_glass_tabSelectedText, resourcesProvider);
          tab.updateColors();
-+        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) tab.inu_radiusOverride = dp(16);
++        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) tab.inu_radiusOverride = dp(16);
          return tab;
      }
  
@@ -2329,11 +2329,11 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
-@@ -282,6 +282,7 @@ import desu.inugram.InuHooks;
- import desu.inugram.helpers.dialogs.DialogsFabHelper;
- import desu.inugram.helpers.dialogs.FolderHelper;
- import desu.inugram.helpers.dialogs.MainTabsHelper;
-+import desu.inugram.helpers.theme.NonIslandHelper;
+@@ -282,6 +282,7 @@ import xie.fa.gram.InuHooks;
+ import xie.fa.gram.helpers.dialogs.DialogsFabHelper;
+ import xie.fa.gram.helpers.dialogs.FolderHelper;
+ import xie.fa.gram.helpers.dialogs.MainTabsHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  import me.vkryl.android.util.ClickHelper;
@@ -2544,7 +2544,7 @@ index 0000000..0000000 100644
                  .setPadding(dp(7));
  
 +            if (NonIslandHelper.foldersBar()) {
-+                topPanelLayout.inu_blurHelper = desu.inugram.ui.BlurBehindHelper.create(topPanelLayout, contentView, Theme.key_windowBackgroundWhite);
++                topPanelLayout.inu_blurHelper = xie.fa.gram.ui.BlurBehindHelper.create(topPanelLayout, contentView, Theme.key_windowBackgroundWhite);
 +            } else {
              topPanelLayout.setPadding(dp(11), dp(21), dp(11), dp(21));
              topPanelLayout.setBlurredBackground(topPanelLayoutBackground);
@@ -2862,7 +2862,7 @@ index 0000000..0000000 100644
              }
              nameTextView[a].setPadding(0, AndroidUtilities.dp(6), 0, AndroidUtilities.dp(a == 0 ? 12 : 4));
 -            nameTextView[a].setTextSizePx(dp(17.5f));
-+            nameTextView[a].setTextSizePx(dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 18 : 17.5f));
++            nameTextView[a].setTextSizePx(dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 18 : 17.5f));
              nameTextView[a].setGravity(Gravity.LEFT);
              nameTextView[a].setTypeface(AndroidUtilities.bold());
              nameTextView[a].setLeftDrawableTopPadding(-AndroidUtilities.dp(1.3f));
@@ -2871,7 +2871,7 @@ index 0000000..0000000 100644
              onlineTextView[a].setEllipsizeByGradient(true);
              onlineTextView[a].setTextColor(applyPeerColor(getThemedColor(Theme.key_actionBarDefaultSubtitle), true, null));
 -            onlineTextView[a].setTextSizePx(dp(13.5f));
-+            onlineTextView[a].setTextSizePx(dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 14 : 13.5f));
++            onlineTextView[a].setTextSizePx(dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 14 : 13.5f));
              onlineTextView[a].setGravity(Gravity.LEFT);
              onlineTextView[a].setAlpha(a == 0 ? 0.0f : 1.0f);
              onlineTextView[a].setPivotX(dp(8));
@@ -2880,7 +2880,7 @@ index 0000000..0000000 100644
                  TextView textView = new TextView(context);
                  textView.setTextColor(getThemedColor(Theme.key_player_actionBarSubtitle));
 -                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, AndroidUtilities.dp(13.5f));
-+                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, AndroidUtilities.dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 14 : 13.5f));
++                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, AndroidUtilities.dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 14 : 13.5f));
                  textView.setSingleLine(true);
                  textView.setEllipsize(TextUtils.TruncateAt.END);
                  textView.setGravity(Gravity.LEFT);
@@ -2908,8 +2908,8 @@ index 0000000..0000000 100644
  
 -            float nameX = lerp((prevAvatarTranslation - dp(109) + dp(48)), backwardInitialValues[12 + a * 2], backwardDiff);
 -            float onlineX = lerp((prevAvatarTranslation - dp(109) + dp(48)), backwardInitialValues[12 + a * 2 + 1], backwardDiff);
-+            float nameX = lerp((prevAvatarTranslation - dp(109) + dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)), backwardInitialValues[12 + a * 2], backwardDiff);
-+            float onlineX = lerp((prevAvatarTranslation - dp(109) + dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)), backwardInitialValues[12 + a * 2 + 1], backwardDiff);
++            float nameX = lerp((prevAvatarTranslation - dp(109) + dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)), backwardInitialValues[12 + a * 2], backwardDiff);
++            float onlineX = lerp((prevAvatarTranslation - dp(109) + dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)), backwardInitialValues[12 + a * 2 + 1], backwardDiff);
  
              nameTextView[a].setTranslationX(nameX);
              nameTextView[a].setTranslationY(nameY);
@@ -2918,10 +2918,10 @@ index 0000000..0000000 100644
  //                metaball.setVisibility(View.GONE);
  
 -                nameTextView[0].setTranslationX((prevAvatarTranslation - dp(109) + dp(48)));
-+                nameTextView[0].setTranslationX((prevAvatarTranslation - dp(109) + dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)));
++                nameTextView[0].setTranslationX((prevAvatarTranslation - dp(109) + dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)));
                  nameTextView[0].setTranslationY((float) Math.floor(avY) + AndroidUtilities.dp(1.3f));
 -                onlineTextView[0].setTranslationX((prevAvatarTranslation - dp(109) + dp(48)));
-+                onlineTextView[0].setTranslationX((prevAvatarTranslation - dp(109) + dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)));
++                onlineTextView[0].setTranslationX((prevAvatarTranslation - dp(109) + dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)));
                  onlineTextView[0].setTranslationY((float) Math.floor(avY) + AndroidUtilities.dp(24));
                  nameTextView[0].setScaleX(1.0f);
                  nameTextView[0].setScaleY(1.0f);
@@ -2930,7 +2930,7 @@ index 0000000..0000000 100644
                  nameY = avatarBottom + dp(1.3f) + dp(7) * diff + titleAnimationsYDiff * (1f - avatarAnimationProgress);
                  onlineY = avatarBottom + dp(24) + (float) Math.floor(11 * AndroidUtilities.density) * diff;
 -                final float minimizedX = openAnimationInProgress ? (prevAvatarTranslation - dp(109) + dp(48)) : -dpf2(42 + 4);
-+                final float minimizedX = openAnimationInProgress ? (prevAvatarTranslation - dp(109) + dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)) : -dpf2(42 + 4);
++                final float minimizedX = openAnimationInProgress ? (prevAvatarTranslation - dp(109) + dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 54 : 48)) : -dpf2(42 + 4);
  
                  if (showStatusButton != null) {
                      showStatusButton.setAlpha((int) (0xFF * diff));
@@ -2955,7 +2955,7 @@ index 0000000..0000000 100644
  public class SearchTabsAndFiltersLayout extends FrameLayout implements Theme.Colorable {
      private final Path clipPath = new Path();
      private BlurredBackgroundDrawable blurredBackgroundDrawable;
-+    public desu.inugram.ui.BlurBehindHelper inu_blurHelper;
++    public xie.fa.gram.ui.BlurBehindHelper inu_blurHelper;
  
      public SearchTabsAndFiltersLayout(@NonNull Context context) {
          super(context);
@@ -2980,7 +2980,7 @@ index 0000000..0000000 100644
          layout.setOrientation(LinearLayout.HORIZONTAL);
          layout.setPadding(dp(16), dp(5), dp(8), dp(5));
 -        ScaleStateListAnimator.apply(layout, .025f, 1.4f);
-+        if (!desu.inugram.helpers.theme.NonIslandHelper.chatElements()) ScaleStateListAnimator.apply(layout, .025f, 1.4f);
++        if (!xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) ScaleStateListAnimator.apply(layout, .025f, 1.4f);
          addView(layout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.FILL));
  
          setBackground(Theme.createRadSelectorDrawable(Theme.multAlpha(Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider), .1f), 0, 0));
@@ -2994,8 +2994,8 @@ index 0000000..0000000 100644
          this.backgroundDrawable = backgroundDrawable;
 -        this.backgroundDrawable.setRadius(dp(22));
 -        this.backgroundDrawable.setPadding(dp(5));
-+        this.backgroundDrawable.setRadius(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(22));
-+        this.backgroundDrawable.setPadding(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(5));
++        this.backgroundDrawable.setRadius(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(22));
++        this.backgroundDrawable.setPadding(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : dp(5));
  
          listView.setOutlineProvider(backgroundDrawable.getViewOutlineProvider());
      }
@@ -3007,7 +3007,7 @@ index 0000000..0000000 100644
  import androidx.dynamicanimation.animation.SpringAnimation;
  import androidx.dynamicanimation.animation.SpringForce;
  import org.telegram.ui.recyclerview.ChatListItemAnimator;
-+import desu.inugram.helpers.theme.NonIslandHelper;
++import xie.fa.gram.helpers.theme.NonIslandHelper;
  
  import org.json.JSONObject;
  import org.telegram.messenger.AndroidUtilities;
@@ -3038,7 +3038,7 @@ index 0000000..0000000 100644
  //                    topGradient.setVisibility(View.VISIBLE);
  //                    bottomGradient.setVisibility(View.VISIBLE);
 -                    animateInputBackground.setRadius(dp(ChatInputViewsContainer.INPUT_BUBBLE_RADIUS));
-+                    animateInputBackground.setRadius(dp(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : ChatInputViewsContainer.INPUT_BUBBLE_RADIUS));
++                    animateInputBackground.setRadius(dp(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : ChatInputViewsContainer.INPUT_BUBBLE_RADIUS));
                      animateInputBackground.setAlpha(0xFF);
                      animateInputView.drawInputBackground = true;
                      animateInputView.invalidate();
@@ -3047,7 +3047,7 @@ index 0000000..0000000 100644
                      rect.set(0, 0, getWidth(), getHeight());
                      rect.inset(-dp(7), -dp(7));
 -                    final float rad = lerp(dpf2(ChatInputViewsContainer.INPUT_BUBBLE_RADIUS), 0, animateOpenProgress);
-+                    final float rad = lerp(dpf2(desu.inugram.helpers.theme.NonIslandHelper.chatElements() ? 0 : ChatInputViewsContainer.INPUT_BUBBLE_RADIUS), 0, animateOpenProgress);
++                    final float rad = lerp(dpf2(xie.fa.gram.helpers.theme.NonIslandHelper.chatElements() ? 0 : ChatInputViewsContainer.INPUT_BUBBLE_RADIUS), 0, animateOpenProgress);
                      lerp(animateFromRect, rect, animateOpenProgress, rect);
  
                      tempRect.set(animateInputBackground.getBounds());

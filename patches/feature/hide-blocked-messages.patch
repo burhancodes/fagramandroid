@@ -22,7 +22,7 @@ index 0000000..0000000 100644
  
      public static void addTextStyleRuns(MessageObject msg, Spannable text) {
 -        addTextStyleRuns(msg.messageOwner.entities, msg.messageText, text, -1);
-+        addTextStyleRuns(desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(msg), msg.messageText, text, -1);
++        addTextStyleRuns(xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(msg), msg.messageText, text, -1);
      }
  
      public static void addTextStyleRuns(TLRPC.DraftMessage msg, Spannable text, int allowedFlags) {
@@ -31,7 +31,7 @@ index 0000000..0000000 100644
  
      public static void addTextStyleRuns(MessageObject msg, Spannable text, int allowedFlags) {
 -        addTextStyleRuns(msg.messageOwner.entities, msg.messageText, text, allowedFlags);
-+        addTextStyleRuns(desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(msg), msg.messageText, text, allowedFlags);
++        addTextStyleRuns(xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(msg), msg.messageText, text, allowedFlags);
      }
  
      public static void addTextStyleRuns(ArrayList<TLRPC.MessageEntity> entities, CharSequence messageText, Spannable text) {
@@ -44,7 +44,7 @@ index 0000000..0000000 100644
  
      public boolean hasMediaSpoilers() {
 -        return !isRepostPreview && (messageOwner.media != null && messageOwner.media.spoiler || needDrawBluredPreview()) || isHiddenSensitive();
-+        return !isRepostPreview && (messageOwner.media != null && messageOwner.media.spoiler || needDrawBluredPreview() || desu.inugram.helpers.chat.BlockedMessagesHelper.shouldSpoil(this)) || isHiddenSensitive();
++        return !isRepostPreview && (messageOwner.media != null && messageOwner.media.spoiler || needDrawBluredPreview() || xie.fa.gram.helpers.chat.BlockedMessagesHelper.shouldSpoil(this)) || isHiddenSensitive();
      }
  
      public Boolean isSensitiveCached;
@@ -53,7 +53,7 @@ index 0000000..0000000 100644
              return addEntitiesToText(text, entities, isOutOwner(), true, photoViewer, useManualParse);
          } else {
 -            return addEntitiesToText(text, getEntities(), isOutOwner(), true, photoViewer, useManualParse);
-+            return addEntitiesToText(text, desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(this, getEntities()), isOutOwner(), true, photoViewer, useManualParse);
++            return addEntitiesToText(text, xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(this, getEntities()), isOutOwner(), true, photoViewer, useManualParse);
          }
      }
  
@@ -62,10 +62,10 @@ index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
 @@ -8947,6 +8947,9 @@ public class MessagesController extends BaseController implements NotificationCe
-                 totalBlockedCount = desu.inugram.helpers.security.ParanoiaHelper.adjustBlockedTotal(currentAccount, totalBlockedCount);
+                 totalBlockedCount = xie.fa.gram.helpers.security.ParanoiaHelper.adjustBlockedTotal(currentAccount, totalBlockedCount);
                  loadingBlockedPeers = false;
                  getNotificationCenter().postNotificationName(NotificationCenter.blockedUsersDidLoad);
-+                if (!blockedEndReached && desu.inugram.helpers.chat.BlockedMessagesHelper.isEnabled()) {
++                if (!blockedEndReached && xie.fa.gram.helpers.chat.BlockedMessagesHelper.isEnabled()) {
 +                    getBlockedPeers(false);
 +                }
              }
@@ -80,7 +80,7 @@ index 0000000..0000000 100644
          }
          String text = messageObject.messageOwner.message;
 -        if (text == null || messageObject.messageOwner.entities == null) {
-+        if (text == null || messageObject.messageOwner.entities == null && !desu.inugram.helpers.chat.BlockedMessagesHelper.shouldSpoil(messageObject)) {
++        if (text == null || messageObject.messageOwner.entities == null && !xie.fa.gram.helpers.chat.BlockedMessagesHelper.shouldSpoil(messageObject)) {
              return null;
          }
          StringBuilder stringBuilder = new StringBuilder(text);
@@ -90,7 +90,7 @@ index 0000000..0000000 100644
 -        for (int i = 0; i < messageObject.messageOwner.entities.size(); i++) {
 -            if (messageObject.messageOwner.entities.get(i) instanceof TLRPC.TL_messageEntitySpoiler) {
 -                TLRPC.TL_messageEntitySpoiler spoiler = (TLRPC.TL_messageEntitySpoiler) messageObject.messageOwner.entities.get(i);
-+        ArrayList<TLRPC.MessageEntity> entities = desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(messageObject);
++        ArrayList<TLRPC.MessageEntity> entities = xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(messageObject);
 +        for (int i = 0; i < entities.size(); i++) {
 +            if (entities.get(i) instanceof TLRPC.TL_messageEntitySpoiler) {
 +                TLRPC.TL_messageEntitySpoiler spoiler = (TLRPC.TL_messageEntitySpoiler) entities.get(i);
@@ -106,7 +106,7 @@ index 0000000..0000000 100644
                      }
                  }
 -                hasLinkPreview = !messageObject.isRestrictedMessage && MessageObject.getMedia(messageObject.messageOwner) instanceof TLRPC.TL_messageMediaWebPage && MessageObject.getMedia(messageObject.messageOwner).webpage instanceof TLRPC.TL_webPage;
-+                hasLinkPreview = !messageObject.isRestrictedMessage && !desu.inugram.helpers.chat.BlockedMessagesHelper.shouldSpoil(messageObject) && MessageObject.getMedia(messageObject.messageOwner) instanceof TLRPC.TL_messageMediaWebPage && MessageObject.getMedia(messageObject.messageOwner).webpage instanceof TLRPC.TL_webPage;
++                hasLinkPreview = !messageObject.isRestrictedMessage && !xie.fa.gram.helpers.chat.BlockedMessagesHelper.shouldSpoil(messageObject) && MessageObject.getMedia(messageObject.messageOwner) instanceof TLRPC.TL_messageMediaWebPage && MessageObject.getMedia(messageObject.messageOwner).webpage instanceof TLRPC.TL_webPage;
                  TLRPC.WebPage webpage = hasLinkPreview ? MessageObject.getMedia(messageObject.messageOwner).webpage : null;
                  if (messageObject.isStoryMention()) {
                      hasLinkPreview = true;
@@ -115,7 +115,7 @@ index 0000000..0000000 100644
                          stringFinalText = TextUtils.ellipsize(stringFinalText, textPaint, maxWidth, TextUtils.TruncateAt.END);
                          if (stringFinalText instanceof Spannable && messageObject.replyMessageObject.messageOwner != null) {
 -                            MediaDataController.addTextStyleRuns(messageObject.replyMessageObject.messageOwner.entities, messageObject.replyMessageObject.caption, (Spannable) stringFinalText);
-+                            MediaDataController.addTextStyleRuns(desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(messageObject.replyMessageObject), messageObject.replyMessageObject.caption, (Spannable) stringFinalText);
++                            MediaDataController.addTextStyleRuns(xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(messageObject.replyMessageObject), messageObject.replyMessageObject.caption, (Spannable) stringFinalText);
                              stringFinalText = TextUtils.ellipsize(stringFinalText, textPaint, maxWidth, TextUtils.TruncateAt.END);
                          }
                      } else if (messageObject.replyMessageObject != null && messageObject.replyMessageObject.messageText != null && messageObject.replyMessageObject.messageText.length() > 0) {
@@ -128,7 +128,7 @@ index 0000000..0000000 100644
                                                  message.spoilLoginCode();
                                              }
 -                                            MediaDataController.addTextStyleRuns(message.messageOwner.entities, message.caption, msgBuilder, TextStyleSpan.FLAG_STYLE_SPOILER | TextStyleSpan.FLAG_STYLE_STRIKE);
-+                                            MediaDataController.addTextStyleRuns(desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(message), message.caption, msgBuilder, TextStyleSpan.FLAG_STYLE_SPOILER | TextStyleSpan.FLAG_STYLE_STRIKE);
++                                            MediaDataController.addTextStyleRuns(xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(message), message.caption, msgBuilder, TextStyleSpan.FLAG_STYLE_SPOILER | TextStyleSpan.FLAG_STYLE_STRIKE);
                                              MediaDataController.addAnimatedEmojiSpans(message.messageOwner.entities, msgBuilder, currentMessagePaint == null ? null : currentMessagePaint.getFontMetricsInt());
                                          }
                                          messageString = new SpannableStringBuilder(emoji).append(msgBuilder);
@@ -137,7 +137,7 @@ index 0000000..0000000 100644
                      message.spoilLoginCode();
                  }
 -                MediaDataController.addTextStyleRuns(message.messageOwner.entities, mess, msgBuilder, TextStyleSpan.FLAG_STYLE_SPOILER | TextStyleSpan.FLAG_STYLE_STRIKE);
-+                MediaDataController.addTextStyleRuns(desu.inugram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(message), mess, msgBuilder, TextStyleSpan.FLAG_STYLE_SPOILER | TextStyleSpan.FLAG_STYLE_STRIKE);
++                MediaDataController.addTextStyleRuns(xie.fa.gram.helpers.chat.BlockedMessagesHelper.checkBlockedEntities(message), mess, msgBuilder, TextStyleSpan.FLAG_STYLE_SPOILER | TextStyleSpan.FLAG_STYLE_STRIKE);
                  if (message != null && message.messageOwner != null) {
                      MediaDataController.addAnimatedEmojiSpans(message.messageOwner.entities, msgBuilder, currentMessagePaint == null ? null : currentMessagePaint.getFontMetricsInt());
                  }
@@ -149,7 +149,7 @@ index 0000000..0000000 100644
              .add(NotificationCenter.botForumDraftDelete)
              .add(NotificationCenter.joinedGroup);
  
-+        desu.inugram.helpers.chat.BlockedMessagesHelper.ensureBlockedPeersLoaded(currentAccount);
++        xie.fa.gram.helpers.chat.BlockedMessagesHelper.ensureBlockedPeersLoaded(currentAccount);
 +
          globalObserversGroup
              .add(NotificationCenter.emojiLoaded)
@@ -158,7 +158,7 @@ index 0000000..0000000 100644
          } else if (id == NotificationCenter.screenshotTook) {
              updateInformationForScreenshotDetector();
          } else if (id == NotificationCenter.blockedUsersDidLoad) {
-+            if (desu.inugram.helpers.chat.BlockedMessagesHelper.isEnabled() && chatAdapter != null) {
++            if (xie.fa.gram.helpers.chat.BlockedMessagesHelper.isEnabled() && chatAdapter != null) {
 +                chatAdapter.notifyDataSetChanged(true);
 +            }
              if (currentUser != null && !UserObject.isReplyUser(currentUser)) {
@@ -168,7 +168,7 @@ index 0000000..0000000 100644
          private int messagesEndRow;
  
          public ArrayList<MessageObject> getMessages() {
-+            return desu.inugram.helpers.chat.BlockedMessagesHelper.isHideMode() ? inu_visibleMessages : inu_getSourceMessages();
++            return xie.fa.gram.helpers.chat.BlockedMessagesHelper.isHideMode() ? inu_visibleMessages : inu_getSourceMessages();
 +        }
 +
 +        public final ArrayList<MessageObject> inu_visibleMessages = new ArrayList<>();
@@ -189,7 +189,7 @@ index 0000000..0000000 100644
 -            } else {
 -                messages = ChatActivity.this.messages;
 -            }
-+            final ArrayList<MessageObject> messages = desu.inugram.helpers.chat.BlockedMessagesHelper.refreshVisible(this);
++            final ArrayList<MessageObject> messages = xie.fa.gram.helpers.chat.BlockedMessagesHelper.refreshVisible(this);
              if (chatMode == MODE_SAVED && isInsideContainer) {
                  hintRow = rowCount++;
              } else {
@@ -229,7 +229,7 @@ index 0000000..0000000 100644
                  if (view instanceof ChatMessageCell) {
                      final ChatMessageCell messageCell = (ChatMessageCell) view;
 -                    MessageObject.GroupedMessages groupedMessages = getValidGroupedMessage(message);
-+                    MessageObject.GroupedMessages groupedMessages = desu.inugram.helpers.chat.BlockedMessagesHelper.filterGroup(getValidGroupedMessage(message));
++                    MessageObject.GroupedMessages groupedMessages = xie.fa.gram.helpers.chat.BlockedMessagesHelper.filterGroup(getValidGroupedMessage(message));
                      messageCell.isChat = currentChat != null || UserObject.isUserSelf(currentUser) || UserObject.isReplyUser(currentUser) || (chatMode == MODE_SEARCH);
                      messageCell.setSponsoredMessageVisible(true, false);
                      messageCell.isBotForum = UserObject.isBotForum(currentUser);

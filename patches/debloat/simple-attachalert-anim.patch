@@ -15,7 +15,7 @@ index 0000000..0000000 100644
              updateDoneItemEnabled();
          };
  
-+        animated = animated && !desu.inugram.InuConfig.SIMPLE_ATTACH_POPUP_ANIMATION.getValue();
++        animated = animated && !xie.fa.gram.InuConfig.SIMPLE_ATTACH_POPUP_ANIMATION.getValue();
          if (!(currentAttachLayout instanceof ChatAttachAlertPhotoLayoutPreview || nextAttachLayout instanceof ChatAttachAlertPhotoLayoutPreview)) {
              if (animated) {
                  AnimatorSet animator = new AnimatorSet();
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
          }
          appearSpringAnimation = new SpringAnimation(super.containerView, DynamicAnimation.TRANSLATION_Y, 0);
 -        if (editingMessageObject != null) {
-+        if (desu.inugram.InuConfig.SIMPLE_ATTACH_POPUP_ANIMATION.getValue()) {
++        if (xie.fa.gram.InuConfig.SIMPLE_ATTACH_POPUP_ANIMATION.getValue()) {
 +            appearSpringAnimation.getSpring().setDampingRatio(1.0f);
 +            appearSpringAnimation.getSpring().setStiffness(1500.0f);
 +        } else if (editingMessageObject != null) {

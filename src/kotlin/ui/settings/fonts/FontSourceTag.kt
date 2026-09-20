@@ -1,10 +1,10 @@
-package desu.inugram.ui.settings.fonts
+package xie.fa.gram.ui.settings.fonts
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.widget.TextView
-import desu.inugram.helpers.font.FontId
+import xie.fa.gram.helpers.font.FontId
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

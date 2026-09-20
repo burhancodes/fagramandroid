@@ -1,4 +1,4 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.content.res.ColorStateList
 import android.graphics.Canvas
@@ -11,7 +11,7 @@ import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.view.View
 import android.widget.FrameLayout
-import desu.inugram.helpers.dialogs.MainTabsHelper
+import xie.fa.gram.helpers.dialogs.MainTabsHelper
 import me.vkryl.android.AnimatorUtils
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.AndroidUtilities.dpf2

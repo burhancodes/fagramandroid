@@ -16,7 +16,7 @@ index 0000000..0000000 100644
  
      public static boolean shouldShowUrlInAlert(String url) {
          try {
-+            if (desu.inugram.InuConfig.CONFIRM_INTERNAL_LINKS.getValue() && Browser.isInternalUrl(url, null)) return true;
++            if (xie.fa.gram.InuConfig.CONFIRM_INTERNAL_LINKS.getValue() && Browser.isInternalUrl(url, null)) return true;
              Uri uri = Uri.parse(url);
              url = uri.getHost();
              return checkHostForPunycode(url);
@@ -29,7 +29,7 @@ index 0000000..0000000 100644
          if (!AndroidUtilities.isContextSafe(context)) return;
          final String scheme = url == null ? null : Uri.parse(url).getScheme();
 -        if (Browser.isInternalUrl(url, null) || !ask || "mailto".equalsIgnoreCase(scheme)) {
-+        if ((Browser.isInternalUrl(url, null) && !desu.inugram.InuConfig.CONFIRM_INTERNAL_LINKS.getValue()) || !ask || "mailto".equalsIgnoreCase(scheme)) {
++        if ((Browser.isInternalUrl(url, null) && !xie.fa.gram.InuConfig.CONFIRM_INTERNAL_LINKS.getValue()) || !ask || "mailto".equalsIgnoreCase(scheme)) {
              Browser.openUrl(context, Uri.parse(url), inlineReturn == 0, tryTelegraph, forceNotInternalForApps && checkInternalBotApp(url), progress, null, false, true, false);
              return;
          }

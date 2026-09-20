@@ -1,4 +1,4 @@
-package desu.inugram.ui.drawer
+package xie.fa.gram.ui.drawer
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -19,7 +19,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.annotation.Keep
 import androidx.core.graphics.ColorUtils
-import desu.inugram.helpers.dialogs.DrawerHelper
+import xie.fa.gram.helpers.dialogs.DrawerHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.BaseFragment

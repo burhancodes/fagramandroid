@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -6,11 +6,11 @@ import android.graphics.PorterDuffColorFilter
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import desu.inugram.InuConfig
-import desu.inugram.InuConfig.AttachCameraModeItem.Companion.FAB
-import desu.inugram.InuConfig.AttachCameraModeItem.Companion.INSTANT
-import desu.inugram.InuConfig.AttachCameraModeItem.Companion.STATIC
-import desu.inugram.InuConfig.AttachCameraModeItem.Companion.TAB
+import xie.fa.gram.InuConfig
+import xie.fa.gram.InuConfig.AttachCameraModeItem.Companion.FAB
+import xie.fa.gram.InuConfig.AttachCameraModeItem.Companion.INSTANT
+import xie.fa.gram.InuConfig.AttachCameraModeItem.Companion.STATIC
+import xie.fa.gram.InuConfig.AttachCameraModeItem.Companion.TAB
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.Theme

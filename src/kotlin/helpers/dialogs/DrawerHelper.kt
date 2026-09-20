@@ -1,4 +1,4 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -11,16 +11,16 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import desu.inugram.InuConfig
-import desu.inugram.helpers.dialogs.DrawerHelper.setupMainFragment
-import desu.inugram.helpers.update.UpdateHelper
-import desu.inugram.ui.drawer.DrawerAddCell
-import desu.inugram.ui.drawer.DrawerLayoutAdapter
-import desu.inugram.ui.drawer.DrawerProfileCell
-import desu.inugram.ui.drawer.DrawerProxyCell
-import desu.inugram.ui.drawer.DrawerSwipeController
-import desu.inugram.ui.drawer.DrawerUserCell
-import desu.inugram.ui.drawer.SideMenultItemAnimator
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.dialogs.DrawerHelper.setupMainFragment
+import xie.fa.gram.helpers.update.UpdateHelper
+import xie.fa.gram.ui.drawer.DrawerAddCell
+import xie.fa.gram.ui.drawer.DrawerLayoutAdapter
+import xie.fa.gram.ui.drawer.DrawerProfileCell
+import xie.fa.gram.ui.drawer.DrawerProxyCell
+import xie.fa.gram.ui.drawer.DrawerSwipeController
+import xie.fa.gram.ui.drawer.DrawerUserCell
+import xie.fa.gram.ui.drawer.SideMenultItemAnimator
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader

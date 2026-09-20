@@ -18,7 +18,7 @@ index 0000000..0000000 100644
                  }
                  lastFrameTime = newTime;
 -                float duration = preview && open ? 190.0f : 150.0f;
-+                float duration = (preview && open ? 190.0f : 150.0f) / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
++                float duration = (preview && open ? 190.0f : 150.0f) / xie.fa.gram.InuConfig.ANIMATION_SPEED.getValue();
                  animationProgress += dt / duration;
                  if (animationProgress > 1.0f) {
                      animationProgress = 1.0f;
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
                              justFullyExpanded = true;
                              final int actionBarHeight = ActionBar.getCurrentActionBarHeight() + (actionBar.getOccupyStatusBar() ? AndroidUtilities.statusBarHeight : 0);
 -                            listView.smoothScrollBy(0, view.getTop() - listView.getMeasuredWidth() - getActionsExtraHeight() + actionBarHeight, (int) expandAnimator.getDuration(), (Interpolator) expandAnimator.getInterpolator());
-+                            listView.smoothScrollBy(0, view.getTop() - listView.getMeasuredWidth() - getActionsExtraHeight() + actionBarHeight, Math.max(1, Math.round(expandAnimator.getDuration() / desu.inugram.InuConfig.ANIMATION_SPEED.getValue())), (Interpolator) expandAnimator.getInterpolator());
++                            listView.smoothScrollBy(0, view.getTop() - listView.getMeasuredWidth() - getActionsExtraHeight() + actionBarHeight, Math.max(1, Math.round(expandAnimator.getDuration() / xie.fa.gram.InuConfig.ANIMATION_SPEED.getValue())), (Interpolator) expandAnimator.getInterpolator());
                              listView.canStopFlinger = false;
                          }
                          expandNameYStartedFrom = nameTextView[1].getTranslationY();

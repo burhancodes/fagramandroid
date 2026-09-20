@@ -18,7 +18,7 @@ index 0000000..0000000 100644
                  return title;
              }
              if (props == null) return "";
-+            if (props.inu_internalType != 0) return desu.inugram.helpers.WebAppHelper.getInternalBotName(props);
++            if (props.inu_internalType != 0) return xie.fa.gram.helpers.WebAppHelper.getInternalBotName(props);
              TLRPC.User user = MessagesController.getInstance(props.currentAccount).getUser(props.botId);
              return UserObject.getUserName(user);
          }
@@ -31,7 +31,7 @@ index 0000000..0000000 100644
  
          TLRPC.User userbot = MessagesController.getInstance(currentAccount).getUser(botId);
 -        CharSequence title = UserObject.getUserName(userbot);
-+        CharSequence title = props.inu_internalType > 0 ? desu.inugram.helpers.WebAppHelper.getInternalBotName(props) : UserObject.getUserName(userbot);
++        CharSequence title = props.inu_internalType > 0 ? xie.fa.gram.helpers.WebAppHelper.getInternalBotName(props) : UserObject.getUserName(userbot);
          try {
              TextPaint tp = new TextPaint();
              tp.setTextSize(dp(20));
@@ -63,7 +63,7 @@ index 0000000..0000000 100644
  
          final TLRPC.User userbot = MessagesController.getInstance(currentAccount).getUser(botId);
 -        CharSequence title = UserObject.getUserName(userbot);
-+        CharSequence title = props.inu_internalType > 0 ? desu.inugram.helpers.WebAppHelper.getInternalBotName(props) : UserObject.getUserName(userbot);
++        CharSequence title = props.inu_internalType > 0 ? xie.fa.gram.helpers.WebAppHelper.getInternalBotName(props) : UserObject.getUserName(userbot);
          try {
              TextPaint tp = new TextPaint();
              tp.setTextSize(dp(20));

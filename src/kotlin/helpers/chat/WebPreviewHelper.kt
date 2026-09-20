@@ -1,8 +1,8 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.text.TextUtils
 import android.util.Log
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.json.JSONArray
 import org.json.JSONObject
 import org.telegram.messenger.LocaleController

@@ -16,7 +16,7 @@ index 0000000..0000000 100644
      }
  
      public EmojiThemes getDialogTheme(long dialogId) {
-+        if (desu.inugram.helpers.chat.ChatHelper.shouldRemoveTheme(currentAccount, dialogId)) return null;
++        if (xie.fa.gram.helpers.chat.ChatHelper.shouldRemoveTheme(currentAccount, dialogId)) return null;
          ThemeKey themeKey = dialogEmoticonsMap.get(dialogId);
          if (themeKey == null) {
              themeKey = ThemeKey.fromSavedString(getEmojiSharedPreferences().getString("chatTheme_" + currentAccount + "_" + dialogId, null));
@@ -24,7 +24,7 @@ index 0000000..0000000 100644
      }
  
      public TLRPC.WallPaper getDialogWallpaper(long dialogId) {
-+        if (desu.inugram.helpers.chat.ChatHelper.shouldRemoveWallpaper(currentAccount, dialogId)) return null;
++        if (xie.fa.gram.helpers.chat.ChatHelper.shouldRemoveWallpaper(currentAccount, dialogId)) return null;
          if (dialogId >= 0) {
              TLRPC.UserFull userFull = getMessagesController().getUserFull(dialogId);
              if (userFull != null) {
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
          if (themeDelegate == null || parentThemeDelegate != null) {
              return;
          }
-+        if (desu.inugram.helpers.chat.ChatHelper.shouldRemoveTheme(currentAccount, dialog_id)) {
++        if (xie.fa.gram.helpers.chat.ChatHelper.shouldRemoveTheme(currentAccount, dialog_id)) {
 +            TLRPC.WallPaper wallPaper = ChatThemeController.getInstance(currentAccount).getDialogWallpaper(dialog_id);
 +            themeDelegate.setCurrentTheme(null, wallPaper, openAnimationStartTime != 0, null);
 +            return;

@@ -12,7 +12,7 @@
     "lint-patches": "tsx scripts/lint-patches.ts",
     "push-theme": "tsx scripts/push-theme.ts",
     "build-debug": "cd worktree && ./gradlew TMessagesProj_App:assembleDebug",
-    "run-debug": "cd worktree && ./gradlew TMessagesProj_App:installDebug && adb shell am start desu.inugram.beta/org.telegram.ui.LaunchActivity",
+    "run-debug": "cd worktree && ./gradlew TMessagesProj_App:installDebug && adb shell am start xie.fa.gram.beta/org.telegram.ui.LaunchActivity",
     "prepare": "husky"
   },
   "dependencies": {

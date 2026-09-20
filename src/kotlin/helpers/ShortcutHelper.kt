@@ -1,4 +1,4 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.app.Activity
 import android.content.Context
@@ -6,10 +6,10 @@ import android.content.Intent
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import desu.inugram.InuConfig
-import desu.inugram.helpers.security.ParanoiaHelper
-import desu.inugram.helpers.security.PasscodeHelper
-import desu.inugram.ui.AccountPickerActivity
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.security.ParanoiaHelper
+import xie.fa.gram.helpers.security.PasscodeHelper
+import xie.fa.gram.ui.AccountPickerActivity
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.MessagesController
@@ -23,7 +23,7 @@ import org.telegram.ui.LaunchActivity
 // wipes all dynamic shortcuts. Add an Entry here to expose a new one.
 // Stock ranks its own: 0 = compose, 1+ = top chats. Launchers only render the first few by rank.
 object ShortcutHelper {
-    const val SWITCH_ACCOUNT_ACTION = "desu.inugram.action.SWITCH_ACCOUNT"
+    const val SWITCH_ACCOUNT_ACTION = "xie.fa.gram.action.SWITCH_ACCOUNT"
 
     private class Entry(
         val id: String,
@@ -40,7 +40,7 @@ object ShortcutHelper {
     private val entries = listOf(
         Entry(
             id = "inu_enter_paranoia",
-            action = "desu.inugram.action.ENTER_PARANOIA",
+            action = "xie.fa.gram.action.ENTER_PARANOIA",
             labelRes = R.string.InuParanoiaMode,
             iconRes = R.drawable.inu_shortcut_paranoia,
             rank = 0,

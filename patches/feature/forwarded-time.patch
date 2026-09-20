@@ -18,7 +18,7 @@ index 0000000..0000000 100644
                      } else if (!forwardFromSaved) { //if (!toMyself || !msgObj.isOutOwner())
                          long fromId = msgObj.getFromChatId();
                          newMsg.fwd_from = new TLRPC.TL_messageFwdHeader();
-+                        if (desu.inugram.InuConfig.SHOW_FORWARD_TIME.getValue()) {
++                        if (xie.fa.gram.InuConfig.SHOW_FORWARD_TIME.getValue()) {
 +                            newMsg.fwd_from.date = msgObj.messageOwner.date;
 +                        }
                          newMsg.fwd_from.channel_post = msgObj.getId();
@@ -33,7 +33,7 @@ index 0000000..0000000 100644
                          stringBuilder.setSpan(forwardAvatar, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                      }
 -                    forwardNameCenterX = (int) Math.ceil(Theme.chat_forwardNamePaint.measureText(name, 0, name.length())) / 2;
-+                    forwardNameCenterX = (int) Math.ceil(Theme.chat_forwardNamePaint.measureText(name, 0, name.length())) / 2 + desu.inugram.helpers.chat.ChatHelper.getCompactForwardPrefixWidth(messageObject);
++                    forwardNameCenterX = (int) Math.ceil(Theme.chat_forwardNamePaint.measureText(name, 0, name.length())) / 2 + xie.fa.gram.helpers.chat.ChatHelper.getCompactForwardPrefixWidth(messageObject);
                      if (currentForwardName == null || messageObject.messageOwner.fwd_from.from_id != null) {
                          stringBuilder.setSpan(new TypefaceSpan(AndroidUtilities.bold()), 0, stringBuilder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                      }
@@ -41,19 +41,19 @@ index 0000000..0000000 100644
                      lastLine = Emoji.replaceEmoji(lastLine, Theme.chat_forwardNamePaint.getFontMetricsInt(), false);
                  } catch (Exception ignore) {
                  }
-+                lastLine = desu.inugram.helpers.chat.ChatHelper.maybeCompactForwardLine(lastLine, forwardedNameWidth, messageObject);
++                lastLine = xie.fa.gram.helpers.chat.ChatHelper.maybeCompactForwardLine(lastLine, forwardedNameWidth, messageObject);
                  lastLine = TextUtils.ellipsize(lastLine, Theme.chat_forwardNamePaint, forwardedNameWidth, TextUtils.TruncateAt.END);
                  try {
                      forwardedNameLayout[1] = new StaticLayout(lastLine, Theme.chat_forwardNamePaint, forwardedNameWidth + dp(2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 -                    lastLine = TextUtils.ellipsize(AndroidUtilities.replaceTags(forwardedString), Theme.chat_forwardNamePaint, forwardedNameWidth, TextUtils.TruncateAt.END);
-+                    lastLine = TextUtils.ellipsize(desu.inugram.helpers.chat.ChatHelper.formatForwardHeaderLine(AndroidUtilities.replaceTags(forwardedString), messageObject), Theme.chat_forwardNamePaint, forwardedNameWidth, TextUtils.TruncateAt.END);
++                    lastLine = TextUtils.ellipsize(xie.fa.gram.helpers.chat.ChatHelper.formatForwardHeaderLine(AndroidUtilities.replaceTags(forwardedString), messageObject), Theme.chat_forwardNamePaint, forwardedNameWidth, TextUtils.TruncateAt.END);
                      forwardedNameLayout[0] = new StaticLayout(lastLine, Theme.chat_forwardNamePaint, forwardedNameWidth + dp(2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-+                    desu.inugram.helpers.chat.ChatHelper.maybeCompactForwardLayouts(forwardedNameLayout, forwardedNameWidth + dp(2), messageObject);
++                    xie.fa.gram.helpers.chat.ChatHelper.maybeCompactForwardLayouts(forwardedNameLayout, forwardedNameWidth + dp(2), messageObject);
                      if (forwardBg == null) {
                          forwardBg = new ForwardBackground(this);
                      }
 -                    forwardBg.set(forwardedNameLayout, !currentMessageObject.isOutOwner() && !(drawNameLayout && nameLayout != null) && pinnedTop);
-+                    forwardBg.set(forwardedNameLayout, !currentMessageObject.isOutOwner() && !(drawNameLayout && nameLayout != null) && pinnedTop, desu.inugram.helpers.chat.ChatHelper.isCompactForward(messageObject));
++                    forwardBg.set(forwardedNameLayout, !currentMessageObject.isOutOwner() && !(drawNameLayout && nameLayout != null) && pinnedTop, xie.fa.gram.helpers.chat.ChatHelper.isCompactForward(messageObject));
                      forwardedNameWidth = Math.max((int) Math.ceil(forwardedNameLayout[0].getLineWidth(0)), (int) Math.ceil(forwardedNameLayout[1].getLineWidth(0)));
                      if (hasPsaHint) {
                          forwardedNameWidth += dp(36);
@@ -62,7 +62,7 @@ index 0000000..0000000 100644
                      forwardNameOffsetX[1] = forwardedNameLayout[1].getLineLeft(0);
                      if (isSideMenued && !drawBackground || messageObject.type != MessageObject.TYPE_ROUND_VIDEO && !messageObject.isAnyKindOfSticker() || messageObject.type == MessageObject.TYPE_EMOJIS) {
 -                        namesOffset += dp(8) + Theme.chat_forwardNamePaint.getTextSize() * 2;
-+                        namesOffset += dp(8) + Theme.chat_forwardNamePaint.getTextSize() * desu.inugram.helpers.chat.ChatHelper.getForwardLineCount(messageObject) - (desu.inugram.helpers.chat.ChatHelper.isCompactForward(messageObject) ? dp(4) : 0);
++                        namesOffset += dp(8) + Theme.chat_forwardNamePaint.getTextSize() * xie.fa.gram.helpers.chat.ChatHelper.getForwardLineCount(messageObject) - (xie.fa.gram.helpers.chat.ChatHelper.isCompactForward(messageObject) ? dp(4) : 0);
                          if (messageObject.type == MessageObject.TYPE_EMOJIS) {
                              namesOffset += dp(8);
                          }
@@ -71,7 +71,7 @@ index 0000000..0000000 100644
                  }
                  if (drawForwardedName) {
 -                    forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * 2;
-+                    forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * desu.inugram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
++                    forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * xie.fa.gram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
                      replyStartY = forwardNameY + forwardHeight + dp(6);
                  } else {
                      replyStartY = dp(12);
@@ -80,7 +80,7 @@ index 0000000..0000000 100644
                      replyStartX -= dp(7);
                  }
 -                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * 2;
-+                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * desu.inugram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
++                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * xie.fa.gram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
                  replyStartY = dp(12) + (int) (drawNameLayout && nameLayout != null ? getNameHeightAnimated() + dp(1) : 0) + (drawForwardedName && forwardedNameLayout[0] != null ? dp(4) + forwardHeight : 0);
              }
              replyStartY += dp(.66f);
@@ -89,7 +89,7 @@ index 0000000..0000000 100644
                  }
                  forwardNameY = dp(12);
 -                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * 2;
-+                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * desu.inugram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
++                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * xie.fa.gram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
  
                  int backWidth = forwardedNameWidthLocal + dp(14);
                  if (hasReply) {
@@ -98,7 +98,7 @@ index 0000000..0000000 100644
                      forwardNameY += dp(2);
                  }
 -                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * 2;
-+                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * desu.inugram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
++                forwardHeight = dp(4) + (int) Theme.chat_forwardNamePaint.getTextSize() * xie.fa.gram.helpers.chat.ChatHelper.getForwardLineCount(currentMessageObject);
                  Theme.chat_forwardNamePaint.setColor(getThemedColor(hasPsaHint ? Theme.key_chat_inPsaNameText : Theme.key_chat_inForwardedNameText));
                  if (currentMessageObject.isOutOwner()) {
                      Theme.chat_forwardNamePaint.setColor(getThemedColor(hasPsaHint ? Theme.key_chat_outPsaNameText : Theme.key_chat_outForwardedNameText));
@@ -106,7 +106,7 @@ index 0000000..0000000 100644
                  } else if (virtualViewId == FORWARD) {
                      info.setEnabled(true);
                      StringBuilder sb = new StringBuilder();
-+                    sb.append(desu.inugram.helpers.chat.ChatHelper.getForwardAccessibilityPrefix(currentMessageObject));
++                    sb.append(xie.fa.gram.helpers.chat.ChatHelper.getForwardAccessibilityPrefix(currentMessageObject));
                      if (forwardedNameLayout[0] != null && forwardedNameLayout[1] != null) {
                          for (int a = 0; a < 2; a++) {
                              sb.append(forwardedNameLayout[a].getText());
@@ -146,7 +146,7 @@ index 0000000..0000000 100644
                  top += (cell.getMeasuredHeight() - Math.max(0, cell.getBottom() - parentView.getMeasuredHeight()) - AndroidUtilities.dp(50));
              } else {
                  top += AndroidUtilities.dp(22);
-+                top -= desu.inugram.helpers.chat.ChatHelper.getCompactForwardHintShift(messageObject);
++                top -= xie.fa.gram.helpers.chat.ChatHelper.getCompactForwardHintShift(messageObject);
                  if (!messageObject.isOutOwner() && cell.isDrawNameLayout()) {
                      top += AndroidUtilities.dp(20);
                  }

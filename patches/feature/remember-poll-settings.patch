@@ -16,7 +16,7 @@ index 0000000..0000000 100644
              allowRevoting = !quizPoll;
          }
 +        if (!todo) {
-+            android.content.SharedPreferences inuPrefs = desu.inugram.InuConfig.INSTANCE.getPrefs();
++            android.content.SharedPreferences inuPrefs = xie.fa.gram.InuConfig.INSTANCE.getPrefs();
 +            multipleChoise = inuPrefs.getBoolean("poll_last_multiple", false);
 +            allowAddingOptions = !quizPoll && inuPrefs.getBoolean("poll_last_open_answers", false);
 +            shuffleOptions = inuPrefs.getBoolean("poll_last_shuffle", false);
@@ -29,7 +29,7 @@ index 0000000..0000000 100644
          poll.poll.revoting_disabled = !allowRevoting;
          poll.poll.shuffle_answers = shuffleOptions;
 +        if (!quizPoll) {
-+            desu.inugram.InuConfig.INSTANCE.getPrefs().edit()
++            xie.fa.gram.InuConfig.INSTANCE.getPrefs().edit()
 +                .putBoolean("poll_last_multiple", multipleChoise)
 +                .putBoolean("poll_last_open_answers", allowAddingOptions)
 +                .putBoolean("poll_last_shuffle", shuffleOptions)

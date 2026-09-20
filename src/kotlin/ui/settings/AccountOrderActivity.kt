@@ -1,9 +1,9 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 
 import android.content.Context
 import android.view.View
-import desu.inugram.helpers.dialogs.AccountOrderHelper
+import xie.fa.gram.helpers.dialogs.AccountOrderHelper
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig

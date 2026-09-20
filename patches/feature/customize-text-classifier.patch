@@ -15,7 +15,7 @@ index 0000000..0000000 100644
              setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
          }
          init();
-+        desu.inugram.helpers.TextClassifierHelper.configure(this);
++        xie.fa.gram.helpers.TextClassifierHelper.configure(this);
      }
  
      public void useAnimatedTextDrawable() {

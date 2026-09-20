@@ -1,4 +1,4 @@
-package desu.inugram.helpers.search
+package xie.fa.gram.helpers.search
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter

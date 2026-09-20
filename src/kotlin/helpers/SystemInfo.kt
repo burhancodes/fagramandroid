@@ -1,4 +1,4 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.Manifest
 import android.content.Context
@@ -9,7 +9,7 @@ import android.os.Environment
 import android.os.PowerManager
 import android.os.Process
 import android.os.UserManager
-import desu.inugram.helpers.update.UpdateHelper
+import xie.fa.gram.helpers.update.UpdateHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.SharedConfig

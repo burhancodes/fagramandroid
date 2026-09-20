@@ -1,4 +1,4 @@
-package desu.inugram.core.urlcleaner
+package xie.fa.gram.core.urlcleaner
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

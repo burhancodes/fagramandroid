@@ -16,7 +16,7 @@ index 0000000..0000000 100644
      private boolean shownRichButton;
      private void showRichButton(boolean show_) {
 -        final boolean show = (richDraftActive || show_) && parentFragment != null && !parentFragment.isSecretChat() && editingMessageObject == null && MessagesController.getInstance(currentAccount).richEditorAvailable();
-+        final boolean show = (richDraftActive || show_) && parentFragment != null && !parentFragment.isSecretChat() && editingMessageObject == null && MessagesController.getInstance(currentAccount).richEditorAvailable() && !desu.inugram.InuConfig.HIDE_RICH_EDITOR_BUTTON.getValue();
++        final boolean show = (richDraftActive || show_) && parentFragment != null && !parentFragment.isSecretChat() && editingMessageObject == null && MessagesController.getInstance(currentAccount).richEditorAvailable() && !xie.fa.gram.InuConfig.HIDE_RICH_EDITOR_BUTTON.getValue();
  
          if (shownRichButton == show) return;
          shownRichButton = show;

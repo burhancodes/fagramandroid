@@ -1,4 +1,4 @@
-package desu.inugram.core.fileid
+package xie.fa.gram.core.fileid
 
 // test vectors from https://github.com/mtcute/mtcute/tree/master/packages/file-id, MIT license.
 

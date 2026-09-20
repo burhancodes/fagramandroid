@@ -31,7 +31,7 @@ index 0000000..0000000 100644
      @Override
      public boolean canSelectStories() {
 -        return photoPathsArray != null && photoPathsArray.size() == 1 || videoPath != null;
-+        return !desu.inugram.InuConfig.HIDE_REPOST_TO_STORY.getValue() && (photoPathsArray != null && photoPathsArray.size() == 1 || videoPath != null);
++        return !xie.fa.gram.InuConfig.HIDE_REPOST_TO_STORY.getValue() && (photoPathsArray != null && photoPathsArray.size() == 1 || videoPath != null);
      }
  
      @Override
@@ -43,7 +43,7 @@ index 0000000..0000000 100644
      }
  
      public boolean hasStories() {
-+        if (desu.inugram.InuConfig.HIDE_STORIES.getValue()) return false;
++        if (xie.fa.gram.InuConfig.HIDE_STORIES.getValue()) return false;
          return (dialogListStories != null && dialogListStories.size() > 0) || hasSelfStories();
      }
  

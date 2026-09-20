@@ -1,7 +1,7 @@
-package desu.inugram.helpers.media
+package xie.fa.gram.helpers.media
 
 import android.provider.MediaStore
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.FileLoader
 import org.telegram.messenger.ImageLoader
 import org.telegram.messenger.MessageObject

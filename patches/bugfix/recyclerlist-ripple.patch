@@ -223,7 +223,7 @@ index 0000000..0000000 100644
 +            int inu_bottomPadding = getAdapter() instanceof SelectionAdapter ? ((SelectionAdapter) getAdapter()).getSelectionBottomPadding(selectorView) : 0;
 +            selectorRect.set(selectorView.getLeft(), selectorView.getTop(), selectorView.getRight(), selectorView.getBottom() - inu_bottomPadding);
 +            if (selectorType == 42) {
-+                desu.inugram.helpers.theme.NonIslandHelper.adjustMd3TabSelectorRect(selectorRect);
++                xie.fa.gram.helpers.theme.NonIslandHelper.adjustMd3TabSelectorRect(selectorRect);
 +            }
 +        }
  

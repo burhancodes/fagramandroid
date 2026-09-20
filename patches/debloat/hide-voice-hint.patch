@@ -16,7 +16,7 @@ index 0000000..0000000 100644
          dayNightThemeSwitchHintCount = 3;
          stealthModeSendMessageConfirm = 2;
          dayNightWallpaperSwitchHint = 0;
-+        desu.inugram.InuConfig.VOICE_HINT_SHOWN.setValue(true);
++        xie.fa.gram.InuConfig.VOICE_HINT_SHOWN.setValue(true);
          saveConfig();
      }
  

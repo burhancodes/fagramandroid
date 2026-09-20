@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings.fonts
+package xie.fa.gram.ui.settings.fonts
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter

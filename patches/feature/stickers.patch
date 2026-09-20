@@ -15,7 +15,7 @@ index 0000000..0000000 100644
  import java.util.Stack;
  import java.util.concurrent.atomic.AtomicReference;
  
-+import desu.inugram.InuConfig;
++import xie.fa.gram.InuConfig;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  import me.vkryl.core.BitwiseUtils;

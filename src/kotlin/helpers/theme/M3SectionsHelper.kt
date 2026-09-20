@@ -1,4 +1,4 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.graphics.Canvas
 import android.graphics.ColorFilter
@@ -13,7 +13,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.R
 import org.telegram.messenger.Utilities

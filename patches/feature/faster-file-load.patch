@@ -17,7 +17,7 @@ index 0000000..0000000 100644
  
      private void updateParams() {
 -        if ((preloadPrefixSize > 0 || MessagesController.getInstance(currentAccount).getfileExperimentalParams) && !forceSmallChunk) {
-+        if ((preloadPrefixSize > 0 || MessagesController.getInstance(currentAccount).getfileExperimentalParams || desu.inugram.InuConfig.FASTER_DOWNLOADS.getValue()) && !forceSmallChunk) {
++        if ((preloadPrefixSize > 0 || MessagesController.getInstance(currentAccount).getfileExperimentalParams || xie.fa.gram.InuConfig.FASTER_DOWNLOADS.getValue()) && !forceSmallChunk) {
              downloadChunkSizeBig = 1024 * 512;
              maxDownloadRequests = 8;
              maxDownloadRequestsBig = 8;
@@ -38,7 +38,7 @@ index 0000000..0000000 100644
                      maxUploadParts = MessagesController.getInstance(currentAccount).uploadMaxFilePartsPremium;
                  }
 -                uploadChunkSize = (int) Math.max(slowNetwork ? minUploadChunkSlowNetworkSize : minUploadChunkSize, (totalFileSize + 1024L * maxUploadParts - 1) / (1024L * maxUploadParts));
-+                uploadChunkSize = (int) Math.max(slowNetwork ? minUploadChunkSlowNetworkSize : (desu.inugram.InuConfig.FASTER_UPLOADS.getValue() ? minUploadChunkSizeBoost : minUploadChunkSize), (totalFileSize + 1024L * maxUploadParts - 1) / (1024L * maxUploadParts));
++                uploadChunkSize = (int) Math.max(slowNetwork ? minUploadChunkSlowNetworkSize : (xie.fa.gram.InuConfig.FASTER_UPLOADS.getValue() ? minUploadChunkSizeBoost : minUploadChunkSize), (totalFileSize + 1024L * maxUploadParts - 1) / (1024L * maxUploadParts));
                  if (1024 % uploadChunkSize != 0) {
                      int chunkSize = 64;
                      while (uploadChunkSize > chunkSize) {

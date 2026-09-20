@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings.fonts
+package xie.fa.gram.ui.settings.fonts
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,7 @@ import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
 import android.widget.TextView
-import desu.inugram.helpers.font.FontHelper
+import xie.fa.gram.helpers.font.FontHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme

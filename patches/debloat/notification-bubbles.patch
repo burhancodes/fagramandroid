@@ -16,7 +16,7 @@ index 0000000..0000000 100644
                  icon = IconCompat.createWithResource(ApplicationLoader.applicationContext, R.drawable.book_group);
              }
 -            if (supportsBubble) {
-+            if (supportsBubble && !desu.inugram.InuConfig.DISABLE_CHAT_BUBBLES.getValue()) {
++            if (supportsBubble && !xie.fa.gram.InuConfig.DISABLE_CHAT_BUBBLES.getValue()) {
                  NotificationCompat.BubbleMetadata.Builder bubbleBuilder =
                          new NotificationCompat.BubbleMetadata.Builder(
                                  PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT),

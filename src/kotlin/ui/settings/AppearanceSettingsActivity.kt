@@ -1,14 +1,14 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
-import desu.inugram.InuConfig
-import desu.inugram.InuHooks
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.theme.MonetHelper
-import desu.inugram.ui.settings.fonts.FontsSettingsActivity
+import xie.fa.gram.InuConfig
+import xie.fa.gram.InuHooks
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.theme.MonetHelper
+import xie.fa.gram.ui.settings.fonts.FontsSettingsActivity
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.Cells.NotificationsCheckCell

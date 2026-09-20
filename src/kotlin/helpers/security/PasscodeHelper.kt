@@ -1,10 +1,10 @@
-package desu.inugram.helpers.security
+package xie.fa.gram.helpers.security
 
 import android.content.Context
 import android.content.Intent
 import android.util.Base64
 import androidx.core.content.edit
-import desu.inugram.ui.settings.PasscodeSettingsActivity
+import xie.fa.gram.ui.settings.PasscodeSettingsActivity
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.MessagesController

@@ -27,7 +27,7 @@ index 0000000..0000000 100644
              }
              final BaseFragment prevFragment = fragmentsStack.get(fragmentsStack.size() - 2);
 -            prevFragment.onSlideProgress(false, progress);
-+            if (!((startedTracking || animationInProgress) && desu.inugram.helpers.theme.Material3NavigationAnimation.applySlideProgress(this, progress))) {
++            if (!((startedTracking || animationInProgress) && xie.fa.gram.helpers.theme.Material3NavigationAnimation.applySlideProgress(this, progress))) {
 +                prevFragment.onSlideProgress(false, progress);
 +            }
              final BaseFragment currFragment = fragmentsStack.get(fragmentsStack.size() - 1);
@@ -53,7 +53,7 @@ index 0000000..0000000 100644
  
 -    private void onSlideAnimationEnd(final boolean backAnimation) {
 +    public void onSlideAnimationEnd(final boolean backAnimation) {
-+        desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
++        xie.fa.gram.helpers.theme.Material3NavigationAnimation.cleanup(this);
          if (!backAnimation) {
              if (fragmentsStack.size() < 2) {
                  checkBlackScreen("onSlideAnimationEnd exit");
@@ -80,9 +80,9 @@ index 0000000..0000000 100644
 @@ -1828,6 +1838,9 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                  }
                  lastFrameTime = newTime;
-                 float duration = (preview && open ? 190.0f : 150.0f) / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
-+                if (!preview && desu.inugram.helpers.theme.Material3NavigationAnimation.isEnabled()) {
-+                    duration = desu.inugram.helpers.theme.Material3NavigationAnimation.DURATION / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
+                 float duration = (preview && open ? 190.0f : 150.0f) / xie.fa.gram.InuConfig.ANIMATION_SPEED.getValue();
++                if (!preview && xie.fa.gram.helpers.theme.Material3NavigationAnimation.isEnabled()) {
++                    duration = xie.fa.gram.helpers.theme.Material3NavigationAnimation.DURATION / xie.fa.gram.InuConfig.ANIMATION_SPEED.getValue();
 +                }
                  animationProgress += dt / duration;
                  if (animationProgress > 1.0f) {
@@ -92,7 +92,7 @@ index 0000000..0000000 100644
                      interpolated = decelerateInterpolator.getInterpolation(animationProgress);
                  }
 -                if (open) {
-+                if (open && !desu.inugram.helpers.theme.Material3NavigationAnimation.applyOpenFrame(ActionBarLayout.this, animationProgress, preview)) {
++                if (open && !xie.fa.gram.helpers.theme.Material3NavigationAnimation.applyOpenFrame(ActionBarLayout.this, animationProgress, preview)) {
                      float clampedInterpolated = MathUtils.clamp(interpolated, 0, 1);
                      containerView.setAlpha(clampedInterpolated);
                      if (preview) {
@@ -101,7 +101,7 @@ index 0000000..0000000 100644
                          containerView.setTranslationX(dp(48) * (1.0f - interpolated));
                      }
 -                } else {
-+                } else if (!open && !desu.inugram.helpers.theme.Material3NavigationAnimation.applyCloseFrame(ActionBarLayout.this, animationProgress, preview)) {
++                } else if (!open && !xie.fa.gram.helpers.theme.Material3NavigationAnimation.applyCloseFrame(ActionBarLayout.this, animationProgress, preview)) {
                      float clampedReverseInterpolated = MathUtils.clamp(1f - interpolated, 0, 1);
                      containerViewBack.setAlpha(clampedReverseInterpolated);
                      if (preview) {
@@ -109,7 +109,7 @@ index 0000000..0000000 100644
              oldFragment = null;
              Runnable endRunnable = onCloseAnimationEndRunnable;
              onCloseAnimationEndRunnable = null;
-+            desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
++            xie.fa.gram.helpers.theme.Material3NavigationAnimation.cleanup(this);
              if (endRunnable != null) {
                  endRunnable.run();
              }
@@ -117,7 +117,7 @@ index 0000000..0000000 100644
              oldFragment = null;
              Runnable endRunnable = onOpenAnimationEndRunnable;
              onOpenAnimationEndRunnable = null;
-+            desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
++            xie.fa.gram.helpers.theme.Material3NavigationAnimation.cleanup(this);
              endRunnable.run();
              checkNeedRebuild();
          }
@@ -130,10 +130,10 @@ index 0000000..0000000 100644
  
          RestrictedLanguagesSelectActivity.checkRestrictedLanguages(false);
 -        if (Build.VERSION.SDK_INT >= 34) {
-+        final int inuPredictiveMode = desu.inugram.InuConfig.PREDICTIVE_BACK_MODE.getValue();
-+        if (Build.VERSION.SDK_INT >= 34 && inuPredictiveMode == desu.inugram.InuConfig.PredictiveBackModeItem.MATERIAL3 && actionBarLayout != null) {
++        final int inuPredictiveMode = xie.fa.gram.InuConfig.PREDICTIVE_BACK_MODE.getValue();
++        if (Build.VERSION.SDK_INT >= 34 && inuPredictiveMode == xie.fa.gram.InuConfig.PredictiveBackModeItem.MATERIAL3 && actionBarLayout != null) {
 +            if (onBackAnimationCallback == null) {
-+                onBackAnimationCallback = desu.inugram.helpers.theme.Material3PredictiveBack.createCallback(
++                onBackAnimationCallback = xie.fa.gram.helpers.theme.Material3PredictiveBack.createCallback(
 +                    this,
 +                    actionBarLayout,
 +                    () -> {
@@ -150,7 +150,7 @@ index 0000000..0000000 100644
 +                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
 +                (OnBackAnimationCallback) onBackAnimationCallback
 +            );
-+        } else if (Build.VERSION.SDK_INT >= 34 && inuPredictiveMode == desu.inugram.InuConfig.PredictiveBackModeItem.STOCK) {
++        } else if (Build.VERSION.SDK_INT >= 34 && inuPredictiveMode == xie.fa.gram.InuConfig.PredictiveBackModeItem.STOCK) {
              if (onBackAnimationCallback == null) {
                  onBackAnimationCallback =  new OnBackAnimationCallback() {
                      private AnimationNotificationsLocker locker = new AnimationNotificationsLocker();

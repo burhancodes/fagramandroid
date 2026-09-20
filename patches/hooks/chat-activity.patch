@@ -40,7 +40,7 @@ index 0000000..0000000 100644
              return;
          }
 +        if (inu_reorderable) {
-+            desu.inugram.helpers.chat.ChatActionsHelper.reorder(lazyList);
++            xie.fa.gram.helpers.chat.ChatActionsHelper.reorder(lazyList);
 +        }
          for (int i = 0; i < lazyList.size(); ++i) {
              lazyList.get(i).add(this);
@@ -68,9 +68,9 @@ index 0000000..0000000 100644
  import me.vkryl.android.animator.FactorAnimator;
  import me.vkryl.core.BitwiseUtils;
  import me.vkryl.core.reference.ReferenceList;
-+import desu.inugram.InuConfig;
-+import desu.inugram.helpers.chat.ChatHelper;
-+import desu.inugram.helpers.chat.ChatActionsHelper;
++import xie.fa.gram.InuConfig;
++import xie.fa.gram.helpers.chat.ChatHelper;
++import xie.fa.gram.helpers.chat.ChatActionsHelper;
  
  @SuppressWarnings("unchecked")
  public class ChatActivity extends BaseFragment implements
@@ -496,7 +496,7 @@ index 0000000..0000000 100644
              });
          }
  
-+        desu.inugram.helpers.chat.MessageLinkPreviewHelper.addMenuItem(this, options, str);
++        xie.fa.gram.helpers.chat.MessageLinkPreviewHelper.addMenuItem(this, options, str);
 +
          if (customTabs && !isHashtag || isMail) {
              options.add(R.drawable.msg_openin, getString(R.string.OpenInSystemBrowser2), () -> {

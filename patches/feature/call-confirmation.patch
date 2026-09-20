@@ -28,7 +28,7 @@ index 0000000..0000000 100644
  			return;
  		}
  
-+        if (!confirmed && desu.inugram.InuConfig.CALL_CONFIRMATION.getValue()) {
++        if (!confirmed && xie.fa.gram.InuConfig.CALL_CONFIRMATION.getValue()) {
 +            new AlertDialog.Builder(activity)
 +                .setTitle(LocaleController.getString(R.string.InuCallConfirmationTitle))
 +                .setMessage(AndroidUtilities.replaceTags(LocaleController.formatString(R.string.InuCallConfirmationText, ContactsController.formatName(user.first_name, user.last_name))))

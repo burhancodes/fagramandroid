@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -12,7 +12,7 @@ import android.graphics.RectF
 import android.graphics.Region
 import android.view.MotionEvent
 import androidx.core.graphics.ColorUtils
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities.dpf2
 import org.telegram.messenger.LiteMode
 import org.telegram.messenger.MessageObject

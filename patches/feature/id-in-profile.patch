@@ -14,8 +14,8 @@ index 0000000..0000000 100644
 @@ -344,6 +344,7 @@ import java.util.zip.ZipEntry;
  import java.util.zip.ZipOutputStream;
  
- import desu.inugram.helpers.dialogs.MainTabsHelper;
-+import desu.inugram.helpers.profile.ProfileHelper;
+ import xie.fa.gram.helpers.dialogs.MainTabsHelper;
++import xie.fa.gram.helpers.profile.ProfileHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.core.reference.ReferenceList;
  

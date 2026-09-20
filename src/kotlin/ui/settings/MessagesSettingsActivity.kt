@@ -1,15 +1,15 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.os.Bundle
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.InuHooks
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.chat.BlockedMessagesHelper
-import desu.inugram.helpers.chat.DoubleTapAction
-import desu.inugram.helpers.chat.DoubleTapActionHelper
-import desu.inugram.helpers.chat.DoubleTapContext
+import xie.fa.gram.InuConfig
+import xie.fa.gram.InuHooks
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.chat.BlockedMessagesHelper
+import xie.fa.gram.helpers.chat.DoubleTapAction
+import xie.fa.gram.helpers.chat.DoubleTapActionHelper
+import xie.fa.gram.helpers.chat.DoubleTapContext
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.Cells.NotificationsCheckCell

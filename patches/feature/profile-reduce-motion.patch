@@ -20,7 +20,7 @@ index 0000000..0000000 100644
  
          float fraction = Utilities.clamp01(height / targetHeight);
          float alphaFraction1 = Utilities.clamp01((fraction - 0.2f) / 0.8f);
-+        if (desu.inugram.helpers.profile.ProfileHelper.reduceMotion()) {
++        if (xie.fa.gram.helpers.profile.ProfileHelper.reduceMotion()) {
 +            fraction = 1f;
 +            alphaFraction1 = 1f;
 +        }
@@ -35,7 +35,7 @@ index 0000000..0000000 100644
          if (!delegate.isFragmentOpened()) {
              animated = false;
          }
-+        if (desu.inugram.helpers.profile.ProfileHelper.reduceMotion()) {
++        if (xie.fa.gram.helpers.profile.ProfileHelper.reduceMotion()) {
 +            animated = false;
 +        }
          boolean hasRecommendations = false;
@@ -49,7 +49,7 @@ index 0000000..0000000 100644
  
              imageView = new BackupImageView(context);
              imageView.getImageReceiver().setAutoRepeat(0);
-+            if (desu.inugram.helpers.profile.ProfileHelper.reduceMotion()) {
++            if (xie.fa.gram.helpers.profile.ProfileHelper.reduceMotion()) {
 +                imageView.getImageReceiver().setAllowStartLottieAnimation(false);
 +                imageView.getImageReceiver().setAllowStartAnimation(false);
 +            }
@@ -176,7 +176,7 @@ index 0000000..0000000 100644
  
  import androidx.annotation.NonNull;
  
-+import desu.inugram.helpers.profile.ProfileHelper;
++import xie.fa.gram.helpers.profile.ProfileHelper;
 +
  import org.telegram.messenger.AndroidUtilities;
  import org.telegram.messenger.MessagesController;
@@ -216,7 +216,7 @@ index 0000000..0000000 100644
      }
  
      public void animateNewStory() {
-+        if (desu.inugram.helpers.profile.ProfileHelper.reduceMotion()) return;
++        if (xie.fa.gram.helpers.profile.ProfileHelper.reduceMotion()) return;
          if (newStoryBounce != null) {
              newStoryBounce.cancel();
          }
@@ -226,8 +226,8 @@ index 0000000..0000000 100644
              segmentsAlpha = clamp(1f - expandProgress / 0.2f, 1, 0) * (1f - progressToUploading);
 -            final float segmentsCount = segmentsCountAnimated.set(count);
 -            final float segmentsUnreadCount = segmentsUnreadCountAnimated.set(unreadCount);
-+            final float segmentsCount = segmentsCountAnimated.set(count, desu.inugram.helpers.profile.ProfileHelper.reduceMotion());
-+            final float segmentsUnreadCount = segmentsUnreadCountAnimated.set(unreadCount, desu.inugram.helpers.profile.ProfileHelper.reduceMotion());
++            final float segmentsCount = segmentsCountAnimated.set(count, xie.fa.gram.helpers.profile.ProfileHelper.reduceMotion());
++            final float segmentsUnreadCount = segmentsUnreadCountAnimated.set(unreadCount, xie.fa.gram.helpers.profile.ProfileHelper.reduceMotion());
  
              if (isFailed) {
                  rect2.set(rect1);

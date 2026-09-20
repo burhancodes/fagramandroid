@@ -1,4 +1,4 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -13,8 +13,8 @@ import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputConnectionWrapper
 import android.widget.EditText
 import androidx.core.net.toUri
-import desu.inugram.InuConfig
-import desu.inugram.core.urlcleaner.UrlCleaner
+import xie.fa.gram.InuConfig
+import xie.fa.gram.core.urlcleaner.UrlCleaner
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.FileLog

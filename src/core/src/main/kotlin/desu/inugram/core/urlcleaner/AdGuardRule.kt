@@ -1,4 +1,4 @@
-package desu.inugram.core.urlcleaner
+package xie.fa.gram.core.urlcleaner
 
 /**
  * Parsed AdGuard-style `$removeparam` rule.

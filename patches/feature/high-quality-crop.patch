@@ -52,7 +52,7 @@ index 0000000..0000000 100644
  
          public void rebuildPhoto(boolean highQuality) {
 -            final Pair<Integer, Integer> orientation = AndroidUtilities.getImageOrientation(filterPath != null ? filterPath : path);
-+            final String sourcePath = desu.inugram.helpers.media.PhotoViewerHelper.getEditSourcePath(this);
++            final String sourcePath = xie.fa.gram.helpers.media.PhotoViewerHelper.getEditSourcePath(this);
 +            final Pair<Integer, Integer> orientation = AndroidUtilities.getImageOrientation(sourcePath);
              final Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
 -            final Bitmap bitmap = StoryEntry.getScaledBitmap(opts -> BitmapFactory.decodeFile(filterPath != null ? filterPath : path, opts), AndroidUtilities.getPhotoSize(highQuality), AndroidUtilities.getPhotoSize(highQuality), false, true);
@@ -70,13 +70,13 @@ index 0000000..0000000 100644
              }
 -            currentCroppedBitmap = createCroppedBitmap(bitmap, entry.cropState, orientation, true);
 +            if (!isCurrentVideo) {
-+                currentCroppedBitmap = desu.inugram.helpers.media.PhotoViewerHelper.renderHighQualityCrop(entry);
++                currentCroppedBitmap = xie.fa.gram.helpers.media.PhotoViewerHelper.renderHighQualityCrop(entry);
 +            }
 +            if (currentCroppedBitmap == null) {
 +                currentCroppedBitmap = createCroppedBitmap(bitmap, entry.cropState, orientation, true);
 +            }
              if (currentCroppedBitmap == null) {
-                 currentCroppedBitmap = desu.inugram.helpers.media.PhotoViewerHelper.rebakeCroppedBitmap(entry);
+                 currentCroppedBitmap = xie.fa.gram.helpers.media.PhotoViewerHelper.rebakeCroppedBitmap(entry);
                  if (currentCroppedBitmap == null) {
 @@ -11497,6 +11502,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
              }
@@ -160,7 +160,7 @@ index 0000000..0000000 100644
 +        if (!isCurrentVideo && currentEditMode == EDIT_MODE_NONE && mode != EDIT_MODE_NONE && currentIndex >= 0 && currentIndex < imagesArrLocals.size()) {
 +            Object object = imagesArrLocals.get(currentIndex);
 +            if (object instanceof MediaController.MediaEditState) {
-+                desu.inugram.helpers.media.PhotoViewerHelper.ensureEditSourceSnapshot((MediaController.MediaEditState) object);
++                xie.fa.gram.helpers.media.PhotoViewerHelper.ensureEditSourceSnapshot((MediaController.MediaEditState) object);
 +            }
 +        }
          if (placeProvider != null && (currentEditMode == EDIT_MODE_NONE || mode == EDIT_MODE_NONE)) {

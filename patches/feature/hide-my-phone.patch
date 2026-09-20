@@ -17,7 +17,7 @@ index 0000000..0000000 100644
                              text = PhoneFormat.getInstance().format("+" + vcardPhone);
                              phoneNumber = vcardPhone;
 -                        } else if (user != null && !TextUtils.isEmpty(user.phone)) {
-+                        } else if (user != null && !TextUtils.isEmpty(user.phone) && !(user.self && desu.inugram.InuConfig.HIDE_MY_PHONE_NUMBER.getValue())) {
++                        } else if (user != null && !TextUtils.isEmpty(user.phone) && !(user.self && xie.fa.gram.InuConfig.HIDE_MY_PHONE_NUMBER.getValue())) {
                              text = PhoneFormat.getInstance().format("+" + user.phone);
                              phoneNumber = user.phone;
                          } else {
@@ -30,7 +30,7 @@ index 0000000..0000000 100644
          final StringBuilder sb = new StringBuilder();
          if (user != null) {
 -            sb.append(PhoneFormat.getInstance().format("+" + user.phone));
-+            sb.append(desu.inugram.InuConfig.HIDE_MY_PHONE_NUMBER.getValue() ? getString(R.string.MobileHidden) : PhoneFormat.getInstance().format("+" + user.phone));
++            sb.append(xie.fa.gram.InuConfig.HIDE_MY_PHONE_NUMBER.getValue() ? getString(R.string.MobileHidden) : PhoneFormat.getInstance().format("+" + user.phone));
          }
          final String username = UserObject.getPublicUsername(user);
          if (username != null) {

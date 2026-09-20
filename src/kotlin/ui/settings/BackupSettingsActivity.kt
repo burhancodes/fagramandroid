@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 
 import android.app.Activity
@@ -16,11 +16,11 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.collection.LongSparseArray
-import desu.inugram.InuConfig
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.cloud.CloudSettingsHelper
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.cloud.SettingsBackupHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.cloud.CloudSettingsHelper
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.cloud.SettingsBackupHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.Emoji
 import org.telegram.messenger.DialogObject

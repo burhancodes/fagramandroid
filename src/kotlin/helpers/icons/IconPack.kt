@@ -1,4 +1,4 @@
-package desu.inugram.helpers.icons
+package xie.fa.gram.helpers.icons
 
 import android.util.SparseIntArray
 

@@ -1,4 +1,4 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.text.TextUtils
 import android.util.Base64

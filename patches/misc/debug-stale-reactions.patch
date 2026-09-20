@@ -19,7 +19,7 @@ index 0000000..0000000 100644
                      if (isVotes) {
                          getMessagesStorage().markMessagePollVotesAsRead(dialogId, topicId, messageId);
                      }
-+                    if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                    if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                        FileLog.d("InuRx next mention local did=" + dialogId + " topic=" + topicId + " isReactions=" + isReactions + " mid=" + messageId);
 +                    }
                      int finalMessageId = messageId;
@@ -29,7 +29,7 @@ index 0000000..0000000 100644
                      if (error == null && res != null && res.messages != null && !res.messages.isEmpty()) {
                          messageId = res.messages.get(0).id;
                      }
-+                    if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                    if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                        FileLog.d("InuRx next mention server did=" + dialogId + " topic=" + topicId + " isReactions=" + isReactions + " addOffset=" + (count - 1) + " expected=" + expectedCount + " current=" + inu_getUnreadCount(dialogId, topicId, isReactions) + " serverCount=" + (res == null ? -1 : res.count) + " serverSize=" + (res == null || res.messages == null ? -1 : res.messages.size()) + " mid=" + messageId + " error=" + error);
 +                    }
                      if (error == null && res != null && res.messages != null && canApplyServerCount) {
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
                              }
                          }
                          if (currentDialog.unread_reactions_count != value.unread_reactions_count) {
-+                            if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                            if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                                FileLog.d("InuRx dialogs update did=" + currentDialog.id + " " + currentDialog.unread_reactions_count + " -> " + value.unread_reactions_count + " fromCache=" + fromCache);
 +                            }
                              currentDialog.unread_reactions_count = value.unread_reactions_count;
@@ -49,7 +49,7 @@ index 0000000..0000000 100644
      public void inu_onMessageUnreadContentRead(long dialogId, long topicId, int messageId, boolean isReactions) {
          AndroidUtilities.runOnUIThread(() -> {
              int current = inu_getUnreadCount(dialogId, topicId, isReactions);
-+            if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                FileLog.d("InuRx content read did=" + dialogId + " topic=" + topicId + " mid=" + messageId + " isReactions=" + isReactions + " current=" + current);
 +            }
              if (current == 1) {
@@ -59,8 +59,8 @@ index 0000000..0000000 100644
      }
  
      private void checkUnreadReactionsInternal(long dialogId, long topicId, SparseBooleanArray unreadReactions, boolean isReactions) {
-+        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
-+            FileLog.d("InuRx check did=" + dialogId + " topic=" + topicId + " isReactions=" + isReactions + " incoming=" + unreadReactions + " from " + desu.inugram.helpers.chat.ReactionDebugHelper.caller());
++        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            FileLog.d("InuRx check did=" + dialogId + " topic=" + topicId + " isReactions=" + isReactions + " incoming=" + unreadReactions + " from " + xie.fa.gram.helpers.chat.ReactionDebugHelper.caller());
 +        }
          final String tableMentionsForDialogs = isReactions ? "reaction_mentions" : "poll_votes_mentions";
          final String tableMentionsForTopics = isReactions ? "reaction_mentions_topics" : "poll_votes_mentions_topics";
@@ -69,7 +69,7 @@ index 0000000..0000000 100644
                      e.printStackTrace();
                  }
              }
-+            if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                FileLog.d("InuRx check result did=" + dialogId + " topic=" + topicId + " isReactions=" + isReactions + " knownRows=" + reactionsMentionsMessageIds + " needReload=" + needReload + " changed=" + changed + " delta=" + newUnreadCount + " unreadIds=" + newUnreadMessages);
 +            }
              if (isReactions) {
@@ -79,7 +79,7 @@ index 0000000..0000000 100644
                                  getMessagesStorage().updateDialogUnreadReactions(dialogId, 0, count, false);
                                  return;
                              }
-+                            if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                            if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                                FileLog.d("InuRx reload applied did=" + dialogId + " local=" + dialog.unread_reactions_count + " server=" + count);
 +                            }
                              dialog.unread_reactions_count = count;
@@ -89,7 +89,7 @@ index 0000000..0000000 100644
                          getMessagesStorage().updateDialogUnreadReactions(dialogId, 0, finalNewUnreadCount, true);
                          return;
                      }
-+                    if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                    if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                        FileLog.d("InuRx counter delta did=" + dialogId + " " + dialog.unread_reactions_count + " -> " + (dialog.unread_reactions_count + finalNewUnreadCount));
 +                    }
                      dialog.unread_reactions_count += finalNewUnreadCount;
@@ -99,7 +99,7 @@ index 0000000..0000000 100644
      }
  
      public void markReactionsAsRead(long dialogId, long topicId) {
-+        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +            FileLog.d("InuRx mark all read did=" + dialogId + " topic=" + topicId + " current=" + inu_getUnreadCount(dialogId, topicId, true));
 +        }
          if (topicId == 0) {
@@ -113,7 +113,7 @@ index 0000000..0000000 100644
                          }
                          dialog.folder_id = cursor.intValue(17);
                          dialog.unread_reactions_count = cursor.intValue(19);
-+                        if (dialog.unread_reactions_count != 0 && desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                        if (dialog.unread_reactions_count != 0 && xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                            FileLog.d("InuRx db loaded did=" + dialog.id + " unreadReactions=" + dialog.unread_reactions_count);
 +                        }
                          long groupMessagesId = cursor.longValue(20);
@@ -123,8 +123,8 @@ index 0000000..0000000 100644
      }
  
      private void updateUnreadReactionsCountInternal(String tableMentionsForDialogs, String tableMentionsForTopics, String mentionsCounterFieldForDialogs, String mentionsCounterFieldForTopics, long dialogId, long topicId, int count, boolean increment) {
-+        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
-+            FileLog.d("InuRx db setCount table=" + mentionsCounterFieldForDialogs + " did=" + dialogId + " topic=" + topicId + " count=" + count + " increment=" + increment + " from " + desu.inugram.helpers.chat.ReactionDebugHelper.caller());
++        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            FileLog.d("InuRx db setCount table=" + mentionsCounterFieldForDialogs + " did=" + dialogId + " topic=" + topicId + " count=" + count + " increment=" + increment + " from " + xie.fa.gram.helpers.chat.ReactionDebugHelper.caller());
 +        }
          storageQueue.postRunnable(() -> {
              SQLitePreparedStatement state = null;
@@ -133,8 +133,8 @@ index 0000000..0000000 100644
              }
          }
  
-+        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
-+            FileLog.d("InuRx db markRead table=" + tableMentionsForDialogs + " did=" + dialogId + " topic=" + topicId + " mid=" + messageId + " wasUnread=" + wasUnread + " hasTtl=" + hasTtl + " from " + desu.inugram.helpers.chat.ReactionDebugHelper.caller());
++        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            FileLog.d("InuRx db markRead table=" + tableMentionsForDialogs + " did=" + dialogId + " topic=" + topicId + " mid=" + messageId + " wasUnread=" + wasUnread + " hasTtl=" + hasTtl + " from " + xie.fa.gram.helpers.chat.ReactionDebugHelper.caller());
 +        }
          if (wasUnread) {
              getMessagesController().inu_onMessageUnreadContentRead(dialogId, topicId, hasTtl ? 0 : messageId, updateReactions);
@@ -143,8 +143,8 @@ index 0000000..0000000 100644
      }
  
      private void updateDialogUnreadReactionsInternal(long dialogId, long topicId, int newUnreadCount, boolean increment, boolean isReactions) {
-+        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
-+            FileLog.d("InuRx db addCount isReactions=" + isReactions + " did=" + dialogId + " topic=" + topicId + " delta=" + newUnreadCount + " increment=" + increment + " from " + desu.inugram.helpers.chat.ReactionDebugHelper.caller());
++        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            FileLog.d("InuRx db addCount isReactions=" + isReactions + " did=" + dialogId + " topic=" + topicId + " delta=" + newUnreadCount + " increment=" + increment + " from " + xie.fa.gram.helpers.chat.ReactionDebugHelper.caller());
 +        }
          final String mentionsCounterFieldForDialogs = isReactions ? "unread_reactions" : "unread_poll_votes";
          final String mentionsCounterFieldForTopics = isReactions ? "unread_reactions" : "unread_poll_votes";
@@ -158,7 +158,7 @@ index 0000000..0000000 100644
                      reactionsLayoutInBubble.setMessage(null, false, false, resourcesProvider);
                  }
 +            } else {
-+                desu.inugram.helpers.chat.ReactionDebugHelper.onReactionsLayoutKept(this, messageObject);
++                xie.fa.gram.helpers.chat.ReactionDebugHelper.onReactionsLayoutKept(this, messageObject);
              }
  
  
@@ -170,7 +170,7 @@ index 0000000..0000000 100644
                  updatePollVotesMentionButton(false);
              }
          }
-+        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +            FileLog.d("InuRx[" + classGuid + "] init did=" + dialog_id + " topic=" + getTopicId() + " reactions=" + reactionsMentionCount + " pollVotes=" + pollVotesMentionCount);
 +        }
  
@@ -180,7 +180,7 @@ index 0000000..0000000 100644
                      updatePollVotesMentionButton(true);
                  }
                  if (messageObject != null && fragmentOpened && openAnimationEnded && !inPreviewMode && (chatListItemAnimator == null || !chatListItemAnimator.isRunning()) && messageCell.checkUnreadReactions(clipTop, chatListView.getMeasuredHeight() - blurredViewBottomOffset)) {
-+                    if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                    if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                        FileLog.d("InuRx[" + classGuid + "] visible read mid=" + messageObject.getId() + " count=" + reactionsMentionCount);
 +                    }
                      reactionsMentionCount--;
@@ -190,7 +190,7 @@ index 0000000..0000000 100644
                      }
                      updateReactionsMentionButton(true);
                  }
-+                desu.inugram.helpers.chat.ReactionDebugHelper.checkStaleUnread(messageCell, reactionsMentionCount);
++                xie.fa.gram.helpers.chat.ReactionDebugHelper.checkStaleUnread(messageCell, reactionsMentionCount);
                  getDownloadController().checkUnviewedDownloads(messageCell.getId(), dialog_id);
                  boolean allowPlayEffect = messageObject.getEffect() != null || ((messageObject.messageOwner.media != null && !messageObject.messageOwner.media.nopremium) || (messageObject.isAnimatedEmojiStickerSingle() && dialog_id > 0));
                  if ((chatListItemAnimator == null || !chatListItemAnimator.isRunning()) && (!messageObject.isOutOwner() || messageObject.forcePlayEffect) && allowPlayEffect && !messageObject.messageOwner.premiumEffectWasPlayed && (messageObject.isPremiumSticker() || messageCell.getEffect() != null || messageObject.isAnimatedEmojiStickerSingle()) && emojiAnimationsOverlay.isIdle() && emojiAnimationsOverlay.checkPosition(messageCell, chatListViewPaddingTop, chatListView.getMeasuredHeight() - blurredViewBottomOffset)) {
@@ -198,7 +198,7 @@ index 0000000..0000000 100644
              long topicId = (long) args[1];
              if (dialogId == dialog_id && ((!isTopic && (!ChatObject.isMonoForum(currentChat) || getTopicId() == 0)) || topicId == getTopicId())) {
                  reactionsMentionCount = (int) args[2];
-+                if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                    FileLog.d("InuRx[" + classGuid + "] counter notification did=" + dialogId + " topic=" + topicId + " count=" + reactionsMentionCount + " messages=" + args[3]);
 +                }
                  ArrayList<Integer> messages = null;
@@ -208,7 +208,7 @@ index 0000000..0000000 100644
                      for (int i = 0; i < messages.size(); i++) {
                          int messageId = messages.get(i);
                          BaseCell cell = findMessageCell(messageId, true);
-+                        if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                        if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                            FileLog.d("InuRx[" + classGuid + "] counter notification mid=" + messageId + " visibleCell=" + (cell != null) + " count=" + reactionsMentionCount);
 +                        }
                          if (cell != null && reactionsMentionCount > 0) {
@@ -218,7 +218,7 @@ index 0000000..0000000 100644
                  }
                  if (messageObject.type >= 0) {
                      messageObject.reactionsChanged |= old.isBotPendingDraft && !messageObject.isBotPendingDraft;
-+                    desu.inugram.helpers.chat.ReactionDebugHelper.onMessageObjectReplaced(old, messageObject);
++                    xie.fa.gram.helpers.chat.ReactionDebugHelper.onMessageObjectReplaced(old, messageObject);
                      messageObject.copyStableParams(old);
                      messages.set(index, messageObject);
                      if (chatAdapter != null && !chatAdapter.isFiltered) {
@@ -226,11 +226,11 @@ index 0000000..0000000 100644
              loadLastUnreadMention();
          } else if (buttonId == ChatActivitySideControlsButtonsLayout.BUTTON_REACTIONS) {
              wasManualScroll = true;
-+            if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                FileLog.d("InuRx[" + classGuid + "] jump click count=" + reactionsMentionCount);
 +            }
              getMessagesController().getNextReactionMention(dialog_id, getTopicId(), reactionsMentionCount, (messageId) -> {
-+                if (desu.inugram.helpers.chat.ReactionDebugHelper.isEnabled()) {
++                if (xie.fa.gram.helpers.chat.ReactionDebugHelper.isEnabled()) {
 +                    FileLog.d("InuRx[" + classGuid + "] jump result mid=" + messageId + " count=" + reactionsMentionCount);
 +                }
                  if (messageId == 0) {

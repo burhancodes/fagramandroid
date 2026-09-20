@@ -1,10 +1,10 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.menu.MenuOrderEntry
-import desu.inugram.helpers.menu.MessageMenuConfig
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.menu.MenuOrderEntry
+import xie.fa.gram.helpers.menu.MessageMenuConfig
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.Components.BulletinFactory

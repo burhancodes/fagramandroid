@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -21,9 +21,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.graphics.withTranslation
-import desu.inugram.InuConfig
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.InuConfig
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LocaleController

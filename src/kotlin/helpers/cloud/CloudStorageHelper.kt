@@ -1,4 +1,4 @@
-package desu.inugram.helpers.cloud
+package xie.fa.gram.helpers.cloud
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -7,7 +7,7 @@ import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.Utilities
 import org.telegram.tgnet.TLRPC
 import org.telegram.tgnet.tl.TL_bots
-import desu.inugram.helpers.WebAppHelper
+import xie.fa.gram.helpers.WebAppHelper
 
 // per-user key/value storage backed by the helper bot's webview cloud storage.
 // bot-side must implement saveStorageValue / getStorageValues / deleteStorageValues / getStorageKeys.

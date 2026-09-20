@@ -86,7 +86,7 @@ index 0000000..0000000 100644
                      return;
                  }
 +                CharSequence currentText = chatActivityEnterView != null ? chatActivityEnterView.getFieldText() : null;
-+                if (TextUtils.isEmpty(currentText) || requestUrls != null && !desu.inugram.helpers.chat.WebPreviewHelper.allUrlsPresent(requestUrls, currentText) || requestUrls == null && !TextUtils.equals(currentText, charSequence)) {
++                if (TextUtils.isEmpty(currentText) || requestUrls != null && !xie.fa.gram.helpers.chat.WebPreviewHelper.allUrlsPresent(requestUrls, currentText) || requestUrls == null && !TextUtils.equals(currentText, charSequence)) {
 +                    return;
 +                }
                  if (success) {

@@ -1,4 +1,4 @@
-package desu.inugram.ui
+package xie.fa.gram.ui
 
 import android.content.Context
 import android.graphics.Typeface
@@ -13,7 +13,7 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
-import desu.inugram.helpers.CrashReporter
+import xie.fa.gram.helpers.CrashReporter
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

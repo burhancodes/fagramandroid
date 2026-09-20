@@ -12,7 +12,7 @@ index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
 @@ -1299,7 +1299,16 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
-         desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+         xie.fa.gram.helpers.theme.Material3NavigationAnimation.cleanup(this);
          if (!backAnimation) {
              if (fragmentsStack.size() < 2) {
 +                // racing closeLastFragment drained the stack mid-animation;
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
 +        if (fragment == null || checkTransitionAnimation() || animationInProgress || startedTracking || delegate != null && check && !delegate.needPresentFragment(this, params) || !fragment.onFragmentCreate()) {
              return false;
          }
-         if (inPreviewMode && !preview && desu.inugram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue()) {
+         if (inPreviewMode && !preview && xie.fa.gram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue()) {
 @@ -2573,7 +2582,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
          if (fragment != null && fragment.closeLastFragment()) {
              return;

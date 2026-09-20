@@ -1,8 +1,8 @@
-package desu.inugram.helpers.update
+package xie.fa.gram.helpers.update
 
 import android.os.Build
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.BetaUpdate
@@ -20,7 +20,7 @@ import org.telegram.tgnet.ConnectionsManager
 import org.telegram.tgnet.TLRPC
 import kotlin.math.max
 import kotlin.math.min
-import desu.inugram.helpers.security.ParanoiaHelper
+import xie.fa.gram.helpers.security.ParanoiaHelper
 
 object UpdateHelper {
     const val USERNAME = "InugramCI"

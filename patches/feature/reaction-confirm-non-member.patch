@@ -15,7 +15,7 @@ index 0000000..0000000 100644
              return;
          }
  
-+        if (desu.inugram.helpers.chat.ChatHelper.maybeConfirmReaction(this, cell, primaryMessage, reactionsLayout, fromView, x, y, visibleReaction, fromDoubleTap, bigEmoji, addToRecent, withoutAnimation)) return;
++        if (xie.fa.gram.helpers.chat.ChatHelper.maybeConfirmReaction(this, cell, primaryMessage, reactionsLayout, fromView, x, y, visibleReaction, fromDoubleTap, bigEmoji, addToRecent, withoutAnimation)) return;
 +
          ReactionsEffectOverlay.removeCurrent(false);
          chatMessagesMetadataController.cancelReactionsRequests();

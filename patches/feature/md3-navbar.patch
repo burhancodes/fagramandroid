@@ -17,7 +17,7 @@ index 0000000..0000000 100644
  import org.telegram.ui.Components.ScaleStateListAnimator;
  import org.telegram.ui.MainTabsLayout;
  
-+import desu.inugram.helpers.theme.M3MainTabsHelper;
++import xie.fa.gram.helpers.theme.M3MainTabsHelper;
 +
  import me.vkryl.android.AnimatorUtils;
  import me.vkryl.android.animator.BoolAnimator;
@@ -119,8 +119,8 @@ index 0000000..0000000 100644
 @@ -85,6 +85,7 @@ import java.util.ArrayList;
  import java.util.Collections;
  
- import desu.inugram.helpers.dialogs.MainTabsHelper;
-+import desu.inugram.helpers.theme.M3MainTabsHelper;
+ import xie.fa.gram.helpers.dialogs.MainTabsHelper;
++import xie.fa.gram.helpers.theme.M3MainTabsHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  

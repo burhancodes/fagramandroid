@@ -17,7 +17,7 @@ index 0000000..0000000 100644
                          }
                      }
 -                    if (!hasPaidReaction) {
-+                    if (!hasPaidReaction && !desu.inugram.InuConfig.HIDE_PAID_REACTION_UPSELL.getValue()) {
++                    if (!hasPaidReaction && !xie.fa.gram.InuConfig.HIDE_PAID_REACTION_UPSELL.getValue()) {
                          includeEmptyStarButton = true;
                      }
                  }
@@ -30,7 +30,7 @@ index 0000000..0000000 100644
              }
  
 -            if (hasStar) {
-+            if (hasStar && !desu.inugram.InuConfig.HIDE_PAID_REACTION_UPSELL.getValue()) {
++            if (hasStar && !xie.fa.gram.InuConfig.HIDE_PAID_REACTION_UPSELL.getValue()) {
                  boolean isStarSelected = false;
                  for (ReactionsLayoutInBubble.VisibleReaction r : selectedReactions) {
                      if (r.isStar) {
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
                  }
              }
 -            if (currentReaction != null && currentReaction.isStar && particles != null && LiteMode.isEnabled(LiteMode.FLAG_ANIMATED_EMOJI_REACTIONS) && LiteMode.isEnabled(LiteMode.FLAG_PARTICLES)) {
-+            if (currentReaction != null && currentReaction.isStar && particles != null && !desu.inugram.InuConfig.HIDE_PAID_REACTION_UPSELL.getValue() && LiteMode.isEnabled(LiteMode.FLAG_ANIMATED_EMOJI_REACTIONS) && LiteMode.isEnabled(LiteMode.FLAG_PARTICLES)) {
++            if (currentReaction != null && currentReaction.isStar && particles != null && !xie.fa.gram.InuConfig.HIDE_PAID_REACTION_UPSELL.getValue() && LiteMode.isEnabled(LiteMode.FLAG_ANIMATED_EMOJI_REACTIONS) && LiteMode.isEnabled(LiteMode.FLAG_PARTICLES)) {
                  final int sz = (int) (getHeight() * .7f);
                  AndroidUtilities.rectTmp.set(getWidth() / 2f - sz / 2f, getHeight() / 2f - sz / 2f, getWidth() / 2f + sz / 2f, getHeight() / 2f + sz / 2f);
                  RLottieDrawable lottieDrawable = enterImageView.getImageReceiver().getLottieAnimation();

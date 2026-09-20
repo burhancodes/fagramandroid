@@ -16,7 +16,7 @@ index 0000000..0000000 100644
              android:exported="true">
          </activity>
 +        <activity
-+            android:name="desu.inugram.ui.AccountPickerActivity"
++            android:name="xie.fa.gram.ui.AccountPickerActivity"
 +            android:taskAffinity=""
 +            android:excludeFromRecents="true"
 +            android:theme="@style/Theme.TMessages.TransparentWithAlerts"

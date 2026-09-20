@@ -1,8 +1,8 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.graphics.drawable.Drawable
 import android.view.ViewOutlineProvider
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.utils.ViewOutlineProviderImpl
 import org.telegram.ui.ActionBar.Theme

@@ -1,4 +1,4 @@
-package desu.inugram.helpers.media
+package xie.fa.gram.helpers.media
 
 import android.content.Intent
 import android.graphics.Bitmap

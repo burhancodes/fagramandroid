@@ -1,13 +1,13 @@
-package desu.inugram.helpers
+package xie.fa.gram.helpers
 
 import android.content.DialogInterface
 import android.widget.FrameLayout
 import android.widget.TextView
-import desu.inugram.InuConfig
-import desu.inugram.core.diff.DiffKind
-import desu.inugram.core.diff.WordDiff
-import desu.inugram.helpers.InuUtils
-import desu.inugram.ui.MessageDetailsActivity
+import xie.fa.gram.InuConfig
+import xie.fa.gram.core.diff.DiffKind
+import xie.fa.gram.core.diff.WordDiff
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.ui.MessageDetailsActivity
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ContactsController
 import org.telegram.messenger.Emoji

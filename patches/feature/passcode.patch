@@ -25,13 +25,13 @@ index 0000000..0000000 100644
                  int account = -1;
                  for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 -                    if (UserConfig.getInstance(a).isClientActivated()) {
-+                    if (UserConfig.getInstance(a).isClientActivated() && !desu.inugram.helpers.security.PasscodeHelper.isAccountHiddenByPasscode(a)) {
++                    if (UserConfig.getInstance(a).isClientActivated() && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHiddenByPasscode(a)) {
                          account = a;
                          break;
                      }
                  }
 +                if (account == -1) {
-+                    desu.inugram.helpers.security.PasscodeHelper.lockIfHiddenAccountsLeft();
++                    xie.fa.gram.helpers.security.PasscodeHelper.lockIfHiddenAccountsLeft();
 +                }
                  if (account != -1) {
                      UserConfig.selectedAccount = account;
@@ -41,11 +41,11 @@ index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/AlertsCreator.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/AlertsCreator.java
 @@ -7725,7 +7725,7 @@ public class AlertsCreator {
-         desu.inugram.helpers.dialogs.AccountOrderHelper.sort(inu_accountNumbers);
+         xie.fa.gram.helpers.dialogs.AccountOrderHelper.sort(inu_accountNumbers);
          for (int a : inu_accountNumbers) {
              TLRPC.User u = UserConfig.getInstance(a).getCurrentUser();
 -            if (u != null) {
-+            if (u != null && !desu.inugram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
++            if (u != null && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
                  AccountSelectCell cell = new AccountSelectCell(parentActivity, false);
                  cell.setAccount(a, false);
                  cell.setPadding(dp(14), 0, dp(14), 0);
@@ -58,7 +58,7 @@ index 0000000..0000000 100644
                  return;
              }
 -            if (!SharedConfig.checkPasscode(password)) {
-+            if (!desu.inugram.helpers.security.PasscodeHelper.check(getContext(), password)) {
++            if (!xie.fa.gram.helpers.security.PasscodeHelper.check(getContext(), password)) {
                  SharedConfig.increaseBadPasscodeTries();
                  if (SharedConfig.passcodeRetryInMs > 0) {
                      checkRetryTextView();
@@ -90,7 +90,7 @@ index 0000000..0000000 100644
 +
 +            for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 +                TLRPC.User u = AccountInstance.getInstance(a).getUserConfig().getCurrentUser();
-+                if (u != null && !desu.inugram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
++                if (u != null && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
 +                    AccountSelectCell cell = new AccountSelectCell(context, false);
 +                    cell.setAccount(a, true);
 +                    switchItem.addSubItem(10 + a, cell, dp(230), dp(48));
@@ -108,7 +108,7 @@ index 0000000..0000000 100644
          int account = -1;
          for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 -            if (UserConfig.getInstance(a).isClientActivated()) {
-+            if (UserConfig.getInstance(a).isClientActivated() && !desu.inugram.helpers.security.PasscodeHelper.isAccountHiddenByPasscode(a)) {
++            if (UserConfig.getInstance(a).isClientActivated() && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHiddenByPasscode(a)) {
                  account = a;
                  break;
              }
@@ -116,7 +116,7 @@ index 0000000..0000000 100644
                  rightActionBarLayout.rebuildLogout();
              }
              presentFragment(new IntroActivity().setOnLogout());
-+            if (desu.inugram.helpers.security.PasscodeHelper.lockIfHiddenAccountsLeft()) {
++            if (xie.fa.gram.helpers.security.PasscodeHelper.lockIfHiddenAccountsLeft()) {
 +                showPasscodeActivity(false, false, -1, -1, null, null);
 +            }
          }
@@ -130,7 +130,7 @@ index 0000000..0000000 100644
      private boolean pendingSwitchingAccount;
  
      private void onAuthSuccess(TLRPC.TL_auth_authorization res, boolean afterSignup) {
-+        desu.inugram.InuHooks.onAuthSuccess(currentAccount);
++        xie.fa.gram.InuHooks.onAuthSuccess(currentAccount);
          MessagesController.getInstance(currentAccount).cleanup();
          ConnectionsManager.getInstance(currentAccount).setUserId(res.user.id);
          UserConfig.getInstance(currentAccount).clearConfig();
@@ -143,7 +143,7 @@ index 0000000..0000000 100644
          accountNumbers.clear();
          for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 -            if (UserConfig.getInstance(a).isClientActivated()) {
-+            if (UserConfig.getInstance(a).isClientActivated() && !desu.inugram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
++            if (UserConfig.getInstance(a).isClientActivated() && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
                  accountNumbers.add(a);
              }
          }
@@ -164,7 +164,7 @@ index 0000000..0000000 100644
                                  .setMessage(LocaleController.getString(R.string.DisablePasscodeConfirmMessage))
                                  .setNegativeButton(LocaleController.getString(R.string.Cancel), null)
                                  .setPositiveButton(LocaleController.getString(R.string.DisablePasscodeTurnOff), (dialog, which) -> {
-+                                    desu.inugram.helpers.security.PasscodeHelper.clearAll();
++                                    xie.fa.gram.helpers.security.PasscodeHelper.clearAll();
                                      SharedConfig.passcodeHash = "";
                                      SharedConfig.appLocked = false;
                                      SharedConfig.saveConfig();
@@ -172,7 +172,7 @@ index 0000000..0000000 100644
                  return;
              }
  
-+            if (desu.inugram.helpers.security.PasscodeHelper.handleSetupSubmit(this, firstPassword)) return;
++            if (xie.fa.gram.helpers.security.PasscodeHelper.handleSetupSubmit(this, firstPassword)) return;
              boolean isFirst = SharedConfig.passcodeHash.isEmpty();
              try {
                  SharedConfig.passcodeSalt = new byte[16];
@@ -181,7 +181,7 @@ index 0000000..0000000 100644
                  return;
              }
 -            if (!SharedConfig.checkPasscode(password)) {
-+            if (!desu.inugram.helpers.security.PasscodeHelper.check(getParentActivity(), password)) {
++            if (!xie.fa.gram.helpers.security.PasscodeHelper.check(getParentActivity(), password)) {
                  SharedConfig.increaseBadPasscodeTries();
                  passwordEditText.setText("");
                  for (CodeNumberField f : codeFieldContainer.codeField) {
@@ -194,7 +194,7 @@ index 0000000..0000000 100644
          accountNumbers.clear();
          for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 -            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a) {
-+            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a && !desu.inugram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
++            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
                  accountNumbers.add(a);
              }
          }
@@ -207,7 +207,7 @@ index 0000000..0000000 100644
          accountNumbers.clear();
          for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 -            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a) {
-+            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a && !desu.inugram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
++            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a && !xie.fa.gram.helpers.security.PasscodeHelper.isAccountHidden(a)) {
                  accountNumbers.add(a);
              }
          }

@@ -8,8 +8,8 @@
     <string name="InuNavigationDrawerInfo">Brings back the pre-12.0 hamburger side drawer. Requires restart.</string>
     <string name="InuDrawerBackGesture">Open drawer with back gesture</string>
     <string name="InuDrawerBackGestureInfo">Swiping back from the left edge of the chat list opens the drawer instead of leaving the app.</string>
-    <string name="InuSettings">Inugram Settings</string>
-    <string name="InuSettingsInfo">what the dog doin?</string>
+    <string name="InuSettings">FAgram Settings</string>
+    <string name="InuSettingsInfo">FAAAHHHHHHH!</string>
     <string name="InuExperimental">Experimental</string>
     <string name="InuGeneral">General</string>
     <string name="InuMiscellaneous">Miscellaneous</string>
@@ -252,7 +252,7 @@
     <string name="InuConfirmReactionText">Send %1$s reaction in **%2$s**?</string>
     <string name="InuNotificationIcon">Notification icon</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">Inugram</string>
+    <string name="InuNotificationIconInugram">FAgram</string>
     <string name="InuDisableChatBubbles">Disable Android notification bubbles</string>
     <string name="InuInPlaceTranslation">In-place translation</string>
     <string name="InuTranslateWebPreviews">Translate web previews</string>
@@ -512,7 +512,7 @@
     <string name="InuFormattingPopupDivider">——————</string>
     <string name="InuCut">Cut</string>
     <string name="InuCodeLanguage">Code language</string>
-    <string name="InuVersion">Inugram v%1$s (based on %2$s, build %3$s)</string>
+    <string name="InuVersion">FAgram v%1$s (based on %2$s, build %3$s)</string>
 
     <string name="InuSearchFilter">Filter by media</string>
     <string name="InuSearchFilterPhotos">Photos</string>
@@ -573,7 +573,7 @@
     <string name="InuBackupImportSheetCancel">No, leave as is</string>
     <string name="InuBackupSettings">Backup &amp; reset</string>
     <string name="InuBackupReset">Reset settings</string>
-    <string name="InuBackupResetConfirm">All Inugram settings will be reset to their default values. Your chats, accounts, and Telegram\'s own settings stay the same.\n\nThis cannot be undone.</string>
+    <string name="InuBackupResetConfirm">All FAgram settings will be reset to their default values. Your chats, accounts, and Telegram\'s own settings stay the same.\n\nThis cannot be undone.</string>
     <string name="InuBackupResetSuccess">Reset %1$d settings</string>
     <string name="InuBackupResetNoChanges">Settings are already at their defaults</string>
     <string name="InuCloudSync">Cloud sync</string>
@@ -661,7 +661,7 @@
     <string name="InuGoToMessagePrompt">Message ID</string>
     <string name="InuPrivacySecurity">Privacy &amp; Security</string>
     <string name="InuPerAccountPasscode">Per-account passcode</string>
-    <string name="InuHideInugramSettings">Hide Inugram settings</string>
+    <string name="InuHideInugramSettings">Hide FAgram settings</string>
     <string name="InuParanoiaDisableNotifications">Disable notifications</string>
     <string name="InuParanoiaHideOtherAccounts">Hide other accounts</string>
     <string name="InuParanoiaHideFolders">Hide folders</string>
@@ -694,17 +694,17 @@
     <string name="InuBotHelp">Bot Help</string>
 
     <string name="InuSimulateOom">Simulate OOM crash</string>
-    <string name="InuCrashTitle">Inugram crashed last time</string>
-    <string name="InuCrashTitleOom">Inugram ran out of memory</string>
+    <string name="InuCrashTitle">FAgram crashed last time</string>
+    <string name="InuCrashTitleOom">FAgram ran out of memory</string>
     <string name="InuCrashDesc">Sorry about that. You can share the crash log with the developer to help fix it.</string>
     <string name="InuCrashDescOom">Sorry about that. Crash logs aren\'t very useful for out-of-memory issues — a heap dump is what helps.</string>
     <string name="InuCrashDescHeapDump">A heap dump was also saved. DO NOT SHARE IT! It contains private data! Take a look at it yourself, if you want, and share your findings — that would help a lot.</string>
-    <string name="InuCrashOomEnableLogs">Enable debug mode in Inugram Settings > About to create a heap dump on every future OOM.</string>
+    <string name="InuCrashOomEnableLogs">Enable debug mode in FAgram Settings > About to create a heap dump on every future OOM.</string>
     <string name="InuCrashShare">Share crash log</string>
     <string name="InuCrashShareHeapDump">Save heap dump</string>
     <string name="InuCrashDiscard">Discard</string>
     <string name="InuCrashChannel">Crash recovery</string>
-    <string name="InuCrashNotifTitle">Inugram crashed</string>
+    <string name="InuCrashNotifTitle">FAgram crashed</string>
     <string name="InuCrashNotifText">Tap to restart</string>
 
     <string name="InuLogs">Debug</string>

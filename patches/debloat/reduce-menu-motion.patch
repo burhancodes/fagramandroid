@@ -17,8 +17,8 @@ index 0000000..0000000 100644
  
          private void startChildAnimation(View child) {
              if (animationEnabled) {
-+                if (desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
-+                    desu.inugram.helpers.theme.MenuMotionHelper.applyShown(child);
++                if (xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
++                    xie.fa.gram.helpers.theme.MenuMotionHelper.applyShown(child);
 +                    return;
 +                }
                  AnimatorSet animatorSet = new AnimatorSet();
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
          }
  
          public void setReactionsTransitionProgress(float transitionEnterProgress) {
-+            if (desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) transitionEnterProgress = 1f;
++            if (xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) transitionEnterProgress = 1f;
              this.reactionsEnterProgress = transitionEnterProgress;
              invalidate();
          }
@@ -36,8 +36,8 @@ index 0000000..0000000 100644
          });
          content.updateAnimation = false;
          content.clipChildren = true;
-+        if (desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
-+            windowAnimatorSet = desu.inugram.helpers.theme.MenuMotionHelper.buildEnter(content, content, finalScaleY);
++        if (xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
++            windowAnimatorSet = xie.fa.gram.helpers.theme.MenuMotionHelper.buildEnter(content, content, finalScaleY);
 +        } else {
          windowAnimatorSet.playTogether(
                  ObjectAnimator.ofFloat(content, "backScaleY", 0.0f, finalScaleY),
@@ -53,8 +53,8 @@ index 0000000..0000000 100644
                  finalScaleY = content.backScaleY;
              }
              windowAnimatorSet = new AnimatorSet();
-+            if (desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
-+                windowAnimatorSet = desu.inugram.helpers.theme.MenuMotionHelper.buildEnter(content, viewGroup, finalScaleY);
++            if (xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
++                windowAnimatorSet = xie.fa.gram.helpers.theme.MenuMotionHelper.buildEnter(content, viewGroup, finalScaleY);
 +            } else {
              windowAnimatorSet.playTogether(
                      ObjectAnimator.ofFloat(content, "backScaleY", 0.0f, finalScaleY),
@@ -73,7 +73,7 @@ index 0000000..0000000 100644
              scrimPopupWindow.setOutsideTouchable(true);
              scrimPopupWindow.setClippingEnabled(true);
 -            if (!isReactionsAvailable || reactionsLayout == null || !ReactionsContainerLayout.allowSmoothEnterTransition()) {
-+            if (!isReactionsAvailable || reactionsLayout == null || !ReactionsContainerLayout.allowSmoothEnterTransition() || desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
++            if (!isReactionsAvailable || reactionsLayout == null || !ReactionsContainerLayout.allowSmoothEnterTransition() || xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
                  scrimPopupWindow.setAnimationStyle(R.style.PopupContextAnimation);
              } else {
                  scrimPopupWindow.setAnimationStyle(0);
@@ -86,7 +86,7 @@ index 0000000..0000000 100644
                      if (child == premiumLockContainer) {
                          if (child.getX() + child.getMeasuredWidth() / 2f > 0 && child.getX() + child.getMeasuredWidth() / 2f < recyclerListView.getWidth()) {
 -                            if (!lastVisibleViewsTmp.contains(child)) {
-+                            if (!lastVisibleViewsTmp.contains(child) && !desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
++                            if (!lastVisibleViewsTmp.contains(child) && !xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
                                  if (transitionProgress != 1f) {
                                      premiumLockIconView.resetAnimation();
                                  }
@@ -95,7 +95,7 @@ index 0000000..0000000 100644
                      if (child == customReactionsContainer) {
                          if (child.getX() + child.getMeasuredWidth() / 2f > 0 && child.getX() + child.getMeasuredWidth() / 2f < recyclerListView.getWidth()) {
 -                            if (!lastVisibleViewsTmp.contains(child)) {
-+                            if (!lastVisibleViewsTmp.contains(child) && !desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
++                            if (!lastVisibleViewsTmp.contains(child) && !xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
                                  if (transitionProgress != 1f) {
                                      customEmojiReactionsIconView.resetAnimation();
                                  }
@@ -103,7 +103,7 @@ index 0000000..0000000 100644
  
      public void startEnterAnimation(boolean animatePopup) {
          this.animatePopup = animatePopup;
-+        if (desu.inugram.helpers.theme.MenuMotionHelper.getEnabled()) {
++        if (xie.fa.gram.helpers.theme.MenuMotionHelper.getEnabled()) {
 +            skipEnterAnimation = true;
 +            setTransitionProgress(1f);
 +            setAlpha(1f);

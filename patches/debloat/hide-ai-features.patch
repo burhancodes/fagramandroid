@@ -19,7 +19,7 @@ index 0000000..0000000 100644
              int count = webPage.cached_page.blocks.size();
              for (int a = 0; a < count; a++) {
                  TL_iv.PageBlock block = webPage.cached_page.blocks.get(a);
-+                if (desu.inugram.helpers.translate.InstantViewHelper.shouldHideBlock(block)) continue;
++                if (xie.fa.gram.helpers.translate.InstantViewHelper.shouldHideBlock(block)) continue;
                  if (a == 0) {
                      block.first = true;
                      if (block instanceof TL_iv.pageBlockCover) {
@@ -32,7 +32,7 @@ index 0000000..0000000 100644
                  }
              }
 -            drawSummarizeButton = TranslateController.isSummarizable(messageObject);
-+            drawSummarizeButton = !desu.inugram.InuConfig.HIDE_MESSAGE_SUMMARY.getValue() && TranslateController.isSummarizable(messageObject);
++            drawSummarizeButton = !xie.fa.gram.InuConfig.HIDE_MESSAGE_SUMMARY.getValue() && TranslateController.isSummarizable(messageObject);
              hasReplyQuote = false;
              isReplyQuote = false;
              isReplyTaskOrPollOption = false;
@@ -45,7 +45,7 @@ index 0000000..0000000 100644
      private boolean shownAiButton;
      private void showAiButton(boolean show_) {
 -        final boolean show = show_;
-+        final boolean show = show_ && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = show_ && !xie.fa.gram.InuConfig.HIDE_AI_EDITOR.getValue();
  
          if (shownAiButton == show) return;
          if (show) {
@@ -58,7 +58,7 @@ index 0000000..0000000 100644
      private boolean shownAiButton;
      private void showAiButton(boolean show_) {
 -        final boolean show = (show_ || richDraftActive) && parentFragment != null && !parentFragment.isSecretChat();
-+        final boolean show = (show_ || richDraftActive) && parentFragment != null && !parentFragment.isSecretChat() && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = (show_ || richDraftActive) && parentFragment != null && !parentFragment.isSecretChat() && !xie.fa.gram.InuConfig.HIDE_AI_EDITOR.getValue();
  
          if (shownAiButton == show) return;
          if (show) {
@@ -71,7 +71,7 @@ index 0000000..0000000 100644
      private boolean shownAiButton;
      private void showAiButton(boolean show_) {
 -        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat());
-+        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat()) && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat()) && !xie.fa.gram.InuConfig.HIDE_AI_EDITOR.getValue();
  
          if (shownAiButton == show) return;
          if (show) {

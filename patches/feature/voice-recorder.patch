@@ -105,7 +105,7 @@ index 0000000..0000000 100644
  import java.util.List;
  import java.util.Locale;
  
-+import desu.inugram.helpers.chat.VoiceRecorderHelper;
++import xie.fa.gram.helpers.chat.VoiceRecorderHelper;
  import me.vkryl.android.animator.BoolAnimator;
  import me.vkryl.android.animator.FactorAnimator;
  
@@ -314,7 +314,7 @@ index 0000000..0000000 100644
  
  import com.google.android.exoplayer2.ExoPlayer;
  
-+import desu.inugram.helpers.chat.VoiceRecorderHelper;
++import xie.fa.gram.helpers.chat.VoiceRecorderHelper;
  import org.telegram.messenger.AndroidUtilities;
  import org.telegram.messenger.ApplicationLoader;
  import org.telegram.messenger.AutoDeleteMediaTask;

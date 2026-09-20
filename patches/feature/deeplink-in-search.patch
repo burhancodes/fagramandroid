@@ -16,7 +16,7 @@ index 0000000..0000000 100644
      private final ArrayList<String> searchResultHashtags = new ArrayList<>();
      public final ArrayList<TLRPC.TL_sponsoredPeer> sponsoredPeers = new ArrayList<>();
      private final HashSet<byte[]> seenSponsoredPeers = new HashSet<>();
-+    private desu.inugram.helpers.search.SearchTopAction inu_topAction;
++    private xie.fa.gram.helpers.search.SearchTopAction inu_topAction;
      private String lastSearchText;
      private boolean searchWas;
      private int reqId = 0;
@@ -24,7 +24,7 @@ index 0000000..0000000 100644
          } else {
              query = null;
          }
-+        inu_topAction = desu.inugram.helpers.search.SearchTopAction.parse(query);
++        inu_topAction = xie.fa.gram.helpers.search.SearchTopAction.parse(query);
          filterRecent(query);
          if (!TextUtils.equals(sponsoredQuery, query)) {
              sponsoredQuery = query;
@@ -61,7 +61,7 @@ index 0000000..0000000 100644
                  });
                  messagesEmptyLayout.setQuery(lastMessagesSearchString);
                  break;
-+            case desu.inugram.helpers.search.SearchTopAction.VIEW_TYPE:
++            case xie.fa.gram.helpers.search.SearchTopAction.VIEW_TYPE:
 +                view = new TextCell(mContext, 23, false, false, resourcesProvider);
 +                break;
              case VIEW_TYPE_ADD_BY_PHONE:
@@ -91,9 +91,9 @@ index 0000000..0000000 100644
                  profileSearchCell.setData(contact, null, ContactsController.formatName(contact.first_name, contact.last_name), PhoneFormat.getInstance().format("+" + contact.shortPhones.get(0)), false, false);
                  break;
              }
-+            case desu.inugram.helpers.search.SearchTopAction.VIEW_TYPE: {
++            case xie.fa.gram.helpers.search.SearchTopAction.VIEW_TYPE: {
 +                TextCell cell = (TextCell) holder.itemView;
-+                desu.inugram.helpers.search.SearchTopAction action = inu_topAction;
++                xie.fa.gram.helpers.search.SearchTopAction action = inu_topAction;
 +                if (action != null) {
 +                    cell.setTextAndIcon(action.getLabel(), action.getIconRes(), false);
 +                }
@@ -107,7 +107,7 @@ index 0000000..0000000 100644
      @Override
      public int getItemViewType(int i) {
 +        if (inu_topAction != null) {
-+            if (i == 0) return desu.inugram.helpers.search.SearchTopAction.VIEW_TYPE;
++            if (i == 0) return xie.fa.gram.helpers.search.SearchTopAction.VIEW_TYPE;
 +            i--;
 +        }
          if (!searchResultHashtags.isEmpty()) {
@@ -121,8 +121,8 @@ index 0000000..0000000 100644
          });
          searchViewPager.searchListView.setOnItemClickListener((view, position, x, y) -> {
              Object item = searchViewPager.dialogsSearchAdapter.getItem(position);
-+            if (item instanceof desu.inugram.helpers.search.SearchTopAction) {
-+                ((desu.inugram.helpers.search.SearchTopAction) item).execute(this);
++            if (item instanceof xie.fa.gram.helpers.search.SearchTopAction) {
++                ((xie.fa.gram.helpers.search.SearchTopAction) item).execute(this);
 +                return;
 +            }
              if (item instanceof TLRPC.TL_sponsoredPeer) {

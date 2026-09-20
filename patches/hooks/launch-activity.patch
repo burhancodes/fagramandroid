@@ -15,7 +15,7 @@ index 0000000..0000000 100644
  
      @SuppressLint("Range")
      private boolean handleIntent(Intent intent, boolean isNew, boolean restore, boolean fromPassword, Browser.Progress progress, boolean rebuildFragments, boolean openedTelegram) {
-+        if (desu.inugram.InuHooks.handleIntent(this, intent)) return true;
++        if (xie.fa.gram.InuHooks.handleIntent(this, intent)) return true;
          if (GiftInfoBottomSheet.handleIntent(intent, progress)) {
              return true;
          }
@@ -23,7 +23,7 @@ index 0000000..0000000 100644
          if (Theme.selectedAutoNightType == Theme.AUTO_NIGHT_TYPE_SYSTEM) {
              Theme.checkAutoNightThemeConditions();
          }
-+        desu.inugram.InuHooks.onResume(this);
++        xie.fa.gram.InuHooks.onResume(this);
          checkWasMutedByAdmin(true);
          //FileLog.d("UI resume time = " + (SystemClock.elapsedRealtime() - ApplicationLoader.startTime));
          NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.startAllHeavyOperations, 4096);

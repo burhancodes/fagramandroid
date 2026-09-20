@@ -1,13 +1,13 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.chat.WebPreviewHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.chat.WebPreviewHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

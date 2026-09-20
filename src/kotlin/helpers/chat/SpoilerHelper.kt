@@ -1,4 +1,4 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -13,7 +13,7 @@ import android.text.TextPaint
 import android.text.style.MetricAffectingSpan
 import android.view.View
 import androidx.core.content.ContextCompat
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LocaleController

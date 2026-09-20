@@ -1,4 +1,4 @@
-package desu.inugram.helpers.media
+package xie.fa.gram.helpers.media
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
@@ -9,8 +9,8 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.FileLoader
 import org.telegram.messenger.FileLog

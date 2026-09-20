@@ -1,9 +1,9 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.FrameLayout
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R

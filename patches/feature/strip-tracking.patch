@@ -17,7 +17,7 @@ index 0000000..0000000 100644
          if (context == null || uri == null) {
              return;
          }
-+        uri = desu.inugram.helpers.UrlCleanerHelper.clean(uri);
++        uri = xie.fa.gram.helpers.UrlCleanerHelper.clean(uri);
          final int currentAccount = UserConfig.selectedAccount;
          boolean[] forceBrowser = new boolean[]{false};
          boolean internalUri = isInternalUri(uri, forceBrowser);
@@ -30,7 +30,7 @@ index 0000000..0000000 100644
                  }
                  try {
 -                    editable.setSpan(createUrlSpan(url), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-+                    editable.setSpan(createUrlSpan(desu.inugram.helpers.UrlCleanerHelper.cleanUrlString(url).toString()), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
++                    editable.setSpan(createUrlSpan(xie.fa.gram.helpers.UrlCleanerHelper.cleanUrlString(url).toString()), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                  } catch (Exception ignore) {}
                  if (delegate != null) {
                      delegate.onSpansChanged();
@@ -41,13 +41,13 @@ index 0000000..0000000 100644
 +
 +            @Override
 +            public boolean onTextContextMenuItem(int id) {
-+                if (id == android.R.id.paste && desu.inugram.helpers.UrlCleanerHelper.handleContextMenuPaste(this)) return true;
++                if (id == android.R.id.paste && xie.fa.gram.helpers.UrlCleanerHelper.handleContextMenuPaste(this)) return true;
 +                return super.onTextContextMenuItem(id);
 +            }
 +
 +            @Override
 +            public android.view.inputmethod.InputConnection onCreateInputConnection(android.view.inputmethod.EditorInfo outAttrs) {
-+                return desu.inugram.helpers.UrlCleanerHelper.wrapInputConnection(super.onCreateInputConnection(outAttrs));
++                return xie.fa.gram.helpers.UrlCleanerHelper.wrapInputConnection(super.onCreateInputConnection(outAttrs));
 +            }
          };
          final String def = initial == null ? "" : initial;
@@ -57,7 +57,7 @@ index 0000000..0000000 100644
              }
              if (text != null) {
 -                editText.setText(text);
-+                editText.setText(desu.inugram.helpers.UrlCleanerHelper.cleanUrlString(text));
++                editText.setText(xie.fa.gram.helpers.UrlCleanerHelper.cleanUrlString(text));
                  editText.setSelection(0, editText.getText().length());
              }
              checkPaste.run();
@@ -66,7 +66,7 @@ index 0000000..0000000 100644
              }
              if (text != null) {
 -                editText.setText(text);
-+                editText.setText(desu.inugram.helpers.UrlCleanerHelper.cleanUrlString(text));
++                editText.setText(xie.fa.gram.helpers.UrlCleanerHelper.cleanUrlString(text));
                  editText.setSelection(0, editText.getText().length());
              }
          }
@@ -74,7 +74,7 @@ index 0000000..0000000 100644
                      String html = clipData.getItemAt(0).getHtmlText();
                      SpannableStringBuilder pasted = new SpannableStringBuilder(CopyUtilities.fromHTML(html));
                      Emoji.replaceEmoji(pasted, getPaint().getFontMetricsInt(), false, null);
-+                    desu.inugram.helpers.UrlCleanerHelper.cleanSpannedUrls(pasted);
++                    xie.fa.gram.helpers.UrlCleanerHelper.cleanSpannedUrls(pasted);
                      AnimatedEmojiSpan[] spans = pasted.getSpans(0, pasted.length(), AnimatedEmojiSpan.class);
                      if (spans != null) {
                          for (int k = 0; k < spans.length; ++k) {
@@ -82,7 +82,7 @@ index 0000000..0000000 100644
                      FileLog.e(e);
                  }
              }
-+            if (desu.inugram.helpers.UrlCleanerHelper.handleContextMenuPaste(this)) return true;
++            if (xie.fa.gram.helpers.UrlCleanerHelper.handleContextMenuPaste(this)) return true;
          } else if (id == android.R.id.copy) {
              int start = Math.max(0, getSelectionStart());
              int end = Math.min(getText().length(), getSelectionEnd());
@@ -93,7 +93,7 @@ index 0000000..0000000 100644
 +
 +    @Override
 +    public android.view.inputmethod.InputConnection onCreateInputConnection(android.view.inputmethod.EditorInfo outAttrs) {
-+        return desu.inugram.helpers.UrlCleanerHelper.wrapInputConnection(super.onCreateInputConnection(outAttrs));
++        return xie.fa.gram.helpers.UrlCleanerHelper.wrapInputConnection(super.onCreateInputConnection(outAttrs));
 +    }
  }
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
@@ -105,7 +105,7 @@ index 0000000..0000000 100644
                                  text = subject + "\n" + text;
                              }
 -                            sendingText = text;
-+                            sendingText = desu.inugram.helpers.UrlCleanerHelper.cleanText(text);
++                            sendingText = xie.fa.gram.helpers.UrlCleanerHelper.cleanText(text);
                          } else if (!TextUtils.isEmpty(subject)) {
                              sendingText = subject;
                          }

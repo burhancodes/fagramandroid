@@ -16,7 +16,7 @@ index 0000000..0000000 100644
          }
          filterReactions(visibleReactions);
 +        if (type == TYPE_DEFAULT) {
-+            desu.inugram.helpers.chat.PinnedReactionsHelper.reorder(visibleReactions, hasStar, allReactionsAvailable);
++            xie.fa.gram.helpers.chat.PinnedReactionsHelper.reorder(visibleReactions, hasStar, allReactionsAvailable);
 +        }
          showExpandableReactions = !hitLimit && (!allReactionsAvailable && visibleReactions.size() > 16 || allReactionsAvailable && !UserConfig.getInstance(currentAccount).isPremium() && MessagesController.getInstance(currentAccount).premiumFeaturesBlocked());
          if (type == TYPE_TAGS && !UserConfig.getInstance(currentAccount).isPremium()) {

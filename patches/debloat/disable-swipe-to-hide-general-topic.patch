@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                  return makeMovementFlags(0, 0);
              }
              TLRPC.TL_forumTopic topic = forumTopics.get(position).topic;
-+            if (topic.id == 1 && desu.inugram.InuConfig.DISABLE_SWIPE_TO_HIDE_GENERAL_TOPIC.getValue()) {
++            if (topic.id == 1 && xie.fa.gram.InuConfig.DISABLE_SWIPE_TO_HIDE_GENERAL_TOPIC.getValue()) {
 +                return makeMovementFlags(0, 0);
 +            }
              if (selectedTopics.isEmpty() && viewHolder.itemView instanceof TopicDialogCell && topic.id == 1) {

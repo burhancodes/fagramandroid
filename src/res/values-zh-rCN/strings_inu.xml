@@ -621,7 +621,7 @@
     <string name="InuConfirmReactionText">在 **%2$s** 发送 %1$s 回应？</string>
     <string name="InuNotificationIcon">通知图标</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">Inugram</string>
+    <string name="InuNotificationIconInugram">FAgram</string>
     <string name="InuNothingToTranslate">没有可翻译的消息。</string>
     <string name="InuAlreadyInTargetLanguage">此消息已是 %1$s。</string>
     <string name="InuVoiceRecorder">语音 / 圆形录制</string>

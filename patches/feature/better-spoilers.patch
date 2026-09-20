@@ -26,7 +26,7 @@ index 0000000..0000000 100644
      }
  
      public void drawBlurredPhotoParticles(Canvas canvas) {
-+        if (desu.inugram.helpers.chat.SpoilerHelper.drawMediaSpoilerIfOverridden(canvas, this)) {
++        if (xie.fa.gram.helpers.chat.SpoilerHelper.drawMediaSpoilerIfOverridden(canvas, this)) {
 +            return;
 +        }
          if (mediaSpoilerEffect2 == null) {
@@ -72,7 +72,7 @@ index 0000000..0000000 100644
  
                              for (int i = 0; i < spoilers.size(); i++) {
                                  SpoilerEffect eff = spoilers.get(i);
-+                                desu.inugram.helpers.chat.SpoilerHelper.setDrawAlphaMultiplier(eff, 1f - updateHelper.typingProgres);
++                                xie.fa.gram.helpers.chat.SpoilerHelper.setDrawAlphaMultiplier(eff, 1f - updateHelper.typingProgres);
                                  eff.setColor(messageLayout.getPaint().getColor());
                                  eff.draw(canvas);
                              }
@@ -93,7 +93,7 @@ index 0000000..0000000 100644
      @Override
      public void draw(@NonNull Canvas canvas) {
          final Rect bounds = getBounds();
-+        if (inu_isTextSpoiler && desu.inugram.helpers.chat.SpoilerHelper.drawSolidIfOverridden(canvas, this, mParent, lastColor, mAlpha)) {
++        if (inu_isTextSpoiler && xie.fa.gram.helpers.chat.SpoilerHelper.drawSolidIfOverridden(canvas, this, mParent, lastColor, mAlpha)) {
 +            return;
 +        }
          if (bounds.isEmpty()) {
@@ -103,7 +103,7 @@ index 0000000..0000000 100644
                  addSpoilerRangesInternal(v, textLayout, left, right, start, end, spoilersPool, spoilers, quoteBlocks);
              }
          }
-+        desu.inugram.helpers.chat.SpoilerHelper.linkNeighbors(spoilers);
++        xie.fa.gram.helpers.chat.SpoilerHelper.linkNeighbors(spoilers);
          if (v instanceof TextView && spoilersPool != null) {
              spoilersPool.clear();
          }
@@ -112,7 +112,7 @@ index 0000000..0000000 100644
      private static void addSpoilerRangeInternal(@Nullable View v, @NonNull Layout textLayout, float left, float top, float right, float bottom, @Nullable Stack<SpoilerEffect> spoilersPool, List<SpoilerEffect> spoilers, int mostleft, int mostright, ArrayList<QuoteSpan.Block> quote) {
          SpoilerEffect spoilerEffect = spoilersPool == null || spoilersPool.isEmpty() ? new SpoilerEffect() : spoilersPool.remove(0);
 +        spoilerEffect.inu_isTextSpoiler = true;
-+        if (desu.inugram.InuConfig.SPOILER_EXTEND_TO_LINE_END.getValue() && mostright > 0) {
++        if (xie.fa.gram.InuConfig.SPOILER_EXTEND_TO_LINE_END.getValue() && mostright > 0) {
 +            int inu_line = textLayout.getLineForVertical((int) ((top + bottom) / 2f));
 +            if (inu_line < textLayout.getLineCount() - 1 && right >= textLayout.getLineRight(inu_line) - dp(2)) {
 +                right = mostright;
@@ -126,7 +126,7 @@ index 0000000..0000000 100644
                          }
  
 -                        sb.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), start, end, sp.getSpanFlags(ss));
-+                        sb.setSpan(new desu.inugram.helpers.chat.SpoilerHelper.TransparentMetricSpan(ss), start, end, sp.getSpanFlags(ss));
++                        sb.setSpan(new xie.fa.gram.helpers.chat.SpoilerHelper.TransparentMetricSpan(ss), start, end, sp.getSpanFlags(ss));
                          sb.removeSpan(ss);
                      }
                  }
@@ -135,7 +135,7 @@ index 0000000..0000000 100644
                              sb.removeSpan(e);
                          }
 -                        sb.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), start, end, sp.getSpanFlags(ss));
-+                        sb.setSpan(new desu.inugram.helpers.chat.SpoilerHelper.TransparentMetricSpan(ss), start, end, sp.getSpanFlags(ss));
++                        sb.setSpan(new xie.fa.gram.helpers.chat.SpoilerHelper.TransparentMetricSpan(ss), start, end, sp.getSpanFlags(ss));
                          sb.removeSpan(ss);
                      }
                  }

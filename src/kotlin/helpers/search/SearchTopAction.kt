@@ -1,11 +1,11 @@
-package desu.inugram.helpers.search
+package xie.fa.gram.helpers.search
 
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
 import org.telegram.messenger.browser.Browser
 import org.telegram.ui.ActionBar.BaseFragment
-import desu.inugram.helpers.security.ParanoiaHelper
+import xie.fa.gram.helpers.security.ParanoiaHelper
 
 
 sealed class SearchTopAction {

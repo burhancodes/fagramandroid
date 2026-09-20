@@ -16,7 +16,7 @@ index 0000000..0000000 100644
              if (getTopicId() != arg.botTopicId) return;
  
 -            saveScrollPosition2();
-+            final boolean keepDraftAtBottom = desu.inugram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue();
++            final boolean keepDraftAtBottom = xie.fa.gram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue();
              final int startRow = chatAdapter.messagesStartRow;
 +            if (!keepDraftAtBottom) {
 +                saveScrollPosition2();
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
          final boolean isBot = UserObject.isBot(currentUser);
          final boolean isStreamingTopic = isBot && BotForumHelper.getInstance(currentAccount).isStreamingTopic(getDialogId(), getTopicId());
 -        if (arr.size() == 1 && isBot && isStreamingTopic) {
-+        if (!desu.inugram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue() && arr.size() == 1 && isBot && isStreamingTopic) {
++        if (!xie.fa.gram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue() && arr.size() == 1 && isBot && isStreamingTopic) {
              MessageObject message = arr.get(0);
  
              final boolean isOutButWithHeight = !message.isBotPendingDraft && !message.isOutOwner()
@@ -57,7 +57,7 @@ index 0000000..0000000 100644
          checkSendButtonBlockedByTyping(true);
  
 -        forceScrollToMessageBottom = hasDraftsReplaces;
-+        forceScrollToMessageBottom = !desu.inugram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue() && hasDraftsReplaces;
++        forceScrollToMessageBottom = !xie.fa.gram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue() && hasDraftsReplaces;
  
          if (isBot && isStreamingTopic && !hasDraftsReplaces) {
              boolean hasMessageFromBot = false;
@@ -65,7 +65,7 @@ index 0000000..0000000 100644
              if (messageObject.getId() > 0 && old == null && UserObject.isBot(currentUser)) {
                  old = BotForumHelper.getInstance(currentAccount).onBotForumDraftCheckNewMessages(currentUser.id, (int) getTopicId(), messageObject.getId(), messageObject.messageText.toString());
                  if (old != null) {
-+                    if (!desu.inugram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue()) {
++                    if (!xie.fa.gram.InuConfig.DISABLE_BOT_DRAFT_TOP.getValue()) {
                      saveScrollPosition2();
                      botDraftHeightController.setMessageIdToOverride(messageObject.getId(), messageObject.getGroupId());
 +                    }

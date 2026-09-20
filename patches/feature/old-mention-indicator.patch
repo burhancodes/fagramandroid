@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                          mentionLayout.draw(canvas);
                          canvas.restore();
                      } else {
-+                        final boolean oldStyle = desu.inugram.InuConfig.OLD_MENTION_INDICATOR.getValue();
++                        final boolean oldStyle = xie.fa.gram.InuConfig.OLD_MENTION_INDICATOR.getValue();
 +                        if (oldStyle) {
 +                            int x = mentionLeft;
 +                            rect.set(x, countTop, x + mentionWidth + dp(BADGE_TEXT_PADDING * 2), countTop + dp(BADGE_SIZE));
@@ -42,7 +42,7 @@ index 0000000..0000000 100644
                      }
  
 -                    final Drawable drawable = drawCounterMuted ?
-+                    final boolean oldStyle = desu.inugram.InuConfig.OLD_MENTION_INDICATOR.getValue();
++                    final boolean oldStyle = xie.fa.gram.InuConfig.OLD_MENTION_INDICATOR.getValue();
 +                    if (oldStyle) {
 +                        int prevColor = Theme.dialogs_countPaint.getColor();
 +                        Theme.dialogs_countPaint.setColor(Theme.getColor(Theme.key_dialogReactionMentionBackground));

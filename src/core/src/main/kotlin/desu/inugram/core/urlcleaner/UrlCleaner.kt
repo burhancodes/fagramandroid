@@ -1,4 +1,4 @@
-package desu.inugram.core.urlcleaner
+package xie.fa.gram.core.urlcleaner
 
 /**
  * Strips tracking query parameters from URLs using AdGuard `$removeparam` rules.

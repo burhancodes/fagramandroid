@@ -21,7 +21,7 @@ index 0000000..0000000 100644
              return;
          }
  
-+        if (desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            Bitmap stub = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
 +            stub.eraseColor(0x60000000);
 +            onBitmapDone.run(stub);
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
          if (parentView == null || parentView.getMeasuredHeight() == 0 && parentView.getMeasuredWidth() == 0) {
              return;
          }
-+        if (desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            if (animateAlpha) {
 +                if (show && blurAlpha != 1f) {
 +                    blurAlpha = Math.min(1f, blurAlpha + 0.09f);
@@ -65,7 +65,7 @@ index 0000000..0000000 100644
      }
  
      public static void makeGlobalBlurBitmaps(Utilities.Callback2<Bitmap, Bitmap> bitmaps) {
-+        if (desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            Bitmap stubBg = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
 +            stubBg.eraseColor(0x60000000);
 +            Bitmap stubOptions = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
@@ -81,7 +81,7 @@ index 0000000..0000000 100644
  
      public static void makeGlobalBlurBitmaps(View cutToContainer, Utilities.Callback2<Bitmap, Bitmap> bitmaps) {
 -        if (cutToContainer == null) {
-+        if (cutToContainer == null || desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (cutToContainer == null || xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
              makeGlobalBlurBitmaps(bitmaps);
              return;
          }
@@ -94,7 +94,7 @@ index 0000000..0000000 100644
              }
  
 -            if (blurProgress != 0 && blurrBitmap != null) {
-+            if (blurProgress != 0 && blurrBitmap != null && !desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++            if (blurProgress != 0 && blurrBitmap != null && !xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
                  paint.setAlpha((int) (blurProgress * 255));
                  if (paint.getAlpha() != 255) {
                      canvas.drawColor(Theme.multAlpha(Theme.getColor(Theme.key_windowBackgroundGray, resourcesProvider), blurProgress));
@@ -103,7 +103,7 @@ index 0000000..0000000 100644
          }
  
 -        backgroundDrawable.setAlpha((int) (180 * showProgress));
-+        backgroundDrawable.setAlpha((int) ((desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue() ? 255 : 180) * showProgress));
++        backgroundDrawable.setAlpha((int) ((xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue() ? 255 : 180) * showProgress));
          backgroundDrawable.setBounds(0, 0, containerView.getWidth(), containerView.getHeight());
          backgroundDrawable.draw(canvas);
  
@@ -115,7 +115,7 @@ index 0000000..0000000 100644
          if (blurredView == null) {
              return;
          }
-+        if (desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            blurredView.setBackgroundColor(0x60000000);
 +            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 +                blurredView.setForeground(null);
@@ -137,7 +137,7 @@ index 0000000..0000000 100644
              protected void dispatchDraw(@NonNull Canvas canvas) {
                  if (activityVisibilityController != null) {
 -                    activityVisibilityController.setHidden(openProgress == 1 && blurBitmapPaint != null);
-+                    activityVisibilityController.setHidden(openProgress == 1 && blurBitmapPaint != null && !desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue());
++                    activityVisibilityController.setHidden(openProgress == 1 && blurBitmapPaint != null && !xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue());
                  }
  
                  if (openProgress > 0 && blurBitmapPaint != null) {
@@ -146,7 +146,7 @@ index 0000000..0000000 100644
                  WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION |
                  WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 -        params.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-+        if (!desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (!xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            params.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
 +        }
          params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
@@ -156,7 +156,7 @@ index 0000000..0000000 100644
          if (dismissing) return;
          dismissing = true;
  
-+        if (desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            if (editText != null) {
 +                editText.setAlpha(1f);
 +            }
@@ -173,14 +173,14 @@ index 0000000..0000000 100644
                  }
                  if (editText != null) {
 -                    editText.setAlpha(1f);
-+                    editText.setAlpha(open && desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue() ? 0f : 1f);
++                    editText.setAlpha(open && xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue() ? 0f : 1f);
                  }
                  if (destCell != null) {
                      destCell.setVisibility(View.VISIBLE);
                  }
                  if (anchorSendButton != null && !sent) {
 -                    anchorSendButton.setAlpha(1f);
-+                    anchorSendButton.setAlpha(open && desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue() ? 0f : 1f);
++                    anchorSendButton.setAlpha(open && xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue() ? 0f : 1f);
                  }
                  if (!open && sendButton != null) {
                      sendButton.setAlpha(0f);
@@ -192,7 +192,7 @@ index 0000000..0000000 100644
          if (blurredView == null || parentLayout == null) {
              return;
          }
-+        if (desu.inugram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_SCRIM_BLUR.getValue()) {
 +            blurredView.setBackgroundColor(0x60000000);
 +            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 +                blurredView.setForeground(null);

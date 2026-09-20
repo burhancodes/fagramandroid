@@ -16,7 +16,7 @@ index 0000000..0000000 100644
      android:installLocation="auto">
  
 -    <application android:name="org.telegram.messenger.ApplicationLoaderImpl" tools:replace="name">
-+    <application android:name="desu.inugram.ApplicationLoaderImpl" tools:replace="name">
++    <application android:name="xie.fa.gram.ApplicationLoaderImpl" tools:replace="name">
          <service
              android:name="org.telegram.messenger.GoogleVoiceClientService"
              android:exported="true"

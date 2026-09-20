@@ -31,7 +31,7 @@ index 0000000..0000000 100644
          final Runnable inCaseLoading = () -> {
              sideControlsButtonsLayout.setButtonLoading(ChatActivitySideControlsButtonsLayout.BUTTON_PAGE_DOWN, true, true);
          };
-+        if (desu.inugram.InuConfig.CHAT_REMEMBER_ALL_REPLIES.getValue() && !inu_replyStack.isEmpty()) {
++        if (xie.fa.gram.InuConfig.CHAT_REMEMBER_ALL_REPLIES.getValue() && !inu_replyStack.isEmpty()) {
 +            int[] top = inu_replyStack.pop();
 +            scrollToMessageId(top[0], 0, true, top[1], true, 0, null, inCaseLoading);
 +            return;
@@ -43,7 +43,7 @@ index 0000000..0000000 100644
                  showFloatingTopicView(false);
              }
          }
-+        if (desu.inugram.InuConfig.CHAT_REMEMBER_ALL_REPLIES.getValue() && fromMessageId != 0 && (inu_replyStack.isEmpty() || inu_replyStack.peek()[0] != fromMessageId)) {
++        if (xie.fa.gram.InuConfig.CHAT_REMEMBER_ALL_REPLIES.getValue() && fromMessageId != 0 && (inu_replyStack.isEmpty() || inu_replyStack.peek()[0] != fromMessageId)) {
 +            inu_replyStack.push(new int[]{fromMessageId, loadIndex});
 +        }
          returnToMessageId = fromMessageId;
@@ -69,7 +69,7 @@ index 0000000..0000000 100644
      }
  
      private boolean onSideControlButtonOnLongClick(int buttonId, View view) {
-+        if (buttonId == ChatActivitySideControlsButtonsLayout.BUTTON_PAGE_DOWN && desu.inugram.InuConfig.CHAT_REMEMBER_ALL_REPLIES.getValue()) {
++        if (buttonId == ChatActivitySideControlsButtonsLayout.BUTTON_PAGE_DOWN && xie.fa.gram.InuConfig.CHAT_REMEMBER_ALL_REPLIES.getValue()) {
 +            inu_replyStack.clear();
 +            returnToMessageId = 0;
 +            scrollToLastMessage(true, true, null);

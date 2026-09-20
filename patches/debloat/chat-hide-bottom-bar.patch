@@ -130,7 +130,7 @@ index 0000000..0000000 100644
                  bottomOverlayChatText.setTag(null);
                  bottomOverlayChatText.setText(LocaleController.getString(R.string.HidePinnedMessagesNoCaps));
              }
-+            ActionBarMenuItem unpinAllItem = actionBar.createMenu().getItem(desu.inugram.helpers.chat.ChatActionsHelper.ACTION_PINNED_UNPIN_ALL);
++            ActionBarMenuItem unpinAllItem = actionBar.createMenu().getItem(xie.fa.gram.helpers.chat.ChatActionsHelper.ACTION_PINNED_UNPIN_ALL);
 +            if (unpinAllItem != null) {
 +                unpinAllItem.setVisibility(forceNoBottom ? View.VISIBLE : View.GONE);
 +                unpinAllItem.setContentDescription(LocaleController.getString(allowPin ? R.string.UnpinAllMessagesNoCaps : R.string.HidePinnedMessagesNoCaps));
@@ -155,8 +155,8 @@ index 0000000..0000000 100644
          );
          tmpRect.inset(0, -dp(7));
          tmpRect.offset(0, blurTop + (int) bubbleInputTranlationY);
--        if (desu.inugram.helpers.theme.NonIslandHelper.chatElements()) {
-+        final boolean nonIsland = desu.inugram.helpers.theme.NonIslandHelper.chatElements();
+-        if (xie.fa.gram.helpers.theme.NonIslandHelper.chatElements()) {
++        final boolean nonIsland = xie.fa.gram.helpers.theme.NonIslandHelper.chatElements();
 +        final boolean hasBar = inputBubbleHeight > 0;
 +        if (nonIsland && hasBar) {
              tmpRect.top += dp(16);

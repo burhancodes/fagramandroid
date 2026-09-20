@@ -1,7 +1,7 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import androidx.core.content.edit
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.MessageObject
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.NotificationCenter

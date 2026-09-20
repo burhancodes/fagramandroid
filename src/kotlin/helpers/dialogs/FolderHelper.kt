@@ -1,4 +1,4 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import android.graphics.Canvas
 import android.graphics.ColorFilter
@@ -7,8 +7,8 @@ import android.text.TextPaint
 import android.util.Pair
 import androidx.core.content.edit
 import androidx.core.graphics.withSave
-import desu.inugram.InuConfig
-import desu.inugram.helpers.security.ParanoiaHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.security.ParanoiaHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.MessagesController

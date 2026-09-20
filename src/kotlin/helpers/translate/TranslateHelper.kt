@@ -1,4 +1,4 @@
-package desu.inugram.helpers.translate
+package xie.fa.gram.helpers.translate
 
 import android.graphics.drawable.Drawable
 import android.text.SpannableStringBuilder
@@ -6,9 +6,9 @@ import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.chat.ChatHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.chat.ChatHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LanguageDetector

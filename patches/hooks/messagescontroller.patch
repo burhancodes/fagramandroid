@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                  localInstance = Instance[num];
                  if (localInstance == null) {
                      Instance[num] = localInstance = new MessagesController(num);
-+                    desu.inugram.InuHooks.onMessagesControllerCreated(localInstance, num);
++                    xie.fa.gram.InuHooks.onMessagesControllerCreated(localInstance, num);
                  }
              }
          }

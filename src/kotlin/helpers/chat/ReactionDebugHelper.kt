@@ -1,6 +1,6 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.MessageObject
@@ -19,8 +19,8 @@ object ReactionDebugHelper {
         var frames = 0
         for (frame in Throwable().stackTrace) {
             val name = frame.className
-            if (name.startsWith("desu.inugram.helpers.chat.ReactionDebugHelper")) continue
-            if (!name.startsWith("org.telegram") && !name.startsWith("desu.inugram")) continue
+            if (name.startsWith("xie.fa.gram.helpers.chat.ReactionDebugHelper")) continue
+            if (!name.startsWith("org.telegram") && !name.startsWith("xie.fa.gram")) continue
             if (sb.isNotEmpty()) sb.append(" < ")
             sb.append(name.substringAfterLast('.')).append('.').append(frame.methodName).append(':').append(frame.lineNumber)
             if (++frames == 6) break

@@ -16,9 +16,9 @@ index 0000000..0000000 100644
              }
          } else {
 +            if (fromActions && !userBlocked) {
-+                desu.inugram.helpers.profile.ProfileHelper.showStopBotAlert(this, user);
++                xie.fa.gram.helpers.profile.ProfileHelper.showStopBotAlert(this, user);
 +                return;
 +            }
              if (!userBlocked || fromActions) {
-                 AlertsCreator.createClearOrDeleteDialogAlert(ProfileActivity.this, false, currentChat, user, currentEncryptedChat != null, true, false, true, (param) -> desu.inugram.helpers.security.BiometricHelper.gate(getParentActivity(), desu.inugram.InuConfig.BIOMETRIC_CONFIRM_DELETE_CHAT.getValue(), () -> {
+                 AlertsCreator.createClearOrDeleteDialogAlert(ProfileActivity.this, false, currentChat, user, currentEncryptedChat != null, true, false, true, (param) -> xie.fa.gram.helpers.security.BiometricHelper.gate(getParentActivity(), xie.fa.gram.InuConfig.BIOMETRIC_CONFIRM_DELETE_CHAT.getValue(), () -> {
                      if (getParentLayout() != null) {

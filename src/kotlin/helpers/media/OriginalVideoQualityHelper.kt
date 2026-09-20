@@ -1,4 +1,4 @@
-package desu.inugram.helpers.media
+package xie.fa.gram.helpers.media
 
 import android.media.MediaCodecList
 import android.media.MediaExtractor

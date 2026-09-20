@@ -15,7 +15,7 @@ index 0000000..0000000 100644
      }
  
      public static String formatShortNumber(int number, int[] rounded) {
-+        if (desu.inugram.InuConfig.DISABLE_ROUNDING.getValue()) {
++        if (xie.fa.gram.InuConfig.DISABLE_ROUNDING.getValue()) {
 +            if (rounded != null) rounded[0] = number;
 +            return String.format(Locale.getDefault(), "%,d", number);
 +        }

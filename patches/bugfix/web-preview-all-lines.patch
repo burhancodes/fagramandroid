@@ -16,7 +16,7 @@ index 0000000..0000000 100644
                              }
                              int restLines = 0;
 -                            boolean allowAllLines = site_name != null && site_name.toString().toLowerCase().equals("twitter");
-+                            boolean allowAllLines = desu.inugram.helpers.chat.WebPreviewHelper.shouldShowAllLines(webpage);
++                            boolean allowAllLines = xie.fa.gram.helpers.chat.WebPreviewHelper.shouldShowAllLines(webpage);
                              CharSequence text = overrideDescrption != null ? overrideDescrption : messageObject.linkDescription;
                              boolean isRTL = AndroidUtilities.isRTL(text);
                              int maxLines = allowAllLines ? 100 : (currentMessageObject.isRepostPreview ? 3 : 6);

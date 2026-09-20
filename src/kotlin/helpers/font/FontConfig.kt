@@ -1,9 +1,9 @@
-package desu.inugram.helpers.font
+package xie.fa.gram.helpers.font
 
 import android.content.SharedPreferences
-import desu.inugram.InuConfig
-import desu.inugram.InuConfig.BoolItem
-import desu.inugram.InuConfig.StringItem
+import xie.fa.gram.InuConfig
+import xie.fa.gram.InuConfig.BoolItem
+import xie.fa.gram.InuConfig.StringItem
 import org.json.JSONArray
 import org.json.JSONObject
 

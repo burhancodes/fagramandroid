@@ -1,4 +1,4 @@
-package desu.inugram.core.fileid
+package xie.fa.gram.core.fileid
 
 import java.util.Base64
 

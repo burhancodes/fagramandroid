@@ -1,6 +1,6 @@
-package desu.inugram.helpers.font
+package xie.fa.gram.helpers.font
 
-import desu.inugram.helpers.font.SfntParser.Script
+import xie.fa.gram.helpers.font.SfntParser.Script
 
 /** Whether a font (or a whole stack) provides each style natively vs. relying on synthesis. */
 data class StyleCoverage(val regular: Boolean, val bold: Boolean, val upright: Boolean, val italic: Boolean) {

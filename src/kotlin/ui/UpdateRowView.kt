@@ -1,4 +1,4 @@
-package desu.inugram.ui
+package xie.fa.gram.ui
 
 import android.app.Activity
 import android.content.Context
@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.widget.FrameLayout
-import desu.inugram.helpers.update.UpdateHelper
+import xie.fa.gram.helpers.update.UpdateHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader

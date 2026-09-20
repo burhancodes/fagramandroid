@@ -1,4 +1,4 @@
-package desu.inugram.ui.drawer
+package xie.fa.gram.ui.drawer
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
@@ -24,8 +24,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.ColorUtils
-import desu.inugram.InuConfig
-import desu.inugram.helpers.dialogs.DrawerHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.dialogs.DrawerHelper
 import org.telegram.PhoneFormat.PhoneFormat
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader

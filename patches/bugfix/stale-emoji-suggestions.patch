@@ -22,7 +22,7 @@ index 0000000..0000000 100644
 @@ -967,6 +968,7 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
              searchGlobalRunnable = null;
          }
-         desu.inugram.helpers.search.SearchFromHelper.cancel();
+         xie.fa.gram.helpers.search.SearchFromHelper.cancel();
 +        inu_emojiSearchGeneration++;
          if (checkAgainRunnable != null) {
              AndroidUtilities.cancelRunOnUIThread(checkAgainRunnable);

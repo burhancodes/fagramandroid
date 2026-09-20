@@ -20,7 +20,7 @@ index 0000000..0000000 100644
          final boolean isButtonColorLight = isButtonColorLight();
          float useFilledWhiteIcon = !isButtonColorLight ? 1 : MathUtils.clamp((parentExpanded - 0.75f) / 0.25f, 0, 1);
 -        if (isButtonColorLight && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-+        if (isButtonColorLight && (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || desu.inugram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade())) {
++        if (isButtonColorLight && (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || xie.fa.gram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade())) {
              useFilledWhiteIcon = 0f;
          }
  
@@ -41,7 +41,7 @@ index 0000000..0000000 100644
      @Override
      protected void onDraw(Canvas canvas) {
 -        draw(canvas, null, view.getMeasuredWidth(), view.getMeasuredHeight(), false, 0f, 1f);
-+        float a = desu.inugram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade() ? inu_expandProgress : 1f;
++        float a = xie.fa.gram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade() ? inu_expandProgress : 1f;
 +        draw(canvas, null, view.getMeasuredWidth(), view.getMeasuredHeight(), false, 0f, a);
      }
  
@@ -50,7 +50,7 @@ index 0000000..0000000 100644
              return;
          }
  
-+        if (desu.inugram.helpers.profile.ProfileHelper.drawProfilePhotoGradientFade(canvas, this, width, translate, fraction, alpha)) return;
++        if (xie.fa.gram.helpers.profile.ProfileHelper.drawProfilePhotoGradientFade(canvas, this, width, translate, fraction, alpha)) return;
 +
          if (usingRenderNode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
              if (canvas.isHardwareAccelerated()) {
@@ -64,7 +64,7 @@ index 0000000..0000000 100644
          super.setAlpha(alpha);
          if (blurView != null) {
 -            blurView.setAlpha(alpha);
-+            blurView.setAlpha(desu.inugram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade() ? 1f : alpha);
++            blurView.setAlpha(xie.fa.gram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade() ? 1f : alpha);
          }
      }
  
@@ -87,15 +87,15 @@ index 0000000..0000000 100644
              backgroundColor = Theme.adaptHSV(ColorUtils.blendARGB(color1, color2, .15f), +.04f, -.09f);
              withShadows = false;
          }
-+        backgroundColor = desu.inugram.helpers.profile.ProfileHelper.blendChipBackgroundForExpand(backgroundColor, Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider), parentExpanded);
-+        withShadows = withShadows || desu.inugram.helpers.profile.ProfileHelper.forceChipShadowForExpand(parentExpanded);
++        backgroundColor = xie.fa.gram.helpers.profile.ProfileHelper.blendChipBackgroundForExpand(backgroundColor, Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider), parentExpanded);
++        withShadows = withShadows || xie.fa.gram.helpers.profile.ProfileHelper.forceChipShadowForExpand(parentExpanded);
          backgroundPaint.setColor(backgroundColor);
          checkTextColor();
      }
  
      private void checkTextColor() {
 -        final boolean useBlackText = parentExpanded < 0.8f && AndroidUtilities.computePerceivedBrightness(backgroundColor) > 0.85f;
-+        final boolean useBlackText = (parentExpanded < 0.8f || desu.inugram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade()) && AndroidUtilities.computePerceivedBrightness(backgroundColor) > 0.85f;
++        final boolean useBlackText = (parentExpanded < 0.8f || xie.fa.gram.helpers.profile.ProfileHelper.useProfilePhotoGradientFade()) && AndroidUtilities.computePerceivedBrightness(backgroundColor) > 0.85f;
          textColor = useBlackText ? Color.BLACK : Color.WHITE;
          icon.setColorFilter(useBlackText ? filterColorBlack : filterColorWhite);
          iconPaint.setColor(textColor);
@@ -155,7 +155,7 @@ index 0000000..0000000 100644
                          if (giftsView != null) {
                              giftsView.setExpandProgress(1f);
                          }
-+                        desu.inugram.helpers.profile.ProfileHelper.notifyBlurExpandProgress(avatarsViewPager, 1f);
++                        xie.fa.gram.helpers.profile.ProfileHelper.notifyBlurExpandProgress(avatarsViewPager, 1f);
                          if (actionsView != null) {
                              actionsView.setParentExpanded(1f);
                          }

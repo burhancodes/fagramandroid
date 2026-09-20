@@ -1,9 +1,9 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.InuConfig
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.ui.Cells.NotificationsCheckCell

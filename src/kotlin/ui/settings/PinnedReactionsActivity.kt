@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 
 import android.animation.ValueAnimator
@@ -15,9 +15,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import desu.inugram.InuConfig
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.chat.PinnedReactionsHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.chat.PinnedReactionsHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.DocumentObject
 import org.telegram.messenger.Emoji

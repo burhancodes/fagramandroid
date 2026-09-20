@@ -1,4 +1,4 @@
-package desu.inugram.helpers.security
+package xie.fa.gram.helpers.security
 
 import android.app.Activity
 import android.content.Context
@@ -10,7 +10,7 @@ import org.telegram.tgnet.TLRPC
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.LauncherIconController
 import org.telegram.ui.LauncherIconController.LauncherIcon
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.helpers.InuUtils
 
 // "Hidden chats" aka "Paranoia mode": a per-account set of dialogs that vanishes from every surface while
 // paranoia mode is on. Secret (encrypted) chats are hidden unconditionally in that mode.

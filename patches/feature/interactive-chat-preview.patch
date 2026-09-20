@@ -17,7 +17,7 @@ index 0000000..0000000 100644
          if (fragment == null || checkTransitionAnimation() || delegate != null && check && !delegate.needPresentFragment(this, params) || !fragment.onFragmentCreate()) {
              return false;
          }
-+        if (inPreviewMode && !preview && desu.inugram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue()) {
++        if (inPreviewMode && !preview && xie.fa.gram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue()) {
 +            final NavigationParams deferred = params;
 +            finishPreviewFragment();
 +            AndroidUtilities.runOnUIThread(() -> {
@@ -86,7 +86,7 @@ index 0000000..0000000 100644
              });
          }
  
-+        if (desu.inugram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue()) {
++        if (xie.fa.gram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue()) {
 +            ActionBarMenuSubItem openChatItem = new ActionBarMenuSubItem(getParentActivity(), true, false);
 +            openChatItem.setTextAndIcon(LocaleController.getString(R.string.SavedOpenChatNoCaps), R.drawable.msg_discussion);
 +            openChatItem.setMinimumWidth(160);
@@ -106,7 +106,7 @@ index 0000000..0000000 100644
                  presentFragmentAsPreviewWithMenu(previewActivity[0] = chatActivity1, previewMenu[0]);
                  if (chatActivity1 != null) {
 -                    chatActivity1.allowExpandPreviewByClick = true;
-+                    chatActivity1.allowExpandPreviewByClick = !desu.inugram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue();
++                    chatActivity1.allowExpandPreviewByClick = !xie.fa.gram.InuConfig.INTERACTIVE_CHAT_PREVIEW.getValue();
                      try {
                          chatActivity1.getAvatarContainer().getAvatarImageView().performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
                      } catch (Exception ignore) {

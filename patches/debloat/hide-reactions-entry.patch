@@ -15,7 +15,7 @@ index 0000000..0000000 100644
      }
  
      public void animateReaction(VisibleReaction reaction) {
-+        if (desu.inugram.InuConfig.HIDE_REACTIONS_ENTRY.getValue()) return;
++        if (xie.fa.gram.InuConfig.HIDE_REACTIONS_ENTRY.getValue()) return;
          if (reaction.documentId == 0 && animatedReactions.get(reaction) == null) {
              ImageReceiver imageReceiver = new ImageReceiver();
              imageReceiver.setParentView(parentView);

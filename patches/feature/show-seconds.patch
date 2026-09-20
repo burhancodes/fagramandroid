@@ -15,7 +15,7 @@ index 0000000..0000000 100644
  
      private volatile FastDateFormat formatterDay;
      public FastDateFormat getFormatterDay() {
-+        if (desu.inugram.InuConfig.SHOW_SECONDS.getValue()) {
++        if (xie.fa.gram.InuConfig.SHOW_SECONDS.getValue()) {
 +            return getFormatterDayWithSeconds();
 +        }
          if (formatterDay == null) {

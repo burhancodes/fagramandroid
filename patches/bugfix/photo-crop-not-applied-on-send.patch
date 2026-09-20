@@ -72,7 +72,7 @@ index 0000000..0000000 100644
                  orientation = new int[]{centerImage.getOrientation(), centerImage.getInvert()};
 +                if (bitmap == null) {
 +                    orientation = new int[2];
-+                    bitmap = desu.inugram.helpers.media.PhotoViewerHelper.loadEditSourceBitmap(entry, orientation);
++                    bitmap = xie.fa.gram.helpers.media.PhotoViewerHelper.loadEditSourceBitmap(entry, orientation);
 +                }
 +            }
 +            if (bitmap == null) {
@@ -84,7 +84,7 @@ index 0000000..0000000 100644
 +            }
 +            currentCroppedBitmap = createCroppedBitmap(bitmap, entry.cropState, orientation, true);
 +            if (currentCroppedBitmap == null) {
-+                currentCroppedBitmap = desu.inugram.helpers.media.PhotoViewerHelper.rebakeCroppedBitmap(entry);
++                currentCroppedBitmap = xie.fa.gram.helpers.media.PhotoViewerHelper.rebakeCroppedBitmap(entry);
 +                if (currentCroppedBitmap == null) {
 +                    return false;
 +                }

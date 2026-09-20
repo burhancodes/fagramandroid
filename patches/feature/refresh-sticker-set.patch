@@ -18,7 +18,7 @@ index 0000000..0000000 100644
              }
 +        } else if (id == 100) {
 +            final int index = customEmojiPacks.stickerSets.indexOf(stickerSet);
-+            desu.inugram.helpers.StickerSetHelper.refreshStickerSet(currentAccount, (FrameLayout) containerView, resourcesProvider, stickerSet, newSet -> {
++            xie.fa.gram.helpers.StickerSetHelper.refreshStickerSet(currentAccount, (FrameLayout) containerView, resourcesProvider, stickerSet, newSet -> {
 +                if (index < 0 || index >= customEmojiPacks.stickerSets.size()) {
 +                    return;
 +                }
@@ -54,7 +54,7 @@ index 0000000..0000000 100644
                  MediaDataController.getInstance(currentAccount).toggleStickerSet(getContext(), stickerSet, 1, parentFragment, false, false);
              });
 +        } else if (id == 100) {
-+            desu.inugram.helpers.StickerSetHelper.refreshStickerSet(currentAccount, (FrameLayout) containerView, resourcesProvider, stickerSet, this::updateStickerSet);
++            xie.fa.gram.helpers.StickerSetHelper.refreshStickerSet(currentAccount, (FrameLayout) containerView, resourcesProvider, stickerSet, this::updateStickerSet);
          }
      }
  

@@ -1,4 +1,4 @@
-package desu.inugram
+package xie.fa.gram
 
 import android.content.Context
 import android.graphics.Canvas
@@ -14,7 +14,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
-import desu.inugram.helpers.update.UpdateHelper
+import xie.fa.gram.helpers.update.UpdateHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.DocumentObject
 import org.telegram.messenger.FileLoader

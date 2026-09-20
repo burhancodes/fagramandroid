@@ -1,14 +1,14 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.os.Build
 import android.view.View
-import desu.inugram.InuConfig
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.ProxyVpnHelper
-import desu.inugram.helpers.ShortcutHelper
-import desu.inugram.helpers.chat.WebPreviewHelper
-import desu.inugram.helpers.maps.MapsHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.ProxyVpnHelper
+import xie.fa.gram.helpers.ShortcutHelper
+import xie.fa.gram.helpers.chat.WebPreviewHelper
+import xie.fa.gram.helpers.maps.MapsHelper
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
 import org.telegram.messenger.SharedConfig

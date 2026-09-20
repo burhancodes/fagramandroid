@@ -40,7 +40,7 @@ index 0000000..0000000 100644
          public void updateDrawState(TextPaint tp) {
 -            tp.setColor(Theme.getColor(getColorKey()));
 +            final int key = getColorKey();
-+            tp.setColor(Theme.getColor(inu_out ? desu.inugram.helpers.theme.MonetHelper.getOutCodeColorKey(key) : key));
++            tp.setColor(Theme.getColor(inu_out ? xie.fa.gram.helpers.theme.MonetHelper.getOutCodeColorKey(key) : key));
          }
      }
  
@@ -156,54 +156,54 @@ index 0000000..0000000 100644
              }
              final boolean isDark = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
 -            return (isDark ? darkColors : colors)[i];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[i]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[i]);
          }
          public int getLvl(boolean isGroup) {
              return isGroup ? groupLvl : channelLvl;
          }
          public int getColor1(boolean isDark) {
 -            return (isDark ? darkColors : colors)[0];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[0]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[0]);
          }
          public int getColor2(boolean isDark) {
 -            return (isDark ? darkColors : colors)[1];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[1]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[1]);
          }
          public int getColor3(boolean isDark) {
 -            return (isDark ? darkColors : colors)[2];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[2]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[2]);
          }
          public int getColor4(boolean isDark) {
 -            return (isDark ? darkColors : colors)[3];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[3]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[3]);
          }
          public int getColor5(boolean isDark) {
 -            return (isDark ? darkColors : colors)[4];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[4]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[4]);
          }
          public int getColor6(boolean isDark) {
 -            return (isDark ? darkColors : colors)[5];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[5]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((isDark ? darkColors : colors)[5]);
          }
          public int getColor1() {
 -            return (Theme.isCurrentThemeDark() ? darkColors : colors)[0];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[0]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[0]);
          }
          public int getColor2() {
 -            return (Theme.isCurrentThemeDark() ? darkColors : colors)[1];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[1]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[1]);
          }
          public int getColor3() {
 -            return (Theme.isCurrentThemeDark() ? darkColors : colors)[2];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[2]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[2]);
          }
          public int getColor4() {
 -            return (Theme.isCurrentThemeDark() ? darkColors : colors)[3];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[3]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[3]);
          }
          public int getColor5() {
 -            return (Theme.isCurrentThemeDark() ? darkColors : colors)[4];
-+            return desu.inugram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[4]);
++            return xie.fa.gram.helpers.theme.MonetHelper.maybeHarmonizePeerColor((Theme.isCurrentThemeDark() ? darkColors : colors)[4]);
          }
          public boolean hasColor2() {
              return getColor2() != getColor1();
@@ -228,7 +228,7 @@ index 0000000..0000000 100644
  import java.util.Map;
  import java.util.Objects;
  import java.util.concurrent.CountDownLatch;
-+import desu.inugram.helpers.theme.MonetHelper;
++import xie.fa.gram.helpers.theme.MonetHelper;
  
  public class Theme {
  
@@ -336,7 +336,7 @@ index 0000000..0000000 100644
              if (assetName != null) {
                  file = getAssetFile(assetName);
 +                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-+                    File override = desu.inugram.helpers.theme.MonetHelper.getThemeOverrideFile(assetName);
++                    File override = xie.fa.gram.helpers.theme.MonetHelper.getThemeOverrideFile(assetName);
 +                    if (override != null) {
 +                        file = override;
 +                    }
@@ -418,7 +418,7 @@ index 0000000..0000000 100644
          }
          int size = bounds.width();
 -        namePaint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_avatar_text), alpha));
-+        namePaint.setColor(ColorUtils.setAlphaComponent(desu.inugram.helpers.theme.MonetHelper.getAvatarTextColor(getThemedColor(Theme.key_avatar_text), getColor(), getColor2()), alpha));
++        namePaint.setColor(ColorUtils.setAlphaComponent(xie.fa.gram.helpers.theme.MonetHelper.getAvatarTextColor(getThemedColor(Theme.key_avatar_text), getColor(), getColor2()), alpha));
          Paint backgroundPaint = Theme.avatar_backgroundPaint;
          if (hasAdvancedGradient && advancedGradient != null) {
              advancedGradient.setBounds(bounds.left, bounds.top, bounds.left + size, bounds.top + size);

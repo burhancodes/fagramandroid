@@ -15,7 +15,7 @@ index 0000000..0000000 100644
              if (forceDeleteForAll) {
                  cell[0].setChecked(deleteForAll[0] = true, false);
                  updateText.run();
-+            } else if (deleteChatForAll ? desu.inugram.InuConfig.DELETE_FOR_BOTH_GROUPS.getValue() : desu.inugram.InuConfig.DELETE_FOR_BOTH_DMS.getValue()) {
++            } else if (deleteChatForAll ? xie.fa.gram.InuConfig.DELETE_FOR_BOTH_GROUPS.getValue() : xie.fa.gram.InuConfig.DELETE_FOR_BOTH_DMS.getValue()) {
 +                cell[0].setChecked(deleteForAll[0] = true, false);
 +                updateText.run();
              }
@@ -25,7 +25,7 @@ index 0000000..0000000 100644
                      deleteForAll[0] = !deleteForAll[0];
                      cell12.setChecked(deleteForAll[0], true);
                  });
-+                if (desu.inugram.InuConfig.DELETE_FOR_BOTH_MESSAGES.getValue()) {
++                if (xie.fa.gram.InuConfig.DELETE_FOR_BOTH_MESSAGES.getValue()) {
 +                    cell.setChecked(deleteForAll[0] = true, false);
 +                }
                  builder.setView(frameLayout);
@@ -35,7 +35,7 @@ index 0000000..0000000 100644
                      deleteForAll[0] = !deleteForAll[0];
                      cell1.setChecked(deleteForAll[0], true);
                  });
-+                if (desu.inugram.InuConfig.DELETE_FOR_BOTH_MESSAGES.getValue()) {
++                if (xie.fa.gram.InuConfig.DELETE_FOR_BOTH_MESSAGES.getValue()) {
 +                    cell.setChecked(deleteForAll[0] = true, false);
 +                }
                  builder.setView(frameLayout);

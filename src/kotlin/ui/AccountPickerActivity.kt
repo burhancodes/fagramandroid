@@ -1,10 +1,10 @@
-package desu.inugram.ui
+package xie.fa.gram.ui
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import desu.inugram.helpers.ShortcutHelper
+import xie.fa.gram.helpers.ShortcutHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.SharedConfig

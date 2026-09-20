@@ -16,7 +16,7 @@ index 0000000..0000000 100644
      }
  
      public boolean contains() {
-+        if (desu.inugram.InuConfig.HIDE_SUGGESTION_BIRTHDAY_CONTACTS.getValue()) return false;
++        if (xie.fa.gram.InuConfig.HIDE_SUGGESTION_BIRTHDAY_CONTACTS.getValue()) return false;
          final BirthdayState state = getState();
          return state != null && !state.isTodayEmpty();
      }
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
                  noDialog = true;
              } else if (response instanceof TLRPC.TL_help_promoData) {
                  TLRPC.TL_help_promoData res = (TLRPC.TL_help_promoData) response;
-+                desu.inugram.helpers.dialogs.SuggestionFilter.filterPromoData(res);
++                xie.fa.gram.helpers.dialogs.SuggestionFilter.filterPromoData(res);
  
                  long did;
                  if (res.peer == null) {

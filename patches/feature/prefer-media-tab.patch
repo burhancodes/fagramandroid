@@ -24,7 +24,7 @@ index 0000000..0000000 100644
          } else {
              main_tab = null;
          }
-+        final boolean inuPreferMediaTab = desu.inugram.helpers.profile.ProfileHelper.preferMediaTab() && !isStoriesView();
++        final boolean inuPreferMediaTab = xie.fa.gram.helpers.profile.ProfileHelper.preferMediaTab() && !isStoriesView();
 +        if (inuPreferMediaTab) {
 +            main_tab = null;
 +        }
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
          }
          if (info != null && (stories_pinned_available != info.stories_pinned_available)) {
 -            if (scrollSlidingTextTabStrip != null) {
-+            if (scrollSlidingTextTabStrip != null && (!desu.inugram.helpers.profile.ProfileHelper.preferMediaTab() || isStoriesView())) {
++            if (scrollSlidingTextTabStrip != null && (!xie.fa.gram.helpers.profile.ProfileHelper.preferMediaTab() || isStoriesView())) {
                  scrollSlidingTextTabStrip.setInitialTabId(isArchivedOnlyStoriesView() ? TAB_ARCHIVED_STORIES : TAB_STORIES);
              }
              updateTabs(true);
@@ -57,7 +57,7 @@ index 0000000..0000000 100644
          this.userInfo = userInfo;
          updateTabs(true);
 -        if (userInfo != null && (stories_pinned_available != userInfo.stories_pinned_available)) {
-+        if (userInfo != null && (stories_pinned_available != userInfo.stories_pinned_available) && (!desu.inugram.helpers.profile.ProfileHelper.preferMediaTab() || isStoriesView())) {
++        if (userInfo != null && (stories_pinned_available != userInfo.stories_pinned_available) && (!xie.fa.gram.helpers.profile.ProfileHelper.preferMediaTab() || isStoriesView())) {
              scrollToPage(TAB_STORIES);
          }
      }

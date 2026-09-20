@@ -1,4 +1,4 @@
-package desu.inugram.ui.drawer
+package xie.fa.gram.ui.drawer
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

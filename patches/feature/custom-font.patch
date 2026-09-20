@@ -34,7 +34,7 @@ index 0000000..0000000 100644
 +
 +    public static Typeface inu_getTypeface(String assetPath, boolean inu_forPaint) {
          synchronized (typefaceCache) {
-+            Typeface inu_override = inu_forPaint ? null : desu.inugram.helpers.font.FontHelper.onGetTypeface(typefaceCache, assetPath);
++            Typeface inu_override = inu_forPaint ? null : xie.fa.gram.helpers.font.FontHelper.onGetTypeface(typefaceCache, assetPath);
 +            if (inu_override != null) return inu_override;
              if (!typefaceCache.containsKey(assetPath)) {
                  try {
@@ -47,7 +47,7 @@ index 0000000..0000000 100644
          if (SharedConfig.useSystemEmoji || cs == null || cs.length() == 0) {
              return cs;
          }
-+        scale *= desu.inugram.helpers.font.FontHelper.getEmojiScale();
++        scale *= xie.fa.gram.helpers.font.FontHelper.getEmojiScale();
          Spannable s;
          if (!createNew && cs instanceof Spannable) {
              s = (Spannable) cs;
@@ -57,7 +57,7 @@ index 0000000..0000000 100644
              boolean needRestore = false;
 -            float ty = emojiDrawingYOffset - (size - scale * size) / 2;
 +            float ty = emojiDrawingYOffset - (size - scale * size) / 2
-+                - desu.inugram.helpers.font.FontHelper.getEmojiBaselineOffset(fontMetrics);
++                - xie.fa.gram.helpers.font.FontHelper.getEmojiBaselineOffset(fontMetrics);
              if (ty != 0) {
                  needRestore = true;
                  canvas.save();
@@ -69,8 +69,8 @@ index 0000000..0000000 100644
          density = AndroidUtilities.density;
          textPaint.setTextSize(dp(fontSize));
          numTextPaint.setTextSize(dp(fontSize));
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(textPaint);
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(numTextPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(textPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(numTextPaint);
      }
  
      /** Uses the message renderer for editable inline buttons without laying out a message. */
@@ -78,8 +78,8 @@ index 0000000..0000000 100644
          density = AndroidUtilities.density;
          textPaint.setTextSize(dp(SharedConfig.fontSize));
          numTextPaint.setTextSize(dp(SharedConfig.fontSize));
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(textPaint);
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(numTextPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(textPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(numTextPaint);
          isPart = false;
  
          richMessage = null;
@@ -87,7 +87,7 @@ index 0000000..0000000 100644
              this.currentMessageObject = root.audioBlocks.get(block);
              this.currentDocument = currentMessageObject != null ? currentMessageObject.getDocument() : null;
              this.observerTag = DownloadController.getInstance(root.currentAccount).generateObserverTag();
-+            desu.inugram.helpers.font.FontHelper.applyDefaultFont(audioTimePaint);
++            xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(audioTimePaint);
  
              radialProgress = new RadialProgress2(null);
              radialProgress.setCircleRadius(dp(24));
@@ -95,7 +95,7 @@ index 0000000..0000000 100644
              this.previewX = root.padLeft + dp(10);
              this.hasPreview = MessageObject.isDocumentHasThumb(document);
              observerTag = DownloadController.getInstance(root.currentAccount).generateObserverTag();
-+            desu.inugram.helpers.font.FontHelper.applyDefaultFont(sizePaint);
++            xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(sizePaint);
              radialProgress = new RadialProgress2(null);
              radialProgress.setCircleRadius(buttonSize / 2);
              final int progressX = hasPreview ? previewX + (dp(86) - buttonSize) / 2 : buttonX;
@@ -107,7 +107,7 @@ index 0000000..0000000 100644
      public SimpleTextView(Context context) {
          super(context);
          textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(textPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(textPaint);
          setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
      }
  
@@ -119,7 +119,7 @@ index 0000000..0000000 100644
          dialogs_tagTextPaint.setTextSize(dp(10));
          dialogs_searchNamePaint.setTextSize(dp(16));
          dialogs_searchNameEncryptedPaint.setTextSize(dp(16));
-+        desu.inugram.helpers.font.FontHelper.onThemePaintsCreated();
++        xie.fa.gram.helpers.font.FontHelper.onThemePaintsCreated();
      }
  
      public static void applyDialogsTheme() {
@@ -127,7 +127,7 @@ index 0000000..0000000 100644
              addChatPaint(key_paint_chatComposeBackground, chat_composeBackgroundPaint, key_chat_messagePanelBackground);
              addChatPaint(key_paint_chatTimeBackground, chat_timeBackgroundPaint, key_chat_mediaTimeBackground);
          }
-+        desu.inugram.helpers.font.FontHelper.onThemePaintsCreated();
++        xie.fa.gram.helpers.font.FontHelper.onThemePaintsCreated();
      }
  
      public static void createChatResources(Context context, boolean fontsOnly) {
@@ -135,7 +135,7 @@ index 0000000..0000000 100644
          }
  
          profile_aboutTextPaint.setTextSize(dp(16));
-+        desu.inugram.helpers.font.FontHelper.onThemePaintsCreated();
++        xie.fa.gram.helpers.font.FontHelper.onThemePaintsCreated();
      }
  
      private static ColorFilter currentShareColorFilter;
@@ -147,7 +147,7 @@ index 0000000..0000000 100644
          if (customPaints) {
              if (statusPaint == null) {
                  statusPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-+                desu.inugram.helpers.font.FontHelper.applyDefaultFont(statusPaint);
++                xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(statusPaint);
              }
              statusPaint.setTextSize(dp(callCellStyle ? 13f : 15));
              if (currentStatusPaint == Theme.dialogs_offlinePaint) {
@@ -159,7 +159,7 @@ index 0000000..0000000 100644
          private int cacheType = AnimatedEmojiDrawable.CACHE_TYPE_MESSAGES;
          public TextViewEmojis(Context context) {
              super(context);
-+            desu.inugram.helpers.font.FontHelper.applyDefaultFont(this);
++            xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(this);
          }
  
          private ColorFilter emojiColorFilter;
@@ -171,7 +171,7 @@ index 0000000..0000000 100644
              this.preserveIndex = preserveIndex;
              this.startFromEnd = startFromEnd;
              this.enforceByLetter = enforceByLetter;
-+            desu.inugram.helpers.font.FontHelper.applyDefaultFont(textPaint);
++            xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(textPaint);
          }
  
          public void setAllowCancel(boolean allowCancel) {
@@ -274,9 +274,9 @@ index 0000000..0000000 100644
 -                }
 -            }
 +            ArrayList<PaintTypeface> typefaces = new ArrayList<PaintTypeface>();
-+            final int inu_gen = desu.inugram.helpers.font.FontLibrary.buildEditorRoster(typefaces);
++            final int inu_gen = xie.fa.gram.helpers.font.FontLibrary.buildEditorRoster(typefaces);
              AndroidUtilities.runOnUIThread(() -> {
-+                if (!desu.inugram.helpers.font.FontLibrary.isRosterCurrent(inu_gen)) {
++                if (!xie.fa.gram.helpers.font.FontLibrary.isRosterCurrent(inu_gen)) {
 +                    return;
 +                }
                  PaintTypeface.typefaces = typefaces;
@@ -323,7 +323,7 @@ index 0000000..0000000 100644
          setWillNotDraw(false);
  
          observerTag = DownloadController.getInstance(currentAccount).generateObserverTag();
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(audioTimePaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(audioTimePaint);
  
          radialProgress = new RadialProgress2(this, resourcesProvider);
          radialProgress.setCircleRadius(dp(24));
@@ -335,7 +335,7 @@ index 0000000..0000000 100644
      public RichBlockChrome() {
          markerPaint.setTextSize(dp(16));
          markerPaint.setTextAlign(Paint.Align.CENTER);
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(markerPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(markerPaint);
      }
  }
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/iv/RichDocumentCell.java b/TMessagesProj/src/main/java/org/telegram/ui/iv/RichDocumentCell.java
@@ -346,7 +346,7 @@ index 0000000..0000000 100644
          setWillNotDraw(false);
          setMinimumHeight(dp(66));
          observerTag = DownloadController.getInstance(currentAccount).generateObserverTag();
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(sizePaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(sizePaint);
          radialProgress = new RadialProgress2(this, resourcesProvider);
          radialProgress.setCircleRadius(dp(24));
          radialProgress.setProgressRect(buttonX, buttonY, buttonX + buttonSize, buttonY + buttonSize);
@@ -358,7 +358,7 @@ index 0000000..0000000 100644
  
          hintPaint.setTextSize(dp(15));
          hintPaint.setTextAlign(Paint.Align.CENTER);
-+        desu.inugram.helpers.font.FontHelper.applyDefaultFont(hintPaint);
++        xie.fa.gram.helpers.font.FontHelper.applyDefaultFont(hintPaint);
  
          imageReceiver = new ImageReceiver(this);
  

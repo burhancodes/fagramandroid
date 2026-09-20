@@ -16,7 +16,7 @@ index 0000000..0000000 100644
          updateFieldHint(false);
          messageEditText.setSingleLine(false);
 -        messageEditText.setMaxLines(6);
-+        messageEditText.setMaxLines(desu.inugram.InuConfig.CHAT_INPUT_MAX_LINES.getValue());
++        messageEditText.setMaxLines(xie.fa.gram.InuConfig.CHAT_INPUT_MAX_LINES.getValue());
          messageEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
          messageEditText.setGravity(Gravity.BOTTOM);
          messageEditText.setPadding(0, dp(9), 0, dp(10));

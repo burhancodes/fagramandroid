@@ -1,4 +1,4 @@
-package desu.inugram.core.fileid
+package xie.fa.gram.core.fileid
 
 open class FileIdException(message: String) : RuntimeException(message)
 

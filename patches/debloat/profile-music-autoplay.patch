@@ -41,7 +41,7 @@ index 0000000..0000000 100644
                      MediaController.getInstance().getPlaylist().addAll(savedMusicList.list);
 -                    if (!sameList) MediaController.getInstance().playMessage(savedMusicList.list.get(0));
 +                    if (!sameList) {
-+                        if (desu.inugram.InuConfig.DISABLE_PROFILE_MUSIC_AUTOPLAY.getValue()) {
++                        if (xie.fa.gram.InuConfig.DISABLE_PROFILE_MUSIC_AUTOPLAY.getValue()) {
 +                            MediaController.getInstance().inu_prepareMessage(savedMusicList.list.get(0));
 +                        } else {
 +                            MediaController.getInstance().playMessage(savedMusicList.list.get(0));

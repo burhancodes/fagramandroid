@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings
+package xie.fa.gram.ui.settings
 
 import android.app.Dialog
 import android.content.ClipData
@@ -11,8 +11,8 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.security.PasscodeHelper
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.security.PasscodeHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.ContactsController

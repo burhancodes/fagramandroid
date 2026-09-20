@@ -9,7 +9,7 @@ import {
 import { step, success, warn } from './lib.js'
 
 const themeOverrideDirName = 'theme-override'
-const themeReloadAction = 'desu.inugram.RELOAD_THEME'
+const themeReloadAction = 'xie.fa.gram.RELOAD_THEME'
 
 $.verbose = false
 

@@ -1,4 +1,4 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver
@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.edit
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.toColorInt
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import google_material.Blend
 import google_material.Hct
 import org.telegram.messenger.ApplicationLoader
@@ -241,7 +241,7 @@ object MonetHelper {
     private var themeReloadReceiverRegistered = false
 
     private const val THEME_OVERRIDE_DIR = "theme-override"
-    private const val ACTION_RELOAD_THEME = "desu.inugram.RELOAD_THEME"
+    private const val ACTION_RELOAD_THEME = "xie.fa.gram.RELOAD_THEME"
 
     private val overlayChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

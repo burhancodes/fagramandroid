@@ -1,4 +1,4 @@
-package desu.inugram.helpers.update
+package xie.fa.gram.helpers.update
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -26,7 +26,7 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import desu.inugram.helpers.NotificationsHelper
+import xie.fa.gram.helpers.NotificationsHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.FileLoader
@@ -47,7 +47,7 @@ import java.io.File
 import java.io.IOException
 
 object ApkInstaller {
-    private const val ACTION = "desu.inugram.helpers.update.ApkInstaller.STATUS"
+    private const val ACTION = "xie.fa.gram.helpers.update.ApkInstaller.STATUS"
 
     fun dismissInstalledNotification() {
         NotificationManagerCompat.from(ApplicationLoader.applicationContext)

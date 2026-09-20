@@ -21,7 +21,7 @@ index 0000000..0000000 100644
          for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
 +            inu_accountNumbers.add(a);
 +        }
-+        desu.inugram.helpers.dialogs.AccountOrderHelper.sort(inu_accountNumbers);
++        xie.fa.gram.helpers.dialogs.AccountOrderHelper.sort(inu_accountNumbers);
 +        for (int a : inu_accountNumbers) {
              TLRPC.User u = UserConfig.getInstance(a).getCurrentUser();
              if (u != null) {
@@ -44,7 +44,7 @@ index 0000000..0000000 100644
 -            }
 -            return 0;
 -        });
-+        desu.inugram.helpers.dialogs.AccountOrderHelper.sort(accountNumbers);
++        xie.fa.gram.helpers.dialogs.AccountOrderHelper.sort(accountNumbers);
  
          ItemOptions o = ItemOptions.makeOptions(this, button);
          if (UserConfig.getActivatedAccountsCount() < UserConfig.MAX_ACCOUNT_COUNT) {
@@ -57,7 +57,7 @@ index 0000000..0000000 100644
                  } else if (id == 2) {
                      presentSettingFragment(new LogoutActivity());
 +                } else if (id == 98) {
-+                    presentSettingFragment(new desu.inugram.ui.settings.AccountOrderActivity());
++                    presentSettingFragment(new xie.fa.gram.ui.settings.AccountOrderActivity());
                  }
              }
          });
@@ -65,7 +65,7 @@ index 0000000..0000000 100644
  
          otherItem = menu.addItem(1, R.drawable.ic_ab_other);
          otherItem.setContentDescription(getString(R.string.AccDescrMoreOptions));
-+        if (UserConfig.getActivatedAccountsCount() > 1 && !desu.inugram.helpers.security.ParanoiaHelper.hidesOtherAccounts()) {
++        if (UserConfig.getActivatedAccountsCount() > 1 && !xie.fa.gram.helpers.security.ParanoiaHelper.hidesOtherAccounts()) {
 +            otherItem.addSubItem(98, R.drawable.tabs_reorder, getString(R.string.InuReorderAccounts));
 +        }
          otherItem.addSubItem(2, R.drawable.msg_leave, getString(R.string.LogOut));
@@ -98,7 +98,7 @@ index 0000000..0000000 100644
 -            }
 -            return 0;
 -        });
-+        desu.inugram.helpers.dialogs.AccountOrderHelper.sort(accountNumbers);
++        xie.fa.gram.helpers.dialogs.AccountOrderHelper.sort(accountNumbers);
  
          final Set<String> suggestions = getMessagesController().pendingSuggestions;
          if (suggestions.contains("PREMIUM_GRACE")) {

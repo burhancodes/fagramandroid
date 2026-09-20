@@ -17,7 +17,7 @@ index 0000000..0000000 100644
  
 +            @Override
 +            public boolean requestChildRectangleOnScreen(View child, android.graphics.Rect rect, boolean immediate) {
-+                if (child == sharedMediaLayout && desu.inugram.InuConfig.DISABLE_PROFILE_SCROLL_SNAP.getValue()) {
++                if (child == sharedMediaLayout && xie.fa.gram.InuConfig.DISABLE_PROFILE_SCROLL_SNAP.getValue()) {
 +                    return false;
 +                }
 +                return super.requestChildRectangleOnScreen(child, rect, immediate);
@@ -31,7 +31,7 @@ index 0000000..0000000 100644
                                  listView.smoothScrollBy(0, view.getTop() - getHeaderExtraHeight(), CubicBezierInterpolator.EASE_OUT_QUINT);
                              }
 -                        } else {
-+                        } else if (!desu.inugram.InuConfig.DISABLE_PROFILE_SCROLL_SNAP.getValue()) {
++                        } else if (!xie.fa.gram.InuConfig.DISABLE_PROFILE_SCROLL_SNAP.getValue()) {
                              final boolean hasActions = getActionsExtraHeight() > 0;
                              if (hasActions && extraHeight > 0 && (extraHeight < getHeaderExtraHeight() * 0.6f || listViewVelocityY < -1000f) && extraHeight > getActionsExtraHeight() * .6f) {
                                  listView.smoothScrollBy(0, (int) (extraHeight - getActionsExtraHeight()), CubicBezierInterpolator.EASE_OUT_QUINT);

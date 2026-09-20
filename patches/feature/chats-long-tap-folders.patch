@@ -39,8 +39,8 @@ index 0000000..0000000 100644
 -        tabs[INDEX_CHATS].setOnLongClickListener(this::openFoldersSelector);
          tabs[INDEX_CONTACTS].setOnLongClickListener(this::openContactsSelector);
          tabs[INDEX_CALLS].setOnLongClickListener(this::openCallsSelector);
-         desu.inugram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
-+        desu.inugram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_CHATS], v -> desu.inugram.helpers.dialogs.MainTabsHelper.openChatsLongPressMenu(this, v));
+         xie.fa.gram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
++        xie.fa.gram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_CHATS], v -> xie.fa.gram.helpers.dialogs.MainTabsHelper.openChatsLongPressMenu(this, v));
  
          tabsView.addTabToIgnoreClick(tabs[INDEX_CHATS]);
          tabsView.addTabToIgnoreClick(tabs[INDEX_CONTACTS]);

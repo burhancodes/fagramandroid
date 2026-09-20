@@ -48,7 +48,7 @@ index 0000000..0000000 100644
                  updatePinnedMessageView(true);
              }
          });
-+        closePinned.setOnLongClickListener(v -> desu.inugram.helpers.chat.ChatActionsHelper.onPinnedPanelLongPressed(ChatActivity.this));
++        closePinned.setOnLongClickListener(v -> xie.fa.gram.helpers.chat.ChatActionsHelper.onPinnedPanelLongPressed(ChatActivity.this));
  
          updatePinnedListButton(false);
      }

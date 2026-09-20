@@ -41,7 +41,7 @@ index 0000000..0000000 100644
                          }
                      } else if ((changeFlags & FLAG_CELLBACKGROUNDCOLOR) != 0) {
 -                        child.setBackgroundColor(color);
-+                        if (child instanceof HeaderCell && viewToInvalidate instanceof RecyclerListView && ((RecyclerListView) viewToInvalidate).hasSections() && desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                        if (child instanceof HeaderCell && viewToInvalidate instanceof RecyclerListView && ((RecyclerListView) viewToInvalidate).hasSections() && xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +                            // skip
 +                        } else {
 +                            child.setBackgroundColor(color);
@@ -57,12 +57,12 @@ index 0000000..0000000 100644
                  case HEADER_VIEW_TYPE:
                      view = new ChartHeaderView(getContext());
                      view.setPadding(view.getPaddingLeft(), AndroidUtilities.dp(16), view.getRight(), AndroidUtilities.dp(16));
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
                      break;
                  case HEADER_VIEW_TYPE_SMALL:
                      view = new ChartHeaderView(getContext());
                      view.setPadding(view.getPaddingLeft(), AndroidUtilities.dp(16), view.getRight(), AndroidUtilities.dp(8));
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
                      break;
                  case HEADER_VIEW_TYPE_TABS:
                      boostsTabs = new ScrollSlidingTextTabStrip(getContext(), resourceProvider);
@@ -70,7 +70,7 @@ index 0000000..0000000 100644
                          @Override
                          protected void dispatchDraw(Canvas canvas) {
                              super.dispatchDraw(canvas);
-+                            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) return;
++                            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) return;
                              dividerPaint.setColor(Theme.getColor(Theme.key_windowBackgroundGray, resourceProvider));
                              canvas.drawRect(0, getHeight() - 2, getWidth(), getHeight(), dividerPaint);
                          }
@@ -78,7 +78,7 @@ index 0000000..0000000 100644
                          }
                      });
                      frameLayoutWrapper.addView(boostsTabs, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 48));
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(frameLayoutWrapper, false, true);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(frameLayoutWrapper, false, true);
                      view = frameLayoutWrapper;
                      break;
                  case SHOW_BOOST_BY_GIFTS:
@@ -86,7 +86,7 @@ index 0000000..0000000 100644
                  userCell.setData(user, ContactsController.formatName(user), str, 0, !items.get(position).isLast);
                  userCell.setStatus(booster);
                  userCell.setAvatarPadding(5);
-+                desu.inugram.helpers.theme.M3SectionsHelper.markMerged(userCell, true, true);
++                xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(userCell, true, true);
              } else if (holder.getItemViewType() == DIVIDER_TEXT_VIEW_TYPE) {
                  TextInfoPrivacyCell privacyCell = (TextInfoPrivacyCell) holder.itemView;
                  privacyCell.setText(items.get(position).title);
@@ -100,8 +100,8 @@ index 0000000..0000000 100644
      private boolean needDivider;
 -    public int offsetFromImage = 58;
 -    public int heightDp = 50;
-+    public int offsetFromImage = desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() ? 60 : 58;
-+    public int heightDp = desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() ? 56 : 50;
++    public int offsetFromImage = xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() ? 60 : 58;
++    public int heightDp = xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() ? 56 : 50;
      public int imageLeft = 16;
 +    public int inu_m3IconSize = 22;
      private boolean inDialogs;
@@ -112,7 +112,7 @@ index 0000000..0000000 100644
          valueTextView.setGravity(LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT);
          valueTextView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
 -        valueTextView.setTranslationY(dp(-2));
-+        valueTextView.setTranslationY(desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() ? 0 : dp(-2));
++        valueTextView.setTranslationY(xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() ? 0 : dp(-2));
          addView(valueTextView);
  
          valueSpoilersTextView = new SimpleTextView(context);
@@ -120,7 +120,7 @@ index 0000000..0000000 100644
              subtitleView.measure(MeasureSpec.makeMeasureSpec(width - dp(71 + leftPadding) - valueWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(dp(20), MeasureSpec.EXACTLY));
          }
          if (imageView.getVisibility() == VISIBLE) {
-+            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 +                if (imageView.getBackground() instanceof SettingsActivity.SettingCell.Background) {
 +                    imageView.setPadding(dp(7), dp(7), dp(7), dp(7));
@@ -143,7 +143,7 @@ index 0000000..0000000 100644
              viewLeft = dp(imageView.getVisibility() == VISIBLE ? offsetFromImage : leftPadding);
          }
 -        if (subtitleView.getVisibility() == View.VISIBLE) {
-+        if (subtitleView.getVisibility() == View.VISIBLE && (!desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() || subtitleView.getTextHeight() > 0)) {
++        if (subtitleView.getVisibility() == View.VISIBLE && (!xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() || subtitleView.getTextHeight() > 0)) {
              int margin = heightDp > 50 ? 4 : 2;
              viewTop = (height - textView.getTextHeight() - subtitleView.getTextHeight() - dp(margin)) / 2 + dp(1);
              textView.layout(viewLeft, viewTop, viewLeft + textView.getMeasuredWidth(), viewTop + textView.getMeasuredHeight());
@@ -151,7 +151,7 @@ index 0000000..0000000 100644
              subtitleView.layout(viewLeft, viewTop, viewLeft + subtitleView.getMeasuredWidth(), viewTop + subtitleView.getMeasuredHeight());
          } else {
              viewTop = (height - textView.getTextHeight()) / 2 + dp(1);
-+            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +                viewTop = (height - textView.getMeasuredHeight()) / 2;
 +            }
              textView.layout(viewLeft, viewTop, viewLeft + textView.getMeasuredWidth(), viewTop + textView.getMeasuredHeight());
@@ -159,11 +159,11 @@ index 0000000..0000000 100644
          if (imageView.getVisibility() == VISIBLE) {
              viewTop = dp(heightDp > 50 ? 0 : 2) + (height - imageView.getMeasuredHeight()) / 2 - imageView.getPaddingTop() + dp(1);
 -            viewLeft = !LocaleController.isRTL ? dp(imageLeft) : width - imageView.getMeasuredWidth() - dp(imageLeft);
-+            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +                viewTop = (height - imageView.getMeasuredHeight()) / 2;
 +            }
 +            final boolean inu_colorful = imageView.getBackground() instanceof SettingsActivity.SettingCell.Background;
-+            final int inu_imageLeft = desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() && imageLeft == 16 ? (inu_colorful ? 14 : 21) : imageLeft;
++            final int inu_imageLeft = xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() && imageLeft == 16 ? (inu_colorful ? 14 : 21) : imageLeft;
 +            viewLeft = !LocaleController.isRTL ? dp(inu_imageLeft) : width - imageView.getMeasuredWidth() - dp(inu_imageLeft);
              imageView.layout(viewLeft, viewTop, viewLeft + imageView.getMeasuredWidth(), viewTop + imageView.getMeasuredHeight());
          }
@@ -172,7 +172,7 @@ index 0000000..0000000 100644
          drawable.setColor(colorTop, colorBottom);
          drawable.setDrawBorder(border);
          imageView.setBackground(drawable);
-+        desu.inugram.helpers.theme.M3SectionsHelper.applyTextCellColorfulIcon(imageView, colorTop, colorBottom, drawable);
++        xie.fa.gram.helpers.theme.M3SectionsHelper.applyTextCellColorfulIcon(imageView, colorTop, colorBottom, drawable);
      }
  
      public void setTextAndCheck(CharSequence text, boolean checked, boolean divider) {
@@ -180,7 +180,7 @@ index 0000000..0000000 100644
      }
  
      protected int getOffsetFromImage(boolean colourful) {
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) return 60;
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) return 60;
          return colourful ? 52 : 58;
      }
  
@@ -201,7 +201,7 @@ index 0000000..0000000 100644
          if (isMultiline) {
              super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
          } else {
-+            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +                super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(valueTextView.getVisibility() == VISIBLE ? 72 : (height == 50 ? 56 : height)) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
 +                return;
 +            }
@@ -216,7 +216,7 @@ index 0000000..0000000 100644
      public TextDetailSettingsCell(Context context) {
          super(context);
  
-+        final int inu_topOffset = desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() ? 4 : 0;
++        final int inu_topOffset = xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() ? 4 : 0;
 +
          textView = new TextView(context);
          textView.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText));
@@ -244,7 +244,7 @@ index 0000000..0000000 100644
      protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
          if (!multiline) {
 -            super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
-+            super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() ? 72 : 64) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
++            super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() ? 72 : 64) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
          } else {
              super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
          }
@@ -257,7 +257,7 @@ index 0000000..0000000 100644
      @Override
      protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 -        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), AndroidUtilities.dp(50) + (needDivider ? 1 : 0));
-+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), AndroidUtilities.dp(desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() ? 56 : 50) + (needDivider ? 1 : 0));
++        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), AndroidUtilities.dp(xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() ? 56 : 50) + (needDivider ? 1 : 0));
  
          int availableWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight() - AndroidUtilities.dp(34);
          int width = betterLayout ? availableWidth : availableWidth / 2;
@@ -269,12 +269,12 @@ index 0000000..0000000 100644
                  case HEADER_VIEW_TYPE:
                      view = new ChartHeaderView(getContext());
                      view.setPadding(view.getPaddingLeft(), AndroidUtilities.dp(16), view.getRight(), AndroidUtilities.dp(16));
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
                      break;
                  case HEADER_VIEW_TYPE_SMALL:
                      view = new ChartHeaderView(getContext());
                      view.setPadding(view.getPaddingLeft(), AndroidUtilities.dp(16), view.getRight(), AndroidUtilities.dp(8));
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(view, false, true);
                      break;
                  case HEADER_VIEW_TYPE_TABS:
                      boostsTabs = new ScrollSlidingTextTabStrip(fragment.getContext(), resourcesProvider);
@@ -282,7 +282,7 @@ index 0000000..0000000 100644
                          @Override
                          protected void dispatchDraw(Canvas canvas) {
                              super.dispatchDraw(canvas);
-+                            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) return;
++                            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) return;
                              dividerPaint.setColor(Theme.getColor(Theme.key_windowBackgroundGray, resourcesProvider));
                              canvas.drawRect(0, getHeight() - 2, getWidth(), getHeight(), dividerPaint);
                          }
@@ -290,7 +290,7 @@ index 0000000..0000000 100644
                          }
                      });
                      frameLayoutWrapper.addView(boostsTabs, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 48));
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(frameLayoutWrapper, false, true);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(frameLayoutWrapper, false, true);
                      view = frameLayoutWrapper;
                      break;
                  case SHOW_BOOST_BY_GIFTS:
@@ -298,7 +298,7 @@ index 0000000..0000000 100644
                  userCell.setData(user, ContactsController.formatName(user), str, 0, !items.get(position).isLast);
                  userCell.setStatus(booster);
                  userCell.setAvatarPadding(5);
-+                desu.inugram.helpers.theme.M3SectionsHelper.markMerged(userCell, true, true);
++                xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(userCell, true, true);
              } else if (holder.getItemViewType() == DIVIDER_TEXT_VIEW_TYPE) {
                  TextInfoPrivacyCell privacyCell = (TextInfoPrivacyCell) holder.itemView;
                  privacyCell.setText(items.get(position).title);
@@ -310,8 +310,8 @@ index 0000000..0000000 100644
                  case VIEW_TYPE_HEADER_CELL:
                      view = new HeaderCell(mContext, Theme.key_windowBackgroundWhiteBlueHeader, 21, 15, true);
                      view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
-+                    if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+                        desu.inugram.helpers.theme.M3SectionsHelper.styleHeaderCell((HeaderCell) view);
++                    if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                        xie.fa.gram.helpers.theme.M3SectionsHelper.styleHeaderCell((HeaderCell) view);
 +                    }
                      break;
                  case VIEW_TYPE_EXPANDABLE_SWITCH:
@@ -324,8 +324,8 @@ index 0000000..0000000 100644
                      } else {
                          checkCell.setIcon(0);
                      }
-+                    if (position == sendMediaRow && desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+                        desu.inugram.helpers.theme.M3SectionsHelper.markMerged(checkCell, false, sendMediaExpanded);
++                    if (position == sendMediaRow && xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                        xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(checkCell, false, sendMediaExpanded);
 +                    }
                      break;
                  case 8:
@@ -334,8 +334,8 @@ index 0000000..0000000 100644
                      } else
                      //  checkBoxCell.setText(getCheckBoxTitle(item.headerName, percents[item.index < 0 ? 8 : item.index], item.index < 0), AndroidUtilities.formatFileSize(item.size), selected, item.index < 0 ? !collapsed : !item.last);
                      checkBoxCell.setPad(1);
-+                    if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+                        desu.inugram.helpers.theme.M3SectionsHelper.markMerged(checkBoxCell, true, isExpandableSendMediaRow(position + 1));
++                    if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                        xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(checkBoxCell, true, isExpandableSendMediaRow(position + 1));
 +                    }
                      break;
                  case VIEW_TYPE_CHECK:
@@ -362,7 +362,7 @@ index 0000000..0000000 100644
                      } else {
                          canvas.save();
                      }
-+                    desu.inugram.helpers.theme.M3SectionsHelper.applyScrimClip(canvas, scrimView);
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.applyScrimClip(canvas, scrimView);
                      if (scrimView instanceof ScrimView) {
                          ((ScrimView) scrimView).drawScrim(canvas, dimProgress);
                      } else {
@@ -383,7 +383,7 @@ index 0000000..0000000 100644
  
      @Override
      public boolean drawChild(Canvas canvas, View child, long drawingTime) {
-+        final boolean inu_m3 = hasSections() && desu.inugram.helpers.theme.M3SectionsHelper.isEnabled();
++        final boolean inu_m3 = hasSections() && xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled();
 +        final int inu_oldDividerAlpha = inu_m3 ? Theme.dividerPaint.getAlpha() : 0;
 +        if (inu_m3) Theme.dividerPaint.setAlpha(0);
 +        final Paint inu_providerDivider = inu_m3 && resourcesProvider != null ? resourcesProvider.getPaint(Theme.key_paint_divider) : null;
@@ -409,7 +409,7 @@ index 0000000..0000000 100644
 +    @Override
 +    public void onDescendantInvalidated(@NonNull View child, @NonNull View target) {
 +        super.onDescendantInvalidated(child, target);
-+        if (hasSections() && desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++        if (hasSections() && xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +            // since API 26 a dirty child re-records its display list without going through the
 +            // parent's drawChild, escaping the divider paint suppression above — dirty ourselves
 +            // so the re-record happens inside drawChild
@@ -438,7 +438,7 @@ index 0000000..0000000 100644
      public void setSections(int padding, float roundRadius, boolean topPadding) {
          setSections(
 -            view -> !(view instanceof TextInfoPrivacyCell || view instanceof ShadowSectionCell || view instanceof FiltersSetupActivity.HintInnerCell || view instanceof GraySectionCell || view instanceof CollapseTextCell) && !Objects.equals(view.getTag(), TAG_NOT_SECTION),
-+            view -> !(view instanceof TextInfoPrivacyCell || view instanceof ShadowSectionCell || view instanceof FiltersSetupActivity.HintInnerCell || view instanceof GraySectionCell || view instanceof CollapseTextCell) && !desu.inugram.helpers.theme.M3SectionsHelper.isDetachedHeaderCell(view) && !Objects.equals(view.getTag(), TAG_NOT_SECTION),
++            view -> !(view instanceof TextInfoPrivacyCell || view instanceof ShadowSectionCell || view instanceof FiltersSetupActivity.HintInnerCell || view instanceof GraySectionCell || view instanceof CollapseTextCell) && !xie.fa.gram.helpers.theme.M3SectionsHelper.isDetachedHeaderCell(view) && !Objects.equals(view.getTag(), TAG_NOT_SECTION),
              padding,
              roundRadius,
              this::drawBackgroundRect,
@@ -446,8 +446,8 @@ index 0000000..0000000 100644
                          if (last) outRect.bottom = padding;
                      }
                  }
-+                if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+                    desu.inugram.helpers.theme.M3SectionsHelper.augmentItemOffsets(outRect, parent, view);
++                if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.augmentItemOffsets(outRect, parent, view);
 +                }
              }
          }
@@ -456,8 +456,8 @@ index 0000000..0000000 100644
      public void drawSectionsBackgrounds(Canvas canvas) {
          if (drawSectionBackground == null) return;
  
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+            desu.inugram.helpers.theme.M3SectionsHelper.drawSectionsBackgrounds(canvas, this);
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            xie.fa.gram.helpers.theme.M3SectionsHelper.drawSectionsBackgrounds(canvas, this);
 +            return;
 +        }
 +
@@ -468,8 +468,8 @@ index 0000000..0000000 100644
          if (child == null || !sectionsItemDecoration.isSectionItem.run(child))
              return;
  
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+            desu.inugram.helpers.theme.M3SectionsHelper.clipChild(canvas, child, this);
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            xie.fa.gram.helpers.theme.M3SectionsHelper.clipChild(canvas, child, this);
 +            return;
 +        }
 +
@@ -480,8 +480,8 @@ index 0000000..0000000 100644
      public Drawable getClipBackground(View child, boolean forceRound) {
          if (child.getParent() != this || !hasSections() || !sectionsItemDecoration.isSectionItem.run(child)) return null;
  
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+            final Drawable m3 = desu.inugram.helpers.theme.M3SectionsHelper.makeClipBackground(this, child);
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            final Drawable m3 = xie.fa.gram.helpers.theme.M3SectionsHelper.makeClipBackground(this, child);
 +            if (m3 != null) return m3;
 +        }
 +
@@ -496,14 +496,14 @@ index 0000000..0000000 100644
      }
  
      private boolean hasDivider(int position) {
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() && listView != null && listView.hasSections()) return false;
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() && listView != null && listView.hasSections()) return false;
          UItem item = getItem(position);
          UItem nextItem = getItem(position + 1);
          return item != null && !item.hideDivider && nextItem != null && isShadow(nextItem.viewType) == isShadow(item.viewType);
      }
  
      public static boolean isShadow(int viewType) {
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() && desu.inugram.helpers.theme.M3SectionsHelper.isHeaderViewType(viewType)) return true;
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() && xie.fa.gram.helpers.theme.M3SectionsHelper.isHeaderViewType(viewType)) return true;
          if (viewType >= UItem.factoryViewTypeStartsWith) {
              UItem.UItemFactory<?> factory = UItem.findFactory(viewType);
              return factory != null && factory.isShadow();
@@ -511,8 +511,8 @@ index 0000000..0000000 100644
          final int viewType = holder.getItemViewType();
          final boolean divider = hasDivider(position);
          updateColors(holder);
-+        if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+            desu.inugram.helpers.theme.M3SectionsHelper.markMerged(
++        if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(
 +                holder.itemView,
 +                item.pad > 0,
 +                nextItem != null && nextItem.pad > 0
@@ -525,8 +525,8 @@ index 0000000..0000000 100644
              case VIEW_TYPE_LARGE_HEADER:
                  ((HeaderCell) holder.itemView).setText(item.text);
                  ((HeaderCell) holder.itemView).setEnabled(item.enabled, true);
-+                if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled() && listView != null && listView.hasSections()) {
-+                    desu.inugram.helpers.theme.M3SectionsHelper.styleHeaderCell((HeaderCell) holder.itemView);
++                if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled() && listView != null && listView.hasSections()) {
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.styleHeaderCell((HeaderCell) holder.itemView);
 +                }
                  break;
              case VIEW_TYPE_ANIMATED_HEADER:
@@ -536,7 +536,7 @@ index 0000000..0000000 100644
                      TextInfoPrivacyCell cell2 = (TextInfoPrivacyCell) holder.itemView;
                      if (TextUtils.isEmpty(item.text)) {
 -                        cell2.setFixedSize(viewType == VIEW_TYPE_LARGE_SHADOW ? 220 : 12);
-+                        cell2.setFixedSize(viewType == VIEW_TYPE_LARGE_SHADOW ? 220 : desu.inugram.helpers.theme.M3SectionsHelper.shadowHeightDp(nextItem, 12));
++                        cell2.setFixedSize(viewType == VIEW_TYPE_LARGE_SHADOW ? 220 : xie.fa.gram.helpers.theme.M3SectionsHelper.shadowHeightDp(nextItem, 12));
                          cell2.setText("");
                      } else {
                          cell2.setFixedSize(0);
@@ -556,8 +556,8 @@ index 0000000..0000000 100644
                  final boolean divider = position + 1 < items.size() && items.get(position + 1).viewType != VIEW_TYPE_INFO;
                  SwitchCell switchCell = (SwitchCell) holder.itemView;
                  switchCell.set(item, divider);
-+                if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+                    desu.inugram.helpers.theme.M3SectionsHelper.markMerged(
++                if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                    xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(
 +                        switchCell,
 +                        viewType == VIEW_TYPE_CHECKBOX,
 +                        position + 1 < items.size() && items.get(position + 1).viewType == VIEW_TYPE_CHECKBOX
@@ -574,12 +574,12 @@ index 0000000..0000000 100644
                          headerCell.setTopMargin(9);
                          headerCell.setPadding(0, 0, 0, AndroidUtilities.dp(8));
                          headerCell.setText(LocaleController.formatString("StatisticOverview", R.string.StatisticOverview));
-+                        desu.inugram.helpers.theme.M3SectionsHelper.markMerged(headerCell, false, true);
++                        xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(headerCell, false, true);
                      } else {
                          headerCell.setTopMargin(11);
                          headerCell.setPadding(0, 0, 0, 0);
                          headerCell.setText(LocaleController.formatString("PublicShares", R.string.PublicShares));
-+                        desu.inugram.helpers.theme.M3SectionsHelper.markMerged(headerCell, false, false);
++                        xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(headerCell, false, false);
                      }
                      break;
                  case 4:
@@ -592,7 +592,7 @@ index 0000000..0000000 100644
          @Override
          protected void dispatchDraw(Canvas canvas) {
 -            DrawableUtils.setBounds(drawable, rtl(dp(28)), getMeasuredHeight() / 2f, Gravity.CENTER);
-+            final boolean m3 = desu.inugram.helpers.theme.M3SectionsHelper.isEnabled();
++            final boolean m3 = xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled();
 +            final int iconCenter = m3 ? dp(31) : dp(28);
 +            final int textInset = m3 ? dp(60) : dp(58);
 +            DrawableUtils.setBounds(drawable, rtl(iconCenter), getMeasuredHeight() / 2f, Gravity.CENTER);
@@ -644,7 +644,7 @@ index 0000000..0000000 100644
              titleView.setTranslationX(icon == 0 ? dp(2) : 0);
              subtitleView.setTranslationX(icon == 0 ? dp(2) : 0);
  
-+            desu.inugram.helpers.theme.M3SectionsHelper.applySettingCellIcon(iconLayout, iconView, iconColorTop, iconColorBottom, iconBackground);
++            xie.fa.gram.helpers.theme.M3SectionsHelper.applySettingCellIcon(iconLayout, iconView, iconColorTop, iconColorBottom, iconBackground);
 +
              iconBackground.setColor(iconColorTop, iconColorBottom);
              iconView.setImageResource(icon);
@@ -653,7 +653,7 @@ index 0000000..0000000 100644
  
          @Override
          protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-+            if (desu.inugram.helpers.theme.M3SectionsHelper.isEnabled()) {
++            if (xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
 +                super.onMeasure(
 +                    MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
 +                    MeasureSpec.makeMeasureSpec(dp(twoLines ? 64 : 52), MeasureSpec.EXACTLY)
@@ -689,7 +689,7 @@ index 0000000..0000000 100644
                  };
                  headerCell.setWillNotDraw(false);
                  headerCell.setPadding(headerCell.getPaddingLeft(), dp(16), headerCell.getRight(), dp(16));
-+                desu.inugram.helpers.theme.M3SectionsHelper.markMerged(headerCell, false, true);
++                xie.fa.gram.helpers.theme.M3SectionsHelper.markMerged(headerCell, false, true);
                  v = headerCell;
              } else if (viewType == 14) {
                  v = new OverviewCell(parent.getContext(), isMegagroup ? 2 : 4);

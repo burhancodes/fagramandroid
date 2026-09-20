@@ -16,7 +16,7 @@ index 0000000..0000000 100644
                      }
                  }
 -            } else if (!mainFragmentsStack.isEmpty() && (!PhotoViewer.hasInstance() || !PhotoViewer.getInstance().isVisible()) && event.getRepeatCount() == 0) {
-+            } else if (!desu.inugram.InuConfig.DISABLE_VOLUME_PLAY_VIDEO.getValue() && !mainFragmentsStack.isEmpty() && (!PhotoViewer.hasInstance() || !PhotoViewer.getInstance().isVisible()) && event.getRepeatCount() == 0) {
++            } else if (!xie.fa.gram.InuConfig.DISABLE_VOLUME_PLAY_VIDEO.getValue() && !mainFragmentsStack.isEmpty() && (!PhotoViewer.hasInstance() || !PhotoViewer.getInstance().isVisible()) && event.getRepeatCount() == 0) {
                  BaseFragment fragment = mainFragmentsStack.get(mainFragmentsStack.size() - 1);
                  if (fragment instanceof ChatActivity && !BaseFragment.hasSheets(fragment)) {
                      if (((ChatActivity) fragment).maybePlayVisibleVideo()) {

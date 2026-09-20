@@ -1,4 +1,4 @@
-package desu.inugram.helpers.theme
+package xie.fa.gram.helpers.theme
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -13,7 +13,7 @@ import kotlin.math.roundToInt
 
 /**
  * Material 3 styling for [org.telegram.ui.Components.Switch], drawn in place of the stock
- * pill+thumb when [desu.inugram.InuConfig.MATERIAL3_SWITCHES] is on.
+ * pill+thumb when [xie.fa.gram.InuConfig.MATERIAL3_SWITCHES] is on.
  *
  * Geometry mirrors the MDC `MaterialSwitch` spec (track 52x32 r16, thumb 16/24dp), rendered at a
  * fixed size derived from [TARGET_TRACK_W] and centered in the host frame.

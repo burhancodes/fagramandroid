@@ -1,4 +1,4 @@
-package desu.inugram.helpers.dialogs
+package xie.fa.gram.helpers.dialogs
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -8,7 +8,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.MessagesController
@@ -22,9 +22,9 @@ import org.telegram.ui.Components.ItemOptions
 import org.telegram.ui.DialogsActivity
 import org.telegram.ui.LaunchActivity
 import org.telegram.ui.MainTabsActivity
-import desu.inugram.helpers.icons.ScaledIconDrawable
-import desu.inugram.helpers.security.PasscodeHelper
-import desu.inugram.helpers.theme.M3MainTabsHelper
+import xie.fa.gram.helpers.icons.ScaledIconDrawable
+import xie.fa.gram.helpers.security.PasscodeHelper
+import xie.fa.gram.helpers.theme.M3MainTabsHelper
 
 
 object MainTabsHelper {

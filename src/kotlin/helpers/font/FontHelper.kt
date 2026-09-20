@@ -1,4 +1,4 @@
-package desu.inugram.helpers.font
+package xie.fa.gram.helpers.font
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,7 @@ import android.os.Build
 import android.text.TextPaint
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import desu.inugram.helpers.font.FontConfig.FontMode
+import xie.fa.gram.helpers.font.FontConfig.FontMode
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.FileLog
 import org.telegram.ui.ActionBar.Theme

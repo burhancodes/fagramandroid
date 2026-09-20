@@ -25,16 +25,16 @@ index 0000000..0000000 100644
      private FrameMetricsOverlayView frameMetricsOverlayView;
      // private RefreshRateController refreshRateController;
  
-+    private desu.inugram.helpers.icons.IconsResources customResources;
++    private xie.fa.gram.helpers.icons.IconsResources customResources;
 +
 +    @Override
 +    public Resources getResources() {
 +        Resources baseResources = super.getResources();
-+        if (desu.inugram.InuConfig.ICON_REPLACEMENT.getValue() == desu.inugram.InuConfig.IconReplacementItem.OFF) {
++        if (xie.fa.gram.InuConfig.ICON_REPLACEMENT.getValue() == xie.fa.gram.InuConfig.IconReplacementItem.OFF) {
 +            return baseResources;
 +        }
 +        if (customResources == null || !customResources.wrapsResources(baseResources)) {
-+            customResources = new desu.inugram.helpers.icons.IconsResources(baseResources);
++            customResources = new xie.fa.gram.helpers.icons.IconsResources(baseResources);
 +        }
 +        return customResources;
 +    }

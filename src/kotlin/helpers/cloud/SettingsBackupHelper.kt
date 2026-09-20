@@ -1,10 +1,10 @@
-package desu.inugram.helpers.cloud
+package xie.fa.gram.helpers.cloud
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import desu.inugram.InuConfig
-import desu.inugram.ui.settings.SettingsImportConfirmSheet
+import xie.fa.gram.InuConfig
+import xie.fa.gram.ui.settings.SettingsImportConfirmSheet
 import org.json.JSONObject
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
@@ -15,7 +15,7 @@ import org.telegram.messenger.Utilities
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.Components.BulletinFactory
 import java.io.File
-import desu.inugram.helpers.InuUtils
+import xie.fa.gram.helpers.InuUtils
 
 object SettingsBackupHelper {
     const val FORMAT_VERSION = 1

@@ -19,7 +19,7 @@ index 0000000..0000000 100644
 +        inu_goUpButton.setIcon(R.drawable.msg_go_up);
 +        inu_goUpButton.setBackground(Theme.createSelectorDrawable(Theme.getColor(Theme.key_player_actionBarSelector, resourcesProvider), 1));
 +        inu_goUpButton.setOnClickListener(v -> {
-+            desu.inugram.helpers.chat.ChatHelper.handleCalendarJumpToBeginning(callback, builder.getDismissRunnable());
++            xie.fa.gram.helpers.chat.ChatHelper.handleCalendarJumpToBeginning(callback, builder.getDismissRunnable());
 +        });
 +        inu_goUpButton.setContentDescription(LocaleController.getString(R.string.InuJumpToBeginning));
 +        titleLayout.addView(inu_goUpButton, LayoutHelper.createFrame(40, 40, Gravity.TOP | Gravity.RIGHT, 0, 8, 5, 0));

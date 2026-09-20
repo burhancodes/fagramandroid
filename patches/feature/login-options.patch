@@ -39,7 +39,7 @@ index 0000000..0000000 100644
              if (BuildVars.LOGS_ENABLED && baseUpdate != null) {
                  FileLog.d("process update " + baseUpdate.getClass().getSimpleName());
              }
-+            desu.inugram.InuHooks.onUpdate(baseUpdate, currentAccount);
++            xie.fa.gram.InuHooks.onUpdate(baseUpdate, currentAccount);
              if (baseUpdate instanceof TL_update.TL_updateNewMessage || baseUpdate instanceof TL_update.TL_updateNewChannelMessage || baseUpdate instanceof TL_update.TL_updateNewScheduledMessage) {
                  TLRPC.Message message;
                  if (baseUpdate instanceof TL_update.TL_updateNewMessage) {
@@ -51,7 +51,7 @@ index 0000000..0000000 100644
  import androidx.credentials.exceptions.GetCredentialInterruptedException;
  import androidx.credentials.exceptions.NoCredentialException;
  
-+import desu.inugram.helpers.LoginHelper;
++import xie.fa.gram.helpers.LoginHelper;
  import org.json.JSONObject;
  import org.json.JSONStringer;
  import org.telegram.messenger.browser.Browser;

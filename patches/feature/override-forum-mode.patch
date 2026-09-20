@@ -16,9 +16,9 @@ index 0000000..0000000 100644
      }
  
      public static boolean areTabsEnabled(TLRPC.Chat chat) {
-+        final int inuOverride = chat == null ? 0 : desu.inugram.helpers.chat.ForumDisplayHelper.getOverride(chat.id);
++        final int inuOverride = chat == null ? 0 : xie.fa.gram.helpers.chat.ForumDisplayHelper.getOverride(chat.id);
 +        if (inuOverride != 0) {
-+            return inuOverride == desu.inugram.helpers.chat.ForumDisplayHelper.MODE_TABS;
++            return inuOverride == xie.fa.gram.helpers.chat.ForumDisplayHelper.MODE_TABS;
 +        }
          return SharedConfig.forceForumTabs || chat != null && chat.forum_tabs;
      }

@@ -6,7 +6,7 @@
  * Copyright Nikolai Kudashov, 2013-2018.
  */
 
-package desu.inugram.ui.drawer
+package xie.fa.gram.ui.drawer
 
 import android.content.Context
 import android.graphics.Canvas

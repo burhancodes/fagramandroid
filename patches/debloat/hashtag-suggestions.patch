@@ -16,7 +16,7 @@ index 0000000..0000000 100644
                              break;
                          }
 -                    } else if (ch == '#') {
-+                    } else if (ch == '#' && !desu.inugram.InuConfig.HIDE_HASHTAG_SUGGESTIONS.getValue()) {
++                    } else if (ch == '#' && !xie.fa.gram.InuConfig.HIDE_HASHTAG_SUGGESTIONS.getValue()) {
                          if (ChatObject.isChannelAndNotMegaGroup(currentChat) && !TextUtils.isEmpty(ChatObject.getPublicUsername(currentChat))) {
                              hintHashtag = text.substring(a);
                              if (hintHashtag.length() < 4 || !hintHashtag.matches("^[#$][\\p{L}_-]+$"))

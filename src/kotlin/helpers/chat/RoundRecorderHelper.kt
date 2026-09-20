@@ -1,10 +1,10 @@
-package desu.inugram.helpers.chat
+package xie.fa.gram.helpers.chat
 
 import android.graphics.SurfaceTexture
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.Utilities
 import org.telegram.messenger.camera.Camera2Session
 import org.telegram.messenger.camera.CameraSession

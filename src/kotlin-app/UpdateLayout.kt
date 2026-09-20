@@ -1,4 +1,4 @@
-package desu.inugram
+package xie.fa.gram
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -6,7 +6,7 @@ import android.app.Activity
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import desu.inugram.ui.UpdateRowView
+import xie.fa.gram.ui.UpdateRowView
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.SharedConfig
 import org.telegram.ui.Components.CubicBezierInterpolator

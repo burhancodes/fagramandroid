@@ -1,9 +1,9 @@
-package desu.inugram.helpers.media
+package xie.fa.gram.helpers.media
 
 import android.os.Build
 import android.os.FileObserver
 import android.os.StatFs
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.FileLoader
 import org.telegram.messenger.FileLog

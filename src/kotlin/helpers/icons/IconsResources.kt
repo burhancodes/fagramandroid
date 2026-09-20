@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
 
-package desu.inugram.helpers.icons
+package xie.fa.gram.helpers.icons
 
 import android.annotation.SuppressLint
 import android.content.res.AssetFileDescriptor
@@ -16,7 +16,7 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
-import desu.inugram.InuConfig
+import xie.fa.gram.InuConfig
 import java.io.InputStream
 
 class IconsResources(private val resources: Resources) : Resources(resources.assets, resources.displayMetrics, resources.configuration) {

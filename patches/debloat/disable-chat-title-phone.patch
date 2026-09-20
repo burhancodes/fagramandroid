@@ -30,7 +30,7 @@ index 0000000..0000000 100644
                      nameTextView[a].setRightDrawable(titleTextView.getRightDrawable());
                      nameTextView[a].setRightDrawable2(titleTextView.getRightDrawable2());
 -                } else if (a == 0 && user.id != getUserConfig().getClientUserId() && !MessagesController.isSupportUser(user) && user.phone != null && user.phone.length() != 0 && getContactsController().contactsDict.get(user.id) == null &&
-+                } else if (a == 0 && !desu.inugram.InuConfig.DISABLE_CHAT_TITLE_PHONE.getValue() && user.id != getUserConfig().getClientUserId() && !MessagesController.isSupportUser(user) && user.phone != null && user.phone.length() != 0 && getContactsController().contactsDict.get(user.id) == null &&
++                } else if (a == 0 && !xie.fa.gram.InuConfig.DISABLE_CHAT_TITLE_PHONE.getValue() && user.id != getUserConfig().getClientUserId() && !MessagesController.isSupportUser(user) && user.phone != null && user.phone.length() != 0 && getContactsController().contactsDict.get(user.id) == null &&
                          (getContactsController().contactsDict.size() != 0 || !getContactsController().isLoadingContacts())) {
                      nameTextView[a].setText(PhoneFormat.getInstance().format("+" + user.phone));
                  } else {

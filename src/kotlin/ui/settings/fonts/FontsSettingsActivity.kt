@@ -1,4 +1,4 @@
-package desu.inugram.ui.settings.fonts
+package xie.fa.gram.ui.settings.fonts
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -19,14 +19,14 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import desu.inugram.SearchRegistry
-import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.font.FontConfig
-import desu.inugram.helpers.font.FontConfig.FontMode
-import desu.inugram.helpers.font.FontHelper
-import desu.inugram.helpers.font.FontId
-import desu.inugram.helpers.font.FontLibrary
-import desu.inugram.ui.settings.SettingsPageActivity
+import xie.fa.gram.SearchRegistry
+import xie.fa.gram.helpers.InuUtils
+import xie.fa.gram.helpers.font.FontConfig
+import xie.fa.gram.helpers.font.FontConfig.FontMode
+import xie.fa.gram.helpers.font.FontHelper
+import xie.fa.gram.helpers.font.FontId
+import xie.fa.gram.helpers.font.FontLibrary
+import xie.fa.gram.ui.settings.SettingsPageActivity
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController

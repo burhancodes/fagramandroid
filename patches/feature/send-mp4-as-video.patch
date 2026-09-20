@@ -15,7 +15,7 @@ index 0000000..0000000 100644
                  }
              }
          }
-+        final boolean inu_sendMp4DocumentAsVideo = desu.inugram.helpers.media.MediaSendHelper.prepareMp4Document(document, path, isEncrypted, forceDocument);
++        final boolean inu_sendMp4DocumentAsVideo = xie.fa.gram.helpers.media.MediaSendHelper.prepareMp4Document(document, path, isEncrypted, forceDocument);
          final String captionFinal = caption != null ? caption.toString() : "";
  
          final TLRPC.TL_document documentFinal = document;

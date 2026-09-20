@@ -25,12 +25,12 @@ index 0000000..0000000 100644
          if (hit != hoveredItem) {
              if (hoveredItem != null) {
 -                hoveredItem.setPressed(false);
-+                desu.inugram.helpers.LongPressDragMenuHelper.setHover(hoveredItem, false);
++                xie.fa.gram.helpers.LongPressDragMenuHelper.setHover(hoveredItem, false);
              }
              hoveredItem = hit;
              if (hoveredItem != null) {
 -                hoveredItem.setPressed(true);
-+                desu.inugram.helpers.LongPressDragMenuHelper.setHover(hoveredItem, true);
++                xie.fa.gram.helpers.LongPressDragMenuHelper.setHover(hoveredItem, true);
              }
          }
 -        if (hoveredItem != null) {
@@ -45,7 +45,7 @@ index 0000000..0000000 100644
              View target = hoveredItem;
              hoveredItem = null;
 -            target.setPressed(false);
-+            desu.inugram.helpers.LongPressDragMenuHelper.setHover(target, false);
++            xie.fa.gram.helpers.LongPressDragMenuHelper.setHover(target, false);
              target.performClick();
          }
      }
@@ -53,7 +53,7 @@ index 0000000..0000000 100644
      private void cancelHover() {
          if (hoveredItem != null) {
 -            hoveredItem.setPressed(false);
-+            desu.inugram.helpers.LongPressDragMenuHelper.setHover(hoveredItem, false);
++            xie.fa.gram.helpers.LongPressDragMenuHelper.setHover(hoveredItem, false);
              hoveredItem = null;
          }
      }
@@ -66,7 +66,7 @@ index 0000000..0000000 100644
          tabs[INDEX_CONTACTS].setOnLongClickListener(this::openContactsSelector);
          tabs[INDEX_CALLS].setOnLongClickListener(this::openCallsSelector);
 -        tabs[INDEX_PROFILE].setOnLongClickListener(this::openAccountSelector);
-+        desu.inugram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
++        xie.fa.gram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
  
          tabsView.addTabToIgnoreClick(tabs[INDEX_CHATS]);
          tabsView.addTabToIgnoreClick(tabs[INDEX_CONTACTS]);

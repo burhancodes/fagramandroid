@@ -17,7 +17,7 @@ index 0000000..0000000 100644
                  }
              }
 -        } else if (allowBotOpenButton && !isFolderCell() && !isForumCell() && !isDialogFolder() && UserObject.isBot(user) && user.bot_has_main_app) {
-+        } else if (allowBotOpenButton && !isFolderCell() && !isForumCell() && !isDialogFolder() && UserObject.isBot(user) && user.bot_has_main_app && !desu.inugram.InuConfig.HIDE_BOT_WEBVIEW_DIALOGS.getValue()) {
++        } else if (allowBotOpenButton && !isFolderCell() && !isForumCell() && !isDialogFolder() && UserObject.isBot(user) && user.bot_has_main_app && !xie.fa.gram.InuConfig.HIDE_BOT_WEBVIEW_DIALOGS.getValue()) {
              setOpenBotButton(true);
              int buttonWidth = (int) (dp(2 * 13) + openButtonText.getCurrentWidth()), p = dp(13);
              messageWidth -= buttonWidth;
@@ -29,8 +29,8 @@ index 0000000..0000000 100644
  
  package org.telegram.ui.Components;
  
-+import desu.inugram.InuConfig;
-+import desu.inugram.helpers.chat.ChatHelper;
++import xie.fa.gram.InuConfig;
++import xie.fa.gram.helpers.chat.ChatHelper;
  import static org.telegram.messenger.AndroidUtilities.dp;
  import static org.telegram.messenger.AndroidUtilities.dpf2;
  import static org.telegram.messenger.AndroidUtilities.lerp;

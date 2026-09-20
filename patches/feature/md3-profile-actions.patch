@@ -25,7 +25,7 @@ index 0000000..0000000 100644
          textPadding = dpf2(4);
  
 -        this.targetHeight = (int) (targetHeight - ypadding - top);
-+        inu_materialLayout = desu.inugram.helpers.profile.ProfileHelper.useMaterialProfileActions();
++        inu_materialLayout = xie.fa.gram.helpers.profile.ProfileHelper.useMaterialProfileActions();
 +        this.targetHeight = (int) (targetHeight - top - (inu_materialLayout ? 0 : ypadding));
  
          setBackgroundColor(0);

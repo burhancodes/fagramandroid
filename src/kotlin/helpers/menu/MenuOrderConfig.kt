@@ -1,9 +1,9 @@
-package desu.inugram.helpers.menu
+package xie.fa.gram.helpers.menu
 
 import android.content.SharedPreferences
-import desu.inugram.InuConfig
-import desu.inugram.helpers.chat.ChatActionsHelper
-import desu.inugram.helpers.chat.ChatHelper
+import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.chat.ChatActionsHelper
+import xie.fa.gram.helpers.chat.ChatHelper
 import org.json.JSONArray
 import org.json.JSONObject
 import org.telegram.messenger.R

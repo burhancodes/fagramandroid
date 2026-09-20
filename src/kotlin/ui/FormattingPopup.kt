@@ -1,4 +1,4 @@
-package desu.inugram.ui
+package xie.fa.gram.ui
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
@@ -23,8 +23,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.TooltipCompat
-import desu.inugram.InuConfig
-import desu.inugram.ui.FormattingPopupConfig
+import xie.fa.gram.InuConfig
+import xie.fa.gram.ui.FormattingPopupConfig
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.CodeHighlighting
 import org.telegram.messenger.LocaleController

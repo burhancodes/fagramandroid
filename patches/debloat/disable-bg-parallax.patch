@@ -16,7 +16,7 @@ index 0000000..0000000 100644
  
      private void checkMotion() {
 -        boolean motion = oldBackgroundMotion || backgroundMotion;
-+        boolean motion = (oldBackgroundMotion || backgroundMotion) && !desu.inugram.InuConfig.DISABLE_BG_PARALLAX.getValue();
++        boolean motion = (oldBackgroundMotion || backgroundMotion) && !xie.fa.gram.InuConfig.DISABLE_BG_PARALLAX.getValue();
          if (motion) {
              if (parallaxEffect == null) {
                  parallaxEffect = new WallpaperParallaxEffect(getContext());

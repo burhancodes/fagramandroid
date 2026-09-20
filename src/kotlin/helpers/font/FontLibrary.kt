@@ -1,4 +1,4 @@
-package desu.inugram.helpers.font
+package xie.fa.gram.helpers.font
 
 import android.content.Context
 import android.graphics.Paint
@@ -10,8 +10,8 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import desu.inugram.helpers.font.FontLibrary.buildEditorRoster
-import desu.inugram.helpers.font.SfntParser.Script
+import xie.fa.gram.helpers.font.FontLibrary.buildEditorRoster
+import xie.fa.gram.helpers.font.SfntParser.Script
 import org.json.JSONArray
 import org.json.JSONObject
 import org.telegram.messenger.AndroidUtilities

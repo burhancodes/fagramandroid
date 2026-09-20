@@ -30,7 +30,7 @@ index 0000000..0000000 100644
              codeField.setTypeface(Typeface.DEFAULT);
              codeField.setGravity(LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT);
              codeField.setOnFocusChangeListener((v, hasFocus) -> outlineCodeField.animateSelection(hasFocus ? 1f : 0f));
-+            desu.inugram.helpers.InuUtils.setAutofillHint(codeField, View.AUTOFILL_HINT_PASSWORD);
++            xie.fa.gram.helpers.InuUtils.setAutofillHint(codeField, View.AUTOFILL_HINT_PASSWORD);
              outlineCodeField.attachEditText(codeField);
              outlineCodeField.addView(codeField, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
              codeField.setOnEditorActionListener((textView, i, keyEvent) -> {
@@ -38,7 +38,7 @@ index 0000000..0000000 100644
                  codeField[a].setPadding(padding, padding, padding, padding);
                  if (stage == 0) {
                      codeField[a].setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-+                    desu.inugram.helpers.InuUtils.setAutofillHint(codeField[a], View.AUTOFILL_HINT_PASSWORD);
++                    xie.fa.gram.helpers.InuUtils.setAutofillHint(codeField[a], View.AUTOFILL_HINT_PASSWORD);
                      codeField[a].setTransformationMethod(PasswordTransformationMethod.getInstance());
                  }
                  codeField[a].setTypeface(Typeface.DEFAULT);
@@ -50,7 +50,7 @@ index 0000000..0000000 100644
          passwordEditText.setBackground(null);
          passwordEditText.setSingleLine(true);
          passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-+        desu.inugram.helpers.InuUtils.setAutofillHint(passwordEditText, View.AUTOFILL_HINT_PASSWORD);
++        xie.fa.gram.helpers.InuUtils.setAutofillHint(passwordEditText, View.AUTOFILL_HINT_PASSWORD);
          passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
          passwordEditText.setTypeface(Typeface.DEFAULT);
          passwordEditText.setCursorColor(Theme.getColor(Theme.key_windowBackgroundWhiteInputFieldActivated));
@@ -62,7 +62,7 @@ index 0000000..0000000 100644
                  editTextFirstRow.setContentDescription(LocaleController.getString(R.string.LoginPassword));
                  editTextFirstRow.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
                  editTextFirstRow.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-+                desu.inugram.helpers.InuUtils.setAutofillHint(editTextFirstRow, View.AUTOFILL_HINT_PASSWORD);
++                xie.fa.gram.helpers.InuUtils.setAutofillHint(editTextFirstRow, View.AUTOFILL_HINT_PASSWORD);
                  editTextFirstRow.setTransformationMethod(PasswordTransformationMethod.getInstance());
                  editTextFirstRow.setTypeface(Typeface.DEFAULT);
  
@@ -70,7 +70,7 @@ index 0000000..0000000 100644
                  editTextFirstRow.setContentDescription(LocaleController.getString(currentType == TYPE_CREATE_PASSWORD_STEP_1 ? R.string.EnterPassword : R.string.ReEnterPassword));
                  editTextFirstRow.setImeOptions(EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
                  editTextFirstRow.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-+                desu.inugram.helpers.InuUtils.setAutofillHint(editTextFirstRow, View.AUTOFILL_HINT_PASSWORD);
++                xie.fa.gram.helpers.InuUtils.setAutofillHint(editTextFirstRow, View.AUTOFILL_HINT_PASSWORD);
                  editTextFirstRow.setTransformationMethod(PasswordTransformationMethod.getInstance());
                  editTextFirstRow.setTypeface(Typeface.DEFAULT);
  

@@ -53,8 +53,8 @@ index 0000000..0000000 100644
 @@ -2769,6 +2770,7 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
          containerView.addView(buttonsRecyclerViewWrapper, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 70, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL));
          NonIslandHelper.applyChatAttachTabBar(buttonsRecyclerViewWrapper, buttonsRecyclerView);
-         desu.inugram.helpers.chat.VoiceRecorderHelper.addFab(this, (FrameLayout) containerView, resourcesProvider);
-+        desu.inugram.helpers.chat.AttachCameraHelper.addFab(this, (FrameLayout) containerView, resourcesProvider);
+         xie.fa.gram.helpers.chat.VoiceRecorderHelper.addFab(this, (FrameLayout) containerView, resourcesProvider);
++        xie.fa.gram.helpers.chat.AttachCameraHelper.addFab(this, (FrameLayout) containerView, resourcesProvider);
          buttonsRecyclerView.setOnItemClickListener((view, position) -> {
              BaseFragment lastFragment = baseFragment;
              if (lastFragment == null) {
@@ -63,7 +63,7 @@ index 0000000..0000000 100644
                      }
                      showLayout(richLayout);
 +                } else if (num == inu_TAG_CAMERA) {
-+                    desu.inugram.helpers.chat.AttachCameraHelper.openCamera(this);
++                    xie.fa.gram.helpers.chat.AttachCameraHelper.openCamera(this);
                  } else if (view.getTag() instanceof Integer) {
                      delegate.didPressedButton((Integer) view.getTag(), true, true, 0, 0, 0, isCaptionAbove(), false, 0);
                  }
@@ -71,7 +71,7 @@ index 0000000..0000000 100644
              }
          });
          buttonsRecyclerView.setOnItemLongClickListener((view, position) -> {
-+            if (desu.inugram.helpers.chat.AttachCameraHelper.onLongClickTab(this, view)) return true;
++            if (xie.fa.gram.helpers.chat.AttachCameraHelper.onLongClickTab(this, view)) return true;
              if (view instanceof AttachBotButton) {
                  AttachBotButton button = (AttachBotButton) view;
                  if (destroyed || button.currentUser == null) {
@@ -105,7 +105,7 @@ index 0000000..0000000 100644
  
              if (isPollAttach) {
                  galleryButton = buttonsCount++;
-+                if (desu.inugram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
++                if (xie.fa.gram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
                  if (pollAllowedLayouts == 0 || BitwiseUtils.hasFlag(pollAllowedLayouts, 1 << LAYOUT_TYPE_DOCUMENTS)) {
                      documentButton = buttonsCount++;
                  }
@@ -113,13 +113,13 @@ index 0000000..0000000 100644
              } else if (editingMessageObject != null) {
                  if (editType == EDITMEDIA_TYPE_ANY) {
                      galleryButton = buttonsCount++;
-+                    if (desu.inugram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
++                    if (xie.fa.gram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
                      documentButton = buttonsCount++;
                      musicButton = buttonsCount++;
                  } else {
                      if (editType == EDITMEDIA_TYPE_PHOTOVIDEO) {
                          galleryButton = buttonsCount++;
-+                        if (desu.inugram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
++                        if (xie.fa.gram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
                      }
                      if (editType == EDITMEDIA_TYPE_FILE) {
                          documentButton = buttonsCount++;
@@ -127,7 +127,7 @@ index 0000000..0000000 100644
                  TLRPC.Chat chat = baseFragment instanceof ChatActivity ? ((ChatActivity) baseFragment).getCurrentChat() : null;
                  final boolean paidUser = user != null && ((ChatActivity) baseFragment).getMessagesController().getSendPaidMessagesStars(user.id) > 0;
                  galleryButton = buttonsCount++;
-+                if (desu.inugram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
++                if (xie.fa.gram.helpers.chat.AttachCameraHelper.hasCameraTab(ChatAttachAlert.this)) inu_cameraButton = buttonsCount++;
                  if ((photosEnabled || videosEnabled) && !paidUser && (chat == null || !ChatObject.isMonoForum(chat))) {
                      if (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isInScheduleMode() && !((ChatActivity) baseFragment).isSecretChat() && ((ChatActivity) baseFragment).getChatMode() != ChatActivity.MODE_QUICK_REPLIES) {
                          ChatActivity chatActivity = (ChatActivity) baseFragment;
@@ -156,7 +156,7 @@ index 0000000..0000000 100644
  
          @Override
          public void onClose() {
-+            desu.inugram.helpers.chat.AttachFabHelper.setPhotoTransitionAnchor(null);
++            xie.fa.gram.helpers.chat.AttachFabHelper.setPhotoTransitionAnchor(null);
              resumeCameraPreview();
              AndroidUtilities.runOnUIThread(()-> setCurrentSpoilerVisible(-1, true), 150);
              onSelectedItemsCountChanged(getSelectedCount());
@@ -164,11 +164,11 @@ index 0000000..0000000 100644
                  object.scale = cell.getScale();
                  object.clipBottomAddition = (int) parentAlert.getClipLayoutBottom();
                  cell.showCheck(false);
-+                desu.inugram.helpers.chat.AttachFabHelper.setPhotoTransitionAnchor(cell.getImageView());
++                xie.fa.gram.helpers.chat.AttachFabHelper.setPhotoTransitionAnchor(cell.getImageView());
                  return object;
              }
  
-+            desu.inugram.helpers.chat.AttachFabHelper.setPhotoTransitionAnchor(null);
++            xie.fa.gram.helpers.chat.AttachFabHelper.setPhotoTransitionAnchor(null);
              return null;
          }
  
@@ -176,7 +176,7 @@ index 0000000..0000000 100644
          super(alert, context, resourcesProvider);
          this.forceDarkTheme = forceDarkTheme;
          this.needCamera = needCamera;
-+        this.inu_cameraOutsideGrid = needCamera && desu.inugram.helpers.chat.AttachCameraHelper.hasCameraOutsideGrid(alert);
++        this.inu_cameraOutsideGrid = needCamera && xie.fa.gram.helpers.chat.AttachCameraHelper.hasCameraOutsideGrid(alert);
          NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.albumsDidLoad);
          NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.cameraInitied);
          FrameLayout container = alert.getContainer();
@@ -220,7 +220,7 @@ index 0000000..0000000 100644
 +    public void openCameraByClick() {
          if (SharedConfig.inappCamera) {
 -            openCamera(true);
-+            if (!desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) showCamera();
++            if (!xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) showCamera();
 +            openCamera(!inu_cameraOutsideGrid);
          } else {
              if (parentAlert.delegate != null) {
@@ -230,7 +230,7 @@ index 0000000..0000000 100644
              @Override
              public boolean cancelButtonPressed() {
 -                if (cameraOpened && cameraView != null) {
-+                if (cameraOpened && cameraView != null && desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) {
++                if (cameraOpened && cameraView != null && xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) {
                      AndroidUtilities.runOnUIThread(() -> {
                          if (cameraView != null && !parentAlert.isDismissed()) {
                              cameraView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN);
@@ -239,11 +239,11 @@ index 0000000..0000000 100644
              adapter.notifyDataSetChanged();
          }
 -        if (!parentAlert.destroyed && parentAlert.isShowing() && deviceHasGoodCamera && parentAlert.getBackDrawable().getAlpha() != 0 && !cameraOpened) {
-+        if (deviceHasGoodCamera && !desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) {
++        if (deviceHasGoodCamera && !xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) {
 +            File file = new File(ApplicationLoader.getFilesDirFixed(), "cthumb.jpg");
 +            if (file.exists()) file.delete();
 +        }
-+        if (!parentAlert.destroyed && parentAlert.isShowing() && deviceHasGoodCamera && parentAlert.getBackDrawable().getAlpha() != 0 && !cameraOpened && desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) {
++        if (!parentAlert.destroyed && parentAlert.isShowing() && deviceHasGoodCamera && parentAlert.getBackDrawable().getAlpha() != 0 && !cameraOpened && xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) {
              showCamera();
          }
      }
@@ -260,7 +260,7 @@ index 0000000..0000000 100644
  
      private void saveLastCameraBitmap() {
 -        if (!canSaveCameraPreview) {
-+        if (!canSaveCameraPreview || !desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) {
++        if (!canSaveCameraPreview || !xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) {
              return;
          }
          try {
@@ -284,12 +284,12 @@ index 0000000..0000000 100644
              checkCameraWhenShown = false;
              checkCamera(true);
          }
-+        desu.inugram.helpers.chat.AttachCameraHelper.onLayoutShown(this);
++        xie.fa.gram.helpers.chat.AttachCameraHelper.onLayoutShown(this);
      }
  
      public void setCheckCameraWhenShown(boolean checkCameraWhenShown) {
 -        this.checkCameraWhenShown = checkCameraWhenShown;
-+        this.checkCameraWhenShown = checkCameraWhenShown && desu.inugram.helpers.chat.AttachCameraHelper.isInstant();
++        this.checkCameraWhenShown = checkCameraWhenShown && xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant();
      }
  
      @Override
@@ -297,7 +297,7 @@ index 0000000..0000000 100644
      }
  
      private void resumeCameraPreview() {
-+        if (!desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) return;
++        if (!xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) return;
          try {
              checkCamera(false);
              if (cameraView != null) {
@@ -306,7 +306,7 @@ index 0000000..0000000 100644
  //                    isCameraFrontfaceBeforeEnteringEditMode = null;
  //                };
 -                showCamera();
-+                if (desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) showCamera();
++                if (xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) showCamera();
              }
          }
      }
@@ -315,7 +315,7 @@ index 0000000..0000000 100644
      @Override
      public void onOpenAnimationEnd() {
 -        checkCamera(parentAlert != null && parentAlert.baseFragment instanceof ChatActivity);
-+        checkCamera(parentAlert != null && parentAlert.baseFragment instanceof ChatActivity && desu.inugram.helpers.chat.AttachCameraHelper.isInstant());
++        checkCamera(parentAlert != null && parentAlert.baseFragment instanceof ChatActivity && xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant());
      }
  
      @Override
@@ -323,7 +323,7 @@ index 0000000..0000000 100644
  
          public void updateBitmap() {
              Bitmap bitmap = null;
-+            if (desu.inugram.helpers.chat.AttachCameraHelper.isInstant()) {
++            if (xie.fa.gram.helpers.chat.AttachCameraHelper.isInstant()) {
              try {
                  File file = new File(ApplicationLoader.getFilesDirFixed(), "cthumb.jpg");
                  bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());

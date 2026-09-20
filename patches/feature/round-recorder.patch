@@ -80,8 +80,8 @@ index 0000000..0000000 100644
  
  import com.google.android.exoplayer2.ExoPlayer;
  
-+import desu.inugram.helpers.chat.RoundRecorderHelper;
- import desu.inugram.helpers.chat.VoiceRecorderHelper;
++import xie.fa.gram.helpers.chat.RoundRecorderHelper;
+ import xie.fa.gram.helpers.chat.VoiceRecorderHelper;
  import org.telegram.messenger.AndroidUtilities;
  import org.telegram.messenger.ApplicationLoader;
 @@ -325,6 +326,8 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
@@ -114,7 +114,7 @@ index 0000000..0000000 100644
  
          if (useCamera2) {
 -            bothCameras = DualCameraView.roundDualAvailableStatic(getContext());
-+            bothCameras = DualCameraView.roundDualAvailableStatic(getContext()) && desu.inugram.InuConfig.ROUND_RECORDER_DUAL_CAMERA.getValue();
++            bothCameras = DualCameraView.roundDualAvailableStatic(getContext()) && xie.fa.gram.InuConfig.ROUND_RECORDER_DUAL_CAMERA.getValue();
              if (bothCameras) {
 +                RoundRecorderHelper.awaitPendingDualCleanup();
                  for (int a = 0; a < 2; ++a) {
@@ -221,7 +221,7 @@ index 0000000..0000000 100644
              return;
          }
  
-+        if (desu.inugram.InuConfig.ROUND_RECORDER_KEEP_ZOOM.getValue()) return;
++        if (xie.fa.gram.InuConfig.ROUND_RECORDER_KEEP_ZOOM.getValue()) return;
 +
          float zoom;
          if (useCamera2) {

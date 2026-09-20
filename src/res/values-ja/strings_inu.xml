@@ -622,7 +622,7 @@
     <string name="InuConfirmReactionText">**%2$s** に %1$s リアクションを送信しますか？</string>
     <string name="InuNotificationIcon">通知アイコン</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">Inugram</string>
+    <string name="InuNotificationIconInugram">FAgram</string>
     <string name="InuNothingToTranslate">翻訳対象のメッセージが選択されていません。</string>
     <string name="InuVoiceRecorder">音声 / 丸メッセージ録画</string>
     <string name="InuSummarize">要約</string>

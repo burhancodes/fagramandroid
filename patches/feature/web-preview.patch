@@ -29,7 +29,7 @@ index 0000000..0000000 100644
              return;
          }
          checkEditLinkRemoved(charSequence);
-+        if (force && foundWebPage != null && !(foundWebPage instanceof TLRPC.TL_webPagePending) && desu.inugram.helpers.chat.WebPreviewHelper.allUrlsPresent(foundUrls, charSequence)) {
++        if (force && foundWebPage != null && !(foundWebPage instanceof TLRPC.TL_webPagePending) && xie.fa.gram.helpers.chat.WebPreviewHelper.allUrlsPresent(foundUrls, charSequence)) {
 +            if (messagePreviewParams != null) {
 +                messagePreviewParams.updateLink(currentAccount, foundWebPage, chatActivityEnterView.getFieldText(), replyingMessageObject == threadMessageObject ? null : replyingMessageObject, replyingQuote, editingMessageObject);
 +            }
@@ -42,7 +42,7 @@ index 0000000..0000000 100644
              } else {
                  req.message = textToCheck.toString();
              }
-+            req.message = desu.inugram.helpers.chat.WebPreviewHelper.applyReplacements(req.message);
++            req.message = xie.fa.gram.helpers.chat.WebPreviewHelper.applyReplacements(req.message);
              if (foundWebPage != null && req.message.equals(foundWebPage.displayedText)) {
                  return;
              }

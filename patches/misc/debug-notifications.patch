@@ -16,9 +16,9 @@ index 0000000..0000000 100644
  
              for (int a = 0; a < messageObjects.size(); a++) {
                  MessageObject messageObject = messageObjects.get(a);
--                if (desu.inugram.helpers.NotificationsHelper.shouldSuppressMessageNotification(messageObject)) continue;
-+                if (desu.inugram.helpers.NotificationsHelper.shouldSuppressMessageNotification(messageObject)) {
-+                    desu.inugram.helpers.NotificationDebugHelper.onPushMessageSkipped(messageObject.getDialogId(), messageObject.getId(), "fork suppression");
+-                if (xie.fa.gram.helpers.NotificationsHelper.shouldSuppressMessageNotification(messageObject)) continue;
++                if (xie.fa.gram.helpers.NotificationsHelper.shouldSuppressMessageNotification(messageObject)) {
++                    xie.fa.gram.helpers.NotificationDebugHelper.onPushMessageSkipped(messageObject.getDialogId(), messageObject.getId(), "fork suppression");
 +                    continue;
 +                }
                  if (messageObject.messageOwner != null && (messageObject.isImportedForward() ||
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
                  }
              }
  
-+            desu.inugram.helpers.NotificationDebugHelper.onAvatarResolved(currentAccount, dialogId, "dialog", chat != null ? chat : user, avatarFile);
++            xie.fa.gram.helpers.NotificationDebugHelper.onAvatarResolved(currentAccount, dialogId, "dialog", chat != null ? chat : user, avatarFile);
              if (chat != null) {
                  Person.Builder personBuilder = new Person.Builder().setName(name);
                  if (avatarFile != null && avatarFile.exists() && Build.VERSION.SDK_INT >= 28) {
@@ -37,7 +37,7 @@ index 0000000..0000000 100644
                      if (person == null || !TextUtils.equals(person.getName(), personName)) {
                          Person.Builder personBuilder = new Person.Builder().setName(personName);
 +                        if (!preview[0] || DialogObject.isEncryptedDialog(dialogId) || Build.VERSION.SDK_INT < 28) {
-+                            desu.inugram.helpers.NotificationDebugHelper.onPersonIconSkipped(dialogId, "preview=" + preview[0]);
++                            xie.fa.gram.helpers.NotificationDebugHelper.onPersonIconSkipped(dialogId, "preview=" + preview[0]);
 +                        }
                          if (preview[0] && !DialogObject.isEncryptedDialog(dialogId) && Build.VERSION.SDK_INT >= 28) {
                              File avatar = null;
@@ -46,7 +46,7 @@ index 0000000..0000000 100644
                                  if (sender != null && sender.photo != null && sender.photo.photo_small != null && sender.photo.photo_small.volume_id != 0 && sender.photo.photo_small.local_id != 0) {
                                      avatar = getFileLoader().getPathToAttach(sender.photo.photo_small, true);
                                  }
-+                                desu.inugram.helpers.NotificationDebugHelper.onAvatarResolved(currentAccount, dialogId, "sender" + fromId, sender, avatar);
++                                xie.fa.gram.helpers.NotificationDebugHelper.onAvatarResolved(currentAccount, dialogId, "sender" + fromId, sender, avatar);
                              }
                              if (avatar == null && dialogId == UserObject.VERIFY && messageObject.getForwardedFromId() != null) {
                                  if (uid >= 0) {
@@ -54,7 +54,7 @@ index 0000000..0000000 100644
              }
              FileLog.d("showExtraNotifications: holders["+a+"].call()");
              holder.call();
-+            desu.inugram.helpers.NotificationDebugHelper.onNotificationPosted(holder.id, holder.dialogId);
++            xie.fa.gram.helpers.NotificationDebugHelper.onNotificationPosted(holder.id, holder.dialogId);
              if (!unsupportedNotificationShortcut() && !ids.isEmpty()) {
                  ShortcutManagerCompat.removeDynamicShortcuts(ApplicationLoader.applicationContext, ids);
              }
@@ -65,7 +65,7 @@ index 0000000..0000000 100644
 -            } catch (Throwable ignore) {
 -
 +            } catch (Throwable e) {
-+                desu.inugram.helpers.NotificationDebugHelper.onAvatarDecodeFailed(dialogId, avatar, e);
++                xie.fa.gram.helpers.NotificationDebugHelper.onAvatarDecodeFailed(dialogId, avatar, e);
              }
          }
          return personBuilder;
@@ -78,7 +78,7 @@ index 0000000..0000000 100644
                                  if (msg_id > currentReadValue) {
                                      processNotification = true;
 +                                } else {
-+                                    desu.inugram.helpers.NotificationDebugHelper.onPushSkippedAsRead(dialogId, msg_id, currentReadValue);
++                                    xie.fa.gram.helpers.NotificationDebugHelper.onPushSkippedAsRead(dialogId, msg_id, currentReadValue);
                                  }
                              } else if (random_id != 0) {
                                  if (!MessagesStorage.getInstance(account).checkMessageByRandomId(random_id)) {

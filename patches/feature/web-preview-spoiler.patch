@@ -51,7 +51,7 @@ index 0000000..0000000 100644
          if (x >= unmovedTextX && x <= unmovedTextX + backgroundWidth - dp(14) && y >= linkPreviewY && y <= linkPreviewY + linkPreviewHeight + dp(8 + (drawInstantView ? 46 : 0))) {
              if (event.getAction() == MotionEvent.ACTION_DOWN) {
 -                if (descriptionLayout != null && y >= descriptionY && !currentMessageObject.preview) {
-+                final boolean inu_covered = desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.isCardCovered(this);
++                final boolean inu_covered = xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.isCardCovered(this);
 +                if (!inu_covered && descriptionLayout != null && y >= descriptionY && !currentMessageObject.preview) {
                      try {
                          int checkX = x - (unmovedTextX + dp(10) + descriptionX);
@@ -83,7 +83,7 @@ index 0000000..0000000 100644
                  }
              } else if (event.getAction() == MotionEvent.ACTION_UP) {
                  if (instantPressed) {
-+                    if (desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.revealFromCardTap(this, lastTouchX, lastTouchY)) {} else
++                    if (xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.revealFromCardTap(this, lastTouchX, lastTouchY)) {} else
                      if (documentAttachType == DOCUMENT_ATTACH_TYPE_ROUND) {
                          if (!MediaController.getInstance().isPlayingMessage(currentMessageObject) || MediaController.getInstance().isMessagePaused()) {
                              delegate.needPlayMessage(this, currentMessageObject, false);
@@ -92,7 +92,7 @@ index 0000000..0000000 100644
              );
          }
 -        if (!allow) {
-+        if (!allow || desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
++        if (!allow || xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
              return false;
          }
  
@@ -100,7 +100,7 @@ index 0000000..0000000 100644
                          block.spoilers.clear();
                      }
                  }
-+                desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.onTextSpoilerRevealed(this);
++                xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.onTextSpoilerRevealed(this);
                  invalidate();
              }));
              if (explanationLayout != null) {
@@ -108,7 +108,7 @@ index 0000000..0000000 100644
                  }
              }
  
-+            desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.startCardReveal(this, x, y);
++            xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.startCardReveal(this, x, y);
              spoilerPressed = null;
              return true;
          }
@@ -116,7 +116,7 @@ index 0000000..0000000 100644
          if (mediaSpoilerEffect2 != null) {
              mediaSpoilerEffect2.detach(this);
          }
-+        desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.onDetached(this);
++        xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.onDetached(this);
          if (channelRecommendationsCell != null) {
              channelRecommendationsCell.onDetachedFromWindow();
          }
@@ -124,7 +124,7 @@ index 0000000..0000000 100644
                  mediaSpoilerEffect2.attach(this);
              }
          }
-+        desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.onAttached(this);
++        xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.onAttached(this);
          if (channelRecommendationsCell != null) {
              channelRecommendationsCell.onAttachedToWindow();
          }
@@ -142,7 +142,7 @@ index 0000000..0000000 100644
                                  photoImage.setNeedsQualityThumb(true);
                                  photoImage.setShouldGenerateQualityThumb(true);
 -                                if (!isSmallImage && !currentMessageObject.isHiddenSensitive() && (documentCover == null || currentMessageObject.isLivePhoto()) && SharedConfig.isAutoplayVideo() && !currentMessageObject.isRepostPreview && (!currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && (
-+                                if (!isSmallImage && !currentMessageObject.isHiddenSensitive() && (documentCover == null || currentMessageObject.isLivePhoto()) && SharedConfig.isAutoplayVideo() && !currentMessageObject.isRepostPreview && (!currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && !desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.isMediaCovered(currentMessageObject) && (
++                                if (!isSmallImage && !currentMessageObject.isHiddenSensitive() && (documentCover == null || currentMessageObject.isLivePhoto()) && SharedConfig.isAutoplayVideo() && !currentMessageObject.isRepostPreview && (!currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && !xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.isMediaCovered(currentMessageObject) && (
                                      (currentMessageObject.mediaExists || currentMessageObject.attachPathExists) ||
                                      messageObject.canStreamVideo() && DownloadController.getInstance(currentAccount).canDownloadMedia(currentMessageObject)
                                  )) {
@@ -151,7 +151,7 @@ index 0000000..0000000 100644
                                  }
                                  String filter = currentPhotoObject instanceof TLRPC.TL_photoStrippedSize || "s".equals(currentPhotoObject.type) ? currentPhotoFilterThumb : currentPhotoFilter;
 -                                if ((messageObject.mediaExists || autoDownload) && !currentMessageObject.isRepostPreview) {
-+                                if ((messageObject.mediaExists || autoDownload) && !currentMessageObject.isRepostPreview && !desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.isMediaCovered(currentMessageObject)) {
++                                if ((messageObject.mediaExists || autoDownload) && !currentMessageObject.isRepostPreview && !xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.isMediaCovered(currentMessageObject)) {
                                      autoPlayingMedia = true;
                                      TLRPC.VideoSize videoSize = MessageObject.getDocumentVideoThumb(document);
                                      if (!messageObject.mediaExists && videoSize != null && (currentPhotoObject == null || currentPhotoObjectThumb == null)) {
@@ -159,7 +159,7 @@ index 0000000..0000000 100644
  
          highlightCaptionToSetStart = highlightCaptionToSetEnd = -1;
  
-+        desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.onMessageContent(this, hasLinkPreview);
++        xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.onMessageContent(this, hasLinkPreview);
 +
          updateFlagSecure();
      }
@@ -169,7 +169,7 @@ index 0000000..0000000 100644
          }
          if (documentAttachType == DOCUMENT_ATTACH_TYPE_GIF) {
 -            if (drawPhotoImage && !currentMessageObject.isRepostPreview && !currentMessageObject.isSponsored() && photoImage.getVisible() && !hasGamePreview && !currentMessageObject.needDrawBluredPreview() && !currentMessageObject.preview && !isSmallImage && !currentMessageObject.isSponsored()) {
-+            if (drawPhotoImage && !currentMessageObject.isRepostPreview && !currentMessageObject.isSponsored() && photoImage.getVisible() && !hasGamePreview && !currentMessageObject.needDrawBluredPreview() && !currentMessageObject.preview && !isSmallImage && !currentMessageObject.isSponsored() && !desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
++            if (drawPhotoImage && !currentMessageObject.isRepostPreview && !currentMessageObject.isSponsored() && photoImage.getVisible() && !hasGamePreview && !currentMessageObject.needDrawBluredPreview() && !currentMessageObject.preview && !isSmallImage && !currentMessageObject.isSponsored() && !xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
                  int oldAlpha = ((BitmapDrawable) Theme.chat_msgMediaMenuDrawable).getPaint().getAlpha();
                  Theme.chat_msgMediaMenuDrawable.setAlpha((int) (oldAlpha * controlsAlpha));
                  setDrawableBounds(Theme.chat_msgMediaMenuDrawable, otherX = (int) (photoImage.getImageX() + photoImage.getImageWidth() - dp(14)), otherY = (int) (photoImage.getImageY() + dp(8.1f)));
@@ -177,7 +177,7 @@ index 0000000..0000000 100644
                  .offsetEmoji(0, drawPhotoImageBefore ? (1f - isSmallImage()) * (dp(18) + photoImage.getImageHeight() + (siteNameLayout != null ? siteNameLayout.getLineBottom(siteNameLayout.getLineCount() - 1) : 0)) : 0)
                  .drawBackground(canvas, AndroidUtilities.rectTmp, rad, rad, rad, alpha);
  
-+            desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.setCardBounds(this, AndroidUtilities.rectTmp.left, AndroidUtilities.rectTmp.top, AndroidUtilities.rectTmp.right, AndroidUtilities.rectTmp.bottom, AndroidUtilities.dp(rad));
++            xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.setCardBounds(this, AndroidUtilities.rectTmp.left, AndroidUtilities.rectTmp.top, AndroidUtilities.rectTmp.right, AndroidUtilities.rectTmp.bottom, AndroidUtilities.dp(rad));
 +
              int rippleColor = linkLine.getBackgroundColor();
              if (linkPreviewSelector == null) {
@@ -186,7 +186,7 @@ index 0000000..0000000 100644
              }
          }
  
-+        desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.drawOverlay(canvas, this);
++        xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.drawOverlay(canvas, this);
 +
          canvas.restoreToCount(restoreCount);
      }
@@ -196,7 +196,7 @@ index 0000000..0000000 100644
                  radialProgress.setProgress(1, true);
              }
 -            if (!currentMessageObject.needDrawBluredPreview() && !autoPlayingMedia && documentAttach != null) {
-+            if (!currentMessageObject.needDrawBluredPreview() && !autoPlayingMedia && documentAttach != null && !desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.isMediaCovered(currentMessageObject)) {
++            if (!currentMessageObject.needDrawBluredPreview() && !autoPlayingMedia && documentAttach != null && !xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.isMediaCovered(currentMessageObject)) {
                  if (documentAttachType == DOCUMENT_ATTACH_TYPE_ROUND) {
                      photoImage.setImage(ImageLocation.getForDocument(documentAttach), ImageLoader.AUTOPLAY_FILTER, ImageLocation.getForObject(currentPhotoObject, photoParentObject), currentPhotoObject instanceof TLRPC.TL_photoStrippedSize || currentPhotoObject != null && "s".equals(currentPhotoObject.type) ? currentPhotoFilterThumb : currentPhotoFilter, ImageLocation.getForObject(currentPhotoObjectThumb, photoParentObject), currentPhotoFilterThumb, currentPhotoObjectThumbStripped, documentAttach.size, null, currentMessageObject, 0);
                      photoImage.setAllowStartAnimation(true);
@@ -205,7 +205,7 @@ index 0000000..0000000 100644
          }
  
 -        if ((!autoPlayingMedia || !MediaController.getInstance().isPlayingMessageAndReadyToDraw(currentMessageObject) || isRoundVideo) && !transitionParams.animateBackgroundBoundsInner && !(currentMessageObject != null && currentMessageObject.preview)) {
-+        if ((!autoPlayingMedia || !MediaController.getInstance().isPlayingMessageAndReadyToDraw(currentMessageObject) || isRoundVideo) && !transitionParams.animateBackgroundBoundsInner && !(currentMessageObject != null && currentMessageObject.preview) && !desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
++        if ((!autoPlayingMedia || !MediaController.getInstance().isPlayingMessageAndReadyToDraw(currentMessageObject) || isRoundVideo) && !transitionParams.animateBackgroundBoundsInner && !(currentMessageObject != null && currentMessageObject.preview) && !xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
              drawOverlays(canvas);
          }
          if ((drawTime || !mediaBackground) && !forceNotDrawTime && !transitionParams.animateBackgroundBoundsInner && !(enterTransitionInProgress && !currentMessageObject.isVoice()) && (!currentMessageObject.isQuickReply() || currentMessageObject.isSendError())) {
@@ -214,7 +214,7 @@ index 0000000..0000000 100644
          }
  
 -        if (transitionParams.animateBackgroundBoundsInner && !(currentMessageObject != null && currentMessageObject.preview)) {
-+        if (transitionParams.animateBackgroundBoundsInner && !(currentMessageObject != null && currentMessageObject.preview) && !desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
++        if (transitionParams.animateBackgroundBoundsInner && !(currentMessageObject != null && currentMessageObject.preview) && !xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.shouldHideMediaOverlays(this)) {
              drawOverlays(canvas);
          }
  
@@ -228,7 +228,7 @@ index 0000000..0000000 100644
                  thumbsCount++;
 -                drawPlay[index] = (message.isVideo() || message.isRoundVideo()) && !message.hasMediaSpoilers();
 -                drawSpoiler[index] = message.hasMediaSpoilers();
-+                boolean inu_spoiler = message.hasMediaSpoilers() || desu.inugram.helpers.chat.LinkPreviewSpoilerHelper.hasLinkPreviewSpoiler(message);
++                boolean inu_spoiler = message.hasMediaSpoilers() || xie.fa.gram.helpers.chat.LinkPreviewSpoilerHelper.hasLinkPreviewSpoiler(message);
 +                drawPlay[index] = (message.isVideo() || message.isRoundVideo()) && !inu_spoiler;
 +                drawSpoiler[index] = inu_spoiler;
                  int size = message.type == MessageObject.TYPE_PHOTO && selectedThumb != null ? selectedThumb.size : 0;

@@ -41,7 +41,7 @@ index 0000000..0000000 100644
          @Override
          public boolean hasDoubleTap(View view, int position) {
 +            if (actionBar.isActionModeShowed()) return false;
-+            Boolean hasDoubleTap = desu.inugram.helpers.chat.DoubleTapActionHelper.hasDoubleTap(ChatActivity.this, view);
++            Boolean hasDoubleTap = xie.fa.gram.helpers.chat.DoubleTapActionHelper.hasDoubleTap(ChatActivity.this, view);
 +            if (hasDoubleTap != null) {
 +                return hasDoubleTap;
 +            }
@@ -52,7 +52,7 @@ index 0000000..0000000 100644
  
          @Override
          public void onDoubleTap(View view, int position, float x, float y) {
-+            if (desu.inugram.helpers.chat.DoubleTapActionHelper.onDoubleTap(ChatActivity.this, view, x, y)) return;
++            if (xie.fa.gram.helpers.chat.DoubleTapActionHelper.onDoubleTap(ChatActivity.this, view, x, y)) return;
              if (getParentActivity() == null || isSecretChat() || isInScheduleMode() || isInPreviewMode() || isQuickRepliesOrWelcomeMessagesMode()) {
                  return;
              }
