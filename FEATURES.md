@@ -39,6 +39,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
   - lists & sections
   - avatars (tonal on-container initials instead of white)
   - profile action buttons
+  - folder bar: top (stock) or bottom integrated with M3 bottom tabs (only with M3 enabled)
 - 🐶 toggle to replace profile photo bottom blur with a plain gradient fade
 - disable number rounding
 - export/import settings to/from json file
