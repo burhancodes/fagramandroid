@@ -4,6 +4,7 @@ import android.view.View
 import xie.fa.gram.InuConfig
 import xie.fa.gram.SearchRegistry
 import xie.fa.gram.helpers.dialogs.DialogsFabHelper
+import xie.fa.gram.helpers.dialogs.MainTabsHelper
 import xie.fa.gram.helpers.InuUtils
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.MessagesStorage
@@ -51,13 +52,15 @@ class DialogsSettingsActivity : SettingsPageActivity() {
                 LocaleController.getString(R.string.InuHideAllChatsTab),
             ).setChecked(InuConfig.HIDE_ALL_CHATS_TAB.value)
         )
-        items.add(
-            UItem.asButton(
-                BUTTON_FOLDERS_BAR_POSITION,
-                LocaleController.getString(R.string.InuFoldersBarPosition),
-                foldersBarPositionLabel(InuConfig.FOLDERS_BAR_POSITION.value),
+        if (MainTabsHelper.isMaterial) {
+            items.add(
+                UItem.asButton(
+                    BUTTON_FOLDERS_BAR_POSITION,
+                    LocaleController.getString(R.string.InuFoldersBarPosition),
+                    foldersBarPositionLabel(InuConfig.FOLDERS_BAR_POSITION.value),
+                )
             )
-        )
+        }
         items.add(UItem.asShadow(null))
         // end folders section
 

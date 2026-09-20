@@ -58,7 +58,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 - long-tap "chats" tab to pick folder from menu
 - folder display modes: titles / titles+icons / icons-only
 - folder unread counter modes: hide / regular / exclude muted / 🐶 exclude muted non-dms
-- folder bar position: top (stock) or bottom (above the bottom tabs) on the main page
+- folder bar position: top (stock) or bottom integrated with M3 bottom tabs (only with M3 enabled)
 - hide "all chats" folder tab
 - custom title text: Inugram / @username / first name / "Chats"
 - 🐶 dialogs fab customization: main + secondary actions, hide-on-scroll, left-side
