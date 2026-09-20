@@ -1591,7 +1591,7 @@ object ChatHelper {
 
     private fun lottieIcon(rawRes: Int): RLottieDrawable {
         val size = AndroidUtilities.dp(24f)
-        return RLottieDrawable(rawRes, rawRes.toString(), size, size).apply {
+        return RLottieDrawable(rawRes, size, size).apply {
             setCurrentFrame(0)
         }
     }

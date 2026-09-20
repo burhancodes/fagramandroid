@@ -397,12 +397,9 @@ object DrawerHelper {
             .putBoolean("proxy_enabled", enabled && proxy != null)
             .apply()
         if (proxy != null) {
-            ConnectionsManager.setProxySettings(
-                true, proxy.address, proxy.port,
-                proxy.username, proxy.password, proxy.secret
-            )
+            ConnectionsManager.setProxySettings(true, proxy.settings)
         } else {
-            ConnectionsManager.setProxySettings(false, "", 0, "", "", "")
+            ConnectionsManager.setProxySettings(false, null)
         }
         NotificationCenter.getGlobalInstance()
             .postNotificationName(NotificationCenter.proxySettingsChanged)
