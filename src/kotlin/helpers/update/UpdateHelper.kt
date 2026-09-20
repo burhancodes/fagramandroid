@@ -23,8 +23,8 @@ import kotlin.math.min
 import xie.fa.gram.helpers.security.ParanoiaHelper
 
 object UpdateHelper {
-    const val USERNAME = "InugramCI"
-    private const val CHANNEL_ID = 3968318575L
+    const val USERNAME = "fagramci"
+    private const val CHANNEL_ID = 3924906222L
     private const val CHECK_INTERVAL_MS = 4L * 60 * 60 * 1000
     private const val INFLIGHT_TIMEOUT_MS = 60L * 1000
 
