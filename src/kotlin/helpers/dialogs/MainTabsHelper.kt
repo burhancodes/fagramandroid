@@ -195,8 +195,8 @@ object MainTabsHelper {
                     override fun getBottomOffset(tag: Int): Int {
                         var bottomOffset = if (isHidden) 0 else dp(mainTabsHeightWithMargins.toFloat())
                         if (InuConfig.FOLDERS_BAR_POSITION.value == InuConfig.FoldersBarPositionItem.BOTTOM) {
-                            // Approximate folder bar height at bottom; covers default (50) and foldersBar (44)
-                            bottomOffset += dp(50f);
+                            // folder bar at bottom occupies space above the tabs
+                            bottomOffset += FoldersHelper.barHeightPx() + dp(4f);
                         }
                         return bottomOffset;
                     }
