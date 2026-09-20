@@ -4,14 +4,44 @@ Date: Sun, 20 Sep 2026 12:05:11 +0530
 Subject: Disable ads and sponsored messages
 
 ---
- .../src/main/java/org/telegram/messenger/MessageObject.java     | 1 +
- .../main/java/org/telegram/messenger/MessagesController.java    | 2 ++
- .../src/main/java/org/telegram/messenger/video/VideoAds.java    | 1 +
- .../java/org/telegram/ui/Adapters/DialogsSearchAdapter.java     | 2 +-
- TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java   | 2 ++
- TMessagesProj_Modules/media                                     | 2 +-
- 6 files changed, 8 insertions(+), 2 deletions(-)
+ .../java/org/telegram/messenger/LocaleController.java | 11 +++++++++--
+ .../java/org/telegram/messenger/MessageObject.java    |  1 +
+ .../org/telegram/messenger/MessagesController.java    |  2 ++
+ .../java/org/telegram/messenger/video/VideoAds.java   |  1 +
+ .../telegram/ui/Adapters/DialogsSearchAdapter.java    |  2 +-
+ .../src/main/java/org/telegram/ui/ChatActivity.java   |  2 ++
+ TMessagesProj_Modules/media                           |  2 +-
+ 7 files changed, 17 insertions(+), 4 deletions(-)
 
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+@@ -1675,7 +1675,8 @@ public class LocaleController {
+                 if (value == null) {
+                     if (res != 0) {
+                         try {
+-                            value = getInstance().getLocalizedString(res);
++                            value = xie.fa.gram.helpers.LocaleHelper.getLocalString(key, res);
++                            if (value == null) value = getInstance().getLocalizedString(res);
+                         } catch (Exception e) {
+                             if (fallbackRes != 0) {
+                                 try {
+@@ -4526,7 +4527,13 @@ public class LocaleController {
+ 
+     private String getLocalizedString(@StringRes int stringRes) {
+         checkLocalizationInternal();
+-        return localizationInternal.getByResId(ApplicationLoader.applicationContext, stringRes);
++        String val = localizationInternal.getByResId(ApplicationLoader.applicationContext, stringRes);
++        if (val == null && ApplicationLoader.applicationContext != null && stringRes != 0) {
++            try {
++                val = ApplicationLoader.applicationContext.getString(stringRes);
++            } catch (Exception ignored) {}
++        }
++        return val;
+     }
+ 
+ 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java

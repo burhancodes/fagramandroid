@@ -20,6 +20,8 @@ object LocaleHelper {
     fun isLocalOnlyString(key: String?): Boolean {
         if (key == null) return false
         return key.startsWith("Inu") ||
+            key.startsWith("fa_") ||
+            key.startsWith("Fa") ||
             key == "AppName" ||
             key == "AppNameBeta" ||
             key == "AppUpdate" ||
@@ -28,8 +30,16 @@ object LocaleHelper {
 
     @JvmStatic
     fun getLocalString(key: String?, res: Int): String? {
-        if (!isLocalOnlyString(key)) return null
-        disguiseName(key)?.let { return it }
+        if (res == 0) return null
+        val resolvedKey = key ?: try {
+            ApplicationLoader.applicationContext?.resources?.getResourceEntryName(res)
+        } catch (_: Exception) {
+            null
+        }
+        if (resolvedKey != null) {
+            if (!isLocalOnlyString(resolvedKey)) return null
+            disguiseName(resolvedKey)?.let { return it }
+        }
         return resolve(res)
     }
 
@@ -56,12 +66,24 @@ object LocaleHelper {
     }
 
     private fun resolve(res: Int): String? {
-        if (!ensureCache()) return null
-        val def = try {
-            cachedDefault!!.getString(res)
-        } catch (_: Exception) {
-            return null
+        val ctx = ApplicationLoader.applicationContext
+        if (!ensureCache()) {
+            return try {
+                ctx?.getString(res)
+            } catch (_: Exception) {
+                null
+            }
         }
+        val def = try {
+            cachedDefault?.getString(res) ?: ctx?.getString(res)
+        } catch (_: Exception) {
+            try {
+                ctx?.getString(res)
+            } catch (_: Exception) {
+                null
+            }
+        } ?: return null
+
         for (r in cachedCandidates) {
             val v = try {
                 r.getString(res)
@@ -70,7 +92,7 @@ object LocaleHelper {
             }
             if (v != def) return v
         }
-        return null
+        return def
     }
 
     @Synchronized
