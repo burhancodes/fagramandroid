@@ -181,6 +181,15 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuMiscellaneous)))
         items.add(
+            mkTwoLineCheckItem(
+                TOGGLE_LOCAL_PREMIUM,
+                R.string.InuLocalPremium,
+                R.string.InuLocalPremiumInfo,
+                InuConfig.LOCAL_PREMIUM.value,
+                experimental = true,
+            )
+        )
+        items.add(
             UItem.asButton(
                 BUTTON_PERFORMANCE_CLASS,
                 LocaleController.getString(R.string.InuPerformanceClass),
@@ -234,6 +243,11 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
             BUTTON_PERFORMANCE_CLASS -> showPerformanceClassSelector()
             BUTTON_TEXT_CLASSIFIER_MODE -> showTextClassifierModeSelector()
             BUTTON_WEB_PREVIEW_REPLACEMENTS -> presentFragment(WebPreviewReplacementsActivity())
+
+            TOGGLE_LOCAL_PREMIUM -> {
+                val new = InuConfig.LOCAL_PREMIUM.toggle()
+                (view as? NotificationsCheckCell)?.isChecked = new
+            }
 
             TOGGLE_CALL_CONFIRMATION -> {
                 val new = InuConfig.CALL_CONFIRMATION.toggle()
@@ -390,6 +404,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_DISABLE_CHAT_BUBBLES = InuUtils.generateId()
         private val BUTTON_PERFORMANCE_CLASS = InuUtils.generateId()
         private val BUTTON_DOWNLOAD_DIRECTORY = InuUtils.generateId()
+        private val TOGGLE_LOCAL_PREMIUM = InuUtils.generateId()
 
         private val DOWNLOAD_DIRECTORIES = listOf("Inugram", "Telegram")
         private val BUTTON_TEXT_CLASSIFIER_MODE = InuUtils.generateId()
@@ -448,6 +463,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("show-seconds", R.string.InuShowSeconds, TOGGLE_SHOW_SECONDS),
                 SearchRegistry.Entry("disable-rounding", R.string.InuDisableRounding, TOGGLE_DISABLE_ROUNDING),
                 SearchRegistry.Entry("account-switch-shortcut", R.string.InuAccountSwitchShortcut, TOGGLE_ACCOUNT_SWITCH_SHORTCUT),
+                SearchRegistry.Entry("local-premium", R.string.InuLocalPremium, TOGGLE_LOCAL_PREMIUM),
             ),
         )
     }

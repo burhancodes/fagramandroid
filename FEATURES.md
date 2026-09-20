@@ -223,6 +223,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 - choose the media save folder (Inugram/Telegram) used for saved photos, videos, music and downloads
 - original video quality option in quality picker, including audio removal without re-encoding video
 - remember last used settings in polls + reasonable defaults
+- local premium: unlocks client-side premium limits and hides all "Get Premium" and gifting prompts
 
 ## annoyances
 

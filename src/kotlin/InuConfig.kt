@@ -445,6 +445,9 @@ object InuConfig {
     val HIDE_SUGGESTION_PREMIUM = BoolItem("hide_suggestion_premium", true)
 
     @JvmField
+    val LOCAL_PREMIUM = BoolItem("local_premium", false)
+
+    @JvmField
     val HIDE_SUGGESTION_CUSTOM = BoolItem("hide_suggestion_custom", false)
 
     @JvmField

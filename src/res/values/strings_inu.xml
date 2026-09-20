@@ -211,6 +211,8 @@
     <string name="InuHideSuggestionPassword">Password reminder</string>
     <string name="InuHideSuggestionPhone">Phone number reminder</string>
     <string name="InuHideSuggestionPremium">Premium upsell</string>
+    <string name="InuLocalPremium">Local premium</string>
+    <string name="InuLocalPremiumInfo">Unlocks client-side premium limits and hides all "Get Premium" and gifting prompts.</string>
     <string name="InuHideSuggestionCustom">Custom server-side</string>
     <string name="InuFolders">Folders</string>
     <string name="InuFoldersDisplayMode">Display mode</string>

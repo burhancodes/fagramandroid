@@ -1,0 +1,91 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sun, 20 Sep 2026 21:11:03 +0530
+Subject: local premium
+
+---
+ .../java/org/telegram/messenger/MessagesController.java  | 9 +++++++++
+ .../src/main/java/org/telegram/messenger/UserConfig.java | 5 +++++
+ .../java/org/telegram/ui/Stories/StoriesController.java  | 5 +++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+@@ -119,6 +119,9 @@ import org.telegram.ui.bots.WebViewRequestProps;
+ import org.telegram.ui.community.CommunityChatType;
+ import org.telegram.ui.community.CommunityUtils;
+ 
++import xie.fa.gram.InuConfig;
++import xie.fa.gram.helpers.premium.LocalPremiumHelper;
++
+ import java.io.File;
+ import java.util.ArrayList;
+ import java.util.Arrays;
+@@ -741,6 +744,9 @@ public class MessagesController extends BaseController implements NotificationCe
+         return premiumLocked && !getUserConfig().isPremium();
+     }
+     public boolean premiumPurchaseBlocked() {
++        if (InuConfig.LOCAL_PREMIUM.getValue()) {
++            return false;
++        }
+         return premiumLocked;
+     }
+ 
+@@ -944,6 +950,9 @@ public class MessagesController extends BaseController implements NotificationCe
+     }
+ 
+     public boolean isPremiumUser(TLRPC.User currentUser) {
++        if (LocalPremiumHelper.canShowPremiumFor(currentUser)) {
++            return true;
++        }
+         return currentUser != null && currentUser.premium && !isSupportUser(currentUser);
+     }
+ 
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/UserConfig.java b/TMessagesProj/src/main/java/org/telegram/messenger/UserConfig.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/UserConfig.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/UserConfig.java
+@@ -19,6 +19,8 @@ import org.telegram.tgnet.SerializedData;
+ import org.telegram.tgnet.TLRPC;
+ import org.telegram.tgnet.tl.TL_account;
+ 
++import xie.fa.gram.InuConfig;
++
+ import java.util.Arrays;
+ 
+ public class UserConfig extends BaseController {
+@@ -572,6 +574,9 @@ public class UserConfig extends BaseController {
+     }
+ 
+     public boolean isPremium() {
++        if (InuConfig.LOCAL_PREMIUM.getValue()) {
++            return true;
++        }
+         TLRPC.User user = currentUser;
+         if (user == null) {
+             return false;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesController.java b/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesController.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesController.java
+@@ -92,6 +92,8 @@ import java.util.Objects;
+ import java.util.Set;
+ import java.util.TreeSet;
+ 
++import xie.fa.gram.InuConfig;
++
+ @OptIn(markerClass = UnstableApi.class)
+ public class StoriesController {
+ 
+@@ -4296,6 +4298,9 @@ public class StoriesController {
+     };
+ 
+     private boolean isPremium(long uid) {
++        if (InuConfig.LOCAL_PREMIUM.getValue() && uid == UserConfig.getInstance(currentAccount).getClientUserId()) {
++            return true;
++        }
+         TLRPC.User user = MessagesController.getInstance(currentAccount).getUser(uid);
+         if (user == null) {
+             return false;
