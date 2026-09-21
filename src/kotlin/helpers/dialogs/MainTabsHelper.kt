@@ -196,7 +196,7 @@ object MainTabsHelper {
                         var bottomOffset = if (isHidden) 0 else dp(mainTabsHeightWithMargins.toFloat())
                         if (InuConfig.FOLDERS_BAR_POSITION.value == InuConfig.FoldersBarPositionItem.BOTTOM) {
                             // folder bar at bottom occupies space above the tabs
-                            bottomOffset += FoldersHelper.barHeightPx() + dp(4f);
+                            bottomOffset += FoldersHelper.barHeightPx();
                         }
                         return bottomOffset;
                     }

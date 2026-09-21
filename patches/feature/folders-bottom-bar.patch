@@ -4,15 +4,15 @@ Date: Sun, 20 Sep 2026 19:58:28 +0530
 Subject: Allow folder tabs at bottom of dialog list (above bottom tabs) with M3 and classic mode support
 
 ---
- .../ui/Components/FilterTabsView.java         | 11 ++-
+ .../ui/Components/FilterTabsView.java         | 14 +++-
  .../java/org/telegram/ui/DialogsActivity.java | 79 +++++++++++++++----
- 2 files changed, 73 insertions(+), 17 deletions(-)
+ 2 files changed, 76 insertions(+), 17 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
-@@ -1541,14 +1541,19 @@ public class FilterTabsView extends FrameLayout {
+@@ -1541,14 +1541,22 @@ public class FilterTabsView extends FrameLayout {
  
              final float add = additionalTabWidth / 2f;
  
@@ -21,10 +21,13 @@ index 0000000..0000000 100644
 +            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar() || xie.fa.gram.helpers.dialogs.MainTabsHelper.isMaterial()) {
 +                Paint indicatorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 +                int indicatorColor = Theme.getColor(tabLineColorKey, resourcesProvider);
-+                canvas.save();
-+                canvas.translate(indicatorX, 0);
-+                xie.fa.gram.helpers.theme.M3MainTabsHelper.drawIndicator(canvas, indicatorPaint, indicatorWidth, indicatorColor, 1f);
-+                canvas.restore();
++                indicatorPaint.setColor(Theme.multAlpha(indicatorColor, 0.2f));
++                final float padding = dp(FolderHelper.getTabInternalPadding());
++                float pillHeight = dp(28);
++                float pillY = height / 2 - dp(14);
++                float pillX = indicatorX - padding - add;
++                float pillW = indicatorWidth + padding * 2 + add * 2;
++                canvas.drawRoundRect(pillX, pillY, pillX + pillW, pillY + pillHeight, pillHeight / 2f, pillHeight / 2f, indicatorPaint);
              } else {
                  final int y = height / 2 - dp(14);
                  selectorDrawable.setBounds((int) (indicatorX - dp(FolderHelper.getTabInternalPadding()) - add), y, (int) (indicatorX + indicatorWidth + dp(FolderHelper.getTabInternalPadding()) + add), y + dp(28));
