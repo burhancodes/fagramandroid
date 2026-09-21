@@ -2,7 +2,7 @@ package xie.fa.gram.helpers.dialogs
 
 import org.telegram.messenger.AndroidUtilities
 import xie.fa.gram.InuConfig
-import xie.fa.gram.helpers.theme.MainTabsHelper
+import xie.fa.gram.helpers.dialogs.MainTabsHelper
 import xie.fa.gram.helpers.theme.M3MainTabsHelper
 import xie.fa.gram.helpers.theme.NonIslandHelper
 

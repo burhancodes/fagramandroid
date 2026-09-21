@@ -4,9 +4,23 @@ Date: Sun, 20 Sep 2026 19:58:28 +0530
 Subject: Allow folder tabs at bottom of dialog list (above bottom tabs) with M3 and classic mode support
 
 ---
+ .../ui/Components/FilterTabsView.java         |  2 +-
  .../java/org/telegram/ui/DialogsActivity.java | 79 +++++++++++++++----
- 1 file changed, 65 insertions(+), 14 deletions(-)
+ 2 files changed, 66 insertions(+), 15 deletions(-)
 
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
+@@ -1541,7 +1541,7 @@ public class FilterTabsView extends FrameLayout {
+ 
+             final float add = additionalTabWidth / 2f;
+ 
+-            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar()) {
++            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar() || xie.fa.gram.helpers.dialogs.MainTabsHelper.isMaterial) {
+                 xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, 0f);
+             } else {
+                 final int y = height / 2 - dp(14);
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
