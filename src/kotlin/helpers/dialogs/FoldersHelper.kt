@@ -2,6 +2,7 @@ package xie.fa.gram.helpers.dialogs
 
 import org.telegram.messenger.AndroidUtilities
 import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.theme.MainTabsHelper
 import xie.fa.gram.helpers.theme.M3MainTabsHelper
 import xie.fa.gram.helpers.theme.NonIslandHelper
 
@@ -11,11 +12,10 @@ object FoldersHelper {
         MainTabsHelper.isMaterial &&
             InuConfig.FOLDERS_BAR_POSITION.value == InuConfig.FoldersBarPositionItem.BOTTOM
 
-    // Flush with M3 tabs (no gap); non-M3 still uses a small gap for visual separation
+    // Flush with bottom tabs / nav bar (no gap)
     @JvmStatic
     fun bottomSlotPx(navigationBarHeight: Int, additionNavigationBarHeight: Int): Int {
-        val gap = if (MainTabsHelper.isMaterial) 0 else AndroidUtilities.dp(4f)
-        return navigationBarHeight + additionNavigationBarHeight + gap
+        return navigationBarHeight + additionNavigationBarHeight
     }
 
     // M3 mode: match M3 bar height; classic/non-island: existing folder bar heights

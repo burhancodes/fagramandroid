@@ -75,15 +75,13 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 LocaleController.getString(R.string.InuMaterial3Avatars)
             ).setChecked(InuConfig.MATERIAL3_AVATARS.value)
         )
-        if (InuConfig.M3_BOTTOM_TABS.value) {
-            items.add(
-                UItem.asButton(
-                    BUTTON_FOLDERS_BAR_POSITION,
-                    LocaleController.getString(R.string.InuFoldersBarPosition),
-                    foldersBarPositionLabel(InuConfig.FOLDERS_BAR_POSITION.value),
-                )
-            )
-        }
+        items.add(
+            UItem.asButton(
+                BUTTON_FOLDERS_BAR_POSITION,
+                LocaleController.getString(R.string.InuFoldersBarPosition),
+                foldersBarPositionLabel(InuConfig.FOLDERS_BAR_POSITION.value),
+            ).setEnabled(InuConfig.M3_BOTTOM_TABS.value)
+        )
         items.add(
             UItem.asCheck(
                 TOGGLE_M3_BOTTOM_TABS,
@@ -296,9 +294,9 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 val new = InuConfig.M3_BOTTOM_TABS.toggle()
                 (view as? TextCheckCell)?.isChecked = new
                 if (!new) {
-                    // M3 off: reset folder bar to stock (top) since bottom mode requires M3
                     InuConfig.FOLDERS_BAR_POSITION.value = InuConfig.FoldersBarPositionItem.TOP
                 }
+                listView.adapter.update(true)
                 softRebuild()
             }
 
@@ -311,7 +309,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 InuConfig.FOLDERS_BAR_POSITION.value,
             ) { which ->
                 InuConfig.FOLDERS_BAR_POSITION.value = which
-                showRestartBulletin()
             }
 
             TOGGLE_MATERIAL_PROFILE_ACTIONS -> {
