@@ -4,23 +4,37 @@ Date: Sun, 20 Sep 2026 19:58:28 +0530
 Subject: Allow folder tabs at bottom of dialog list (above bottom tabs) with M3 and classic mode support
 
 ---
- .../ui/Components/FilterTabsView.java         |  2 +-
+ .../ui/Components/FilterTabsView.java         | 11 ++-
  .../java/org/telegram/ui/DialogsActivity.java | 79 +++++++++++++++----
- 2 files changed, 66 insertions(+), 15 deletions(-)
+ 2 files changed, 73 insertions(+), 17 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/FilterTabsView.java
-@@ -1541,7 +1541,7 @@ public class FilterTabsView extends FrameLayout {
+@@ -1541,14 +1541,19 @@ public class FilterTabsView extends FrameLayout {
  
              final float add = additionalTabWidth / 2f;
  
 -            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar()) {
+-                xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, 0f);
 +            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar() || xie.fa.gram.helpers.dialogs.MainTabsHelper.isMaterial()) {
-                 xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, 0f);
++                Paint indicatorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++                int indicatorColor = Theme.getColor(tabLineColorKey, resourcesProvider);
++                canvas.save();
++                canvas.translate(indicatorX, 0);
++                xie.fa.gram.helpers.theme.M3MainTabsHelper.drawIndicator(canvas, indicatorPaint, indicatorWidth, indicatorColor, 1f);
++                canvas.restore();
              } else {
                  final int y = height / 2 - dp(14);
+                 selectorDrawable.setBounds((int) (indicatorX - dp(FolderHelper.getTabInternalPadding()) - add), y, (int) (indicatorX + indicatorWidth + dp(FolderHelper.getTabInternalPadding()) + add), y + dp(28));
+                 selectorDrawable.setAlpha(31);
++                selectorDrawable.draw(canvas);
+             }
+-            selectorDrawable.draw(canvas);
+             canvas.restore();
+         }
+     }
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
@@ -86,7 +100,7 @@ index 0000000..0000000 100644
 -            NonIslandHelper.applyFilterTabBar(filterTabsView, contentView);
 +            boolean folderBottom = xie.fa.gram.InuConfig.FOLDERS_BAR_POSITION.getValue() == xie.fa.gram.InuConfig.FoldersBarPositionItem.BOTTOM;
 +            int folderGravity = folderBottom ? Gravity.BOTTOM : Gravity.TOP;
-+            int folderBottomMargin = folderBottom ? dp(4) : 0;
++            int folderBottomMargin = 0;
 +            contentView.addView(filterTabsView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 36 + 7 + 7, folderGravity, 4, 0, 4, folderBottomMargin));
 +            if (folderBottom) {
 +                // At bottom: divider at top of folder bar (separating from list) instead of bottom
