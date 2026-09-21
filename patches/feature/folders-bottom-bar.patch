@@ -17,7 +17,7 @@ index 0000000..0000000 100644
              final float add = additionalTabWidth / 2f;
  
 -            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar()) {
-+            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar() || xie.fa.gram.helpers.dialogs.MainTabsHelper.isMaterial) {
++            if (xie.fa.gram.helpers.theme.NonIslandHelper.foldersBar() || xie.fa.gram.helpers.dialogs.MainTabsHelper.isMaterial()) {
                  xie.fa.gram.helpers.theme.NonIslandHelper.setMd3TabIndicatorBounds(selectorDrawable, indicatorX, indicatorWidth, height, 0f);
              } else {
                  final int y = height / 2 - dp(14);
