@@ -322,3 +322,4 @@ bugfix/scrim-touch-lock.patch
 debloat/disable-ads.patch
 feature/local-premium.patch
 feature/folders-bottom-bar.patch
+feature/online-status-indicator.patch
