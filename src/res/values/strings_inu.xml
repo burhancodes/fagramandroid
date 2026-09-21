@@ -623,7 +623,7 @@
     <string name="InuMentionInsertTitle">Insert mention</string>
     <string name="InuPasscode">Passcode</string>
     <string name="InuPasscodeNeeded">Set up a Telegram passcode first.</string>
-    <string name="InuPasscodeShowInSettings">Show in inugram settings</string>
+    <string name="InuPasscodeShowInSettings">Show in FAgram settings</string>
     <string name="InuPasscodeShowInSettingsInfo">When off, this page can **only** be opened via the link below. Save it now — it doesn\'t change once generated.</string>
     <string name="InuPasscodeAccountsInfo">Each account can have its own passcode. Entering it on the lock screen unlocks the app and switches to that account.</string>
     <string name="InuPasscodeStateNone">Not configured</string>
@@ -674,7 +674,7 @@
     <string name="InuParanoiaHideFolders">Hide folders</string>
     <string name="InuParanoiaHideMyStories">Hide my stories</string>
     <string name="InuParanoiaDisguise">Disguise as Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">Only the launcher icon and name change. Notifications and the in-app name still show \"Inugram\", due to Android limitations.</string>
+    <string name="InuParanoiaDisguiseInfo">Only the launcher icon and name change. Notifications and the in-app name still show \"FAgram\", due to Android limitations.</string>
     <string name="InuDisguiseName" translatable="false">Telegram</string>
     <string name="InuParanoiaMode">Paranoia mode</string>
     <string name="InuParanoiaModeInfo">Paranoia mode lets you \"prepare\" for someone else checking your phone, by hiding any \"dangerous\" chats, and optionally disguising as the stock app.</string>
@@ -761,4 +761,7 @@
     <string name="InuPreviewMessage">Preview</string>
 
     <string name="InuMinimize">Minimize</string>
+
+    <string name="InuAvatarOnlineStatus">Online status indicator</string>
+    <string name="InuAvatarOnlineStatusInfo">Show a colored dot next to user avatars indicating online, recently active, or offline.</string>
 </resources>

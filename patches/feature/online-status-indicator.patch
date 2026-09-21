@@ -1,0 +1,127 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Mon, 21 Sep 2026 14:43:32 +0530
+Subject: feat: online-status indicator
+
+---
+ .../java/org/telegram/ui/ActionBar/Theme.java |  3 ++
+ .../telegram/ui/ActionBar/ThemeColors.java    |  3 ++
+ .../telegram/ui/Cells/ChatMessageCell.java    | 11 ++++++
+ .../org/telegram/ui/Cells/DialogCell.java     | 39 +++++++++++++++----
+ 4 files changed, 49 insertions(+), 7 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java
+@@ -2757,6 +2757,9 @@ public class Theme {
+     public static final int key_actionBarBrowser = colorsCount++;
+ 
+     public static final int key_chats_onlineCircle = colorsCount++;
++    public static final int key_chats_onlineCircleRecencyTier1 = colorsCount++;
++    public static final int key_chats_onlineCircleRecencyTier2 = colorsCount++;
++    public static final int key_chats_onlineCircleRecencyTier3 = colorsCount++;
+     public static final int key_chats_unreadCounter = colorsCount++;
+     public static final int key_chats_unreadCounterMuted = colorsCount++;
+     public static final int key_chats_unreadCounterText = colorsCount++;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ThemeColors.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ThemeColors.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ThemeColors.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ThemeColors.java
+@@ -224,6 +224,9 @@ public class ThemeColors {
+         defaultColors[key_actionBarDefaultArchivedSearchPlaceholder] = 0xff838c96;
+ 
+         defaultColors[key_chats_onlineCircle] = 0xff4bcb1c;
++        defaultColors[key_chats_onlineCircleRecencyTier1] = 0xFFE8A11E;
++        defaultColors[key_chats_onlineCircleRecencyTier2] = 0xFFF0A020;
++        defaultColors[key_chats_onlineCircleRecencyTier3] = 0xFFE03010;
+         defaultColors[key_chats_unreadCounter] = TELEGRAM_COLOR;
+         defaultColors[key_chats_unreadCounterMuted] = 0xffBEC3C7;
+         defaultColors[key_chats_unreadCounterText] = 0xffffffff;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
+@@ -22228,6 +22228,17 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+                 avatarImage.setImageCoords(avatarX, ny + dp(13) * (1.0f - scale), dp(26) * scale, dp(26) * scale);
+                 avatarImage.setAlpha(avatarAlpha);
+                 avatarImage.draw(canvas);
++                if (xie.fa.gram.InuConfig.AVATAR_ONLINE_STATUS.getValue() && currentUser != null && !currentUser.bot && currentUser.id != UserConfig.getInstance(currentAccount).getClientUserId()) {
++                    int indicatorColor = xie.fa.gram.helpers.StatusIndicatorHelper.getOnlineColor(currentUser, resourcesProvider);
++                    if (indicatorColor != 0 && avatarAlpha > 0) {
++                        float cx = avatarX + dp(26) * scale - dp(7);
++                        float cy = ny + dp(13) * (1f - scale) + dp(26) * scale - dp(7);
++                        Theme.dialogs_onlineCirclePaint.setColor(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider));
++                        canvas.drawCircle(cx, cy, dp(7) * avatarAlpha, Theme.dialogs_onlineCirclePaint);
++                        Theme.dialogs_onlineCirclePaint.setColor(indicatorColor);
++                        canvas.drawCircle(cx, cy, dp(5) * avatarAlpha, Theme.dialogs_onlineCirclePaint);
++                    }
++                }
+                 avatarImage.setImageCoords(wasX, wasY, wasWidth, wasHeight);
+                 avatarImage.setAlpha(wasAlpha);
+                 avatarImage.setVisible(wasVisible, false);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/DialogCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/DialogCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/DialogCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/DialogCell.java
+@@ -808,8 +808,22 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
+                 user = newUser;
+             }
+         }
+-        boolean isOnline = isOnline();
+-        onlineProgress = isOnline ? 1.0f : 0.0f;
++        boolean visibleStatus = false;
++                if (xie.fa.gram.InuConfig.AVATAR_ONLINE_STATUS.getValue()) {
++            if (user != null && !user.bot && !user.self && user.status != null) {
++                int currentTime = ConnectionsManager.getInstance(currentAccount).getCurrentTime();
++                if (user.status.expires <= 0) {
++                    if (MessagesController.getInstance(currentAccount).onlinePrivacy.containsKey(user.id)) {
++                        visibleStatus = true;
++                    }
++                } else if (user.status.expires > currentTime - 60 * 60) {
++                    visibleStatus = true;
++                }
++            }
++        } else {
++            visibleStatus = isOnline();
++        }
++        onlineProgress = visibleStatus ? 1.0f : 0.0f;
+     }
+ 
+     private boolean isOnline() {
+@@ -5101,9 +5115,20 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
+                 canvas.restore();
+             }
+             if (user != null && !MessagesController.isSupportUser(user) && !user.bot) {
+-                boolean isOnline = isOnline();
+-                wasDrawnOnline = isOnline;
+-                if (isOnline || onlineProgress != 0) {
++                int statusColor = 0;
++                boolean visibleStatus = false;
++        if (xie.fa.gram.InuConfig.AVATAR_ONLINE_STATUS.getValue()) {
++                    statusColor = xie.fa.gram.helpers.StatusIndicatorHelper.getOnlineColor(user, resourcesProvider);
++                    visibleStatus = statusColor != 0;
++                    wasDrawnOnline = visibleStatus || onlineProgress != 0;
++                } else {
++                    boolean isOnline = isOnline();
++                    wasDrawnOnline = isOnline;
++                    visibleStatus = isOnline || onlineProgress != 0;
++                    statusColor = visibleStatus ? Theme.getColor(Theme.key_chats_onlineCircle, resourcesProvider) : 0;
++                }
++                int colorToDraw = statusColor != 0 ? statusColor : Theme.getColor(Theme.key_chats_onlineCircle, resourcesProvider);
++                if (visibleStatus || onlineProgress != 0) {
+                     int top = (int) (storyParams.originalAvatarRect.bottom - dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? 6 : 8));
+                     int left;
+                     if (LocaleController.isRTL) {
+@@ -5114,9 +5139,9 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
+ 
+                     Theme.dialogs_onlineCirclePaint.setColor(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider));
+                     canvas.drawCircle(left, top, dp(7) * onlineProgress, Theme.dialogs_onlineCirclePaint);
+-                    Theme.dialogs_onlineCirclePaint.setColor(Theme.getColor(Theme.key_chats_onlineCircle, resourcesProvider));
++                    Theme.dialogs_onlineCirclePaint.setColor(colorToDraw);
+                     canvas.drawCircle(left, top, dp(5) * onlineProgress, Theme.dialogs_onlineCirclePaint);
+-                    if (isOnline) {
++                    if (visibleStatus) {
+                         if (onlineProgress < 1.0f) {
+                             onlineProgress += 16f / 150.0f;
+                             if (onlineProgress > 1.0f) {

@@ -199,8 +199,16 @@ class ChatsSettingsActivity : SettingsPageActivity() {
         items.add(UItem.asCustom(chatInputMaxLinesSlider))
         hideBotSlashGroup.addTo(items) { listView.adapter.update(true) }
         items.add(
-            UItem.asCheck(TOGGLE_BOT_WEBVIEW_BUTTON, LocaleController.getString(R.string.InuHideBotWebView))
-                .setChecked(InuConfig.HIDE_BOT_WEBVIEW_INPUT.value)
+            mkTwoLineCheckItem(
+                TOGGLE_AVATAR_ONLINE_STATUS,
+                R.string.InuAvatarOnlineStatus,
+                R.string.InuAvatarOnlineStatusInfo,
+                InuConfig.AVATAR_ONLINE_STATUS.value,
+            )
+        )
+        items.add(
+            UItem.asCheck(TOGGLE_HIDE_CALL_ACTION_BUTTON, LocaleController.getString(R.string.InuHideCallActionButton))
+                .setChecked(InuConfig.HIDE_CALL_ACTION_BUTTON.value)
         )
         items.add(
             mkTwoLineCheckItem(
@@ -337,6 +345,7 @@ class ChatsSettingsActivity : SettingsPageActivity() {
 
             TOGGLE_SEARCH_FROM_GLOBAL -> (view as? NotificationsCheckCell)?.isChecked = InuConfig.SEARCH_FROM_GLOBAL.toggle()
             TOGGLE_HIDE_CALL_ACTION_BUTTON -> (view as? TextCheckCell)?.isChecked = InuConfig.HIDE_CALL_ACTION_BUTTON.toggle()
+            TOGGLE_AVATAR_ONLINE_STATUS -> (view as? NotificationsCheckCell)?.isChecked = InuConfig.AVATAR_ONLINE_STATUS.toggle()
             BUTTON_CHAT_MENU_ORDER -> presentFragment(ChatMenuOrderActivity())
         }
     }
@@ -365,6 +374,7 @@ class ChatsSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_EMOJI_PANEL_KEYWORD_SEARCH = InuUtils.generateId()
         private val TOGGLE_SEARCH_FROM_GLOBAL = InuUtils.generateId()
         private val TOGGLE_HIDE_CALL_ACTION_BUTTON = InuUtils.generateId()
+        private val TOGGLE_AVATAR_ONLINE_STATUS = InuUtils.generateId()
         private val BUTTON_CHAT_MENU_ORDER = InuUtils.generateId()
         private val SECTION_HIDE_BOTTOM_BAR = InuUtils.generateId()
         private val SECTION_HIDE_BOT_SLASH = InuUtils.generateId()
@@ -420,6 +430,7 @@ class ChatsSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("emoji-panel-keyword-search", R.string.InuEmojiPanelKeywordSearch, TOGGLE_EMOJI_PANEL_KEYWORD_SEARCH),
                 SearchRegistry.Entry("search-from-global", R.string.InuSearchFromGlobal, TOGGLE_SEARCH_FROM_GLOBAL),
                 SearchRegistry.Entry("hide-call-action-button", R.string.InuHideCallActionButton, TOGGLE_HIDE_CALL_ACTION_BUTTON),
+                SearchRegistry.Entry("avatar-online-status", R.string.InuAvatarOnlineStatus, TOGGLE_AVATAR_ONLINE_STATUS),
                 SearchRegistry.Entry("chat-menu-order", R.string.InuChatMenuOrder, BUTTON_CHAT_MENU_ORDER),
                 SearchRegistry.Entry("hide-bottom-bar", R.string.InuHideBottomBar, SECTION_HIDE_BOTTOM_BAR),
                 SearchRegistry.Entry("hide-bot-slash", R.string.InuHideBotSlash, SECTION_HIDE_BOT_SLASH),
