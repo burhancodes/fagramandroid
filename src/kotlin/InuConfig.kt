@@ -694,6 +694,9 @@ object InuConfig {
     @JvmField
     val SHOW_FORWARD_TIME = BoolItem("show_forward_time", true)
 
+    @JvmField
+    val AVATAR_ONLINE_STATUS = BoolItem("avatar_online_indicator", false)
+
     class ForwardHeaderModeItem : IntItem("forward_header_mode", REGULAR) {
         override fun read(prefs: SharedPreferences): Int {
             if (prefs.contains(key)) return prefs.getInt(key, default)
