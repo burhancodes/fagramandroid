@@ -5,6 +5,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import xie.fa.gram.InuConfig
 import xie.fa.gram.InuHooks
+import xie.fa.gram.helpers.theme.M3MainTabsHelper
 import xie.fa.gram.SearchRegistry
 import xie.fa.gram.helpers.InuUtils
 import xie.fa.gram.helpers.theme.MonetHelper
@@ -74,6 +75,15 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 LocaleController.getString(R.string.InuMaterial3Avatars)
             ).setChecked(InuConfig.MATERIAL3_AVATARS.value)
         )
+        if (InuConfig.M3_BOTTOM_TABS.value) {
+            items.add(
+                UItem.asButton(
+                    BUTTON_FOLDERS_BAR_POSITION,
+                    LocaleController.getString(R.string.InuFoldersBarPosition),
+                    foldersBarPositionLabel(InuConfig.FOLDERS_BAR_POSITION.value),
+                )
+            )
+        }
         items.add(
             UItem.asCheck(
                 TOGGLE_M3_BOTTOM_TABS,
@@ -285,7 +295,23 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
             TOGGLE_M3_BOTTOM_TABS -> {
                 val new = InuConfig.M3_BOTTOM_TABS.toggle()
                 (view as? TextCheckCell)?.isChecked = new
+                if (!new) {
+                    // M3 off: reset folder bar to stock (top) since bottom mode requires M3
+                    InuConfig.FOLDERS_BAR_POSITION.value = InuConfig.FoldersBarPositionItem.TOP
+                }
                 softRebuild()
+            }
+
+            BUTTON_FOLDERS_BAR_POSITION -> RadioItemOptions.show(
+                this, view,
+                listOf(
+                    LocaleController.getString(R.string.InuFoldersBarPositionTop),
+                    LocaleController.getString(R.string.InuFoldersBarPositionBottom),
+                ),
+                InuConfig.FOLDERS_BAR_POSITION.value,
+            ) { which ->
+                InuConfig.FOLDERS_BAR_POSITION.value = which
+                showRestartBulletin()
             }
 
             TOGGLE_MATERIAL_PROFILE_ACTIONS -> {
@@ -381,6 +407,7 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_MATERIAL3_FABS = InuUtils.generateId()
         private val TOGGLE_M3_SECTIONS_STYLE = InuUtils.generateId()
         private val TOGGLE_MATERIAL3_AVATARS = InuUtils.generateId()
+        private val BUTTON_FOLDERS_BAR_POSITION = InuUtils.generateId()
         private val TOGGLE_M3_BOTTOM_TABS = InuUtils.generateId()
         private val TOGGLE_MATERIAL_PROFILE_ACTIONS = InuUtils.generateId()
         private val TOGGLE_M3_NAVIGATION_ANIMATION = InuUtils.generateId()
@@ -397,6 +424,11 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
             MonetHelper.ThemeMode.AUTO -> LocaleController.getString(R.string.InuMonetThemeAuto)
             MonetHelper.ThemeMode.AUTO_AMOLED -> LocaleController.getString(R.string.InuMonetThemeAutoAmoled)
             else -> LocaleController.getString(R.string.InuMonetThemeDisabled)
+        }
+
+        private fun foldersBarPositionLabel(value: Int): String = when (value) {
+            InuConfig.FoldersBarPositionItem.BOTTOM -> LocaleController.getString(R.string.InuFoldersBarPositionBottom)
+            else -> LocaleController.getString(R.string.InuFoldersBarPositionTop)
         }
 
         private fun predictiveBackModeLabel(value: Int): String = when (value) {
@@ -420,6 +452,7 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("material3-sections", R.string.InuMaterial3Sections, TOGGLE_M3_SECTIONS_STYLE),
                 SearchRegistry.Entry("material3-avatars", R.string.InuMaterial3Avatars, TOGGLE_MATERIAL3_AVATARS),
                 SearchRegistry.Entry("m3-bottom-tabs", R.string.InuMaterial3BottomTabs, TOGGLE_M3_BOTTOM_TABS),
+                SearchRegistry.Entry("folders-bar-position", R.string.InuFoldersBarPosition, BUTTON_FOLDERS_BAR_POSITION),
                 SearchRegistry.Entry("material-profile-actions", R.string.InuMaterialProfileActions, TOGGLE_MATERIAL_PROFILE_ACTIONS),
                 SearchRegistry.Entry("material3-navigation-animation", R.string.InuMaterial3NavigationAnimation, TOGGLE_M3_NAVIGATION_ANIMATION),
                 SearchRegistry.Entry("monet-theme", R.string.InuMonetTheme, BUTTON_MONET_THEME),

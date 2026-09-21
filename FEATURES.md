@@ -39,6 +39,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
   - lists & sections
   - avatars (tonal on-container initials instead of white)
   - profile action buttons
+  - folder bar: top (stock) or bottom integrated with M3 bottom tabs (only with M3 enabled)
 - 🐶 toggle to replace profile photo bottom blur with a plain gradient fade
 - disable number rounding
 - export/import settings to/from json file
@@ -58,7 +59,6 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 - long-tap "chats" tab to pick folder from menu
 - folder display modes: titles / titles+icons / icons-only
 - folder unread counter modes: hide / regular / exclude muted / 🐶 exclude muted non-dms
-- folder bar position: top (stock) or bottom integrated with M3 bottom tabs (only with M3 enabled)
 - hide "all chats" folder tab
 - custom title text: Inugram / @username / first name / "Chats"
 - 🐶 dialogs fab customization: main + secondary actions, hide-on-scroll, left-side
