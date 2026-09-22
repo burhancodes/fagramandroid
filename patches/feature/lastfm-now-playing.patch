@@ -64,17 +64,17 @@ index 0000000..0000000 100644
                  numberSectionRow = rowCount++;
                  numberRow = rowCount++;
                  setUsernameRow = rowCount++;
-@@ -10806,6 +10814,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
-                         channelDividerRow = rowCount++;
-                     }
+@@ -10799,6 +10807,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     unofficialSecurityRiskDividerRow = rowCount++;
                  }
+ 
 +                inu_lastFmUsername = ProfileHelper.resolveLastFmUsername(userInfo != null ? userInfo.about : null, UserObject.isUserSelf(user));
 +                if (inu_lastFmUsername != null) {
 +                    inu_nowPlayingRow = rowCount++;
 +                }
-                 infoStartRow = rowCount;
-                 if (!isBot && (hasPhone || !hasInfo)) {
-                     phoneRow = rowCount++;
+                 if (userInfo != null && (userInfo.flags2 & 64) != 0 && (profileChannelMessageFetcher == null || !profileChannelMessageFetcher.loaded || !profileChannelMessageFetcher.messageObjects.isEmpty())) {
+                     final TLRPC.Chat channel = getMessagesController().getChat(userInfo.personal_channel_id);
+                     if (channel != null && (ChatObject.isPublic(channel) || !ChatObject.isNotInChat(channel))) {
 @@ -13244,7 +13256,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                  VIEW_TYPE_TEXT_DETAIL_MULTILINE_2 = 30,
                  VIEW_TYPE_EMPTY2 = 31,
@@ -101,8 +101,8 @@ index 0000000..0000000 100644
                      detailCell.valueTextView.setLoading(loadingSpan);
                      break;
 +                case VIEW_TYPE_NOW_PLAYING: {
++                    TLRPC.User u = getMessagesController().getUser(userId);
 +                    if (holder.itemView instanceof xie.fa.gram.ui.lastfm.NowPlayingCardView) {
-+                        TLRPC.User u = getMessagesController().getUser(userId);
 +                        ((xie.fa.gram.ui.lastfm.NowPlayingCardView) holder.itemView).bind(
 +                            inu_lastFmUsername != null ? inu_lastFmUsername : "",
 +                            UserObject.isUserSelf(u)

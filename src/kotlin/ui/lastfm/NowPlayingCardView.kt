@@ -19,7 +19,7 @@ import android.text.StaticLayout
 import android.text.TextPaint
 import android.text.TextUtils
 import android.view.MotionEvent
-import android.view.View
+import android.widget.FrameLayout
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.PathParser
 import org.telegram.messenger.AndroidUtilities
@@ -35,7 +35,7 @@ import xie.fa.gram.helpers.lastfm.LastFmPaletteHelper
 import xie.fa.gram.helpers.lastfm.LastFmTrack
 
 @SuppressLint("ViewConstructor")
-class NowPlayingCardView(context: Context) : View(context) {
+class NowPlayingCardView(context: Context) : FrameLayout(context) {
 
     companion object {
         private const val POLL_INTERVAL_MS = 15_000L
@@ -348,7 +348,7 @@ class NowPlayingCardView(context: Context) : View(context) {
         val statusText = if (isNowPlaying) {
             LocaleController.getString(R.string.InuLastFmNowPlaying)
         } else {
-            LocaleController.getString(R.string.InuLastFmScrobblingVia)
+            LocaleController.getString(R.string.InuLastFmScrobbling)
         }
 
         val titleSize = AndroidUtilities.dp(15f).toFloat()
