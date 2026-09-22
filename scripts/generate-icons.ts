@@ -264,6 +264,134 @@ async function loadSvg(relPath: string): Promise<LoadedSvg> {
   return { shapes: foregroundShapes, srcW, srcH, bgColor }
 }
 
+function buildSplashVector(shapes: SvgShape[], bgColor = '#FFFF5858'): string {
+  const scale = 200 / 512
+  const offset = 60
+  const color = bgColor.length === 9 ? `#${bgColor.slice(3)}` : bgColor
+
+  const planePathsXml = shapes.map((shape, i) => {
+    const name = `plane_${i}`
+    const fill = shape.fill ? resolveFillColor(shape.fill) : '#FFFFFF'
+    return `                        <path
+                            android:name="${name}"
+                            android:pathData="${shape.d}"
+                            android:fillColor="${fill}"
+                            android:fillAlpha="0"
+                            android:strokeWidth="1" />`
+  }).join('\n')
+
+  const planeTargetsXml = shapes.map((_, i) => {
+    const name = `plane_${i}`
+    return `    <target android:name="${name}">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="fillAlpha"
+                    android:startOffset="200"
+                    android:duration="100"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>`
+  }).join('\n')
+
+  return `<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="splash"
+            android:width="320dp"
+            android:height="320dp"
+            android:viewportWidth="320"
+            android:viewportHeight="320">
+            <group
+                android:name="scaleme"
+                android:pivotX="160"
+                android:pivotY="160"
+                android:scaleX="1"
+                android:scaleY="1">
+                <group android:name="bg">
+                    <path
+                        android:name="circle"
+                        android:pathData="M 160 110 C 146.744 110 134.018 115.271 124.645 124.645 C 115.271 134.018 110 146.744 110 160 C 110 173.256 115.271 185.982 124.645 195.355 C 134.018 204.729 146.744 210 160 210 C 173.256 210 185.982 204.729 195.355 195.355 C 204.729 185.982 210 173.256 210 160 C 210 146.744 204.729 134.018 195.355 124.645 C 185.982 115.271 173.256 110 160 110 Z"
+                        android:fillColor="${color}"
+                        android:fillAlpha="0"
+                        android:strokeWidth="1" />
+                </group>
+                <group
+                    android:name="fg"
+                    android:pivotX="160"
+                    android:pivotY="160"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5">
+                    <clip-path
+                        android:name="mask"
+                        android:pathData="M 160 60 C 133.489 60 108.036 70.543 89.289 89.289 C 70.543 108.036 60 133.489 60 160 C 60 186.511 70.543 211.964 89.289 230.711 C 108.036 249.457 133.489 260 160 260 C 186.511 260 211.964 249.457 230.711 230.711 C 249.457 211.964 260 186.511 260 160 C 260 133.489 249.457 108.036 230.711 89.289 C 211.964 70.543 186.511 60 160 60 Z" />
+                    <group
+                        android:name="glyph_pos"
+                        android:translateX="${fmtNum(offset)}"
+                        android:translateY="${fmtNum(offset)}"
+                        android:scaleX="${fmtNum(scale)}"
+                        android:scaleY="${fmtNum(scale)}">
+${planePathsXml}
+                    </group>
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="circle">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="200"
+                    android:duration="300"
+                    android:valueFrom="M 160 110 C 146.744 110 134.018 115.271 124.645 124.645 C 115.271 134.018 110 146.744 110 160 C 110 173.256 115.271 185.982 124.645 195.355 C 134.018 204.729 146.744 210 160 210 C 173.256 210 185.982 204.729 195.355 195.355 C 204.729 185.982 210 173.256 210 160 C 210 146.744 204.729 134.018 195.355 124.645 C 185.982 115.271 173.256 110 160 110 Z"
+                    android:valueTo="M 160 60 C 133.489 60 108.036 70.543 89.289 89.289 C 70.543 108.036 60 133.489 60 160 C 60 186.511 70.543 211.964 89.289 230.711 C 108.036 249.457 133.489 260 160 260 C 186.511 260 211.964 249.457 230.711 230.711 C 249.457 211.964 260 186.511 260 160 C 260 133.489 249.457 108.036 230.711 89.289 C 211.964 70.543 186.511 60 160 60 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="fillAlpha"
+                    android:startOffset="200"
+                    android:duration="100"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+${planeTargetsXml}
+    <target android:name="fg">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:startOffset="200"
+                    android:duration="300"
+                    android:valueFrom="0.5"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:startOffset="200"
+                    android:duration="300"
+                    android:valueFrom="0.5"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>
+`
+}
+
 const fg = await loadSvg('src/res/launcher/icon.svg')
 
 const monoPath = join(rootDir, 'src/res/launcher/icon-mono.svg')
@@ -277,6 +405,7 @@ const settingsIcon = buildSettingsVector(mono.shapes, mono.srcW, mono.srcH, fg.b
 const notificationIcon = buildNotificationVector(mono.shapes, mono.srcW, mono.srcH, fg.bgColor)
 const background = buildBackgroundVector(fg.bgColor)
 const debugIcon = buildAdaptiveIcon('icon_foreground_inu_debug')
+const splashIcon = buildSplashVector(fg.shapes, fg.bgColor)
 
 // the *_inu drawables back stock @mipmap/ic_launcher{,_round} (rewired by
 // misc__branding); the mipmap-debug wrappers override it for the debug build
@@ -290,6 +419,7 @@ const targets: [string, string][] = [
   [`${GEN_DRAWABLE}/icon_notification_inu.xml`, notificationIcon],
   [`${GEN_DEBUG_MIPMAP}/ic_launcher.xml`, debugIcon],
   [`${GEN_DEBUG_MIPMAP}/ic_launcher_round.xml`, debugIcon],
+  ['src/res/drawable/inu_splash_320.xml', splashIcon],
 ]
 
 let dirty = false
