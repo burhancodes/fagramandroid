@@ -65,6 +65,13 @@ class UserProfileSettingsActivity : SettingsPageActivity() {
                 LocaleController.getString(R.string.InuDisableChatTitlePhone)
             ).setChecked(InuConfig.DISABLE_CHAT_TITLE_PHONE.value)
         )
+        items.add(
+            UItem.asButton(
+                BUTTON_LASTFM,
+                R.drawable.files_music,
+                LocaleController.getString(R.string.InuLastFm)
+            )
+        )
     }
 
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
@@ -105,6 +112,8 @@ class UserProfileSettingsActivity : SettingsPageActivity() {
                 val new = InuConfig.DISABLE_CHAT_TITLE_PHONE.toggle()
                 (view as? TextCheckCell)?.isChecked = new
             }
+
+            BUTTON_LASTFM -> presentFragment(LastFmSettingsActivity(currentAccount))
         }
     }
 
@@ -115,6 +124,7 @@ class UserProfileSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_PROFILE_PREFER_MEDIA_TAB = InuUtils.generateId()
         private val BUTTON_PROFILE_ID_MODE = InuUtils.generateId()
         private val TOGGLE_DISABLE_CHAT_TITLE_PHONE = InuUtils.generateId()
+        private val BUTTON_LASTFM = InuUtils.generateId()
 
         @JvmField val PAGE = SearchRegistry.Page(
             slug = "user-profile",

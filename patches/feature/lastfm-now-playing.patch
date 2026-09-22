@@ -1,0 +1,164 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Tue, 22 Sep 2026 12:41:23 +0530
+Subject: Add Last.fm Now Playing profile card and settings
+
+---
+ TMessagesProj/build.gradle                    |  5 +++
+ .../java/org/telegram/ui/ProfileActivity.java | 37 ++++++++++++++++++-
+ .../org/telegram/ui/SettingsActivity.java     |  7 +++-
+ 3 files changed, 45 insertions(+), 4 deletions(-)
+
+diff --git a/TMessagesProj/build.gradle b/TMessagesProj/build.gradle
+index 0000000..0000000 100644
+--- a/TMessagesProj/build.gradle
++++ b/TMessagesProj/build.gradle
+@@ -98,6 +98,7 @@ dependencies {
+ 
+     // inu
+     implementation 'org.maplibre.gl:android-sdk:13.1.0'
++    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+     // end inu
+ 
+ //    implementation 'com.google.mlkit:translate:17.0.3'
+@@ -159,6 +160,10 @@ android {
+                 }
+             }
+         }
++
++        // inu
++        buildConfigField "String", "LASTFM_API_KEY", "\"" + (getProps("lastfm.api_key") ?: (System.getenv("LASTFM_API_KEY") ?: "")) + "\""
++        // end inu
+     }
+ 
+     buildTypes {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -621,6 +621,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private int setUsernameRow;
+     private int bioRow;
+     public int inu_idRow;
++    public int inu_nowPlayingRow;
++    public String inu_lastFmUsername;
+     private int phoneSuggestionSectionRow;
+     private int graceSuggestionRow;
+     private int graceSuggestionSectionRow;
+@@ -10559,6 +10561,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         setUsernameRow = -1;
+         bioRow = -1;
+         inu_idRow = -1;
++        inu_nowPlayingRow = -1;
++        inu_lastFmUsername = null;
+         channelRow = -1;
+         channelDividerRow = -1;
+         phoneSuggestionSectionRow = -1;
+@@ -10720,6 +10724,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     setAvatarRow = rowCount++;
+                     setAvatarSectionRow = rowCount++;
+                 }
++                inu_lastFmUsername = ProfileHelper.resolveLastFmUsername(currentAccount, userInfo != null ? userInfo.about : null, true);
++                if (inu_lastFmUsername != null) {
++                    inu_nowPlayingRow = rowCount++;
++                }
+                 numberSectionRow = rowCount++;
+                 numberRow = rowCount++;
+                 setUsernameRow = rowCount++;
+@@ -10799,6 +10807,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     unofficialSecurityRiskDividerRow = rowCount++;
+                 }
+ 
++                inu_lastFmUsername = ProfileHelper.resolveLastFmUsername(currentAccount, userInfo != null ? userInfo.about : null, UserObject.isUserSelf(user));
++                if (inu_lastFmUsername != null) {
++                    inu_nowPlayingRow = rowCount++;
++                }
+                 if (userInfo != null && (userInfo.flags2 & 64) != 0 && (profileChannelMessageFetcher == null || !profileChannelMessageFetcher.loaded || !profileChannelMessageFetcher.messageObjects.isEmpty())) {
+                     final TLRPC.Chat channel = getMessagesController().getChat(userInfo.personal_channel_id);
+                     if (channel != null && (ChatObject.isPublic(channel) || !ChatObject.isNotInChat(channel))) {
+@@ -13244,7 +13256,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 VIEW_TYPE_TEXT_DETAIL_MULTILINE_2 = 30,
+                 VIEW_TYPE_EMPTY2 = 31,
+                 VIEW_TYPE_TEXT2 = 32,
+-                VIEW_TYPE_LINKED_COMMUNITY = 33
++                VIEW_TYPE_LINKED_COMMUNITY = 33,
++                VIEW_TYPE_NOW_PLAYING = 34
+                         ;
+ 
+         private Context mContext;
+@@ -13257,6 +13270,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+             View view;
+             switch (viewType) {
++                case VIEW_TYPE_NOW_PLAYING: {
++                    view = new xie.fa.gram.ui.lastfm.NowPlayingCardView(mContext);
++                    view.setTag(RecyclerListView.TAG_NOT_SECTION);
++                    break;
++                }
+                 case VIEW_TYPE_HEADER: {
+                     view = new HeaderCell(mContext, 18, resourcesProvider);
+                     break;
+@@ -13779,6 +13797,17 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     detailCell.textView.setLoading(loadingSpan);
+                     detailCell.valueTextView.setLoading(loadingSpan);
+                     break;
++                case VIEW_TYPE_NOW_PLAYING: {
++                    TLRPC.User u = getMessagesController().getUser(userId);
++                    if (holder.itemView instanceof xie.fa.gram.ui.lastfm.NowPlayingCardView) {
++                        ((xie.fa.gram.ui.lastfm.NowPlayingCardView) holder.itemView).bind(
++                            currentAccount,
++                            inu_lastFmUsername != null ? inu_lastFmUsername : "",
++                            UserObject.isUserSelf(u)
++                        );
++                    }
++                    break;
++                }
+                 case VIEW_TYPE_ABOUT_LINK:
+                     AboutLinkCell aboutLinkCell = (AboutLinkCell) holder.itemView;
+                     if (position == userInfoRow) {
+@@ -14440,7 +14469,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             int type = holder.getItemViewType();
+             return type != VIEW_TYPE_HEADER && type != VIEW_TYPE_DIVIDER && type != VIEW_TYPE_SHADOW &&
+                     type != VIEW_TYPE_EMPTY && type != VIEW_TYPE_EMPTY2 && type != VIEW_TYPE_HEADER_EMPTY && type != VIEW_TYPE_BOTTOM_PADDING && type != VIEW_TYPE_SHARED_MEDIA &&
+-                    type != 9 && type != 10 && type != VIEW_TYPE_BOT_APP && type != VIEW_TYPE_TEXT2; // These are legacy ones, left for compatibility
++                    type != 9 && type != 10 && type != VIEW_TYPE_BOT_APP && type != VIEW_TYPE_TEXT2 && type != VIEW_TYPE_NOW_PLAYING; // These are legacy ones, left for compatibility
+         }
+ 
+         @Override
+@@ -14450,6 +14479,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         @Override
+         public int getItemViewType(int position) {
++            if (position == inu_nowPlayingRow) {
++                return VIEW_TYPE_NOW_PLAYING;
++            }
+             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
+                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
+                 return VIEW_TYPE_HEADER;
+@@ -15914,6 +15946,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             put(++pointer, bizLocationRow, sparseIntArray);
+             put(++pointer, birthdayRow, sparseIntArray);
+             put(++pointer, inu_idRow, sparseIntArray);
++            put(++pointer, inu_nowPlayingRow, sparseIntArray);
+             put(++pointer, channelRow, sparseIntArray);
+             put(++pointer, botStarsBalanceRow, sparseIntArray);
+             put(++pointer, botTonBalanceRow, sparseIntArray);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+@@ -892,9 +892,12 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+                 break;
+             }
+ 
+-            case 99:
+-                presentFragment(new xie.fa.gram.ui.settings.InuSettingsActivity());
++            case 99: {
++                xie.fa.gram.ui.settings.InuSettingsActivity fragment = new xie.fa.gram.ui.settings.InuSettingsActivity();
++                fragment.setCurrentAccount(currentAccount);
++                presentFragment(fragment);
+                 break;
++            }
+         }
+     }
+ 

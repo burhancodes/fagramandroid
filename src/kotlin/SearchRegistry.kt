@@ -9,6 +9,7 @@ import xie.fa.gram.ui.settings.BehaviorSettingsActivity
 import xie.fa.gram.ui.settings.ChatsSettingsActivity
 import xie.fa.gram.ui.settings.DialogsSettingsActivity
 import xie.fa.gram.ui.settings.InuSettingsActivity
+import xie.fa.gram.ui.settings.LastFmSettingsActivity
 import xie.fa.gram.ui.settings.MessagesSettingsActivity
 import xie.fa.gram.ui.settings.PrivacySecurityActivity
 import xie.fa.gram.ui.settings.SettingsPageActivity
@@ -46,6 +47,7 @@ object SearchRegistry {
             MessagesSettingsActivity.PAGE,
             DialogsSettingsActivity.PAGE,
             UserProfileSettingsActivity.PAGE,
+            LastFmSettingsActivity.PAGE,
             AnnoyancesSettingsActivity.PAGE,
             BehaviorSettingsActivity.PAGE,
             TranslatorSettingsActivity.PAGE,
@@ -95,7 +97,7 @@ object SearchRegistry {
                     pageTitle,
                     LocaleController.getString(R.string.InuSettings),
                     page.iconRes,
-                ) { f.presentFragment(page.factory()) }.withLink("tg://settings/inu/fa/${page.slug}")
+                ) { f.presentFragment(page.factory().apply { setCurrentAccount(f.currentAccount) }) }.withLink("tg://settings/inu/fa/${page.slug}")
             )
             for (entry in page.entries) {
                 val title = LocaleController.getString(entry.titleRes)
@@ -106,7 +108,7 @@ object SearchRegistry {
                         parent,
                         page.iconRes,
                     ) {
-                        f.presentFragment(page.factory().withHighlight(entry.itemId))
+                        f.presentFragment(page.factory().apply { setCurrentAccount(f.currentAccount) }.withHighlight(entry.itemId))
                     }.withLink("tg://settings/inu/fa/${entry.slug}")
                 )
             }
