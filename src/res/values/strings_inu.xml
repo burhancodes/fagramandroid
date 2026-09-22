@@ -764,4 +764,20 @@
 
     <string name="InuAvatarOnlineStatus">Online status indicator</string>
     <string name="InuAvatarOnlineStatusInfo">Show a colored dot next to user avatars indicating online, recently active, or offline.</string>
+
+    <!-- Last.fm -->
+    <string name="InuLastFm">Last.fm</string>
+    <string name="InuLastFmUsername">Username</string>
+    <string name="InuLastFmUsernameInfo">Your Last.fm account name</string>
+    <string name="InuLastFmShowOnProfile">Show on my profile</string>
+    <string name="InuLastFmShowOnProfileInfo">Syncs #np:username to your bio so others can see what you\'re listening to</string>
+    <string name="InuLastFmUseOwnApiKey">Use personal API key</string>
+    <string name="InuLastFmUseOwnApiKeyInfo">Use your own Last.fm API key instead of the shared key for your profile</string>
+    <string name="InuLastFmPersonalApiKey">API key</string>
+    <string name="InuLastFmPersonalApiKeyInfo">Your Last.fm API key</string>
+    <string name="InuLastFmNowPlaying">Now Playing</string>
+    <string name="InuLastFmScrobblingVia">Scrobbling via Last.fm</string>
+    <string name="InuLastFmScrobbling">Scrobbling</string>
+    <string name="InuLastFmUnknownTrack">Unknown Track</string>
+    <string name="InuLastFmUnknownArtist">Unknown Artist</string>
 </resources>

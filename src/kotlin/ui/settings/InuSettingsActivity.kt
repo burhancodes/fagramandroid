@@ -50,6 +50,13 @@ class InuSettingsActivity : SettingsPageActivity() {
         )
         items.add(
             UItem.asButton(
+                BUTTON_LASTFM,
+                R.drawable.files_music,
+                LocaleController.getString(R.string.InuLastFm)
+            )
+        )
+        items.add(
+            UItem.asButton(
                 BUTTON_ANNOYANCES,
                 R.drawable.menu_hide_gift,
                 LocaleController.getString(R.string.InuAnnoyances)
@@ -105,6 +112,7 @@ class InuSettingsActivity : SettingsPageActivity() {
             BUTTON_MESSAGES -> presentFragment(MessagesSettingsActivity())
             BUTTON_DIALOGS -> presentFragment(DialogsSettingsActivity())
             BUTTON_USER_PROFILE -> presentFragment(UserProfileSettingsActivity())
+            BUTTON_LASTFM -> presentFragment(LastFmSettingsActivity())
             BUTTON_ANNOYANCES -> presentFragment(AnnoyancesSettingsActivity())
             BUTTON_BEHAVIOR -> presentFragment(BehaviorSettingsActivity())
             BUTTON_TRANSLATOR -> presentFragment(TranslatorSettingsActivity())
@@ -120,6 +128,7 @@ class InuSettingsActivity : SettingsPageActivity() {
         private val BUTTON_MESSAGES = InuUtils.generateId()
         private val BUTTON_DIALOGS = InuUtils.generateId()
         private val BUTTON_USER_PROFILE = InuUtils.generateId()
+        private val BUTTON_LASTFM = InuUtils.generateId()
         private val BUTTON_ANNOYANCES = InuUtils.generateId()
         private val BUTTON_BEHAVIOR = InuUtils.generateId()
         private val BUTTON_TRANSLATOR = InuUtils.generateId()
