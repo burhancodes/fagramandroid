@@ -116,6 +116,7 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
 
     init {
         isClickable = true
+        setWillNotDraw(false)
         imageReceiver.setRoundRadius(0)
         imageReceiver.setDelegate(object : ImageReceiver.ImageReceiverDelegate {
             override fun didSetImage(receiver: ImageReceiver, set: Boolean, thumb: Boolean, memCache: Boolean) {
@@ -223,7 +224,7 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
     }
 
     private fun updatePaths(w: Int, h: Int) {
-        val marginH = AndroidUtilities.dp(16f)
+        val marginH = AndroidUtilities.dp(12f)
         val marginV = AndroidUtilities.dp(6f)
         cardRect.set(marginH.toFloat(), marginV.toFloat(), (w - marginH).toFloat(), (h - marginV).toFloat())
 
