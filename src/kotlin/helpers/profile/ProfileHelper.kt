@@ -493,4 +493,23 @@ object ProfileHelper {
         fragment.presentFragment(if (openAsChat) ChatActivity(args) else ProfileActivity(args))
         return true
     }
+
+    private val BIO_TAG_REGEX = Regex("""(?:^|\s)#np:([a-zA-Z0-9_\-]+)""")
+
+    @JvmStatic
+    fun resolveLastFmUsername(about: String?, isSelf: Boolean): String? {
+        if (!about.isNullOrEmpty()) {
+            val match = BIO_TAG_REGEX.find(about)
+            if (match != null) {
+                return match.groupValues[1]
+            }
+        }
+        if (isSelf && xie.fa.gram.helpers.lastfm.LastFmStorage.showOnProfile) {
+            val stored = xie.fa.gram.helpers.lastfm.LastFmStorage.username.trim()
+            if (stored.isNotEmpty()) {
+                return stored
+            }
+        }
+        return null
+    }
 }
