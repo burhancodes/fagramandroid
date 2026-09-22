@@ -5,8 +5,8 @@ Subject: Add Last.fm Now Playing profile card and settings
 
 ---
  TMessagesProj/build.gradle                    |  5 +++
- .../java/org/telegram/ui/ProfileActivity.java | 35 +++++++++++++++++--
- 2 files changed, 38 insertions(+), 2 deletions(-)
+ .../java/org/telegram/ui/ProfileActivity.java | 44 ++++++++++++++++++-
+ 2 files changed, 47 insertions(+), 2 deletions(-)
 
 diff --git a/TMessagesProj/build.gradle b/TMessagesProj/build.gradle
 index 0000000..0000000 100644
@@ -85,25 +85,34 @@ index 0000000..0000000 100644
                          ;
  
          private Context mContext;
-@@ -13257,6 +13270,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -13257,6 +13270,15 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
          public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
              View view;
              switch (viewType) {
 +                case VIEW_TYPE_NOW_PLAYING: {
-+                    view = new xie.fa.gram.ui.lastfm.NowPlayingCardView(mContext);
++                    FrameLayout container = new FrameLayout(mContext);
++                    container.setClipToOutline(true);
++                    container.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider));
++                    xie.fa.gram.ui.lastfm.NowPlayingCardView card = new xie.fa.gram.ui.lastfm.NowPlayingCardView(mContext);
++                    container.addView(card, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
++                    view = container;
 +                    break;
 +                }
                  case VIEW_TYPE_HEADER: {
                      view = new HeaderCell(mContext, 18, resourcesProvider);
                      break;
-@@ -13779,6 +13796,16 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -13779,6 +13801,20 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                      detailCell.textView.setLoading(loadingSpan);
                      detailCell.valueTextView.setLoading(loadingSpan);
                      break;
 +                case VIEW_TYPE_NOW_PLAYING: {
-+                    if (holder.itemView instanceof xie.fa.gram.ui.lastfm.NowPlayingCardView) {
-+                        TLRPC.User u = getMessagesController().getUser(userId);
-+                        ((xie.fa.gram.ui.lastfm.NowPlayingCardView) holder.itemView).bind(
++                    TLRPC.User u = getMessagesController().getUser(userId);
++                    View cardItem = holder.itemView;
++                    if (cardItem instanceof FrameLayout && ((FrameLayout) cardItem).getChildCount() > 0) {
++                        cardItem = ((FrameLayout) cardItem).getChildAt(0);
++                    }
++                    if (cardItem instanceof xie.fa.gram.ui.lastfm.NowPlayingCardView) {
++                        ((xie.fa.gram.ui.lastfm.NowPlayingCardView) cardItem).bind(
 +                            inu_lastFmUsername != null ? inu_lastFmUsername : "",
 +                            UserObject.isUserSelf(u)
 +                        );
@@ -113,7 +122,7 @@ index 0000000..0000000 100644
                  case VIEW_TYPE_ABOUT_LINK:
                      AboutLinkCell aboutLinkCell = (AboutLinkCell) holder.itemView;
                      if (position == userInfoRow) {
-@@ -14440,7 +14467,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -14440,7 +14476,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              int type = holder.getItemViewType();
              return type != VIEW_TYPE_HEADER && type != VIEW_TYPE_DIVIDER && type != VIEW_TYPE_SHADOW &&
                      type != VIEW_TYPE_EMPTY && type != VIEW_TYPE_EMPTY2 && type != VIEW_TYPE_HEADER_EMPTY && type != VIEW_TYPE_BOTTOM_PADDING && type != VIEW_TYPE_SHARED_MEDIA &&
@@ -122,7 +131,7 @@ index 0000000..0000000 100644
          }
  
          @Override
-@@ -14450,6 +14477,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -14450,6 +14486,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
  
          @Override
          public int getItemViewType(int position) {
@@ -132,7 +141,7 @@ index 0000000..0000000 100644
              if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                      position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                  return VIEW_TYPE_HEADER;
-@@ -15914,6 +15944,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15914,6 +15953,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              put(++pointer, bizLocationRow, sparseIntArray);
              put(++pointer, birthdayRow, sparseIntArray);
              put(++pointer, inu_idRow, sparseIntArray);

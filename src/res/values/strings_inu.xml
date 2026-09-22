@@ -776,7 +776,6 @@
     <string name="InuLastFmPersonalApiKey">API key</string>
     <string name="InuLastFmPersonalApiKeyInfo">Your Last.fm API key</string>
     <string name="InuLastFmNowPlaying">Now Playing</string>
-    <string name="InuLastFmScrobblingVia">Scrobbling via Last.fm</string>
     <string name="InuLastFmScrobbling">Scrobbling</string>
     <string name="InuLastFmUnknownTrack">Unknown Track</string>
     <string name="InuLastFmUnknownArtist">Unknown Artist</string>

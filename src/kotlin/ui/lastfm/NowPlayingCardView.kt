@@ -348,7 +348,7 @@ class NowPlayingCardView(context: Context) : View(context) {
         val statusText = if (isNowPlaying) {
             LocaleController.getString(R.string.InuLastFmNowPlaying)
         } else {
-            LocaleController.getString(R.string.InuLastFmScrobblingVia)
+            LocaleController.getString(R.string.InuLastFmScrobbling)
         }
 
         val titleSize = AndroidUtilities.dp(15f).toFloat()
