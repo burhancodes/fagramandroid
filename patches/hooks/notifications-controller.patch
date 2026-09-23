@@ -4,8 +4,8 @@ Date: Mon, 25 May 2026 19:59:57 +0400
 Subject: hooks inside NotificationsController
 
 ---
- .../org/telegram/messenger/NotificationsController.java  | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ .../telegram/messenger/NotificationsController.java | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java b/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java
 index 0000000..0000000 100644
@@ -46,7 +46,16 @@ index 0000000..0000000 100644
                      .setAutoCancel(true)
                      .setNumber(total_unread_count)
                      .setContentIntent(contentIntent)
-@@ -5583,7 +5584,7 @@ public class NotificationsController extends BaseController implements Notificat
+@@ -4589,7 +4590,7 @@ public class NotificationsController extends BaseController implements Notificat
+                     .setGroupSummary(true)
+                     .setShowWhen(true)
+                     .setWhen(((long) lastMessageObject.messageOwner.date) * 1000)
+-                    .setColor(0xff11acfa);
++                    .setColor(NotificationsHelper.notificationColor());
+ 
+             long[] vibrationPattern = null;
+             Uri sound = null;
+@@ -5583,11 +5584,11 @@ public class NotificationsController extends BaseController implements Notificat
  
              NotificationCompat.Builder builder = new NotificationCompat.Builder(ApplicationLoader.applicationContext)
                      .setContentTitle(name)
@@ -55,3 +64,8 @@ index 0000000..0000000 100644
                      .setContentText(text.toString())
                      .setAutoCancel(true)
                      .setNumber(dialogKey.story ? storyPushMessages.size() : messageObjects.size())
+-                    .setColor(0xff11acfa)
++                    .setColor(NotificationsHelper.notificationColor())
+                     .setGroupSummary(false)
+                     .setWhen(date)
+                     .setShowWhen(true)
