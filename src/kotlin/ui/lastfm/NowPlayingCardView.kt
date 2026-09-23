@@ -33,6 +33,7 @@ import xie.fa.gram.helpers.lastfm.LastFmApiClient
 import xie.fa.gram.helpers.lastfm.LastFmPalette
 import xie.fa.gram.helpers.lastfm.LastFmPaletteHelper
 import xie.fa.gram.helpers.lastfm.LastFmTrack
+import xie.fa.gram.helpers.lastfm.LastFmTrackCache
 import xie.fa.gram.helpers.theme.M3SectionsHelper
 
 @SuppressLint("ViewConstructor")
@@ -132,6 +133,9 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
                         palette = p
                         updateCardShader()
                         invalidate()
+                        if (currentUsername.isNotEmpty()) {
+                            LastFmTrackCache.putPalette(currentUsername, p)
+                        }
                     }
                 }
                 invalidate()
@@ -142,21 +146,68 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
         })
     }
 
+    private fun applyTrack(track: LastFmTrack, cachedPalette: LastFmPalette? = null) {
+        val oldTrack = currentTrack
+        currentTrack = track
+
+        if (cachedPalette != null) {
+            palette = cachedPalette
+            updateCardShader()
+        }
+
+        val oldCover = oldTrack?.coverUrl
+        val newCover = track.coverUrl
+        if (!TextUtils.equals(oldCover, newCover) || (coverBitmap == null && !newCover.isNullOrEmpty())) {
+            coverBitmap = null
+            coverShader = null
+            if (!newCover.isNullOrEmpty()) {
+                imageReceiver.setImage(ImageLocation.getForPath(newCover), null, null as Drawable?, null as String?, null, 0)
+            } else {
+                imageReceiver.setImageBitmap(null as Bitmap?)
+                if (cachedPalette == null) {
+                    palette = LastFmPaletteHelper.DEFAULT_PALETTE
+                    updateCardShader()
+                }
+            }
+        }
+        invalidate()
+    }
+
+    private fun applyPlaceholder() {
+        currentTrack = null
+        coverBitmap = null
+        coverShader = null
+        palette = LastFmPaletteHelper.DEFAULT_PALETTE
+        imageReceiver.setImageBitmap(null as Bitmap?)
+        updateCardShader()
+        invalidate()
+    }
+
+    private fun isTrackDifferent(current: LastFmTrack?, fresh: LastFmTrack?): Boolean {
+        if (current == null && fresh == null) return false
+        if (current == null || fresh == null) return true
+        return current.title != fresh.title ||
+            current.artist != fresh.artist ||
+            current.album != fresh.album ||
+            current.isNowPlaying != fresh.isNowPlaying ||
+            current.coverUrl != fresh.coverUrl ||
+            current.trackUrl != fresh.trackUrl
+    }
+
     fun bind(username: String, isSelf: Boolean) {
         val trimmed = username.trim()
         val usernameChanged = !TextUtils.equals(currentUsername, trimmed)
         currentUsername = trimmed
         isSelfProfile = isSelf
 
-        if (usernameChanged) {
-            currentTrack = null
-            coverBitmap = null
-            coverShader = null
-            palette = LastFmPaletteHelper.DEFAULT_PALETTE
-            imageReceiver.setImageBitmap(null as Bitmap?)
-            updateCardShader()
-            invalidate()
-            if (pollingActive) {
+        if (usernameChanged || currentTrack == null) {
+            val cached = if (trimmed.isNotEmpty()) LastFmTrackCache.get(trimmed) else null
+            if (cached != null) {
+                applyTrack(cached.track, cached.palette)
+            } else if (usernameChanged) {
+                applyPlaceholder()
+            }
+            if (pollingActive && trimmed.isNotEmpty()) {
                 AndroidUtilities.cancelRunOnUIThread(pollRunnable)
                 fetchTrack(true)
                 AndroidUtilities.runOnUIThread(pollRunnable, POLL_INTERVAL_MS)
@@ -171,23 +222,19 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
             override fun onResult(track: LastFmTrack?) {
                 AndroidUtilities.runOnUIThread {
                     if (!TextUtils.equals(currentUsername, userToFetch)) return@runOnUIThread
-                    val oldTrack = currentTrack
-                    currentTrack = track
 
-                    val oldCover = oldTrack?.coverUrl
-                    val newCover = track?.coverUrl
-                    if (!TextUtils.equals(oldCover, newCover)) {
-                        coverBitmap = null
-                        coverShader = null
-                        if (!newCover.isNullOrEmpty()) {
-                            imageReceiver.setImage(ImageLocation.getForPath(newCover), null, null as Drawable?, null as String?, null, 0)
-                        } else {
-                            imageReceiver.setImageBitmap(null as Bitmap?)
-                            palette = LastFmPaletteHelper.DEFAULT_PALETTE
-                            updateCardShader()
+                    if (track != null) {
+                        // On successful fetch (new or unchanged data), update the persisted cache entry's fetchedAt regardless
+                        LastFmTrackCache.put(userToFetch, track, System.currentTimeMillis(), palette)
+
+                        // Only replace the rendered UI when the fetch actually returns data that differs
+                        if (isTrackDifferent(currentTrack, track)) {
+                            applyTrack(track, palette)
                         }
+                    } else {
+                        // If background fetch fails while a cached entry exists, keep showing the cached entry as-is.
+                        // Silent failure, no fallback to placeholder if already populated.
                     }
-                    invalidate()
                 }
             }
         })
