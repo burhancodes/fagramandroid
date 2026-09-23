@@ -61,7 +61,7 @@ jobs:
           dotnet: true
           haskell: true
           large-packages: false
-          swap-storage: true
+          swap-storage: false
 
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -117,7 +117,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
         with:
-          gradle-home-cache-cleanup: true
+          cache-cleanup: always
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Set up Android SDK
