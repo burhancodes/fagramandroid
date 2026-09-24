@@ -186,28 +186,22 @@ object LocalFolderHelper {
             recipe = DEFAULT_RECIPE
         }
 
-        val result = ArrayList<FolderState>()
-        val missing = FolderType.values().toMutableList()
-
+        val enabledTypes = HashSet<FolderType>()
         for (rawPart in recipe.split(",")) {
             val part = rawPart.trim()
-            if (part.isEmpty()) {
+            if (part.isEmpty() || part.startsWith("!")) {
                 continue
             }
-            val enabled = !part.startsWith("!")
-            val name = if (enabled) part else part.substring(1)
-            val type = try {
-                FolderType.valueOf(name)
+            try {
+                enabledTypes.add(FolderType.valueOf(part))
             } catch (ignore: Exception) {
                 continue
             }
-            if (!missing.remove(type)) {
-                continue
-            }
-            result.add(FolderState(type, enabled))
         }
-        for (type in missing) {
-            result.add(FolderState(type, false))
+
+        val result = ArrayList<FolderState>()
+        for (type in FolderType.values()) {
+            result.add(FolderState(type, enabledTypes.contains(type)))
         }
         return result
     }
@@ -368,22 +362,103 @@ object LocalFolderHelper {
                 break
             }
         }
-        val ordered = ArrayList<FolderState>()
-        for (filter in filters) {
-            if (!filter.local) {
-                continue
+    }
+
+    @JvmStatic
+    fun applyRemoteFiltersOrder(
+        account: Int,
+        dialogFilters: ArrayList<MessagesController.DialogFilter>,
+        filtersOrder: ArrayList<Integer>
+    ): Boolean {
+        if (dialogFilters.isEmpty()) {
+            return false
+        }
+
+        val remoteServerIds = ArrayList<Int>()
+        for (i in 0 until filtersOrder.size) {
+            val id = filtersOrder[i].toInt()
+            if (id != 0 && !isLocalFilterId(id)) {
+                remoteServerIds.add(id)
             }
-            val type = FolderType.of(filter.type) ?: continue
-            ordered.add(FolderState(type, true))
         }
-        if (ordered.isEmpty()) {
-            return
-        }
-        for (state in getAllFolders(account)) {
-            if (ordered.none { it.type == state.type }) {
-                ordered.add(FolderState(state.type, false))
+
+        val currentServerIds = ArrayList<Int>()
+        for (i in 0 until dialogFilters.size) {
+            val f = dialogFilters[i]
+            if (!f.local && !f.isDefault) {
+                currentServerIds.add(f.id)
             }
         }
-        saveFolders(account, ordered)
+
+        val canMoveAllChats = canMoveAllChats(account)
+        val defaultIndex = dialogFilters.indexOfFirst { it.isDefault }
+        val defaultNeedsMove = !canMoveAllChats && defaultIndex > 0
+
+        if (currentServerIds == remoteServerIds && !defaultNeedsMove) {
+            return false
+        }
+
+        val filterById = HashMap<Int, MessagesController.DialogFilter>()
+        for (f in dialogFilters) {
+            filterById[f.id] = f
+        }
+
+        val seenIds = HashSet<Int>()
+        val serverFiltersToPlace = ArrayList<MessagesController.DialogFilter>()
+        for (id in remoteServerIds) {
+            val f = filterById[id]
+            if (f != null && seenIds.add(id)) {
+                serverFiltersToPlace.add(f)
+            }
+        }
+
+        val placedIds = HashSet<Int>()
+        val newList = ArrayList<MessagesController.DialogFilter>()
+        var serverIdx = 0
+
+        for (i in 0 until dialogFilters.size) {
+            val f = dialogFilters[i]
+            if (f.local || f.isDefault) {
+                if (placedIds.add(f.id)) {
+                    newList.add(f)
+                }
+            } else {
+                if (serverIdx < serverFiltersToPlace.size) {
+                    val nextServerFilter = serverFiltersToPlace[serverIdx++]
+                    if (placedIds.add(nextServerFilter.id)) {
+                        newList.add(nextServerFilter)
+                    }
+                }
+            }
+        }
+
+        while (serverIdx < serverFiltersToPlace.size) {
+            val nextServerFilter = serverFiltersToPlace[serverIdx++]
+            if (placedIds.add(nextServerFilter.id)) {
+                newList.add(nextServerFilter)
+            }
+        }
+
+        for (f in dialogFilters) {
+            if (placedIds.add(f.id)) {
+                newList.add(f)
+            }
+        }
+
+        if (!canMoveAllChats) {
+            val dIdx = newList.indexOfFirst { it.isDefault }
+            if (dIdx > 0) {
+                val def = newList.removeAt(dIdx)
+                newList.add(0, def)
+            }
+        }
+
+        dialogFilters.clear()
+        dialogFilters.addAll(newList)
+        for (i in 0 until dialogFilters.size) {
+            dialogFilters[i].order = i
+        }
+
+        return true
     }
 }
