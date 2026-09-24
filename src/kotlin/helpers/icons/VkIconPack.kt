@@ -8,7 +8,7 @@ import org.telegram.messenger.R
  * Icons: https://github.com/VKCOM/icons (MIT)
  */
 object VkIconPack : IconPack() {
-    override fun buildIcons() = SparseIntArray(46).apply {
+    override fun buildIcons() = SparseIntArray(65).apply {
         // Settings
         put(R.drawable.msg_settings, R.drawable.vkui_settings_outline_28)
         put(R.drawable.msg2_language, R.drawable.vkui_globe_outline_28)
@@ -62,5 +62,29 @@ object VkIconPack : IconPack() {
         put(R.drawable.msg_fave, R.drawable.vkui_favorite_outline_28)
         put(R.drawable.msg_shareout, R.drawable.vkui_share_external_outline_28)
         put(R.drawable.msg_download, R.drawable.vkui_download_outline_28)
+
+        // Filters / Folder tabs
+        put(R.drawable.filter_all, R.drawable.vkui_messages_outline_28)
+        put(R.drawable.filter_custom, R.drawable.vkui_cube_box_outline_28)
+        put(R.drawable.filter_private, R.drawable.vkui_user_outline_28)
+        put(R.drawable.filter_group, R.drawable.vkui_messages_outline_28)
+        put(R.drawable.filter_channels, R.drawable.vkui_services_outline_28)
+        put(R.drawable.filter_bots, R.drawable.vkui_keyboard_bots_outline_28)
+        put(R.drawable.filter_unread, R.drawable.vkui_notifications_28)
+        put(R.drawable.filter_unmuted, R.drawable.vkui_notifications_28)
+        put(R.drawable.filter_favorite, R.drawable.vkui_favorite_outline_28)
+        put(R.drawable.filter_love, R.drawable.vkui_favorite_outline_28)
+        put(R.drawable.filter_setup, R.drawable.vkui_settings_outline_28)
+        put(R.drawable.filter_book, R.drawable.vkui_bookmark_outline_28)
+        put(R.drawable.filter_palette, R.drawable.vkui_palette_outline_28)
+        put(R.drawable.filter_travel, R.drawable.vkui_globe_outline_28)
+        put(R.drawable.filter_airplane, R.drawable.vkui_globe_outline_28)
+        put(R.drawable.filter_money, R.drawable.vkui_payment_card_outline_28)
+        put(R.drawable.filter_trade, R.drawable.vkui_payment_card_outline_28)
+        put(R.drawable.filter_work, R.drawable.vkui_laptop_outline_28)
+        put(R.drawable.filter_study, R.drawable.vkui_bookmark_outline_28)
+        put(R.drawable.filter_crown, R.drawable.vkui_favorite_outline_28)
+        put(R.drawable.filter_home, R.drawable.vkui_services_outline_28)
+        put(R.drawable.filter_note, R.drawable.vkui_bookmark_outline_28)
     }
 }

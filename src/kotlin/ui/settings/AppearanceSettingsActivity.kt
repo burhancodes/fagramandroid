@@ -11,7 +11,9 @@ import xie.fa.gram.helpers.InuUtils
 import xie.fa.gram.helpers.theme.MonetHelper
 import xie.fa.gram.ui.settings.fonts.FontsSettingsActivity
 import org.telegram.messenger.LocaleController
+import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
+import org.telegram.messenger.UserConfig
 import org.telegram.ui.Cells.NotificationsCheckCell
 import org.telegram.ui.Cells.TextCheckCell
 import org.telegram.ui.Components.UItem
@@ -235,6 +237,10 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
             ) { which ->
                 InuConfig.ICON_REPLACEMENT.value = which
                 showRestartBulletin()
+                for (i in 0 until UserConfig.MAX_ACCOUNT_COUNT) {
+                    if (!UserConfig.getInstance(i).isClientActivated) continue
+                    NotificationCenter.getInstance(i).postNotificationName(NotificationCenter.dialogFiltersUpdated)
+                }
             }
 
             BUTTON_NOTIFICATION_ICON -> RadioItemOptions.show(

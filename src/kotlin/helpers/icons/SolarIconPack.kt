@@ -536,7 +536,7 @@ object SolarIconPack : IconPack() {
         put(R.drawable.report, R.drawable.report_solar)
         put(R.drawable.verified_area, R.drawable.verified_area_solar)
         put(R.drawable.verified_check, R.drawable.verified_check_solar)
-        put(R.drawable.filter_channels, R.drawable.filter_channels_solar)
-        put(R.drawable.filter_group, R.drawable.filter_group_solar)
+        put(R.drawable.filter_channels, R.drawable.filter_channel_solar)
+        put(R.drawable.filter_group, R.drawable.filter_groups_solar)
     }
 }

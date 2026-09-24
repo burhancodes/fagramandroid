@@ -57,7 +57,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 - bottom tabs: material design 3 style with a pill indicator behind the selected icon
 - double-tap account tab to switch to next account
 - long-tap "chats" tab to pick folder from menu
-- folder display modes: titles / titles+icons / icons-only
+- folder display modes: titles / titles+icons / icons-only (supports custom icon packs: Solar & VKUI)
 - built-in local folders: device-only chat folders that don't count against Telegram's folder limits (Private Chats, Groups, Supergroups, Basic Groups, Channels, Bots, Admin, Unread, Unmuted) - *ported from [NagramXF](https://github.com/Keeperorowner/NagramXF)*
   - allow reordering "All Chats" tab to any slot without Telegram Premium when local folders are active
 - folder unread counter modes: hide / regular / exclude muted / 🐶 exclude muted non-dms

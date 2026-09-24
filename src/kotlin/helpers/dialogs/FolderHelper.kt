@@ -1,5 +1,6 @@
 package xie.fa.gram.helpers.dialogs
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
@@ -8,6 +9,7 @@ import android.util.Pair
 import androidx.core.content.edit
 import androidx.core.graphics.withSave
 import xie.fa.gram.InuConfig
+import xie.fa.gram.helpers.icons.IconHelper
 import xie.fa.gram.helpers.security.ParanoiaHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController.getString
@@ -19,6 +21,7 @@ import org.telegram.tgnet.TLRPC
 import org.telegram.ui.Components.FilterTabsView
 import org.telegram.ui.Stories.recorder.HintView2
 import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 object FolderHelper {
     private val folderIcons = mapOf(
@@ -37,6 +40,8 @@ object FolderHelper {
         "\uD83D\uDEEB" to R.drawable.filter_airplane,
         "\uD83D\uDC64" to R.drawable.filter_private,
         "\uD83D\uDC65" to R.drawable.filter_group,
+        "\u2734" to R.drawable.filter_group,
+        "\uD83C\uDDF4" to R.drawable.filter_group,
         "\uD83D\uDCAC" to R.drawable.filter_all,
         "\u2705" to R.drawable.filter_unread,
         "\uD83E\uDD16" to R.drawable.filter_bots,
@@ -54,11 +59,10 @@ object FolderHelper {
         "\uD83D\uDCCB" to R.drawable.filter_setup,
     )
 
+    const val TAB_ICON_SIZE = 24
     const val ICON_GAP = 4
 
-    private fun getIconSize(): Int {
-        return if (isIconsOnly()) 28 else 24
-    }
+    private fun getIconSize(): Int = TAB_ICON_SIZE
 
     @JvmStatic
     fun saveMeta(storage: MessagesStorage, filters: List<MessagesController.DialogFilter>) {
@@ -175,12 +179,27 @@ object FolderHelper {
     }
 
     @JvmStatic
-    fun getTabIcon(emoticon: String?): Int {
+    @JvmOverloads
+    fun getBaseTabIcon(emoticon: String?, isDefault: Boolean = false): Int {
+        if (isDefault) return R.drawable.filter_all
         if (emoticon != null) {
             val stripped = emoticon.replace("\uFE0F", "")
             return folderIcons[stripped] ?: R.drawable.filter_custom
         }
         return R.drawable.filter_custom
+    }
+
+    @JvmStatic
+    @JvmOverloads
+    fun getTabIcon(emoticon: String?, isDefault: Boolean = false): Int {
+        val baseId = getBaseTabIcon(emoticon, isDefault)
+        return IconHelper.getMappedResId(baseId)
+    }
+
+    @JvmStatic
+    fun getTabDrawable(context: Context?, resId: Int): Drawable? {
+        if (!needIcons() || resId == 0) return null
+        return IconHelper.getDrawable(context, resId)?.mutate()
     }
 
     /** extra dp to add to titleWidth measurement when icon is shown alongside title */
@@ -229,11 +248,20 @@ object FolderHelper {
     ) {
         if (icon == null || !needIcons()) return
 
-        val iconPx = AndroidUtilities.dp(getIconSize().toFloat())
+        val targetSize = AndroidUtilities.dp(getIconSize().toFloat())
+        val srcW = icon.intrinsicWidth.takeIf { it > 0 } ?: targetSize
+        val srcH = icon.intrinsicHeight.takeIf { it > 0 } ?: targetSize
+        val scale = minOf(targetSize.toFloat() / srcW, targetSize.toFloat() / srcH)
+        val drawW = (srcW * scale).roundToInt().coerceAtLeast(1)
+        val drawH = (srcH * scale).roundToInt().coerceAtLeast(1)
+
+        val drawX = textX + (targetSize - drawW) / 2f
+        val drawY = (viewHeight - drawH) / 2f
+
         icon.colorFilter = colorFilter
-        icon.setBounds(0, 0, iconPx, iconPx)
+        icon.setBounds(0, 0, drawW, drawH)
         canvas.withSave {
-            translate(textX, (viewHeight - iconPx) / 2f)
+            translate(drawX, drawY)
             icon.draw(this)
         }
     }

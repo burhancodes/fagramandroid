@@ -7,14 +7,14 @@ Subject: feat: local folders
  .../messenger/DatabaseMigrationHelper.java    |   6 +
  .../messenger/MessagesController.java         | 104 ++++++++++++++++--
  .../telegram/messenger/MessagesStorage.java   |  94 ++++++++++++++--
- .../ui/Components/FilterTabsView.java         |  10 +-
+ .../ui/Components/FilterTabsView.java         |  24 ++--
  .../ui/Components/FolderBottomSheet.java      |   5 +
  .../Premium/LimitReachedBottomSheet.java      |   2 +-
  .../ui/Components/ViewPagerFixed.java         |   3 +
  .../java/org/telegram/ui/DialogsActivity.java |  10 +-
  .../org/telegram/ui/FilterCreateActivity.java |  16 +++
  .../org/telegram/ui/FiltersSetupActivity.java |  58 ++++++++--
- 10 files changed, 265 insertions(+), 43 deletions(-)
+ 10 files changed, 274 insertions(+), 48 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/DatabaseMigrationHelper.java b/TMessagesProj/src/main/java/org/telegram/messenger/DatabaseMigrationHelper.java
 index 0000000..0000000 100644
@@ -471,7 +471,70 @@ index 0000000..0000000 100644
  
  @SuppressLint("ViewConstructor")
  public class FilterTabsView extends FrameLayout {
-@@ -1744,6 +1745,9 @@ public class FilterTabsView extends FrameLayout {
+@@ -122,6 +123,7 @@ public class FilterTabsView extends FrameLayout {
+         public boolean isLocked;
+         public boolean noanimate;
+         public int inu_iconResId;
++        public int inu_baseIconResId;
+ 
+         public Tab(int i, CharSequence title, boolean noanimate) {
+             this.id = i;
+@@ -152,7 +154,7 @@ public class FilterTabsView extends FrameLayout {
+                 if (FolderHelper.isTitleOnly()) {
+                     counterResultWidth = countWidth + dp(-2);
+                 } else if (FolderHelper.isIconsOnly()) {
+-                    counterResultWidth = countWidth;
++                    counterResultWidth = countWidth + dp(4);
+                 } else {
+                     counterResultWidth = countWidth + dp(6);
+                 }
+@@ -248,7 +250,7 @@ public class FilterTabsView extends FrameLayout {
+             currentTab = tab;
+             currentPosition = position;
+             setContentDescription(tab.title);
+-            inu_iconDrawable = FolderHelper.needIcons() ? getContext().getResources().getDrawable(tab.inu_iconResId).mutate() : null;
++            inu_iconDrawable = FolderHelper.getTabDrawable(getContext(), tab.inu_baseIconResId != 0 ? tab.inu_baseIconResId : tab.inu_iconResId);
+             requestLayout();
+ 
+             if (currentNoanimate != (currentTab != null && currentTab.noanimate)) {
+@@ -396,7 +398,7 @@ public class FilterTabsView extends FrameLayout {
+             if (FolderHelper.isTitleOnly()) {
+                 tabWidth += (countWidth != 0 && !animateCounterRemove) ? countWidth + dp(-2 * (counterText != null ? 1.0f : editingStartAnimationProgress)) : 0;
+             } else if (FolderHelper.isIconsOnly()) {
+-                tabWidth += (countWidth != 0 && !animateCounterRemove) ? countWidth : 0;
++                tabWidth += (countWidth != 0 && !animateCounterRemove) ? countWidth + dp(4 * (counterText != null ? 1.0f : editingStartAnimationProgress)) : 0;
+             } else {
+                 tabWidth += (countWidth != 0 && !animateCounterRemove) ? countWidth + dp(6 * (counterText != null ? 1.0f : editingStartAnimationProgress)) : 0;
+             }
+@@ -484,7 +486,7 @@ public class FilterTabsView extends FrameLayout {
+                 if (animateTextChange) {
+                     titleWidth = animateFromTitleWidth * (1f - changeProgress) + currentTab.titleWidth * changeProgress;
+                 }
+-                int extra = dp(FolderHelper.isIconsOnly() ? 0 : 6);
++                int extra = dp(FolderHelper.isIconsOnly() ? 4 : 6);
+                 if (animateTextChange && titleAnimateOutLayout == null) {
+                     x = textX - titleXOffset + titleOffsetX + titleWidth + extra;
+                 } else {
+@@ -1308,7 +1310,8 @@ public class FilterTabsView extends FrameLayout {
+         Tab tab = new Tab(id, text(text, entities), noanimate);
+         tab.isDefault = isDefault;
+         tab.isLocked = isLocked;
+-        tab.inu_iconResId = FolderHelper.getTabIcon(emoticon);
++        tab.inu_baseIconResId = FolderHelper.getBaseTabIcon(emoticon, isDefault);
++        tab.inu_iconResId = FolderHelper.getTabIcon(emoticon, isDefault);
+         allTabsWidth += tab.getWidth(true) + dp(FolderHelper.getTabPadding());
+         tabs.add(tab);
+     }
+@@ -1328,6 +1331,8 @@ public class FilterTabsView extends FrameLayout {
+         Tab tab = new Tab(id, text, noanimate);
+         tab.isDefault = isDefault;
+         tab.isLocked = isLocked;
++        tab.inu_baseIconResId = FolderHelper.getBaseTabIcon(null, isDefault);
++        tab.inu_iconResId = FolderHelper.getTabIcon(null, isDefault);
+         allTabsWidth += tab.getWidth(true) + dp(FolderHelper.getTabPadding());
+         tabs.add(tab);
+     }
+@@ -1744,6 +1749,9 @@ public class FilterTabsView extends FrameLayout {
              ArrayList<MessagesController.DialogFilter> filters = MessagesController.getInstance(UserConfig.selectedAccount).getDialogFilters();
              for (int a = 0, N = filters.size(); a < N; a++) {
                  MessagesController.DialogFilter filter = filters.get(a);
@@ -481,7 +544,7 @@ index 0000000..0000000 100644
                  if (filter.isDefault()) {
                      req.order.add(0);
                  } else {
-@@ -1967,7 +1971,7 @@ public class FilterTabsView extends FrameLayout {
+@@ -1967,7 +1975,7 @@ public class FilterTabsView extends FrameLayout {
  
          @Override
          public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -490,7 +553,7 @@ index 0000000..0000000 100644
                  return makeMovementFlags(0, 0);
              }
              return makeMovementFlags(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, 0);
-@@ -1975,7 +1979,7 @@ public class FilterTabsView extends FrameLayout {
+@@ -1975,7 +1983,7 @@ public class FilterTabsView extends FrameLayout {
  
          @Override
          public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder source, @NonNull RecyclerView.ViewHolder target) {
@@ -499,7 +562,7 @@ index 0000000..0000000 100644
                  return false;
              }
              adapter.swapElements(source.getAdapterPosition(), target.getAdapterPosition());
-@@ -1983,7 +1987,7 @@ public class FilterTabsView extends FrameLayout {
+@@ -1983,7 +1991,7 @@ public class FilterTabsView extends FrameLayout {
          }
  
          private final Runnable resetDefaultPosition = () ->  {

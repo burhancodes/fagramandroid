@@ -37,13 +37,42 @@ class IconsResources(private val resources: Resources) : Resources(resources.ass
     override fun getDisplayMetrics(): DisplayMetrics = resources.displayMetrics
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    override fun getDrawable(id: Int): Drawable = resources.getDrawable(getConversion(id))
+    override fun getDrawable(id: Int): Drawable {
+        val mapped = getConversion(id)
+        return try {
+            resources.getDrawable(mapped)
+        } catch (e: NotFoundException) {
+            if (mapped != id) resources.getDrawable(id) else throw e
+        }
+    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    override fun getDrawable(id: Int, theme: Theme?): Drawable = resources.getDrawable(getConversion(id), theme)
+    override fun getDrawable(id: Int, theme: Theme?): Drawable {
+        val mapped = getConversion(id)
+        return try {
+            resources.getDrawable(mapped, theme)
+        } catch (e: NotFoundException) {
+            if (mapped != id) resources.getDrawable(id, theme) else throw e
+        }
+    }
 
-    override fun getDrawableForDensity(id: Int, density: Int): Drawable? = resources.getDrawableForDensity(getConversion(id), density)
-    override fun getDrawableForDensity(id: Int, density: Int, theme: Theme?): Drawable? = resources.getDrawableForDensity(getConversion(id), density, theme)
+    override fun getDrawableForDensity(id: Int, density: Int): Drawable? {
+        val mapped = getConversion(id)
+        return try {
+            resources.getDrawableForDensity(mapped, density)
+        } catch (e: NotFoundException) {
+            if (mapped != id) resources.getDrawableForDensity(id, density) else throw e
+        }
+    }
+
+    override fun getDrawableForDensity(id: Int, density: Int, theme: Theme?): Drawable? {
+        val mapped = getConversion(id)
+        return try {
+            resources.getDrawableForDensity(mapped, density, theme)
+        } catch (e: NotFoundException) {
+            if (mapped != id) resources.getDrawableForDensity(id, density, theme) else throw e
+        }
+    }
     override fun getFloat(id: Int): Float = resources.getFloat(id)
     override fun getFont(id: Int): Typeface = resources.getFont(id)
     override fun getFraction(id: Int, base: Int, pbase: Int): Float = resources.getFraction(id, base, pbase)
@@ -79,10 +108,6 @@ class IconsResources(private val resources: Resources) : Resources(resources.ass
     override fun updateConfiguration(config: Configuration?, metrics: DisplayMetrics?) = resources.updateConfiguration(config, metrics)
 
     private fun getConversion(icon: Int): Int {
-        return when (InuConfig.ICON_REPLACEMENT.value) {
-            InuConfig.IconReplacementItem.SOLAR -> SolarIconPack.map(icon)
-            InuConfig.IconReplacementItem.VKUI -> VkIconPack.map(icon)
-            else -> icon
-        }
+        return IconHelper.getMappedResId(icon)
     }
 }
