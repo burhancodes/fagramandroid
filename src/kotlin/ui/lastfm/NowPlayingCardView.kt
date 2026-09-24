@@ -32,7 +32,10 @@ import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.Utilities
 import org.telegram.messenger.browser.Browser
+import xie.fa.gram.helpers.lastfm.CoverCacheResult
 import xie.fa.gram.helpers.lastfm.LastFmApiClient
+import xie.fa.gram.helpers.lastfm.LastFmCoverCache
+import xie.fa.gram.helpers.lastfm.LastFmCoverFallbackResolver
 import xie.fa.gram.helpers.lastfm.LastFmPalette
 import xie.fa.gram.helpers.lastfm.LastFmPaletteHelper
 import xie.fa.gram.helpers.lastfm.LastFmTrack
@@ -185,8 +188,21 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
     }
 
     private fun applyTrack(track: LastFmTrack, cachedPalette: LastFmPalette? = null) {
+        var trackToApply = track
+        if (trackToApply.coverUrl.isNullOrEmpty() && trackToApply.artist.isNotEmpty() && trackToApply.title.isNotEmpty()) {
+            when (val cachedCover = LastFmCoverCache.get(trackToApply.artist, trackToApply.title)) {
+                is CoverCacheResult.Hit -> {
+                    trackToApply = trackToApply.copy(coverUrl = cachedCover.url)
+                }
+                is CoverCacheResult.Miss -> {
+                    resolveCoverFallback(trackToApply.artist, trackToApply.title)
+                }
+                CoverCacheResult.Negative -> {}
+            }
+        }
+
         val oldTrack = currentTrack
-        currentTrack = track
+        currentTrack = trackToApply
 
         if (cachedPalette != null) {
             palette = cachedPalette
@@ -194,7 +210,7 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
         }
 
         val oldCover = oldTrack?.coverUrl
-        val newCover = track.coverUrl
+        val newCover = trackToApply.coverUrl
         if (!TextUtils.equals(oldCover, newCover) || (coverBitmap == null && !newCover.isNullOrEmpty())) {
             coverBitmap = null
             coverShader = null
@@ -210,6 +226,40 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
         }
         updateRotationAnimation()
         invalidate()
+    }
+
+    private fun resolveCoverFallback(artist: String, title: String) {
+        val user = currentUsername
+        LastFmCoverFallbackResolver.resolve(artist, title) { resolvedUrl ->
+            if (!resolvedUrl.isNullOrEmpty()) {
+                AndroidUtilities.runOnUIThread {
+                    val cur = currentTrack
+                    if (cur != null &&
+                        cur.coverUrl.isNullOrEmpty() &&
+                        cur.artist == artist &&
+                        cur.title == title
+                    ) {
+                        val updated = cur.copy(coverUrl = resolvedUrl)
+                        currentTrack = updated
+                        coverBitmap = null
+                        coverShader = null
+                        imageReceiver.setImage(
+                            ImageLocation.getForPath(resolvedUrl),
+                            null,
+                            null as Drawable?,
+                            null as String?,
+                            null,
+                            0
+                        )
+                        updateRotationAnimation()
+                        invalidate()
+                        if (user.isNotEmpty()) {
+                            LastFmTrackCache.put(user, updated, System.currentTimeMillis(), palette)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun applyPlaceholder() {
@@ -270,12 +320,27 @@ class NowPlayingCardView(context: Context) : FrameLayout(context) {
                     if (!TextUtils.equals(currentUsername, userToFetch)) return@runOnUIThread
 
                     if (track != null) {
+                        var resolvedTrack = track
+                        if (resolvedTrack.coverUrl.isNullOrEmpty() && resolvedTrack.artist.isNotEmpty() && resolvedTrack.title.isNotEmpty()) {
+                            val cur = currentTrack
+                            if (cur != null && cur.artist == resolvedTrack.artist && cur.title == resolvedTrack.title && !cur.coverUrl.isNullOrEmpty()) {
+                                resolvedTrack = resolvedTrack.copy(coverUrl = cur.coverUrl)
+                            } else {
+                                when (val cachedCover = LastFmCoverCache.get(resolvedTrack.artist, resolvedTrack.title)) {
+                                    is CoverCacheResult.Hit -> {
+                                        resolvedTrack = resolvedTrack.copy(coverUrl = cachedCover.url)
+                                    }
+                                    else -> {}
+                                }
+                            }
+                        }
+
                         // On successful fetch (new or unchanged data), update the persisted cache entry's fetchedAt regardless
-                        LastFmTrackCache.put(userToFetch, track, System.currentTimeMillis(), palette)
+                        LastFmTrackCache.put(userToFetch, resolvedTrack, System.currentTimeMillis(), palette)
 
                         // Only replace the rendered UI when the fetch actually returns data that differs
-                        if (isTrackDifferent(currentTrack, track)) {
-                            applyTrack(track, palette)
+                        if (isTrackDifferent(currentTrack, resolvedTrack)) {
+                            applyTrack(resolvedTrack, palette)
                         }
                     } else {
                         // If background fetch fails while a cached entry exists, keep showing the cached entry as-is.
