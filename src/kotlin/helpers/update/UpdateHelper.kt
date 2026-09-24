@@ -56,8 +56,12 @@ object UpdateHelper {
         return "${getVersionInfoString()}\nBuilt on: ${BuildVars.BUILD_DATE}"
     }
 
-    private val APK_RE = Regex("^fagram-(.+)-(\\d+)\\.apk$")
-    private val SHORT_SHA_RE = Regex("-([0-9a-f]{7,40})$")
+    private val VERSION_RE = Regex("""FAgram Android v(?<version>[\d.\-]+)""", RegexOption.IGNORE_CASE)
+    private val FALLBACK_VERSION_RE = Regex("""v(?<version>[\d.\-]+)""", RegexOption.IGNORE_CASE)
+    private val FILENAME_BUILD_RE = Regex("""fagram-.*-(?<build>\d+)\.apk""", RegexOption.IGNORE_CASE)
+    private val BASE_RE = Regex("""Base:\s*(?<base>[^\r\n]+)""", RegexOption.IGNORE_CASE)
+    private val BUILD_TYPE_RE = Regex("""Build Type:\s*(?<buildType>\w+)""", RegexOption.IGNORE_CASE)
+    private val SHA256_RE = Regex("""SHA256:\s*(?<hash>[a-fA-F0-9]{64})""", RegexOption.IGNORE_CASE)
 
     @Volatile
     private var inflight = false
@@ -67,6 +71,11 @@ object UpdateHelper {
 
     @Volatile
     var pendingBetaUpdate: BetaUpdate? = null
+        private set
+
+    @Volatile
+    var pendingSha256: String? = null
+        get() = field ?: InuConfig.UPDATE_PENDING_SHA256.value.takeIf { it.isNotBlank() }
         private set
 
     // cached source message of the current pending update, set by applyUpdate. lets
@@ -104,6 +113,8 @@ object UpdateHelper {
     fun clearPending() {
         pendingBetaUpdate = null
         pendingSourceMessage = null
+        pendingSha256 = null
+        InuConfig.UPDATE_PENDING_SHA256.value = ""
         isPendingStart = false
         SharedConfig.pendingAppUpdate = null
         SharedConfig.saveConfig()
@@ -114,7 +125,10 @@ object UpdateHelper {
     fun clearPendingIfInstalled() {
         val pending = SharedConfig.pendingAppUpdate ?: return
         val current = currentBuild()
-        if (pending.version == current.versionCode.toString()) {
+        val pendingBuild = pending.version?.substringAfterLast('-')?.toIntOrNull()
+            ?: pending.version?.toIntOrNull()
+            ?: 0
+        if (current.versionCode >= pendingBuild || pending.version == current.versionName) {
             clearPending()
         }
     }
@@ -155,11 +169,16 @@ object UpdateHelper {
                         if (!isPendingStart) return@runOnUIThread
                         val msg = (resp as? TLRPC.messages_Messages)?.messages
                             ?.firstOrNull { it.id == messageId }
-                        val freshDoc = msg?.let { extractApkInfo(it)?.document }
+                        val freshInfo = msg?.let { extractApkInfo(it) }
+                        val freshDoc = freshInfo?.document
                         if (msg == null || freshDoc == null) {
                             beginLoad(account, doc, sourceMessageParent(messageId))
                         } else {
                             pendingSourceMessage = msg
+                            if (freshInfo.sha256 != null) {
+                                pendingSha256 = freshInfo.sha256
+                                InuConfig.UPDATE_PENDING_SHA256.value = freshInfo.sha256
+                            }
                             beginLoad(account, freshDoc, MessageObject(account, msg, false, false))
                         }
                     }
@@ -205,14 +224,27 @@ object UpdateHelper {
         NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.appUpdateLoading)
     }
 
+    fun isCompatibleBuildType(remoteBuildType: String?): Boolean {
+        if (remoteBuildType.isNullOrBlank()) return true
+        val local = BuildConfig.INU_BUILD_TYPE.lowercase().trim()
+        val remote = remoteBuildType.lowercase().trim()
+        val localNorm = when (local) {
+            "rel", "release" -> "release"
+            "debug", "dev" -> "debug"
+            else -> local
+        }
+        val remoteNorm = when (remote) {
+            "rel", "release" -> "release"
+            "debug", "dev" -> "debug"
+            else -> remote
+        }
+        return localNorm == remoteNorm
+    }
+
     fun check(callback: ((CheckResult) -> Unit)?) {
         val account = UserConfig.selectedAccount
         if (!UserConfig.getInstance(account).isClientActivated) {
             callback?.invoke(CheckResult.Error("Not logged in"))
-            return
-        }
-        if (BuildConfig.INU_BUILD_TYPE == "debug") {
-            callback?.invoke(CheckResult.UpToDate)
             return
         }
         val now = System.currentTimeMillis()
@@ -235,7 +267,7 @@ object UpdateHelper {
         val mc = MessagesController.getInstance(account)
         val req = TLRPC.TL_messages_search().apply {
             peer = mc.getInputPeer(peerId)
-            q = "#release"
+            q = ""
             filter = TLRPC.TL_inputMessagesFilterDocument()
             limit = 10
         }
@@ -246,7 +278,7 @@ object UpdateHelper {
                     return@runOnUIThread
                 }
                 val match = resp.messages.firstNotNullOfOrNull { msg ->
-                    extractApkInfo(msg)?.let { msg to it }
+                    extractApkInfo(msg)?.takeIf { isCompatibleBuildType(it.buildType) }?.let { msg to it }
                 }
                 val current = currentBuild()
                 if (match == null || !isNewer(match.second, current)) {
@@ -263,10 +295,10 @@ object UpdateHelper {
 
     fun onNewMessage(msg: TLRPC.Message) {
         if (!InuConfig.UPDATES_ENABLED.value) return
-        if (BuildConfig.INU_BUILD_TYPE == "debug") return
-        if (msg.peer_id?.channel_id != CHANNEL_ID) return
-        if (msg.message?.contains("#release") != true) return
+        val channelId = msg.peer_id?.channel_id ?: 0L
+        if (channelId != CHANNEL_ID && channelId != (CHANNEL_ID % 1000000000000L)) return
         val info = extractApkInfo(msg) ?: return
+        if (!isCompatibleBuildType(info.buildType)) return
         val current = currentBuild()
         if (!isNewer(info, current)) return
         AndroidUtilities.runOnUIThread {
@@ -276,26 +308,46 @@ object UpdateHelper {
         }
     }
 
-    private fun applyUpdate(msg: TLRPC.Message, info: ApkInfo, current: CurrentBuild): TLRPC.TL_help_appUpdate {
-        val updateObj = TLRPC.TL_help_appUpdate().apply {
-            flags = flags or 2
-            // stash the source channel message id in the otherwise-unused `id` field
-            id = msg.id
-            version = info.verCode.toString()
-            text = msg.message ?: ""
-            entities = cloneEntities(msg.entities)
-            document = info.document
-        }
+    private fun extractChangelog(messageText: String, rawEntities: ArrayList<TLRPC.MessageEntity>?): Pair<String, ArrayList<TLRPC.MessageEntity>> {
+        val entities = cloneEntities(rawEntities)
+        val blockquote = entities.firstOrNull { it is TLRPC.TL_messageEntityBlockquote }
 
-        val blockquote = updateObj.entities.firstOrNull {
-            it is TLRPC.TL_messageEntityBlockquote
-        }
         if (blockquote != null) {
             val start = blockquote.offset
-            val end = blockquote.offset + blockquote.length
+            val end = min(messageText.length, blockquote.offset + blockquote.length)
+            if (start < end) {
+                val newEntities = arrayListOf<TLRPC.MessageEntity>()
+                for (entity in entities) {
+                    if (entity === blockquote) continue
+                    if (entity.offset + entity.length <= start) continue
+                    if (entity.offset >= end) continue
+                    val clippedStart = max(entity.offset, start)
+                    val clippedEnd = min(entity.offset + entity.length, end)
+                    entity.offset = clippedStart - start
+                    entity.length = clippedEnd - clippedStart
+                    newEntities.add(entity)
+                }
+                val text = messageText.substring(start, end)
+                return text to newEntities
+            }
+        }
+
+        // Fallback: extract body text below metadata lines
+        val metadataEndIndex = listOfNotNull(
+            SHA256_RE.find(messageText)?.range?.last,
+            BUILD_TYPE_RE.find(messageText)?.range?.last,
+            BASE_RE.find(messageText)?.range?.last,
+            VERSION_RE.find(messageText)?.range?.last,
+        ).maxOrNull()
+
+        if (metadataEndIndex != null && metadataEndIndex + 1 < messageText.length) {
+            val rawBody = messageText.substring(metadataEndIndex + 1)
+            val firstNonWs = rawBody.indexOfFirst { !it.isWhitespace() }
+            val start = if (firstNonWs >= 0) metadataEndIndex + 1 + firstNonWs else metadataEndIndex + 1
+            val end = messageText.length
+
             val newEntities = arrayListOf<TLRPC.MessageEntity>()
-            for (entity in updateObj.entities) {
-                if (entity === blockquote) continue
+            for (entity in entities) {
                 if (entity.offset + entity.length <= start) continue
                 if (entity.offset >= end) continue
                 val clippedStart = max(entity.offset, start)
@@ -304,15 +356,34 @@ object UpdateHelper {
                 entity.length = clippedEnd - clippedStart
                 newEntities.add(entity)
             }
-            updateObj.text = updateObj.text.substring(start, end)
-            updateObj.entities = newEntities
+            var text = messageText.substring(start, end).trim()
+            if (newEntities.isEmpty()) {
+                text = text.lines().joinToString("\n") { it.removePrefix(">").trimStart() }
+            }
+            return text to newEntities
+        }
+
+        return messageText to entities
+    }
+
+    private fun applyUpdate(msg: TLRPC.Message, info: ApkInfo, current: CurrentBuild): TLRPC.TL_help_appUpdate {
+        val updateObj = TLRPC.TL_help_appUpdate().apply {
+            flags = flags or 2
+            // stash the source channel message id in the otherwise-unused `id` field
+            id = msg.id
+            version = info.version
+            text = info.changelog
+            entities = info.changelogEntities
+            document = info.document
         }
 
         SharedConfig.pendingAppUpdate = updateObj
         SharedConfig.pendingAppUpdateBuildVersion = current.versionCode
         SharedConfig.saveConfig()
-        pendingBetaUpdate = BetaUpdate(info.appVerName, info.verCode, updateObj.text)
+        pendingBetaUpdate = BetaUpdate(info.version, info.buildNum, updateObj.text)
         pendingSourceMessage = msg
+        pendingSha256 = info.sha256
+        InuConfig.UPDATE_PENDING_SHA256.value = info.sha256 ?: ""
         return updateObj
     }
 
@@ -331,22 +402,76 @@ object UpdateHelper {
     }
 
     @Suppress("DEPRECATION")
-    private fun currentBuild(): CurrentBuild = CurrentBuild(pInfo.versionCode)
+    private fun currentBuild(): CurrentBuild = CurrentBuild(
+        versionCode = pInfo.versionCode,
+        versionName = pInfo.versionName ?: "",
+    )
 
     private fun extractApkInfo(msg: TLRPC.Message): ApkInfo? {
         val media = msg.media as? TLRPC.TL_messageMediaDocument ?: return null
         val doc = media.document ?: return null
         val nameAttr = doc.attributes.filterIsInstance<TLRPC.TL_documentAttributeFilename>().firstOrNull()
+        val fileName = FileLoader.getDocumentFileName(doc) ?: nameAttr?.file_name ?: ""
+        val isApk = doc.mime_type == "application/vnd.android.package-archive" || fileName.endsWith(".apk", ignoreCase = true)
+        if (!isApk) return null
+
+        val caption = msg.message ?: ""
+        val version = VERSION_RE.find(caption)?.groups?.get("version")?.value
+            ?: FALLBACK_VERSION_RE.find(caption)?.groups?.get("version")?.value
             ?: return null
-        val match = APK_RE.matchEntire(nameAttr.file_name) ?: return null
-        val verName = match.groupValues[1]
-        val verCode = match.groupValues[2].toIntOrNull() ?: return null
-        val appVerName = verName.replace(SHORT_SHA_RE, "")
-        return ApkInfo(verCode, appVerName, doc)
+
+        val buildFromVer = version.substringAfterLast('-').toIntOrNull()
+        val buildFromFilename = FILENAME_BUILD_RE.find(fileName)?.groups?.get("build")?.value?.toIntOrNull()
+        val buildNum = buildFromVer ?: buildFromFilename ?: return null
+
+        val base = BASE_RE.find(caption)?.groups?.get("base")?.value?.trim() ?: ""
+        val buildType = BUILD_TYPE_RE.find(caption)?.groups?.get("buildType")?.value?.trim() ?: ""
+        val sha256 = SHA256_RE.find(caption)?.groups?.get("hash")?.value?.trim()
+
+        val (changelog, changelogEntities) = extractChangelog(caption, msg.entities)
+
+        return ApkInfo(
+            version = version,
+            buildNum = buildNum,
+            base = base,
+            buildType = buildType,
+            sha256 = sha256,
+            changelog = changelog,
+            changelogEntities = changelogEntities,
+            document = doc,
+        )
+    }
+
+    private fun parseSemVer(versionStr: String): IntArray {
+        val clean = versionStr.substringBefore('-').removePrefix("v").trim()
+        return clean.split('.').mapNotNull { it.toIntOrNull() }.toIntArray()
+    }
+
+    private fun compareSemVer(a: IntArray, b: IntArray): Int {
+        val maxLen = max(a.size, b.size)
+        for (i in 0 until maxLen) {
+            val valA = a.getOrElse(i) { 0 }
+            val valB = b.getOrElse(i) { 0 }
+            if (valA != valB) return valA.compareTo(valB)
+        }
+        return 0
     }
 
     private fun isNewer(remote: ApkInfo, current: CurrentBuild): Boolean {
-        return remote.verCode > current.versionCode
+        if (remote.buildNum > current.versionCode) {
+            return true
+        }
+        if (remote.buildNum < current.versionCode) {
+            val remoteSemVer = parseSemVer(remote.version)
+            val currentSemVer = parseSemVer(stockVersionName.ifEmpty { current.versionName })
+            if (compareSemVer(remoteSemVer, currentSemVer) > 0) {
+                return true
+            }
+            return false
+        }
+        val remoteSemVer = parseSemVer(remote.version)
+        val currentSemVer = parseSemVer(stockVersionName.ifEmpty { current.versionName })
+        return compareSemVer(remoteSemVer, currentSemVer) > 0
     }
 
     sealed class CheckResult {
@@ -357,12 +482,18 @@ object UpdateHelper {
     }
 
     private data class ApkInfo(
-        val verCode: Int,
-        val appVerName: String,
+        val version: String,
+        val buildNum: Int,
+        val base: String,
+        val buildType: String,
+        val sha256: String?,
+        val changelog: String,
+        val changelogEntities: ArrayList<TLRPC.MessageEntity>,
         val document: TLRPC.Document,
     )
 
     private data class CurrentBuild(
         val versionCode: Int,
+        val versionName: String,
     )
 }

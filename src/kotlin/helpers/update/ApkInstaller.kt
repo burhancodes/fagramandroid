@@ -11,6 +11,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -26,6 +27,8 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import xie.fa.gram.InuConfig
 import xie.fa.gram.helpers.NotificationsHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
@@ -45,6 +48,7 @@ import org.telegram.ui.Components.RLottieImageView
 import org.telegram.ui.LaunchActivity
 import java.io.File
 import java.io.IOException
+import java.security.MessageDigest
 
 object ApkInstaller {
     private const val ACTION = "xie.fa.gram.helpers.update.ApkInstaller.STATUS"
@@ -58,22 +62,54 @@ object ApkInstaller {
     @Volatile
     private var dialog: AlertDialog? = null
 
-    fun installUpdate(activity: Activity, document: TLRPC.Document) {
-        if (hasBrokenPackageInstaller()) {
-            AndroidUtilities.openForView(document, false, activity)
+    fun installUpdate(activity: Activity, document: TLRPC.Document, expectedSha256: String? = null) {
+        val apk = FileLoader.getInstance(UserConfig.selectedAccount).getPathToAttach(document, true)
+        if (apk == null || !apk.exists()) {
             return
         }
-        val apk = FileLoader.getInstance(UserConfig.selectedAccount).getPathToAttach(document, true) ?: return
-        if (!apk.exists()) {
-            AndroidUtilities.openForView(document, false, activity)
+
+        // On Android 8.0+ (API 26+), verify canRequestPackageInstalls() before launching
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !activity.packageManager.canRequestPackageInstalls()) {
+            requestInstallPermission(activity)
             return
         }
+
         if (dialog?.isShowing == true) return
 
         val progressBar = buildProgressBar(activity)
         dialog = buildProgressDialog(activity, progressBar).also { it.show() }
 
         Utilities.globalQueue.postRunnable {
+            // SHA-256 Checksum Verification
+            val targetHash = expectedSha256
+                ?: UpdateHelper.pendingSha256
+
+            if (!targetHash.isNullOrBlank()) {
+                val computedHash = runCatching { computeSha256(apk) }.getOrNull()
+                if (computedHash == null || !computedHash.equals(targetHash.trim(), ignoreCase = true)) {
+                    android.util.Log.e("ApkInstaller", "Checksum mismatch! Expected: $targetHash, computed: $computedHash")
+                    apk.delete()
+                    AndroidUtilities.runOnUIThread {
+                        dialog?.dismiss()
+                        dialog = null
+                        showChecksumError(activity)
+                    }
+                    return@postRunnable
+                }
+                android.util.Log.d("ApkInstaller", "Checksum verified successfully: $computedHash")
+            } else {
+                android.util.Log.w("ApkInstaller", "SHA-256 checksum is missing, proceeding without checksum validation")
+            }
+
+            if (hasBrokenPackageInstaller()) {
+                AndroidUtilities.runOnUIThread {
+                    dialog?.dismiss()
+                    dialog = null
+                    installViaIntent(activity, apk)
+                }
+                return@postRunnable
+            }
+
             val receiver = registerStatusReceiver(activity) {
                 AndroidUtilities.runOnUIThread {
                     dialog?.dismiss()
@@ -90,12 +126,95 @@ object ApkInstaller {
                         activity,
                         LocaleController.getString(R.string.ErrorOccurred) + "\n" + (err.localizedMessage ?: ""),
                     ).show()
-                    AndroidUtilities.openForView(document, false, activity)
+                    installViaIntent(activity, apk)
                 }
                 runCatching { activity.unregisterReceiver(receiver) }
                 return@postRunnable
             }
             registerProgressCallback(activity, sessionId, progressBar)
+        }
+    }
+
+    fun installViaIntent(activity: Activity, apk: File) {
+        if (!apk.exists()) return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !activity.packageManager.canRequestPackageInstalls()) {
+            requestInstallPermission(activity)
+            return
+        }
+
+        val uri = FileProvider.getUriForFile(
+            activity,
+            ApplicationLoader.getApplicationId() + ".provider",
+            apk,
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/vnd.android.package-archive")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        try {
+            activity.startActivity(intent)
+        } catch (e: Exception) {
+            FileLog.e(e)
+            val fallback = Intent(Intent.ACTION_INSTALL_PACKAGE).apply {
+                setDataAndType(uri, "application/vnd.android.package-archive")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            try {
+                activity.startActivity(fallback)
+            } catch (e2: Exception) {
+                FileLog.e(e2)
+                AlertsCreator.createSimpleAlert(
+                    activity,
+                    LocaleController.getString(R.string.ErrorOccurred) + "\n" + (e2.localizedMessage ?: ""),
+                ).show()
+            }
+        }
+    }
+
+    fun installViaIntent(activity: Activity, document: TLRPC.Document) {
+        val apk = FileLoader.getInstance(UserConfig.selectedAccount).getPathToAttach(document, true) ?: return
+        installViaIntent(activity, apk)
+    }
+
+    fun requestInstallPermission(activity: Activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                    data = Uri.parse("package:${activity.packageName}")
+                }
+                activity.startActivity(intent)
+            } catch (e: Exception) {
+                FileLog.e(e)
+            }
+        }
+    }
+
+    fun computeSha256(file: File): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        file.inputStream().use { stream ->
+            val buffer = ByteArray(65536)
+            var bytesRead: Int
+            while (stream.read(buffer).also { bytesRead = it } != -1) {
+                digest.update(buffer, 0, bytesRead)
+            }
+        }
+        return digest.digest().joinToString("") { "%02x".format(it) }
+    }
+
+    private fun showChecksumError(activity: Activity) {
+        val message = LocaleController.getString(R.string.InuUpdateChecksumMismatch)
+        val launch = LaunchActivity.instance ?: (activity as? LaunchActivity)
+        if (launch != null) {
+            launch.showBulletin { factory ->
+                factory.createErrorBulletin(message)
+            }
+        } else {
+            AlertsCreator.createSimpleAlert(activity, message).show()
         }
     }
 

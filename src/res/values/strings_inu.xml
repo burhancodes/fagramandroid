@@ -560,6 +560,7 @@
     <string name="InuUpdateInstalledNotification">Update installed, tap to relaunch</string>
     <string name="InuUpdateNotificationChannel">App updates</string>
     <string name="InuUpdateFailedToInstall">Install failed (%1$d)</string>
+    <string name="InuUpdateChecksumMismatch">The downloaded APK failed checksum verification. The file may be corrupted.</string>
     <string name="InuRefetchWebPreview">Refetch web preview</string>
     <string name="InuSendStickers">Send stickers</string>
     <string name="InuSendGifs">Send GIFs</string>

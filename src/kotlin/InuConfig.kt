@@ -878,6 +878,9 @@ object InuConfig {
     val UPDATE_LAST_CHECK_MS = LongItem("update_last_check_ms", 0L, exportable = false)
 
     @JvmField
+    val UPDATE_PENDING_SHA256 = StringItem("update_pending_sha256", "", exportable = false)
+
+    @JvmField
     val CLOUD_SYNC_ACCOUNT_ID = LongItem("cloud_sync_account_id", 0L, exportable = false)
 
     @JvmField
