@@ -140,6 +140,41 @@ object FolderHelper {
     }
 
     @JvmStatic
+    fun getTabInfo(suggested: TLRPC.TL_dialogFilterSuggested?): Pair<String, String> {
+        return getTabInfo(suggested?.filter)
+    }
+
+    @JvmStatic
+    fun getTabInfo(filter: TLRPC.DialogFilter?): Pair<String, String> {
+        if (filter == null) return Pair.create("", "")
+        val defaults = getDefaultsFromFlags(filter.flags)
+        val name = filter.title?.text?.takeIf { it.isNotEmpty() } ?: defaults.first
+        val emoticon = filter.emoticon?.takeIf { it.isNotEmpty() } ?: defaults.second
+        return Pair.create(name, emoticon)
+    }
+
+    @JvmStatic
+    fun getEmoticon(filter: MessagesController.DialogFilter?): String? {
+        if (filter == null) return null
+        if (!filter.inu_emoticon.isNullOrEmpty()) return filter.inu_emoticon
+        val defaults = getDefaultsFromFlags(filter.flags)
+        return defaults.second.takeIf { it.isNotEmpty() }
+    }
+
+    @JvmStatic
+    fun getEmoticon(filter: TLRPC.DialogFilter?): String? {
+        if (filter == null) return null
+        if (!filter.emoticon.isNullOrEmpty()) return filter.emoticon
+        val defaults = getDefaultsFromFlags(filter.flags)
+        return defaults.second.takeIf { it.isNotEmpty() }
+    }
+
+    @JvmStatic
+    fun getEmoticon(suggested: TLRPC.TL_dialogFilterSuggested?): String? {
+        return getEmoticon(suggested?.filter)
+    }
+
+    @JvmStatic
     fun getTabIcon(emoticon: String?): Int {
         if (emoticon != null) {
             val stripped = emoticon.replace("\uFE0F", "")

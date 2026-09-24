@@ -195,6 +195,10 @@ class DialogsSettingsActivity : SettingsPageActivity() {
             ) { which ->
                 InuConfig.FOLDERS_DISPLAY_MODE.value = which + 1
                 softRebuild()
+                for (i in 0 until UserConfig.MAX_ACCOUNT_COUNT) {
+                    if (!UserConfig.getInstance(i).isClientActivated) continue
+                    NotificationCenter.getInstance(i).postNotificationName(NotificationCenter.dialogFiltersUpdated)
+                }
             }
 
             BUTTON_FOLDERS_UNREAD_COUNTER_MODE -> RadioItemOptions.show(

@@ -779,4 +779,15 @@
     <string name="InuLastFmScrobbling">Scrobbling</string>
     <string name="InuLastFmUnknownTrack">Unknown Track</string>
     <string name="InuLastFmUnknownArtist">Unknown Artist</string>
+
+    <!-- Built-in local folders -->
+    <string name="InuBuiltInFolders">Built-in Folders</string>
+    <string name="InuBuiltInFoldersInfo">Built-in folders are generated on this device and are not synced to Telegram. Their name and icon can\'t be changed.</string>
+    <string name="InuLocalFolder">Local folder</string>
+    <string name="InuLocalFolderEditInfo">Built-in folders can\'t be edited. Remove it here and add it again to change your mind.</string>
+    <string name="InuBuiltInFolderUnread">Unread</string>
+    <string name="InuBuiltInFolderUnmuted">Unmuted</string>
+    <string name="InuBuiltInFolderBasicGroups">Basic Groups</string>
+    <string name="InuBuiltInFolderSupergroups">Supergroups</string>
+    <string name="InuBuiltInFolderAdmin">Administrator</string>
 </resources>

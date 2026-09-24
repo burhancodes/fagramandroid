@@ -729,4 +729,15 @@
     <string name="InuRefreshStickerSet">刷新</string>
     <string name="InuStickerSetRefreshed">贴纸包已更新</string>
     <string name="InuStickerSetRefreshFailed">无法刷新贴纸包</string>
+
+    <!-- Built-in local folders -->
+    <string name="InuBuiltInFolders">内置文件夹</string>
+    <string name="InuBuiltInFoldersInfo">内置文件夹在本机生成，不会同步到 Telegram，名称和图标也不可修改。</string>
+    <string name="InuLocalFolder">本地文件夹</string>
+    <string name="InuLocalFolderEditInfo">内置文件夹不可编辑。如需调整，可以在这里删除后重新添加。</string>
+    <string name="InuBuiltInFolderUnread">未读</string>
+    <string name="InuBuiltInFolderUnmuted">未静音</string>
+    <string name="InuBuiltInFolderBasicGroups">普通群组</string>
+    <string name="InuBuiltInFolderSupergroups">超级群组</string>
+    <string name="InuBuiltInFolderAdmin">管理员</string>
 </resources>
