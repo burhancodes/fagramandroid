@@ -14,7 +14,8 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 - monet (material you) theme support - *based on [NagramX](https://github.com/risin42/NagramX)*, 🐶 improved. plus a quick switcher in appearance settings (light/dark/amoled/auto)
 - 🐶 classic ui mode for folders bar, shared media tabs, global search and chat elements (reverts the >12.6 "liquid glass" look)
 - icon replacement (solar pack by [480 Design](https://t.me/Design480) - *ported from [NagramX](https://github.com/risin42/NagramX)*; vkui pack by [VK](https://github.com/VKCOM/icons) - *ported from [Catogram](https://github.com/Catogram/Catogram)*)
-- notification icon: Telegram (default) or Inugram
+- notification icon: Telegram (default) or Inugram (monochrome status bar icon + full-color large icon)
+- 🐶 adaptive launcher icon with dedicated Android 13+ Material You themed silhouette, full-color foreground shadow, and modernized raster/store mipmaps
 - show seconds in timestamps
 - override Telegram's detected device performance class
 - 🐶 customizable animation speed multiplier (incl. instant)

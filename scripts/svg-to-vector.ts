@@ -85,6 +85,7 @@ export interface SvgShape {
   tag?: string
   attrs?: SvgAttrs
   fill?: string
+  fillOpacity?: string
   stroke?: string
   strokeWidth?: string
   strokeLineCap?: string
@@ -133,6 +134,7 @@ export function parseSvgBody(body: string): SvgShape[] {
       tag,
       attrs,
       fill: merged.fill,
+      fillOpacity: merged['fill-opacity'] ?? merged.opacity,
       stroke: merged.stroke,
       strokeWidth: merged['stroke-width'],
       strokeLineCap: merged['stroke-linecap'],

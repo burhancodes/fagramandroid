@@ -1,22 +1,20 @@
 import type { SvgShape } from './svg-to-vector.js'
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import { rootDir } from './config.js'
-import { ensureDir, step, success } from './lib.js'
+import { rootDir, worktreeDir } from './config.js'
+import { ensureDir, linkForkSource, step, success } from './lib.js'
 import {
   fmtNum,
   parseSvgBody,
   resolveFillColor,
   resolveStrokeColor,
-
 } from './svg-to-vector.js'
 
 // run manually after changing src/res/launcher SVGs; output is committed
 
 const ADAPTIVE_SIZE = 108
 const FG_SAFE = 72
-// settings-list icon: 24dp render in a 72dp viewport, tinted white by
-// SettingCell — mirrors stock settings_account/settings_chat/settings_privacy
 // settings-list icon: 24dp render in a 72dp viewport
 // SettingCell — mirrors stock settings_account/settings_chat/settings_privacy
 const SETTINGS_DP = 24
@@ -27,6 +25,8 @@ const SETTINGS_SAFE = 80
 const NOTIFICATION_DP = 24
 const NOTIFICATION_VIEWPORT = 24
 const NOTIFICATION_SAFE = 39
+
+const BG_COLOR = '#FF5858'
 
 // debug badge: a small white square (only its top-left corner rounded) tucked
 // into the bottom-right corner, holding a β. the white fill is framed with a
@@ -57,55 +57,27 @@ const BADGE_NEAR = BADGE_FAR - BADGE_SIZE
 const GEN_DRAWABLE = 'src/res/launcher/generated/drawable'
 const GEN_DEBUG_MIPMAP = 'src/res/launcher/generated/mipmap-debug'
 
-function toMonochromeColor(hexColor: string, bgHex = '#FFFF5858'): string {
-  const hex = hexColor.replace(/^#/, '')
-  const fillR = Number.parseInt(hex.length === 8 ? hex.slice(2, 4) : hex.slice(0, 2), 16)
-  const fillG = Number.parseInt(hex.length === 8 ? hex.slice(4, 6) : hex.slice(2, 4), 16)
-  const fillB = Number.parseInt(hex.length === 8 ? hex.slice(6, 8) : hex.slice(4, 6), 16)
-
-  if (fillR >= 250 && fillG >= 250 && fillB >= 250) {
-    return '#FFFFFFFF'
-  }
-
-  const bgClean = bgHex.replace(/^#/, '')
-  const bgR = Number.parseInt(bgClean.length === 8 ? bgClean.slice(2, 4) : bgClean.slice(0, 2), 16)
-  const bgG = Number.parseInt(bgClean.length === 8 ? bgClean.slice(4, 6) : bgClean.slice(2, 4), 16)
-  const bgB = Number.parseInt(bgClean.length === 8 ? bgClean.slice(6, 8) : bgClean.slice(4, 6), 16)
-
-  const diffs = [
-    { fill: fillR, bg: bgR, max: 255 - bgR },
-    { fill: fillG, bg: bgG, max: 255 - bgG },
-    { fill: fillB, bg: bgB, max: 255 - bgB },
-  ].filter(d => d.max > 10)
-
-  let alpha = 0.5
-  if (diffs.length > 0) {
-    const alphas = diffs.map(d => Math.max(0, Math.min(1, (d.fill - d.bg) / d.max)))
-    alpha = alphas.reduce((a, b) => a + b, 0) / alphas.length
-  } else {
-    alpha = (0.2126 * fillR + 0.7152 * fillG + 0.0722 * fillB) / 255
-  }
-
-  const alphaByte = Math.max(0x20, Math.min(0xFF, Math.round(alpha * 255)))
-  const alphaHex = alphaByte.toString(16).padStart(2, '0').toUpperCase()
-  return `#${alphaHex}FFFFFF`
-}
-
-function shapeToPathXml(shape: SvgShape, monochrome: boolean, bgColor = '#FFFF5858'): string | null {
-  const fill = resolveFillColor(shape.fill)
+function shapeToPathXml(shape: SvgShape, overrideFill?: string): string | null {
+  const fill = overrideFill ?? resolveFillColor(shape.fill)
   const stroke = resolveStrokeColor(shape.stroke)
   if (!fill && !stroke) return null
   const attrs: string[] = [`android:pathData="${shape.d}"`]
   if (fill) {
-    const finalFill = monochrome ? toMonochromeColor(fill, bgColor) : fill
-    attrs.push(`android:fillColor="${finalFill}"`)
+    attrs.push(`android:fillColor="${fill}"`)
+    const fillAlpha = shape.fillOpacity ?? shape.attrs?.['fill-opacity']
+    if (fillAlpha && Number(fillAlpha) < 1) {
+      attrs.push(`android:fillAlpha="${fmtNum(Number(fillAlpha))}"`)
+    }
   }
   if (stroke) {
-    const finalStroke = monochrome ? toMonochromeColor(stroke, bgColor) : stroke
-    attrs.push(`android:strokeColor="${finalStroke}"`)
+    attrs.push(`android:strokeColor="${stroke}"`)
     attrs.push(`android:strokeWidth="${fmtNum(Number(shape.strokeWidth ?? 1))}"`)
     if (shape.strokeLineCap) attrs.push(`android:strokeLineCap="${shape.strokeLineCap}"`)
     if (shape.strokeLineJoin) attrs.push(`android:strokeLineJoin="${shape.strokeLineJoin}"`)
+    const strokeAlpha = shape.attrs?.['stroke-opacity']
+    if (strokeAlpha && Number(strokeAlpha) < 1) {
+      attrs.push(`android:strokeAlpha="${fmtNum(Number(strokeAlpha))}"`)
+    }
   }
   return `        <path\n            ${attrs.join('\n            ')} />`
 }
@@ -144,16 +116,17 @@ interface ScaledVectorOpts {
   viewport: number
   safe: number
   overlay?: string
+  overrideFill?: string
 }
 
 // scale an SVG body to `safe` units, centered inside a `viewport`-sized canvas
-function buildScaledVector(shapes: SvgShape[], srcW: number, srcH: number, monochrome: boolean, opts: ScaledVectorOpts, bgColor = '#FFFF5858'): string {
+function buildScaledVector(shapes: SvgShape[], srcW: number, srcH: number, opts: ScaledVectorOpts): string {
   const inset = (opts.viewport - opts.safe) / 2
   const scale = opts.safe / Math.max(srcW, srcH)
   const offsetX = inset + (opts.safe - srcW * scale) / 2
   const offsetY = inset + (opts.safe - srcH * scale) / 2
   const paths = shapes
-    .map(s => shapeToPathXml(s, monochrome, bgColor))
+    .map(s => shapeToPathXml(s, opts.overrideFill))
     .filter((s): s is string => s !== null)
   return `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -172,29 +145,32 @@ ${paths.join('\n')}
 `
 }
 
-function buildForegroundVector(shapes: SvgShape[], srcW: number, srcH: number, monochrome: boolean, debug = false, bgColor = '#FFFF5858'): string {
-  return buildScaledVector(shapes, srcW, srcH, monochrome, {
+function buildForegroundVector(shapes: SvgShape[], srcW: number, srcH: number, debug = false, badgeColor = '#FFFF5858', overrideFill?: string): string {
+  return buildScaledVector(shapes, srcW, srcH, {
     widthDp: ADAPTIVE_SIZE,
     viewport: ADAPTIVE_SIZE,
     safe: FG_SAFE,
-    overlay: debug ? buildDebugBadge(bgColor) : undefined,
-  }, bgColor)
+    overlay: debug ? buildDebugBadge(badgeColor) : undefined,
+    overrideFill,
+  })
 }
 
-function buildSettingsVector(shapes: SvgShape[], srcW: number, srcH: number, bgColor = '#FFFF5858'): string {
-  return buildScaledVector(shapes, srcW, srcH, true, {
+function buildSettingsVector(shapes: SvgShape[], srcW: number, srcH: number): string {
+  return buildScaledVector(shapes, srcW, srcH, {
     widthDp: SETTINGS_DP,
     viewport: SETTINGS_VIEWPORT,
     safe: SETTINGS_SAFE,
-  }, bgColor)
+    overrideFill: '#FFFFFFFF',
+  })
 }
 
-function buildNotificationVector(shapes: SvgShape[], srcW: number, srcH: number, bgColor = '#FFFF5858'): string {
-  return buildScaledVector(shapes, srcW, srcH, true, {
+function buildNotificationVector(shapes: SvgShape[], srcW: number, srcH: number): string {
+  return buildScaledVector(shapes, srcW, srcH, {
     widthDp: NOTIFICATION_DP,
     viewport: NOTIFICATION_VIEWPORT,
     safe: NOTIFICATION_SAFE,
-  }, bgColor)
+    overrideFill: '#FFFFFFFF',
+  })
 }
 
 function buildAdaptiveIcon(foreground: string): string {
@@ -207,7 +183,15 @@ function buildAdaptiveIcon(foreground: string): string {
 `
 }
 
-function buildBackgroundVector(bgColor = '#FFFF5858'): string {
+function buildBackgroundVector(shadowShapes: SvgShape[], srcW: number, srcH: number, bgColor = '#FFFF5858'): string {
+  const inset = (ADAPTIVE_SIZE - FG_SAFE) / 2
+  const scale = FG_SAFE / Math.max(srcW, srcH)
+  const offsetX = inset + (FG_SAFE - srcW * scale) / 2
+  const offsetY = inset + (FG_SAFE - srcH * scale) / 2
+  const paths = shadowShapes
+    .map(s => shapeToPathXml(s))
+    .filter((s): s is string => s !== null)
+
   return `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="${ADAPTIVE_SIZE}dp"
@@ -217,15 +201,23 @@ function buildBackgroundVector(bgColor = '#FFFF5858'): string {
     <path
         android:pathData="M0,0h${ADAPTIVE_SIZE}v${ADAPTIVE_SIZE}h-${ADAPTIVE_SIZE}z"
         android:fillColor="${bgColor}" />
+    <group
+        android:translateX="${fmtNum(offsetX)}"
+        android:translateY="${fmtNum(offsetY)}"
+        android:scaleX="${fmtNum(scale)}"
+        android:scaleY="${fmtNum(scale)}">
+${paths.join('\n')}
+    </group>
 </vector>
 `
 }
 
-async function writeGenerated(relPath: string, content: string): Promise<boolean> {
+async function writeGenerated(relPath: string, content: string | Buffer): Promise<boolean> {
   const absPath = join(rootDir, relPath)
   await ensureDir(dirname(absPath))
-  const current = await fs.readFile(absPath, 'utf8').catch(() => null)
-  if (current === content) return false
+  const current = await fs.readFile(absPath).catch(() => null)
+  const isBuffer = Buffer.isBuffer(content)
+  if (current && (isBuffer ? current.equals(content) : current.toString('utf8') === content)) return false
   step(`Generating ${relPath}`)
   await fs.writeFile(absPath, content)
   return true
@@ -247,7 +239,7 @@ async function loadSvg(relPath: string): Promise<LoadedSvg> {
   const srcH = Number(viewBox[2])
   const allShapes = parseSvgBody(svg)
 
-  let bgColor = '#FFFF5858'
+  let bgColor = BG_COLOR
   const foregroundShapes: SvgShape[] = []
 
   for (const s of allShapes) {
@@ -280,8 +272,9 @@ function buildSplashVector(shapes: SvgShape[], bgColor = '#FFFF5858'): string {
                             android:strokeWidth="1" />`
   }).join('\n')
 
-  const planeTargetsXml = shapes.map((_, i) => {
+  const planeTargetsXml = shapes.map((shape, i) => {
     const name = `plane_${i}`
+    const targetAlpha = shape.fillOpacity ?? shape.attrs?.['fill-opacity'] ?? '1'
     return `    <target android:name="${name}">
         <aapt:attr name="android:animation">
             <set>
@@ -290,7 +283,7 @@ function buildSplashVector(shapes: SvgShape[], bgColor = '#FFFF5858'): string {
                     android:startOffset="200"
                     android:duration="100"
                     android:valueFrom="0"
-                    android:valueTo="1"
+                    android:valueTo="${fmtNum(Number(targetAlpha))}"
                     android:valueType="floatType"
                     android:interpolator="@android:interpolator/fast_out_slow_in" />
             </set>
@@ -392,24 +385,56 @@ ${planeTargetsXml}
 `
 }
 
-const fg = await loadSvg('src/res/launcher/icon.svg')
+function rasterizeSvg(svgString: string, width: number, height: number): Buffer {
+  try {
+    return execFileSync('resvg', [
+      '--resources-dir', '.',
+      '--quiet',
+      '-w', String(width),
+      '-h', String(height),
+      '-', '-c',
+    ], { input: Buffer.from(svgString, 'utf-8'), maxBuffer: 10 * 1024 * 1024 })
+  } catch {
+    return execFileSync('rsvg-convert', [
+      '-w', String(width),
+      '-h', String(height),
+      '-f', 'png',
+    ], { input: Buffer.from(svgString, 'utf-8'), maxBuffer: 10 * 1024 * 1024 })
+  }
+}
 
-const monoPath = join(rootDir, 'src/res/launcher/icon-mono.svg')
-const hasMono = await fs.access(monoPath).then(() => true, () => false)
-const mono = hasMono ? await loadSvg('src/res/launcher/icon-mono.svg') : fg
+const fg = await loadSvg('src/res/launcher/icon-foreground.svg')
+const shadowFile = (await fs.access(join(rootDir, 'src/res/launcher/icon-background-shadow.svg')).then(() => true, () => false))
+  ? 'src/res/launcher/icon-background-shadow.svg'
+  : 'src/res/launcher/icon-background.svg'
+const shadow = await loadSvg(shadowFile)
+const mono = await loadSvg('src/res/launcher/icon-mono.svg')
 
-const foreground = buildForegroundVector(fg.shapes, fg.srcW, fg.srcH, false, false, fg.bgColor)
-const foregroundDebug = buildForegroundVector(fg.shapes, fg.srcW, fg.srcH, false, true, fg.bgColor)
-const monochrome = buildForegroundVector(mono.shapes, mono.srcW, mono.srcH, true, false, fg.bgColor)
-const settingsIcon = buildSettingsVector(mono.shapes, mono.srcW, mono.srcH, fg.bgColor)
-const notificationIcon = buildNotificationVector(mono.shapes, mono.srcW, mono.srcH, fg.bgColor)
-const background = buildBackgroundVector(fg.bgColor)
+const foreground = buildForegroundVector(fg.shapes, fg.srcW, fg.srcH, false, BG_COLOR)
+const foregroundDebug = buildForegroundVector(fg.shapes, fg.srcW, fg.srcH, true, BG_COLOR)
+const monochrome = buildForegroundVector([...shadow.shapes, ...mono.shapes], mono.srcW, mono.srcH, false, BG_COLOR, '#FFFFFFFF')
+const settingsIcon = buildSettingsVector(mono.shapes, mono.srcW, mono.srcH)
+const notificationIcon = buildNotificationVector(mono.shapes, mono.srcW, mono.srcH)
+const background = buildBackgroundVector(shadow.shapes, shadow.srcW, shadow.srcH, BG_COLOR)
 const debugIcon = buildAdaptiveIcon('icon_foreground_inu_debug')
-const splashIcon = buildSplashVector(fg.shapes, fg.bgColor)
+const splashIcon = buildSplashVector([...shadow.shapes, ...fg.shapes], BG_COLOR)
 
-// the *_inu drawables back stock @mipmap/ic_launcher{,_round} (rewired by
-// misc__branding); the mipmap-debug wrappers override it for the debug build
-const targets: [string, string][] = [
+// construct full-color composited SVG over the circular #FF5858 background:
+// solid circle -> shadow shape (from background file) -> main shape (from foreground file)
+const shadowRaw = await fs.readFile(join(rootDir, shadowFile), 'utf8')
+const fgRaw = await fs.readFile(join(rootDir, 'src/res/launcher/icon-foreground.svg'), 'utf8')
+const shadowInner = shadowRaw.replace(/<\/?svg[^>]*>/gi, '').trim()
+const fgInner = fgRaw.replace(/<\/?svg[^>]*>/gi, '').trim()
+
+const compositedLauncherSvg = `<?xml version="1.0" encoding="utf-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="512" height="512" rx="256" fill="${BG_COLOR}" />
+${shadowInner}
+${fgInner}
+</svg>
+`
+
+const targets: [string, string | Buffer][] = [
   [`${GEN_DRAWABLE}/icon_background_inu.xml`, background],
   [`${GEN_DRAWABLE}/icon_plane_inu.xml`, monochrome],
   [`${GEN_DRAWABLE}/icon_foreground_inu.xml`, foreground],
@@ -420,11 +445,34 @@ const targets: [string, string][] = [
   [`${GEN_DEBUG_MIPMAP}/ic_launcher.xml`, debugIcon],
   [`${GEN_DEBUG_MIPMAP}/ic_launcher_round.xml`, debugIcon],
   ['src/res/drawable/inu_splash_320.xml', splashIcon],
+  ['src/res/drawable-xxhdpi/icon_notification_large_inu.png', rasterizeSvg(compositedLauncherSvg, 256, 256)],
 ]
+
+// legacy mipmap densities
+const MIPMAP_DENSITIES: [string, number][] = [
+  ['mdpi', 48],
+  ['hdpi', 72],
+  ['xhdpi', 96],
+  ['xxhdpi', 144],
+  ['xxxhdpi', 192],
+]
+
+for (const [density, size] of MIPMAP_DENSITIES) {
+  const buf = rasterizeSvg(compositedLauncherSvg, size, size)
+  targets.push([`worktree/TMessagesProj/src/main/res/mipmap-${density}/ic_launcher.png`, buf])
+  targets.push([`worktree/TMessagesProj/src/main/res/mipmap-${density}/ic_launcher_round.png`, buf])
+}
+
+// playstore and web assets at TMessagesProj/src/main/
+const storeBuf = rasterizeSvg(compositedLauncherSvg, 512, 512)
+targets.push(['worktree/TMessagesProj/src/main/ic_launcher-playstore.png', storeBuf])
+targets.push(['worktree/TMessagesProj/src/main/ic_launcher-web.png', storeBuf])
 
 let dirty = false
 for (const [rel, content] of targets) {
   if (await writeGenerated(rel, content)) dirty = true
 }
+
+await linkForkSource(worktreeDir).catch(() => {})
 
 success(dirty ? 'Launcher icons generated' : 'Launcher icons already up to date')
