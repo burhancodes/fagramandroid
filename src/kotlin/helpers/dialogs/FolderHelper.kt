@@ -242,7 +242,7 @@ object FolderHelper {
         }
 
         // 10. Favorite / Starred
-        val favStr = runCatching { getString(R.string.Favorites).lowercase() }.getOrNull()
+        val favStr = runCatching { getString(R.string.FavoriteStickersShort).lowercase() }.getOrNull()
         if (lower.contains("fav") || lower.contains("star") || lower == favStr) {
             return "\u2B50" // ⭐
         }
