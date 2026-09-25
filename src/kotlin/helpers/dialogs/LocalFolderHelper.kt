@@ -116,12 +116,12 @@ object LocalFolderHelper {
     fun getEmoticon(type: FolderType): String = when (type) {
         FolderType.USERS -> "\uD83D\uDC64" // 👤
         FolderType.GROUPS -> "\uD83D\uDC65" // 👥
-        FolderType.SUPERGROUPS -> "\u2734\uFE0F" // ✴️
-        FolderType.BASIC_GROUPS -> "\uD83C\uDDF4" // 🇴
+        FolderType.SUPERGROUPS -> "\uD83D\uDC65" // 👥
+        FolderType.BASIC_GROUPS -> "\uD83D\uDC65" // 👥
         FolderType.CHANNELS -> "\uD83D\uDCE2" // 📢
         FolderType.BOTS -> "\uD83E\uDD16" // 🤖
         FolderType.ADMIN -> "\uD83D\uDC51" // 👑
-        FolderType.UNREAD -> "\uD83D\uDCAC" // 💬
+        FolderType.UNREAD -> "\uD83D\uDCEB" // 📫
         FolderType.UNMUTED -> "\uD83D\uDD14" // 🔔
     }
 

@@ -8,7 +8,7 @@ import org.telegram.messenger.R
  * Icons: https://github.com/VKCOM/icons (MIT)
  */
 object VkIconPack : IconPack() {
-    override fun buildIcons() = SparseIntArray(65).apply {
+    override fun buildIcons() = SparseIntArray(80).apply {
         // Settings
         put(R.drawable.msg_settings, R.drawable.vkui_settings_outline_28)
         put(R.drawable.msg2_language, R.drawable.vkui_globe_outline_28)
@@ -86,5 +86,12 @@ object VkIconPack : IconPack() {
         put(R.drawable.filter_crown, R.drawable.vkui_favorite_outline_28)
         put(R.drawable.filter_home, R.drawable.vkui_services_outline_28)
         put(R.drawable.filter_note, R.drawable.vkui_bookmark_outline_28)
+        put(R.drawable.filter_user, R.drawable.vkui_user_outline_28)
+        put(R.drawable.filter_groups, R.drawable.vkui_messages_outline_28)
+        put(R.drawable.filter_channel, R.drawable.vkui_services_outline_28)
+        put(R.drawable.filter_bot, R.drawable.vkui_keyboard_bots_outline_28)
+        put(R.drawable.filter_star, R.drawable.vkui_favorite_outline_28)
+        put(R.drawable.filter_muted, R.drawable.vkui_notification_disable_outline_28)
+        put(R.drawable.msg_folders_muted, R.drawable.vkui_notification_disable_outline_28)
     }
 }

@@ -4,7 +4,7 @@ import android.util.SparseIntArray
 import org.telegram.messenger.R
 
 object SolarIconPack : IconPack() {
-    override fun buildIcons() = SparseIntArray(533).apply {
+    override fun buildIcons() = SparseIntArray(545).apply {
         put(R.drawable.arrow_more, R.drawable.arrow_more_solar)
         put(R.drawable.attach_send, R.drawable.attach_send_solar)
         put(R.drawable.bot_file, R.drawable.msg_round_file_solar)
@@ -537,6 +537,12 @@ object SolarIconPack : IconPack() {
         put(R.drawable.verified_area, R.drawable.verified_area_solar)
         put(R.drawable.verified_check, R.drawable.verified_check_solar)
         put(R.drawable.filter_channels, R.drawable.filter_channel_solar)
+        put(R.drawable.filter_channel, R.drawable.filter_channel_solar)
         put(R.drawable.filter_group, R.drawable.filter_groups_solar)
+        put(R.drawable.filter_groups, R.drawable.filter_groups_solar)
+        put(R.drawable.filter_bot, R.drawable.filter_bots_solar)
+        put(R.drawable.filter_star, R.drawable.filter_favorite_solar)
+        put(R.drawable.filter_user, R.drawable.filter_private_solar)
+        put(R.drawable.filter_muted, R.drawable.msg_folders_muted_solar)
     }
 }
