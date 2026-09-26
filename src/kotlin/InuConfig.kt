@@ -418,6 +418,9 @@ object InuConfig {
     val CLICKABLE_BIO_LINKS = BoolItem("clickable_bio_links", false)
 
     @JvmField
+    val MEMBERS_FILTER = BoolItem("members_filter", true)
+
+    @JvmField
     val DISABLE_MOTION_PHOTOS = BoolItem("disable_motion_photos", true)
 
     @JvmField

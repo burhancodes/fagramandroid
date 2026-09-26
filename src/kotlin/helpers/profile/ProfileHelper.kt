@@ -19,6 +19,7 @@ import xie.fa.gram.helpers.WebAppHelper
 import xie.fa.gram.helpers.chat.BlockedMessagesHelper
 import xie.fa.gram.helpers.chat.ChatHelper
 import xie.fa.gram.helpers.chat.ForumDisplayHelper
+import xie.fa.gram.ui.settings.RadioDialogBuilder
 import org.json.JSONArray
 import org.telegram.messenger.AccountInstance
 import org.telegram.messenger.AndroidUtilities
@@ -32,7 +33,9 @@ import org.telegram.messenger.MessagesStorage
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.UserObject
+import org.telegram.messenger.Utilities
 import org.telegram.messenger.support.LongSparseLongArray
+import org.telegram.tgnet.ConnectionsManager
 import org.telegram.tgnet.TLObject
 import org.telegram.tgnet.TLRPC
 import org.telegram.ui.ActionBar.ActionBarMenuItem
@@ -516,5 +519,226 @@ object ProfileHelper {
     @JvmStatic
     fun resolveLastFmUsername(about: String?, isSelf: Boolean): String? {
         return resolveLastFmUsername(org.telegram.messenger.UserConfig.selectedAccount, about, isSelf)
+    }
+
+    const val MEMBERS_FILTER_ALL = 0
+    const val MEMBERS_FILTER_ADMINS = 1
+    const val MEMBERS_FILTER_BOTS = 2
+    const val MEMBERS_FILTER_DELETED = 3
+
+    private val backupParticipantsMap = LongSparseArray<TLRPC.TL_chatParticipants>()
+    private val backupParticipantsIdMap = LongSparseArray<LongSparseArray<TLRPC.ChatParticipant>>()
+
+    @JvmStatic
+    fun isMembersFilterEnabled(): Boolean = InuConfig.MEMBERS_FILTER.value
+
+    @JvmStatic
+    fun getMembersFilterName(filter: Int): String = when (filter) {
+        MEMBERS_FILTER_ADMINS -> LocaleController.getString(R.string.InuMembersFilterAdmins)
+        MEMBERS_FILTER_BOTS -> LocaleController.getString(R.string.InuMembersFilterBots)
+        MEMBERS_FILTER_DELETED -> LocaleController.getString(R.string.InuMembersFilterDeleted)
+        else -> LocaleController.getString(R.string.InuMembersFilterAll)
+    }
+
+    @JvmStatic
+    fun isMembersFilterSupported(currentChat: TLRPC.Chat?): Boolean {
+        if (currentChat == null) return false
+        return !ChatObject.isChannel(currentChat) || currentChat.megagroup
+    }
+
+    @JvmStatic
+    fun openMembersFilterDialog(
+        fragment: ProfileActivity,
+        currentFilter: Int,
+        onSelect: Utilities.Callback<Int>
+    ) {
+        if (!isMembersFilterSupported(fragment.currentChat)) {
+            return
+        }
+        val context = fragment.context ?: return
+        val items = listOf(
+            RadioDialogBuilder.Item(LocaleController.getString(R.string.InuMembersFilterAll)),
+            RadioDialogBuilder.Item(LocaleController.getString(R.string.InuMembersFilterAdmins)),
+            RadioDialogBuilder.Item(LocaleController.getString(R.string.InuMembersFilterBots)),
+            RadioDialogBuilder.Item(LocaleController.getString(R.string.InuMembersFilterDeleted)),
+        )
+        RadioDialogBuilder(context, fragment.resourceProvider)
+            .setTitle(LocaleController.getString(R.string.InuMembersFilter))
+            .setItems(items, currentFilter) { _, which ->
+                onSelect.run(which)
+            }
+            .setNegativeButton(LocaleController.getString(R.string.Cancel), null)
+            .show()
+    }
+
+    @JvmStatic
+    fun createChannelParticipantsFilter(filter: Int): TLRPC.ChannelParticipantsFilter = when (filter) {
+        MEMBERS_FILTER_ADMINS -> TLRPC.TL_channelParticipantsAdmins()
+        MEMBERS_FILTER_BOTS -> TLRPC.TL_channelParticipantsBots()
+        else -> TLRPC.TL_channelParticipantsRecent()
+    }
+
+    @JvmStatic
+    fun isParticipantAdmin(part: TLRPC.ChatParticipant): Boolean {
+        return if (part is TLRPC.TL_chatChannelParticipant) {
+            val cp = part.channelParticipant
+            cp is TLRPC.TL_channelParticipantCreator || cp is TLRPC.TL_channelParticipantAdmin
+        } else {
+            part is TLRPC.TL_chatParticipantCreator || part is TLRPC.TL_chatParticipantAdmin
+        }
+    }
+
+    @JvmStatic
+    fun isParticipantMatchingFilter(
+        currentAccount: Int,
+        participant: TLRPC.ChatParticipant,
+        user: TLRPC.User?,
+        filter: Int
+    ): Boolean = when (filter) {
+        MEMBERS_FILTER_ADMINS -> isParticipantAdmin(participant)
+        MEMBERS_FILTER_BOTS -> user != null && user.bot
+        MEMBERS_FILTER_DELETED -> user != null && UserObject.isDeleted(user)
+        else -> true
+    }
+
+    @JvmStatic
+    fun buildSortedUsers(
+        currentAccount: Int,
+        currentChat: TLRPC.Chat?,
+        chatInfo: TLRPC.ChatFull?,
+        sortedUsers: ArrayList<Int>,
+        filter: Int
+    ): Int {
+        if (!isMembersFilterSupported(currentChat)) return 0
+        if (chatInfo?.participants?.participants == null) return 0
+        sortedUsers.clear()
+        var onlineCount = 0
+        val currentTime = ConnectionsManager.getInstance(currentAccount).currentTime
+        val clientUserId = UserConfig.getInstance(currentAccount).clientUserId
+        val messagesController = MessagesController.getInstance(currentAccount)
+        val participants = chatInfo.participants.participants
+        val size = participants.size
+        val sortNums = IntArray(size)
+
+        for (a in 0 until size) {
+            val participant = participants[a] ?: continue
+            val user = messagesController.getUser(participant.user_id)
+            if (user != null && user.status != null && (user.status.expires > currentTime || user.id == clientUserId) && user.status.expires > 10000) {
+                onlineCount++
+            }
+            if (!isParticipantMatchingFilter(currentAccount, participant, user, filter)) {
+                continue
+            }
+            sortedUsers.add(a)
+            var sort = Int.MIN_VALUE
+            if (user != null) {
+                sort = when {
+                    user.bot -> -110
+                    user.self -> currentTime + 50000
+                    user.status != null -> user.status.expires
+                    else -> Int.MIN_VALUE
+                }
+            }
+            sortNums[a] = sort
+        }
+
+        try {
+            sortedUsers.sortWith { hs1, hs2 ->
+                sortNums[hs2].compareTo(sortNums[hs1])
+            }
+        } catch (e: Exception) {
+            FileLog.e(e)
+        }
+        return onlineCount
+    }
+
+    private fun backupParticipants(chatId: Long, chatInfo: TLRPC.ChatFull, participantsMap: LongSparseArray<TLRPC.ChatParticipant>?) {
+        if (chatInfo.participants != null && backupParticipantsMap.indexOfKey(chatId) < 0) {
+            val copy = TLRPC.TL_chatParticipants().apply {
+                participants.addAll(chatInfo.participants.participants)
+            }
+            backupParticipantsMap.put(chatId, copy)
+        }
+        if (participantsMap != null && backupParticipantsIdMap.indexOfKey(chatId) < 0) {
+            val copyMap = LongSparseArray<TLRPC.ChatParticipant>()
+            for (i in 0 until participantsMap.size()) {
+                copyMap.put(participantsMap.keyAt(i), participantsMap.valueAt(i))
+            }
+            backupParticipantsIdMap.put(chatId, copyMap)
+        }
+    }
+
+    private fun restoreParticipants(chatId: Long, chatInfo: TLRPC.ChatFull, participantsMap: LongSparseArray<TLRPC.ChatParticipant>?) {
+        val backup = backupParticipantsMap.get(chatId)
+        if (backup != null) {
+            chatInfo.participants = TLRPC.TL_chatParticipants().apply {
+                participants.addAll(backup.participants)
+            }
+        }
+        val backupMap = backupParticipantsIdMap.get(chatId)
+        if (backupMap != null && participantsMap != null) {
+            participantsMap.clear()
+            for (i in 0 until backupMap.size()) {
+                participantsMap.put(backupMap.keyAt(i), backupMap.valueAt(i))
+            }
+        }
+    }
+
+    private fun clearParticipantsBackup(chatId: Long) {
+        backupParticipantsMap.remove(chatId)
+        backupParticipantsIdMap.remove(chatId)
+    }
+
+    @JvmStatic
+    fun applyMembersFilter(activity: ProfileActivity, newFilter: Int) {
+        val currentChat = activity.currentChat
+        if (!isMembersFilterSupported(currentChat)) {
+            return
+        }
+        val oldFilter = activity.inu_membersFilter
+        activity.inu_membersFilter = newFilter
+        val chatInfo = activity.chatInfo
+
+        if (ChatObject.isChannel(currentChat) && currentChat.megagroup && chatInfo != null && chatInfo.participants_count > 200) {
+            if (oldFilter == MEMBERS_FILTER_ALL && newFilter != MEMBERS_FILTER_ALL) {
+                backupParticipants(activity.chatId, chatInfo, activity.participantsMap)
+            }
+            when (newFilter) {
+                MEMBERS_FILTER_ADMINS, MEMBERS_FILTER_BOTS -> {
+                    activity.getChannelParticipants(true)
+                }
+                MEMBERS_FILTER_ALL -> {
+                    if (backupParticipantsMap.indexOfKey(activity.chatId) >= 0) {
+                        restoreParticipants(activity.chatId, chatInfo, activity.participantsMap)
+                        activity.updateOnlineCount(false)
+                        activity.updateListAnimated(true)
+                    } else {
+                        activity.getChannelParticipants(true)
+                    }
+                }
+                MEMBERS_FILTER_DELETED -> {
+                    if (oldFilter != MEMBERS_FILTER_ALL && backupParticipantsMap.indexOfKey(activity.chatId) >= 0) {
+                        restoreParticipants(activity.chatId, chatInfo, activity.participantsMap)
+                    }
+                    activity.updateOnlineCount(false)
+                    activity.updateListAnimated(true)
+                }
+            }
+        } else {
+            activity.updateOnlineCount(false)
+            activity.updateListAnimated(true)
+            if (activity.sharedMediaLayout != null && activity.sortedUsers != null && chatInfo != null) {
+                activity.sharedMediaLayout.setChatUsers(activity.sortedUsers, chatInfo)
+            }
+        }
+    }
+
+    @JvmStatic
+    fun onDestroyProfile(activity: ProfileActivity) {
+        val chatInfo = activity.chatInfo
+        if (chatInfo != null && backupParticipantsMap.indexOfKey(activity.chatId) >= 0) {
+            restoreParticipants(activity.chatId, chatInfo, activity.participantsMap)
+        }
+        clearParticipantsBackup(activity.chatId)
     }
 }

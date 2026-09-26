@@ -1,0 +1,422 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sat, 26 Sep 2026 14:46:58 +0530
+Subject: Add members filter to group/channel profile
+
+---
+ .../ui/Components/SharedMediaLayout.java      |  49 +++++--
+ .../java/org/telegram/ui/ProfileActivity.java | 125 ++++++++++--------
+ 2 files changed, 108 insertions(+), 66 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/SharedMediaLayout.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/SharedMediaLayout.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/SharedMediaLayout.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/SharedMediaLayout.java
+@@ -3217,15 +3217,18 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
+                     if (view instanceof UserCell) {
+                         TLRPC.ChatParticipant participant;
+                         final int i;
+-                        if (!chatUsersAdapter.sortedUsers.isEmpty()) {
++                        if (chatUsersAdapter.sortedUsers != null && !chatUsersAdapter.sortedUsers.isEmpty()) {
++                            if (position >= chatUsersAdapter.sortedUsers.size()) {
++                                return;
++                            }
+                             i = chatUsersAdapter.sortedUsers.get(position);
+                         } else {
+                             i = position;
+                         }
+-                        participant = chatUsersAdapter.chatInfo.participants.participants.get(i);
+-                        if (i < 0 || i >= chatUsersAdapter.chatInfo.participants.participants.size()) {
++                        if (chatUsersAdapter.chatInfo == null || chatUsersAdapter.chatInfo.participants == null || i < 0 || i >= chatUsersAdapter.chatInfo.participants.participants.size()) {
+                             return;
+                         }
++                        participant = chatUsersAdapter.chatInfo.participants.participants.get(i);
+                         onMemberClick(participant, false, view);
+                     } else if (mediaPage.listView.getAdapter() == groupUsersSearchAdapter) {
+                         long user_id;
+@@ -3567,13 +3570,13 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
+                     if (mediaPage.selectedType == TAB_GROUPUSERS && view instanceof UserCell) {
+                         final TLRPC.ChatParticipant participant;
+                         int index = position;
+-                        if (!chatUsersAdapter.sortedUsers.isEmpty()) {
++                        if (chatUsersAdapter.sortedUsers != null && !chatUsersAdapter.sortedUsers.isEmpty()) {
+                             if (position >= chatUsersAdapter.sortedUsers.size()) {
+                                 return false;
+                             }
+                             index = chatUsersAdapter.sortedUsers.get(position);
+                         }
+-                        if (index < 0 || index >= chatUsersAdapter.chatInfo.participants.participants.size()) {
++                        if (chatUsersAdapter.chatInfo == null || chatUsersAdapter.chatInfo.participants == null || index < 0 || index >= chatUsersAdapter.chatInfo.participants.participants.size()) {
+                             return false;
+                         }
+                         participant = chatUsersAdapter.chatInfo.participants.participants.get(index);
+@@ -11069,10 +11072,19 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
+ 
+         @Override
+         public int getItemCount() {
+-            if (chatInfo != null && chatInfo.participants.participants.isEmpty()) {
++            if (chatInfo != null && chatInfo.participants != null && chatInfo.participants.participants.isEmpty()) {
+                 return 1;
+             }
+-            return chatInfo != null ? chatInfo.participants.participants.size() : 0;
++            if (profileActivity instanceof ProfileActivity && ((ProfileActivity) profileActivity).inu_membersFilter != 0 && xie.fa.gram.helpers.profile.ProfileHelper.isMembersFilterSupported(((ProfileActivity) profileActivity).currentChat)) {
++                if (sortedUsers == null || sortedUsers.isEmpty()) {
++                    return 1;
++                }
++                return sortedUsers.size();
++            }
++            if (sortedUsers != null && !sortedUsers.isEmpty()) {
++                return sortedUsers.size();
++            }
++            return chatInfo != null && chatInfo.participants != null ? chatInfo.participants.participants.size() : 0;
+         }
+ 
+         public void updateRank(long userId, String rank) {
+@@ -11103,9 +11115,19 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
+             }
+             UserCell userCell = (UserCell) holder.itemView;
+             TLRPC.ChatParticipant part;
+-            if (!sortedUsers.isEmpty()) {
+-                part = chatInfo.participants.participants.get(sortedUsers.get(position));
++            if (sortedUsers != null && !sortedUsers.isEmpty()) {
++                if (position >= sortedUsers.size()) {
++                    return;
++                }
++                int idx = sortedUsers.get(position);
++                if (chatInfo == null || chatInfo.participants == null || idx < 0 || idx >= chatInfo.participants.participants.size()) {
++                    return;
++                }
++                part = chatInfo.participants.participants.get(idx);
+             } else {
++                if (chatInfo == null || chatInfo.participants == null || position < 0 || position >= chatInfo.participants.participants.size()) {
++                    return;
++                }
+                 part = chatInfo.participants.participants.get(position);
+             }
+             if (part != null) {
+@@ -11153,15 +11175,20 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
+                 userCell.setAdminRole(role, isAdmin, isOwner, showAddTag, v -> {
+                     TagEditCell.showInfoSheet(getContext(), profileActivity.getCurrentAccount(), dialog_id, user, finalRole, isAdmin, isOwner, canEditAdmin, resourcesProvider);
+                 });
+-                userCell.setData(user, null, null, 0, position != chatInfo.participants.participants.size() - 1);
++                userCell.setData(user, null, null, 0, position != getItemCount() - 1);
+             }
+         }
+ 
+         @Override
+         public int getItemViewType(int i) {
+-            if (chatInfo != null && chatInfo.participants.participants.isEmpty()) {
++            if (chatInfo != null && chatInfo.participants != null && chatInfo.participants.participants.isEmpty()) {
+                 return VIEW_TYPE_GROUPUSER_EMPTY;
+             }
++            if (profileActivity instanceof ProfileActivity && ((ProfileActivity) profileActivity).inu_membersFilter != 0 && xie.fa.gram.helpers.profile.ProfileHelper.isMembersFilterSupported(((ProfileActivity) profileActivity).currentChat)) {
++                if (sortedUsers == null || sortedUsers.isEmpty()) {
++                    return VIEW_TYPE_GROUPUSER_EMPTY;
++                }
++            }
+             return VIEW_TYPE_GROUPUSER;
+         }
+     }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -343,6 +343,7 @@ import java.util.concurrent.atomic.AtomicReference;
+ import java.util.zip.ZipEntry;
+ import java.util.zip.ZipOutputStream;
+ 
++import xie.fa.gram.InuConfig;
+ import xie.fa.gram.helpers.dialogs.MainTabsHelper;
+ import xie.fa.gram.helpers.profile.ProfileHelper;
+ import me.vkryl.android.animator.BoolAnimator;
+@@ -464,7 +465,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private int actionBarBackgroundColor;
+     private TopView topView;
+     private long userId;
+-    private long chatId;
++    public long chatId;
+     private long topicId;
+     public boolean saved;
+     private long dialogId;
+@@ -490,7 +491,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private boolean canSearchMembers;
+ 
+     private boolean loadingUsers;
+-    private LongSparseArray<TLRPC.ChatParticipant> participantsMap = new LongSparseArray<>();
++    public LongSparseArray<TLRPC.ChatParticipant> participantsMap = new LongSparseArray<>();
+     private boolean usersEndReached;
+ 
+     private long banFromGroup;
+@@ -543,7 +544,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private BotLocation botLocation;
+     private BotBiometry botBiometry;
+ 
+-    private TLRPC.ChatFull chatInfo;
++    public TLRPC.ChatFull chatInfo;
+     private TLRPC.UserFull userInfo;
+ 
+     public ProfileChannelCell.ChannelMessageFetcher profileChannelMessageFetcher;
+@@ -554,10 +555,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+     private long selectedUser;
+     private int onlineCount = -1;
+-    private ArrayList<Integer> sortedUsers;
++    public ArrayList<Integer> sortedUsers;
+ 
+     private TLRPC.EncryptedChat currentEncryptedChat;
+-    private TLRPC.Chat currentChat;
++    public TLRPC.Chat currentChat;
+     private TL_bots.BotInfo botInfo;
+     private TLRPC.ChannelParticipant currentChannelParticipant;
+     private TL_account.TL_password currentPassword;
+@@ -711,6 +712,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private int membersHeaderRow;
+     private int membersStartRow;
+     private int membersEndRow;
++    public int inu_membersFilterRow;
++    public int inu_membersFilter;
+     private int addMemberRow;
+     private int subscribersRow;
+     private int subscribersRequestsRow;
+@@ -2370,6 +2373,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     @Override
+     public void onFragmentDestroy() {
+         super.onFragmentDestroy();
++        xie.fa.gram.helpers.profile.ProfileHelper.onDestroyProfile(this);
+         if (sharedMediaLayout != null) {
+             sharedMediaLayout.onDestroy();
+         }
+@@ -4522,6 +4526,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     participant = chatInfo.participants.participants.get(position - membersStartRow);
+                 }
+                 onMemberClick(participant, false, view);
++            } else if (position == inu_membersFilterRow) {
++                ProfileHelper.openMembersFilterDialog(this, inu_membersFilter, newFilter -> {
++                    if (inu_membersFilter != newFilter) {
++                        ProfileHelper.applyMembersFilter(this, newFilter);
++                    }
++                });
+             } else if (position == addMemberRow) {
+                 openAddMember();
+             } else if (position == usernameRow) {
+@@ -7734,16 +7744,19 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         }));
+     }
+ 
+-    private void getChannelParticipants(boolean reload) {
+-        if (loadingUsers || participantsMap == null || chatInfo == null) {
++    public void getChannelParticipants(boolean reload) {
++        if (loadingUsers || participantsMap == null || chatInfo == null || !ProfileHelper.isMembersFilterSupported(currentChat)) {
+             return;
+         }
+         loadingUsers = true;
++        if (reload) {
++            usersEndReached = false;
++        }
+         final int delay = participantsMap.size() != 0 && reload ? 300 : 0;
+ 
+         final TLRPC.TL_channels_getParticipants req = new TLRPC.TL_channels_getParticipants();
+         req.channel = getMessagesController().getInputChannel(chatId);
+-        req.filter = new TLRPC.TL_channelParticipantsRecent();
++        req.filter = ProfileHelper.createChannelParticipantsFilter(inu_membersFilter);
+         req.offset = reload ? 0 : participantsMap.size();
+         req.limit = 200;
+         int reqId = getConnectionsManager().sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> getNotificationCenter().doOnIdle(() -> {
+@@ -7757,8 +7770,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 if (req.offset == 0) {
+                     participantsMap.clear();
+                     chatInfo.participants = new TLRPC.TL_chatParticipants();
+-                    getMessagesStorage().putUsersAndChats(res.users, res.chats, true, true);
+-                    getMessagesStorage().updateChannelUsers(chatId, res.participants);
++                    if (inu_membersFilter == 0) {
++                        getMessagesStorage().putUsersAndChats(res.users, res.chats, true, true);
++                        getMessagesStorage().updateChannelUsers(chatId, res.participants);
++                    }
+                 }
+                 for (int a = 0; a < res.participants.size(); a++) {
+                     TLRPC.TL_chatChannelParticipant participant = new TLRPC.TL_chatChannelParticipant();
+@@ -10365,42 +10380,17 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         return AndroidUtilities.calcBitmapColor(avatarImage.getImageReceiver().getBitmap());
+     }
+ 
+-    private void updateOnlineCount(boolean notify) {
++    public void updateOnlineCount(boolean notify) {
+         onlineCount = 0;
+         int currentTime = getConnectionsManager().getCurrentTime();
+         sortedUsers.clear();
+-        if (chatInfo instanceof TLRPC.TL_chatFull || chatInfo instanceof TLRPC.TL_channelFull && chatInfo.participants_count <= 200 && chatInfo.participants != null) {
+-            final ArrayList<Integer> sortNum = new ArrayList<>();
+-            for (int a = 0; a < chatInfo.participants.participants.size(); a++) {
+-                TLRPC.ChatParticipant participant = chatInfo.participants.participants.get(a);
+-                TLRPC.User user = getMessagesController().getUser(participant.user_id);
+-                if (user != null && user.status != null && (user.status.expires > currentTime || user.id == getUserConfig().getClientUserId()) && user.status.expires > 10000) {
+-                    onlineCount++;
+-                }
+-                sortedUsers.add(a);
+-                int sort = Integer.MIN_VALUE;
+-                if (user != null) {
+-                    if (user.bot) {
+-                        sort = -110;
+-                    } else if (user.self) {
+-                        sort = currentTime + 50000;
+-                    } else if (user.status != null) {
+-                        sort = user.status.expires;
+-                    }
+-                }
+-                sortNum.add(sort);
+-            }
+-
+-            try {
+-                Collections.sort(sortedUsers, Comparator.comparingInt(hs -> sortNum.get((int) hs)).reversed());
+-            } catch (Exception e) {
+-                FileLog.e(e);
+-            }
++        if (ProfileHelper.isMembersFilterSupported(currentChat) && (inu_membersFilter != 0 || chatInfo instanceof TLRPC.TL_chatFull || chatInfo instanceof TLRPC.TL_channelFull && chatInfo.participants_count <= 200 && chatInfo.participants != null)) {
++            onlineCount = ProfileHelper.buildSortedUsers(currentAccount, currentChat, chatInfo, sortedUsers, inu_membersFilter);
+ 
+             if (notify && listAdapter != null && membersStartRow > 0) {
+                 AndroidUtilities.updateVisibleRows(listView);
+             }
+-            if (sharedMediaLayout != null && sharedMediaRow != -1 && (sortedUsers.size() > 5 || usersForceShowingIn == 2) && usersForceShowingIn != 1) {
++            if (sharedMediaLayout != null && sharedMediaRow != -1 && (sortedUsers.size() > 5 || usersForceShowingIn == 2 || inu_membersFilter != 0) && usersForceShowingIn != 1) {
+                 sharedMediaLayout.setChatUsers(sortedUsers, chatInfo);
+             }
+         } else if (chatInfo instanceof TLRPC.TL_channelFull && chatInfo.participants_count > 200) {
+@@ -10647,6 +10637,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         membersHeaderRow = -1;
+         membersStartRow = -1;
+         membersEndRow = -1;
++        inu_membersFilterRow = -1;
+         addMemberRow = -1;
+         subscribersRow = -1;
+         subscribersRequestsRow = -1;
+@@ -11075,13 +11066,16 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             }
+ 
+             if (ChatObject.isChannel(currentChat)) {
+-                if (!isTopic && chatInfo != null && currentChat.megagroup && chatInfo.participants != null && chatInfo.participants.participants != null && !chatInfo.participants.participants.isEmpty()) {
++                if (!isTopic && chatInfo != null && currentChat.megagroup && chatInfo.participants != null && chatInfo.participants.participants != null && (!chatInfo.participants.participants.isEmpty() || inu_membersFilter != 0)) {
++                    if (InuConfig.MEMBERS_FILTER.getValue() && ProfileHelper.isMembersFilterSupported(currentChat)) {
++                        inu_membersFilterRow = rowCount++;
++                    }
+                     if (!ChatObject.isNotInChat(currentChat) && ChatObject.canAddUsers(currentChat) && chatInfo.participants_count < getMessagesController().maxMegagroupCount) {
+                         addMemberRow = rowCount++;
+                     }
+-                    int count = chatInfo.participants.participants.size();
++                    int count = (inu_membersFilter != 0 && sortedUsers != null) ? sortedUsers.size() : chatInfo.participants.participants.size();
+                     if ((count <= 5 || !hasMedia || usersForceShowingIn == 1) && usersForceShowingIn != 2) {
+-                        if (addMemberRow == -1 && actionsView == null) {
++                        if (addMemberRow == -1 && inu_membersFilterRow == -1 && actionsView == null) {
+                             membersHeaderRow = rowCount++;
+                         }
+                         membersStartRow = rowCount;
+@@ -11097,11 +11091,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                             sharedMediaLayout.setChatUsers(null, null);
+                         }
+                     } else {
+-                        if (addMemberRow != -1) {
++                        if (addMemberRow != -1 || inu_membersFilterRow != -1) {
+                             membersSectionRow = rowCount++;
+                         }
+                         if (sharedMediaLayout != null) {
+-                            if (!sortedUsers.isEmpty()) {
++                            if (!sortedUsers.isEmpty() || inu_membersFilter != 0) {
+                                 usersForceShowingIn = 2;
+                             }
+                             sharedMediaLayout.setChatUsers(sortedUsers, chatInfo);
+@@ -11130,16 +11124,19 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 }
+             } else if (chatInfo != null) {
+                 if (!isTopic && chatInfo.participants != null && chatInfo.participants.participants != null && !(chatInfo.participants instanceof TLRPC.TL_chatParticipantsForbidden)) {
++                    if (InuConfig.MEMBERS_FILTER.getValue() && ProfileHelper.isMembersFilterSupported(currentChat)) {
++                        inu_membersFilterRow = rowCount++;
++                    }
+                     if (ChatObject.canAddUsers(currentChat) || currentChat.default_banned_rights == null || !currentChat.default_banned_rights.invite_users) {
+                         addMemberRow = rowCount++;
+                     }
+-                    int count = chatInfo.participants.participants.size();
++                    int count = (inu_membersFilter != 0 && sortedUsers != null) ? sortedUsers.size() : chatInfo.participants.participants.size();
+                     if (count <= 5 || !hasMedia) {
+-                        if (addMemberRow == -1 && actionsView == null) {
++                        if (addMemberRow == -1 && inu_membersFilterRow == -1 && actionsView == null) {
+                             membersHeaderRow = rowCount++;
+                         }
+                         membersStartRow = rowCount;
+-                        rowCount += chatInfo.participants.participants.size();
++                        rowCount += count;
+                         membersEndRow = rowCount;
+                         membersSectionRow = rowCount++;
+                         visibleChatParticipants.addAll(chatInfo.participants.participants);
+@@ -11150,7 +11147,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                             sharedMediaLayout.setChatUsers(null, null);
+                         }
+                     } else {
+-                        if (addMemberRow != -1) {
++                        if (addMemberRow != -1 || inu_membersFilterRow != -1) {
+                             membersSectionRow = rowCount++;
+                         }
+                         if (sharedMediaLayout != null) {
+@@ -13969,6 +13966,14 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         } else {
+                             textCell.setTextAndIcon(LocaleController.getString(R.string.ChannelBlacklist), R.drawable.msg_user_remove, position != membersSectionRow - 1);
+                         }
++                    } else if (position == inu_membersFilterRow) {
++                        textCell.setColors(Theme.key_windowBackgroundWhiteGrayIcon, Theme.key_windowBackgroundWhiteBlackText);
++                        textCell.setTextAndValueAndIcon(
++                            LocaleController.getString(R.string.InuMembersFilter),
++                            ProfileHelper.getMembersFilterName(inu_membersFilter),
++                            R.drawable.inu_tabler_filter,
++                            addMemberRow != -1 || (position + 1 >= membersStartRow && position + 1 < membersEndRow) || (membersSectionRow != -1 && position != membersSectionRow - 1)
++                        );
+                     } else if (position == addMemberRow) {
+                         textCell.setColors(Theme.key_windowBackgroundWhiteGrayIcon, Theme.key_windowBackgroundWhiteBlackText);
+                         boolean isNextPositionMember = position + 1 >= membersStartRow && position + 1 < membersEndRow;
+@@ -14498,7 +14503,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 return VIEW_TYPE_ABOUT_LINK;
+             } else if (position == settingsTimerRow || position == settingsKeyRow || position == reportRow || position == reportReactionRow || position == deleteReactionRow ||
+                     position == subscribersRow || position == subscribersRequestsRow || position == administratorsRow || position == settingsRow || position == blockedUsersRow ||
+-                    position == addMemberRow || position == joinRow || position == unblockRow ||
++                    position == inu_membersFilterRow || position == addMemberRow || position == joinRow || position == unblockRow ||
+                     position == sendMessageRow || position == notificationRow || position == privacyRow ||
+                     position == languageRow || position == dataRow || position == chatRow ||
+                     position == questionRow || position == devicesRow || position == filtersRow || position == stickersRow ||
+@@ -15834,16 +15839,25 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 if (oldItemPosition >= oldMembersStartRow && oldItemPosition < oldMembersEndRow) {
+                     TLRPC.ChatParticipant oldItem;
+                     TLRPC.ChatParticipant newItem;
+-                    if (!oldChatParticipantSorted.isEmpty()) {
+-                        oldItem = oldChatParticipant.get(oldChatParticipantSorted.get(oldItemPosition - oldMembersStartRow));
+-                    } else {
++                    if (!oldChatParticipantSorted.isEmpty() && oldItemPosition - oldMembersStartRow < oldChatParticipantSorted.size()) {
++                        int idx = oldChatParticipantSorted.get(oldItemPosition - oldMembersStartRow);
++                        oldItem = idx < oldChatParticipant.size() ? oldChatParticipant.get(idx) : null;
++                    } else if (oldItemPosition - oldMembersStartRow < oldChatParticipant.size()) {
+                         oldItem = oldChatParticipant.get(oldItemPosition - oldMembersStartRow);
++                    } else {
++                        oldItem = null;
+                     }
+ 
+-                    if (!sortedUsers.isEmpty()) {
+-                        newItem = visibleChatParticipants.get(visibleSortedUsers.get(newItemPosition - membersStartRow));
+-                    } else {
++                    if (!sortedUsers.isEmpty() && newItemPosition - membersStartRow < visibleSortedUsers.size()) {
++                        int idx = visibleSortedUsers.get(newItemPosition - membersStartRow);
++                        newItem = idx < visibleChatParticipants.size() ? visibleChatParticipants.get(idx) : null;
++                    } else if (newItemPosition - membersStartRow < visibleChatParticipants.size()) {
+                         newItem = visibleChatParticipants.get(newItemPosition - membersStartRow);
++                    } else {
++                        newItem = null;
++                    }
++                    if (oldItem == null || newItem == null) {
++                        return false;
+                     }
+                     return oldItem.user_id == newItem.user_id;
+                 }
+@@ -15929,6 +15943,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             put(++pointer, settingsKeyRow, sparseIntArray);
+             put(++pointer, secretSettingsSectionRow, sparseIntArray);
+             put(++pointer, membersHeaderRow, sparseIntArray);
++            put(++pointer, inu_membersFilterRow, sparseIntArray);
+             put(++pointer, addMemberRow, sparseIntArray);
+             put(++pointer, subscribersRow, sparseIntArray);
+             put(++pointer, subscribersRequestsRow, sparseIntArray);

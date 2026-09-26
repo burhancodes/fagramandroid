@@ -793,4 +793,12 @@
     <string name="InuBuiltInFolderBasicGroups">Basic Groups</string>
     <string name="InuBuiltInFolderSupergroups">Supergroups</string>
     <string name="InuBuiltInFolderAdmin">Administrator</string>
+
+    <!-- Members filter -->
+    <string name="InuMembersFilter">Members filter</string>
+    <string name="InuMembersFilterInfo">Filter group members by category</string>
+    <string name="InuMembersFilterAll">All</string>
+    <string name="InuMembersFilterAdmins">Administrators</string>
+    <string name="InuMembersFilterBots">Bots</string>
+    <string name="InuMembersFilterDeleted">Deleted Account</string>
 </resources>

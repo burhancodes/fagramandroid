@@ -217,6 +217,7 @@ most things are toggleable in `Settings → Inugram`, with sensible opinionated 
 - 🐶 disable scroll-snap in profile
 - 🐶 reduce profile motion (skip various enter animations, disable avatar scale-on-scroll effect)
 - 🐶 prefer "Media" tab in profile over Gifts/Posts
+- 🐶 members filter in group/channel profiles: filter member list by All, Administrators, Bots, or Deleted Accounts
 - Last.fm Now Playing profile card (with #np:&lt;username&gt; bio tag sync, rotating disc silhouette window and dynamic accent rim stroke over static album art while playing, plus parallel iTunes & MusicBrainz/Cover Art Archive fallback cover resolution) - *ported from FAgramDesktop*
 - clickable links in user bios
 - 🐶 recyclerlistview instant-tap
