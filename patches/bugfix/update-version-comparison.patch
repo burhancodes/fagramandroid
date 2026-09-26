@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sat, 26 Sep 2026 14:08:55 +0530
+Subject: Fix NumberFormatException in update check when comparing hyphenated version strings
+
+---
+ .../org/telegram/messenger/BetaUpdate.java    |  2 +-
+ .../org/telegram/messenger/SharedConfig.java  | 27 ++++++++++++++++---
+ 2 files changed, 25 insertions(+), 4 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/BetaUpdate.java b/TMessagesProj/src/main/java/org/telegram/messenger/BetaUpdate.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/BetaUpdate.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/BetaUpdate.java
+@@ -17,7 +17,7 @@ public class BetaUpdate {
+     }
+ 
+     public boolean higherThan(BetaUpdate update) {
+-        return update == null || SharedConfig.versionBiggerOrEqual(version, update.version) && versionCode > update.versionCode;
++        return update == null || versionCode > update.versionCode;
+     }
+ 
+ }
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
+@@ -581,7 +581,13 @@ public class SharedConfig {
+                     if (updateVersionString == null) {
+                         updateVersionString = BuildVars.BUILD_VERSION_STRING;
+                     }
+-                    if (pendingAppUpdateBuildVersion != updateVersion || pendingAppUpdate.version == null || updateVersionString.compareTo(pendingAppUpdate.version) >= 0 || BuildVars.DEBUG_PRIVATE_VERSION) {
++                    boolean clearPending;
++                    if (ApplicationLoader.applicationLoaderInstance != null && ApplicationLoader.applicationLoaderInstance.isCustomUpdate()) {
++                        clearPending = pendingAppUpdateBuildVersion != updateVersion || pendingAppUpdate.version == null;
++                    } else {
++                        clearPending = pendingAppUpdateBuildVersion != updateVersion || pendingAppUpdate.version == null || updateVersionString.compareTo(pendingAppUpdate.version) >= 0 || BuildVars.DEBUG_PRIVATE_VERSION;
++                    }
++                    if (clearPending) {
+                         pendingAppUpdate = null;
+                         AndroidUtilities.runOnUIThread(SharedConfig::saveConfig);
+                     }
+@@ -816,11 +822,26 @@ public class SharedConfig {
+ 
+     // returns a >= b
+     public static boolean versionBiggerOrEqual(String a, String b) {
++        if (a == null || b == null) {
++            return true;
++        }
+         String[] partsA = a.split("\\.");
+         String[] partsB = b.split("\\.");
+         for (int i = 0; i < Math.min(partsA.length, partsB.length); ++i) {
+-            int numA = Integer.parseInt(partsA[i]);
+-            int numB = Integer.parseInt(partsB[i]);
++            int numA = 0;
++            int numB = 0;
++            try {
++                String pA = partsA[i];
++                int dashA = pA.indexOf('-');
++                if (dashA != -1) pA = pA.substring(0, dashA);
++                numA = Integer.parseInt(pA);
++            } catch (Exception ignore) {}
++            try {
++                String pB = partsB[i];
++                int dashB = pB.indexOf('-');
++                if (dashB != -1) pB = pB.substring(0, dashB);
++                numB = Integer.parseInt(pB);
++            } catch (Exception ignore) {}
+             if (numA < numB) {
+                 return false;
+             } else if (numA > numB) {

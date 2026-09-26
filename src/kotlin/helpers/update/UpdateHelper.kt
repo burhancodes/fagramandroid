@@ -127,8 +127,8 @@ object UpdateHelper {
         val current = currentBuild()
         val pendingBuild = pending.version?.substringAfterLast('-')?.toIntOrNull()
             ?: pending.version?.toIntOrNull()
-            ?: 0
-        if (current.versionCode >= pendingBuild || pending.version == current.versionName) {
+            ?: return
+        if (current.versionCode >= pendingBuild) {
             clearPending()
         }
     }
@@ -380,7 +380,8 @@ object UpdateHelper {
         SharedConfig.pendingAppUpdate = updateObj
         SharedConfig.pendingAppUpdateBuildVersion = current.versionCode
         SharedConfig.saveConfig()
-        pendingBetaUpdate = BetaUpdate(info.version, info.buildNum, updateObj.text)
+        val safeBaseVersion = info.base.substringBefore('-').ifEmpty { info.version.substringBefore('-') }
+        pendingBetaUpdate = InuBetaUpdate(safeBaseVersion, info.buildNum, updateObj.text)
         pendingSourceMessage = msg
         pendingSha256 = info.sha256
         InuConfig.UPDATE_PENDING_SHA256.value = info.sha256 ?: ""
@@ -404,7 +405,6 @@ object UpdateHelper {
     @Suppress("DEPRECATION")
     private fun currentBuild(): CurrentBuild = CurrentBuild(
         versionCode = pInfo.versionCode,
-        versionName = pInfo.versionName ?: "",
     )
 
     private fun extractApkInfo(msg: TLRPC.Message): ApkInfo? {
@@ -422,7 +422,11 @@ object UpdateHelper {
 
         val buildFromVer = version.substringAfterLast('-').toIntOrNull()
         val buildFromFilename = FILENAME_BUILD_RE.find(fileName)?.groups?.get("build")?.value?.toIntOrNull()
-        val buildNum = buildFromVer ?: buildFromFilename ?: return null
+        val buildNum = buildFromVer ?: buildFromFilename
+        if (buildNum == null) {
+            android.util.Log.d("UpdateHelper", "Cannot parse build number from version '$version' or filename '$fileName', skipping")
+            return null
+        }
 
         val base = BASE_RE.find(caption)?.groups?.get("base")?.value?.trim() ?: ""
         val buildType = BUILD_TYPE_RE.find(caption)?.groups?.get("buildType")?.value?.trim() ?: ""
@@ -442,36 +446,18 @@ object UpdateHelper {
         )
     }
 
-    private fun parseSemVer(versionStr: String): IntArray {
-        val clean = versionStr.substringBefore('-').removePrefix("v").trim()
-        return clean.split('.').mapNotNull { it.toIntOrNull() }.toIntArray()
-    }
-
-    private fun compareSemVer(a: IntArray, b: IntArray): Int {
-        val maxLen = max(a.size, b.size)
-        for (i in 0 until maxLen) {
-            val valA = a.getOrElse(i) { 0 }
-            val valB = b.getOrElse(i) { 0 }
-            if (valA != valB) return valA.compareTo(valB)
-        }
-        return 0
-    }
-
     private fun isNewer(remote: ApkInfo, current: CurrentBuild): Boolean {
-        if (remote.buildNum > current.versionCode) {
-            return true
+        return remote.buildNum > current.versionCode
+    }
+
+    class InuBetaUpdate(
+        version: String,
+        versionCode: Int,
+        changelog: String?,
+    ) : BetaUpdate(version, versionCode, changelog) {
+        override fun higherThan(update: BetaUpdate?): Boolean {
+            return update == null || versionCode > update.versionCode
         }
-        if (remote.buildNum < current.versionCode) {
-            val remoteSemVer = parseSemVer(remote.version)
-            val currentSemVer = parseSemVer(stockVersionName.ifEmpty { current.versionName })
-            if (compareSemVer(remoteSemVer, currentSemVer) > 0) {
-                return true
-            }
-            return false
-        }
-        val remoteSemVer = parseSemVer(remote.version)
-        val currentSemVer = parseSemVer(stockVersionName.ifEmpty { current.versionName })
-        return compareSemVer(remoteSemVer, currentSemVer) > 0
     }
 
     sealed class CheckResult {
@@ -494,6 +480,5 @@ object UpdateHelper {
 
     private data class CurrentBuild(
         val versionCode: Int,
-        val versionName: String,
     )
 }

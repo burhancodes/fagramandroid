@@ -328,3 +328,4 @@ feature/local-folders.patch
 feature/icon-branding.patch
 bugfix/bot-webview-container-npe.patch
 feature/clickable-bio-links.patch
+bugfix/update-version-comparison.patch
