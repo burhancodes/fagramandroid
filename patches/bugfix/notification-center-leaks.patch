@@ -75,7 +75,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMe
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
-@@ -3372,6 +3372,10 @@ public class ChatActivity extends BaseFragment implements
+@@ -3368,6 +3368,10 @@ public class ChatActivity extends BaseFragment implements
      @Override
      public void onFragmentDestroy() {
          super.onFragmentDestroy();
@@ -86,7 +86,7 @@ index 0000000..0000000 100644
          ReactionsEffectOverlay.dismissByFragment(this);
          if (messageMetricsView != null) {
              messageMetricsView.finish();
-@@ -35844,6 +35848,7 @@ public class ChatActivity extends BaseFragment implements
+@@ -35860,6 +35864,7 @@ public class ChatActivity extends BaseFragment implements
      private int commentMessagesRequestId;
      private int commentLoadingMessageId;
      private boolean hideCommentLoading;
@@ -94,7 +94,7 @@ index 0000000..0000000 100644
      private long commentLoadingStartedAt;
      private TLRPC.TL_messages_discussionMessage savedDiscussionMessage;
      private TLRPC.messages_Messages savedHistory;
-@@ -35941,9 +35946,11 @@ public class ChatActivity extends BaseFragment implements
+@@ -35957,9 +35962,11 @@ public class ChatActivity extends BaseFragment implements
                                      chatActivity.didReceivedNotification(id, account, args);
                                  }, 50);
                                  NotificationCenter.getInstance(currentAccount).removeObserver(this, NotificationCenter.messagesDidLoad);
@@ -139,7 +139,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.ja
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
-@@ -6152,6 +6152,7 @@ public class EmojiView extends FrameLayout implements
+@@ -6238,6 +6238,7 @@ public class EmojiView extends FrameLayout implements
              colorPickerView.dismiss();
          }
          ContentPreviewViewer.getInstance().clearDelegate(contentPreviewViewerDelegate);

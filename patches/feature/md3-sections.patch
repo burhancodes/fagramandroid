@@ -36,19 +36,19 @@ index 0000000..0000000 100644
  import org.telegram.ui.Components.AnimatedArrowDrawable;
  import org.telegram.ui.Components.AudioPlayerAlert;
  import org.telegram.ui.Components.AvatarDrawable;
-@@ -529,7 +530,11 @@ public class ThemeDescription {
-                             }
-                         }
-                     } else if ((changeFlags & FLAG_CELLBACKGROUNDCOLOR) != 0) {
--                        child.setBackgroundColor(color);
-+                        if (child instanceof HeaderCell && viewToInvalidate instanceof RecyclerListView && ((RecyclerListView) viewToInvalidate).hasSections() && xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
-+                            // skip
-+                        } else {
-+                            child.setBackgroundColor(color);
-+                        }
-                     } else if ((changeFlags & FLAG_TEXTCOLOR) != 0) {
-                         if (child instanceof TextView) {
-                             ((TextView) child).setTextColor(color);
+@@ -552,7 +553,11 @@ public class ThemeDescription {
+                 }
+             }
+         } else if ((changeFlags & FLAG_CELLBACKGROUNDCOLOR) != 0) {
+-            child.setBackgroundColor(color);
++            if (child instanceof HeaderCell && viewToInvalidate instanceof RecyclerListView && ((RecyclerListView) viewToInvalidate).hasSections() && xie.fa.gram.helpers.theme.M3SectionsHelper.isEnabled()) {
++                // skip
++            } else {
++                child.setBackgroundColor(color);
++            }
+         } else if ((changeFlags & FLAG_TEXTCOLOR) != 0) {
+             if (child instanceof TextView) {
+                 ((TextView) child).setTextColor(color);
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/BoostsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/BoostsActivity.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/BoostsActivity.java
@@ -417,7 +417,7 @@ index 0000000..0000000 100644
          }
      }
  
-@@ -3257,12 +3277,12 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
+@@ -3261,12 +3281,12 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
          return sectionsItemDecoration != null;
      }
  
@@ -433,7 +433,7 @@ index 0000000..0000000 100644
      public boolean applyPaddingToSections = false;
  
      public static final int TAG_NOT_SECTION = -33024;
-@@ -3288,7 +3308,7 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
+@@ -3292,7 +3312,7 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
      }
      public void setSections(int padding, float roundRadius, boolean topPadding) {
          setSections(
@@ -442,7 +442,7 @@ index 0000000..0000000 100644
              padding,
              roundRadius,
              this::drawBackgroundRect,
-@@ -3405,6 +3425,9 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
+@@ -3409,6 +3429,9 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
                          if (last) outRect.bottom = padding;
                      }
                  }
@@ -452,7 +452,7 @@ index 0000000..0000000 100644
              }
          }
  
-@@ -3476,6 +3499,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
+@@ -3480,6 +3503,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
      public void drawSectionsBackgrounds(Canvas canvas) {
          if (drawSectionBackground == null) return;
  
@@ -464,7 +464,7 @@ index 0000000..0000000 100644
          if (isAnimating()) {
              if (sections == null) {
                  sections = new ArrayList<>();
-@@ -3622,6 +3650,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
+@@ -3626,6 +3654,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
          if (child == null || !sectionsItemDecoration.isSectionItem.run(child))
              return;
  
@@ -476,7 +476,7 @@ index 0000000..0000000 100644
          boolean prev, next;
          int position = getChildAdapterPosition(child);
          if (position == RecyclerView.NO_POSITION) {
-@@ -3682,6 +3715,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
+@@ -3686,6 +3719,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
      public Drawable getClipBackground(View child, boolean forceRound) {
          if (child.getParent() != this || !hasSections() || !sectionsItemDecoration.isSectionItem.run(child)) return null;
  
@@ -608,7 +608,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProxyListActivity.java 
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ProxyListActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ProxyListActivity.java
-@@ -1002,27 +1002,22 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
+@@ -949,27 +949,22 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                      break;
                  case VIEW_TYPE_TEXT_SETTING:
                      view = new TextSettingsCell(mContext);
@@ -640,7 +640,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
-@@ -1195,6 +1195,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -1203,6 +1203,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              titleView.setTranslationX(icon == 0 ? dp(2) : 0);
              subtitleView.setTranslationX(icon == 0 ? dp(2) : 0);
  
@@ -649,7 +649,7 @@ index 0000000..0000000 100644
              iconBackground.setColor(iconColorTop, iconColorBottom);
              iconView.setImageResource(icon);
              titleView.setText(title);
-@@ -1210,6 +1212,13 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -1218,6 +1220,13 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
  
          @Override
          protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -663,7 +663,7 @@ index 0000000..0000000 100644
              super.onMeasure(
                  MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
                  MeasureSpec.makeMeasureSpec(dp(mini ? 44 : twoLines ? 60 : 50), MeasureSpec.EXACTLY)
-@@ -1238,8 +1247,17 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -1246,8 +1255,17 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                  this.border = drawBorder;
              }
  

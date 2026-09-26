@@ -12,7 +12,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.jav
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
-@@ -1737,6 +1737,10 @@ public class SharedConfig {
+@@ -1736,6 +1736,10 @@ public class SharedConfig {
          return canBlurChat() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
      }
  
@@ -27,7 +27,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java b/TMes
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
-@@ -6327,7 +6327,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -6326,7 +6326,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
  
              @Override
              public void invalidate() {
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
                      return;
                  }
                  super.invalidate();
-@@ -6878,7 +6878,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -6877,7 +6877,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
  
              @Override
              public void invalidate() {
@@ -45,7 +45,7 @@ index 0000000..0000000 100644
                      return;
                  }
                  super.invalidate();
-@@ -6988,7 +6988,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -6987,7 +6987,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
  
              @Override
              public void invalidate() {

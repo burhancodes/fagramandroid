@@ -4,41 +4,34 @@ Date: Sun, 20 Sep 2026 12:05:11 +0530
 Subject: Disable ads and sponsored messages
 
 ---
- .../java/org/telegram/messenger/LocaleController.java | 11 +++++++++--
- .../java/org/telegram/messenger/MessageObject.java    |  1 +
- .../org/telegram/messenger/MessagesController.java    |  2 ++
- .../java/org/telegram/messenger/video/VideoAds.java   |  1 +
- .../telegram/ui/Adapters/DialogsSearchAdapter.java    |  2 +-
- .../src/main/java/org/telegram/ui/ChatActivity.java   |  2 ++
- TMessagesProj_Modules/media                           |  2 +-
- 7 files changed, 17 insertions(+), 4 deletions(-)
+ .../org/telegram/messenger/LocaleController.java     | 12 +++++++++++-
+ .../java/org/telegram/messenger/MessageObject.java   |  1 +
+ .../org/telegram/messenger/MessagesController.java   |  2 ++
+ .../java/org/telegram/messenger/video/VideoAds.java  |  1 +
+ .../telegram/ui/Adapters/DialogsSearchAdapter.java   |  2 +-
+ .../src/main/java/org/telegram/ui/ChatActivity.java  |  2 ++
+ 6 files changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
-@@ -1675,7 +1675,8 @@ public class LocaleController {
-                 if (value == null) {
-                     if (res != 0) {
-                         try {
--                            value = getInstance().getLocalizedString(res);
-+                            value = xie.fa.gram.helpers.LocaleHelper.getLocalString(key, res);
-+                            if (value == null) value = getInstance().getLocalizedString(res);
-                         } catch (Exception e) {
-                             if (fallbackRes != 0) {
-                                 try {
-@@ -4526,7 +4527,13 @@ public class LocaleController {
+@@ -4476,7 +4476,17 @@ public class LocaleController {
+             return value;
+         }
  
-     private String getLocalizedString(@StringRes int stringRes) {
-         checkLocalizationInternal();
--        return localizationInternal.getByResId(ApplicationLoader.applicationContext, stringRes);
-+        String val = localizationInternal.getByResId(ApplicationLoader.applicationContext, stringRes);
-+        if (val == null && ApplicationLoader.applicationContext != null && stringRes != 0) {
+-        return localizationInternal.getByResName(fallback);
++        value = localizationInternal.getByResName(fallback);
++        if (value != null) {
++            return value;
++        }
++
++        if (context != null && stringRes != 0) {
 +            try {
-+                val = ApplicationLoader.applicationContext.getString(stringRes);
++                return context.getString(stringRes);
 +            } catch (Exception ignored) {}
 +        }
-+        return val;
++        return null;
      }
  
  
@@ -78,7 +71,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.j
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/video/VideoAds.java
-@@ -188,6 +188,7 @@ public class VideoAds {
+@@ -194,6 +194,7 @@ public class VideoAds {
      private boolean loading, loaded;
      private void load() {
          if (loading || loaded) return;
@@ -103,7 +96,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMe
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
-@@ -25185,6 +25185,7 @@ public class ChatActivity extends BaseFragment implements
+@@ -25201,6 +25201,7 @@ public class ChatActivity extends BaseFragment implements
      private Pattern sponsoredUrlPattern;
      private MessageObject botSponsoredMessage;
      private void addSponsoredMessages(boolean animated) {
@@ -111,7 +104,7 @@ index 0000000..0000000 100644
          if (sponsoredMessagesAdded || chatMode != 0 || !ChatObject.isChannel(currentChat) && !UserObject.isBot(currentUser) || !forwardEndReached[0] || getUserConfig().isPremium() && getMessagesController().isSponsoredDisabled() || isReport()) {
              return;
          }
-@@ -26521,6 +26522,7 @@ public class ChatActivity extends BaseFragment implements
+@@ -26537,6 +26538,7 @@ public class ChatActivity extends BaseFragment implements
      }
  
      private int getSponsoredMessagesCount() {
@@ -119,10 +112,3 @@ index 0000000..0000000 100644
          int sponsoredMessagesCount = 0;
          while (sponsoredMessagesCount < messages.size()) {
              if (!messages.get(sponsoredMessagesCount).isSponsored()) {
-diff --git a/TMessagesProj_Modules/media b/TMessagesProj_Modules/media
-index 0000000..0000000 160000
---- a/TMessagesProj_Modules/media
-+++ b/TMessagesProj_Modules/media
-@@ -1 +1 @@
--Subproject commit c822f1f33d30591fdbbf3919662be258f7cfbfc6
-+Subproject commit 2bc207851df311340767e913931ca7b28cab1794

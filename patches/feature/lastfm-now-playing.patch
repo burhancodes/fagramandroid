@@ -13,7 +13,7 @@ diff --git a/TMessagesProj/build.gradle b/TMessagesProj/build.gradle
 index 0000000..0000000 100644
 --- a/TMessagesProj/build.gradle
 +++ b/TMessagesProj/build.gradle
-@@ -98,6 +98,7 @@ dependencies {
+@@ -99,6 +99,7 @@ dependencies {
  
      // inu
      implementation 'org.maplibre.gl:android-sdk:13.1.0'
@@ -21,7 +21,7 @@ index 0000000..0000000 100644
      // end inu
  
  //    implementation 'com.google.mlkit:translate:17.0.3'
-@@ -159,6 +160,10 @@ android {
+@@ -160,6 +161,10 @@ android {
                  }
              }
          }
@@ -135,7 +135,7 @@ index 0000000..0000000 100644
              if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                      position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                  return VIEW_TYPE_HEADER;
-@@ -15914,6 +15946,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15913,6 +15945,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              put(++pointer, bizLocationRow, sparseIntArray);
              put(++pointer, birthdayRow, sparseIntArray);
              put(++pointer, inu_idRow, sparseIntArray);
@@ -147,7 +147,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
-@@ -892,9 +892,12 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -900,9 +900,12 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                  break;
              }
  

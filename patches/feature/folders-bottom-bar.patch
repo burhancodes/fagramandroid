@@ -95,7 +95,7 @@ index 0000000..0000000 100644
              final float topPanelsVisibility = topPanelLayout != null ? topPanelLayout.getMetadata().getTotalVisibility() : 0f;
  
              t += (int) (dp(NonIslandHelper.foldersBar() ? NonIslandHelper.foldersBarVisibleHeightDp() : 36 + 14) * filterTabsVisibility);
-@@ -5259,8 +5267,16 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -5253,8 +5261,16 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              filterTabsViewBackground.setPadding(dp(6.666f));
              filterTabsView.setPadding(0, dp(7), 0, dp(7));
              filterTabsView.setBlurredBackground(filterTabsViewBackground);
@@ -114,7 +114,7 @@ index 0000000..0000000 100644
          }
  
          if (fragmentSearchField != null) {
-@@ -6706,18 +6722,28 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -6700,18 +6716,28 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
          float topPanelsVisibility = 0;
          float fadeViewT = totalOffset;
  
@@ -146,7 +146,7 @@ index 0000000..0000000 100644
                  );
              } else {
                  topPanelLayout.setTranslationY(lerp(
-@@ -7318,9 +7344,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -7312,9 +7338,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
  
              @Override
              public int getTopOffset(int tag) {
@@ -158,7 +158,7 @@ index 0000000..0000000 100644
                      (topPanelLayout != null ? topPanelLayout.getHeight() : 0) +
                      (dialogStoriesCell != null && dialogStoriesCellVisible ? (int) ((1f - dialogStoriesCell.getCollapsedProgress()) * dp(DialogStoriesCell.HEIGHT_IN_DP)) : 0) +
                      (NonIslandHelper.globalSearch() ? 0 : dp(SEARCH_FIELD_HEIGHT))
-@@ -14036,9 +14063,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -14030,9 +14057,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
  
          final Insets systemInsets = AndroidUtilities.getDefaultWindowInsets(insets, false);
          statusBarHeight = systemInsets.top;
@@ -170,7 +170,7 @@ index 0000000..0000000 100644
              this.imeInsetHeight = imeInsetHeight;
              fragmentView.requestLayout();
          }
-@@ -14403,10 +14431,13 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -14397,10 +14425,13 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
          final int mainTabBottom = fragmentView.getMeasuredHeight() - MainTabsHelper.getMainTabsBottomOffset(navigationBarHeight);
          final int mainTabTop = mainTabBottom - MainTabsHelper.getMainTabsBlurHeight(navigationBarHeight);
  
@@ -185,7 +185,7 @@ index 0000000..0000000 100644
              + (topPanelLayout != null && topPanelLayout.getVisibility() == View.VISIBLE ? topPanelLayout.getSumHeightOfAllVisibleChild() : 0)
              + ((int) scrollYOffset);
  
-@@ -14421,6 +14452,13 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -14415,6 +14446,13 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              iBlur3PositionMainTabs.set(0, mainTabTop, fragmentView.getMeasuredWidth(), mainTabBottom);
              iBlur3PositionMainTabs.inset(0, LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS) ? 0 : -dp(48));
  
@@ -199,7 +199,7 @@ index 0000000..0000000 100644
              hasBottomBlur = true;
          } else if (commentView != null && chatInputViewsContainer != null) {
              iBlur3PositionMainTabs.set(0,
-@@ -14428,6 +14466,14 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -14422,6 +14460,14 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                  fragmentView.getMeasuredWidth(), fragmentView.getMeasuredHeight());
              iBlur3PositionMainTabs.inset(0, LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS) ? 0 : -dp(48));
  
@@ -214,7 +214,7 @@ index 0000000..0000000 100644
              hasBottomBlur = true;
          }
  
-@@ -14450,7 +14496,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -14444,7 +14490,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
          } else if (communityId != 0) {
              return navigationBarHeight + dp(12 + 48 + 12);
          } else {

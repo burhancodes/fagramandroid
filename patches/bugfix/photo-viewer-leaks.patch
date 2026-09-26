@@ -12,7 +12,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/Blurre
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/BlurredBackgroundDrawableViewFactory.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/BlurredBackgroundDrawableViewFactory.java
-@@ -41,6 +41,12 @@ public class BlurredBackgroundDrawableViewFactory {
+@@ -58,6 +58,12 @@ public class BlurredBackgroundDrawableViewFactory {
          this.linkedViews = linkedViews;
      }
  
@@ -29,7 +29,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java b/TMes
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
-@@ -12208,6 +12208,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -12207,6 +12207,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                  animatorX.addUpdateListener(animation -> photoPaintView.setOffsetTranslationX((Float) animation.getAnimatedValue()));
                  paintingOverlay.showAll();
                  containerView.invalidate();
@@ -43,7 +43,7 @@ index 0000000..0000000 100644
                  photoPaintView.shutdown();
                  animators.add(animatorY);
                  animators.add(animatorX);
-@@ -18223,6 +18230,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -18231,6 +18238,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                  editorDoneLayout.setVisibility(View.GONE);
                  photoCropView.setVisibility(View.GONE);
              } else if (currentEditMode == EDIT_MODE_PAINT) {

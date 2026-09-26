@@ -34,7 +34,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChannelAdminLogActivity
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ChannelAdminLogActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ChannelAdminLogActivity.java
-@@ -170,6 +170,7 @@ import java.util.HashMap;
+@@ -172,6 +172,7 @@ import java.util.HashMap;
  import java.util.HashSet;
  import java.util.List;
  
@@ -108,7 +108,7 @@ index 0000000..0000000 100644
          avatarContainer.setEnabled(false);
  
          avatarContainer.setTitle(currentChat.title);
-@@ -1649,7 +1685,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
+@@ -1636,7 +1672,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
      private final static int OPTION_CALL = 17;
      private final static int OPTION_RESTRICT = 33;
      private final static int OPTION_REPORT_FALSE_POSITIVE = 34;
@@ -117,7 +117,7 @@ index 0000000..0000000 100644
  
      private boolean createMenu(View v) {
          return createMenu(v, 0, 0);
-@@ -1863,6 +1899,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
+@@ -1850,6 +1886,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
                  options.add(OPTION_CALL);
              }
          }
@@ -125,7 +125,7 @@ index 0000000..0000000 100644
  
          boolean callbackSent = false;
  
-@@ -2119,11 +2156,14 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
+@@ -2106,11 +2143,14 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
          roundVideoContainer.setVisibility(View.INVISIBLE);
      }
  

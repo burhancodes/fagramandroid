@@ -16,7 +16,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.java
-@@ -6801,7 +6801,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+@@ -6800,7 +6800,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
       * Some encoders(e.g. OMX.Exynos) can forcibly raise bitrate during encoder initialization.
       */
      public static int extractRealEncoderBitrate(int width, int height, int bitrate, boolean tryHevc) {
@@ -216,7 +216,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java b/TMes
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
-@@ -6149,6 +6149,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -6148,6 +6148,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
          containerView.addView(qualityPicker, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.BOTTOM | Gravity.LEFT));
          qualityPicker.cancelButton.setOnClickListener(view -> {
              selectedCompression = previousCompression;
@@ -224,7 +224,7 @@ index 0000000..0000000 100644
              didChangedCompressionLevel(false);
              showQualityView(false);
              requestVideoPreview(2);
-@@ -6182,6 +6183,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -6181,6 +6182,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
          qualityChooseView.setVisibility(View.INVISIBLE);
          qualityChooseView.setBackgroundColor(0x7f000000);
          containerView.addView(qualityChooseView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 70, Gravity.LEFT | Gravity.BOTTOM, 0, 0, 0, 48));
@@ -232,7 +232,7 @@ index 0000000..0000000 100644
  
          Paint pickerBackgroundPaint = new Paint();
          pickerBackgroundPaint.setColor(0x7f000000);
-@@ -7630,11 +7632,12 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -7629,11 +7631,12 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
          compressItem.setBackground(Theme.createInsetRoundRectDrawable(0x10FFFFFF, dp(22), dp(4), dp(6)));
  
          selectedCompression = selectCompression();
@@ -246,7 +246,7 @@ index 0000000..0000000 100644
                  return;
              }
              if (currentIndex >= 0 && currentIndex < imagesArrLocals.size()) {
-@@ -9848,6 +9851,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -9847,6 +9850,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
          videoEditedInfo.start = videoCutStart;
          videoEditedInfo.end = videoCutEnd;
          videoEditedInfo.compressQuality = selectedCompression;
@@ -256,7 +256,7 @@ index 0000000..0000000 100644
          videoEditedInfo.rotationValue = rotationValue;
          videoEditedInfo.originalWidth = originalWidth;
          videoEditedInfo.originalHeight = originalHeight;
-@@ -14994,6 +15000,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -14993,6 +14999,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                      float start = 0.0f;
                      float end = 1.0f;
                      int compressQuality = -1;
@@ -264,7 +264,7 @@ index 0000000..0000000 100644
                      String coverPath = null;
                      TLRPC.Photo coverPhoto = null;
                      Object coverPhotoObject = null;
-@@ -15004,13 +15011,14 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -15003,13 +15010,14 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                              start = photoEntry.editedInfo.start;
                              end = photoEntry.editedInfo.end;
                              compressQuality = photoEntry.editedInfo.compressQuality;

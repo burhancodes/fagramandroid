@@ -70,16 +70,16 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesControll
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Stories/StoriesController.java
-@@ -92,6 +92,8 @@ import java.util.Objects;
+@@ -88,6 +88,8 @@ import java.util.Objects;
  import java.util.Set;
  import java.util.TreeSet;
  
 +import xie.fa.gram.InuConfig;
 +
- @OptIn(markerClass = UnstableApi.class)
  public class StoriesController {
  
-@@ -4296,6 +4298,9 @@ public class StoriesController {
+     public final static int STATE_READ = 0;
+@@ -4291,6 +4293,9 @@ public class StoriesController {
      };
  
      private boolean isPremium(long uid) {

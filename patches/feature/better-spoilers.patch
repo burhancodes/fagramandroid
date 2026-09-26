@@ -22,7 +22,7 @@ index 0000000..0000000 100644
      private int buttonPressed;
      private int videoButtonPressed;
      private int miniButtonPressed;
-@@ -15284,6 +15284,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+@@ -15292,6 +15292,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
      }
  
      public void drawBlurredPhotoParticles(Canvas canvas) {
@@ -32,7 +32,7 @@ index 0000000..0000000 100644
          if (mediaSpoilerEffect2 == null) {
              if (!LiteMode.isEnabled(LiteMode.FLAG_CHAT_SPOILER)) {
                  if (mediaSpoilerEffect == null) {
-@@ -19661,6 +19664,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+@@ -19669,6 +19672,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                              replyTextWidth -= sz;
                              maxWidth += sz;
                          }
@@ -40,7 +40,7 @@ index 0000000..0000000 100644
                          if (changed || !isReplyQuote) {
                              stringFinalText = TextUtils.ellipsize(sb, textPaint, maxWidth, TextUtils.TruncateAt.END);
                          } else {
-@@ -19688,6 +19692,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+@@ -19696,6 +19700,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                          if (isSideMenued && !drawBackground || (!messageObject.isAnyKindOfSticker() && messageObject.type != MessageObject.TYPE_ROUND_VIDEO || messageObject.type == MessageObject.TYPE_EMOJIS)) {
                              namesOffset += Math.max(0, replyTextHeight - dp(3.66f) - Theme.chat_replyTextPaint.getTextSize());
                          }
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
                          if (replyTextLayout.getLineCount() > 0) {
                              int width = 0;
                              replyTextOffset = replyTextLayout.getWidth();
-@@ -19700,13 +19705,14 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+@@ -19708,13 +19713,14 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                  replyTextOffset = Math.min(replyTextOffset, left);
                              }
                              replyTextWidth += width + dp(18);

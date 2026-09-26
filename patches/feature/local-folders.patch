@@ -4,7 +4,7 @@ Date: Thu, 24 Sep 2026 13:25:01 +0530
 Subject: feat: local folders
 
 ---
- .../messenger/DatabaseMigrationHelper.java    |   6 +
+ .../messenger/DatabaseMigrationHelper.java    |   7 ++
  .../messenger/MessagesController.java         | 104 ++++++++++++++--
  .../telegram/messenger/MessagesStorage.java   | 111 +++++++++++++-----
  .../ui/Components/FilterTabsView.java         |  24 ++--
@@ -14,21 +14,22 @@ Subject: feat: local folders
  .../java/org/telegram/ui/DialogsActivity.java |  10 +-
  .../org/telegram/ui/FilterCreateActivity.java |  16 +++
  .../org/telegram/ui/FiltersSetupActivity.java |  58 +++++++--
- 10 files changed, 274 insertions(+), 65 deletions(-)
+ 10 files changed, 275 insertions(+), 65 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/DatabaseMigrationHelper.java b/TMessagesProj/src/main/java/org/telegram/messenger/DatabaseMigrationHelper.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/DatabaseMigrationHelper.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/DatabaseMigrationHelper.java
-@@ -1688,6 +1688,12 @@ public class DatabaseMigrationHelper {
-             database.executeFast("PRAGMA user_version = 177").stepThis().dispose();
-             version = 177;
+@@ -1698,6 +1698,13 @@ public class DatabaseMigrationHelper {
+             database.executeFast("PRAGMA user_version = 179").stepThis().dispose();
+             version = 179;
          }
-+        if (version == 177) {
-+            database.executeFast("ALTER TABLE dialog_filter ADD COLUMN type INTEGER default 0").stepThis().dispose();
-+            database.executeFast("ALTER TABLE dialog_filter ADD COLUMN local INTEGER default 0").stepThis().dispose();
-+            database.executeFast("PRAGMA user_version = 178").stepThis().dispose();
-+            version = 178;
++        if (version == 179) {
++            executeNoException(database, "ALTER TABLE dialog_filter ADD COLUMN type INTEGER default 0");
++            executeNoException(database, "ALTER TABLE dialog_filter ADD COLUMN local INTEGER default 0");
++            executeNoException(database, "CREATE INDEX IF NOT EXISTS media_v4_music_browse_idx ON media_v4(uid, date DESC, mid DESC) WHERE type = 4 AND mid > 0 AND uid != 0;");
++            database.executeFast("PRAGMA user_version = 180").stepThis().dispose();
++            version = 180;
 +        }
  
          return version;
@@ -241,8 +242,8 @@ index 0000000..0000000 100644
          }
      }
  
--    public final static int LAST_DB_VERSION = 177;
-+    public final static int LAST_DB_VERSION = 178;
+-    public final static int LAST_DB_VERSION = 179;
++    public final static int LAST_DB_VERSION = 180;
      private boolean databaseMigrationInProgress;
      public boolean showClearDatabaseAlert;
  
@@ -255,7 +256,7 @@ index 0000000..0000000 100644
          database.executeFast("CREATE TABLE dialog_filter_ep(id INTEGER, peer INTEGER, PRIMARY KEY (id, peer))").stepThis().dispose();
          database.executeFast("CREATE TABLE dialog_filter_pin_v2(id INTEGER, peer INTEGER, pin INTEGER, PRIMARY KEY (id, peer))").stepThis().dispose();
  
-@@ -2573,7 +2574,7 @@ public class MessagesStorage extends BaseController {
+@@ -2574,7 +2575,7 @@ public class MessagesStorage extends BaseController {
  
                  usersToLoad.add(getUserConfig().getClientUserId());
  
@@ -264,7 +265,7 @@ index 0000000..0000000 100644
  
                  boolean updateCounters = false;
                  boolean hasDefaultFilter = false;
-@@ -2592,6 +2593,8 @@ public class MessagesStorage extends BaseController {
+@@ -2593,6 +2594,8 @@ public class MessagesStorage extends BaseController {
                          buff.reuse();
                      }
                      filter.title_noanimate = filtersCursor.intValue(7) == 1;
@@ -273,7 +274,7 @@ index 0000000..0000000 100644
                      dialogFilters.add(filter);
                      dialogFiltersMap.put(filter.id, filter);
                      filtersById.put(filter.id, filter);
-@@ -2661,7 +2664,7 @@ public class MessagesStorage extends BaseController {
+@@ -2662,7 +2665,7 @@ public class MessagesStorage extends BaseController {
                      dialogFiltersMap.put(filter.id, filter);
                      filtersById.put(filter.id, filter);
  
@@ -282,7 +283,7 @@ index 0000000..0000000 100644
                      state.bindInteger(1, filter.id);
                      state.bindInteger(2, filter.order);
                      state.bindInteger(3, filter.unreadCount);
-@@ -2673,6 +2676,8 @@ public class MessagesStorage extends BaseController {
+@@ -2674,6 +2677,8 @@ public class MessagesStorage extends BaseController {
                      entitiesVector.serializeToStream(entitiesBuffer);
                      state.bindByteBuffer(7, entitiesBuffer);
                      state.bindInteger(8, filter.title_noanimate ? 1 : 0);
@@ -291,7 +292,7 @@ index 0000000..0000000 100644
                      state.stepThis().dispose();
                      state = null;
                      entitiesBuffer.reuse();
-@@ -2733,6 +2738,8 @@ public class MessagesStorage extends BaseController {
+@@ -2734,6 +2739,8 @@ public class MessagesStorage extends BaseController {
      private int[][] bots = new int[][]{new int[2], new int[2]};
      private int[][] channels = new int[][]{new int[2], new int[2]};
      private int[][] groups = new int[][]{new int[2], new int[2]};
@@ -300,7 +301,7 @@ index 0000000..0000000 100644
      private int[][] communities = new int[][]{new int[2], new int[2]};
      private int[] mentionChannels = new int[2];
      private int[] mentionGroups = new int[2];
-@@ -2744,7 +2751,7 @@ public class MessagesStorage extends BaseController {
+@@ -2745,7 +2752,7 @@ public class MessagesStorage extends BaseController {
          try {
              for (int a = 0; a < 2; a++) {
                  for (int b = 0; b < 2; b++) {
@@ -309,7 +310,7 @@ index 0000000..0000000 100644
                  }
              }
              dialogsWithMentions.clear();
-@@ -2924,6 +2931,11 @@ public class MessagesStorage extends BaseController {
+@@ -2925,6 +2932,11 @@ public class MessagesStorage extends BaseController {
                          channels[idx1][idx2]++;
                      } else {
                          groups[idx1][idx2]++;
@@ -321,7 +322,7 @@ index 0000000..0000000 100644
                      }
                      chatsDict.put(chat.id, chat);
                  }
-@@ -2949,6 +2961,13 @@ public class MessagesStorage extends BaseController {
+@@ -2950,6 +2962,13 @@ public class MessagesStorage extends BaseController {
                      if (filter.pendingUnreadCount >= 0) {
                          continue;
                      }
@@ -335,7 +336,7 @@ index 0000000..0000000 100644
                      flags = filter.flags;
                  } else {
                      filter = null;
-@@ -2992,16 +3011,24 @@ public class MessagesStorage extends BaseController {
+@@ -2993,16 +3012,24 @@ public class MessagesStorage extends BaseController {
                      }
                  }
                  if ((flags & MessagesController.DIALOG_FILTER_FLAG_GROUPS) != 0) {
@@ -364,7 +365,7 @@ index 0000000..0000000 100644
                          }
                      }
                  }
-@@ -3174,6 +3201,41 @@ public class MessagesStorage extends BaseController {
+@@ -3175,6 +3202,41 @@ public class MessagesStorage extends BaseController {
          }
      }
  
@@ -406,7 +407,7 @@ index 0000000..0000000 100644
      private void saveDialogFilterInternal(MessagesController.DialogFilter filter, boolean atBegin, boolean peers) {
          SQLitePreparedStatement state = null;
          try {
-@@ -3190,7 +3252,7 @@ public class MessagesStorage extends BaseController {
+@@ -3191,7 +3253,7 @@ public class MessagesStorage extends BaseController {
                  dialogFiltersMap.put(filter.id, filter);
              }
  
@@ -415,7 +416,7 @@ index 0000000..0000000 100644
              state.bindInteger(1, filter.id);
              state.bindInteger(2, filter.order);
              state.bindInteger(3, filter.unreadCount);
-@@ -3203,6 +3265,8 @@ public class MessagesStorage extends BaseController {
+@@ -3204,6 +3266,8 @@ public class MessagesStorage extends BaseController {
              entitiesVector.serializeToStream(entitiesBuffer);
              state.bindByteBuffer(7, entitiesBuffer);
              state.bindInteger(8, filter.title_noanimate ? 1 : 0);
@@ -424,7 +425,7 @@ index 0000000..0000000 100644
              state.step();
              state.dispose();
              entitiesBuffer.reuse();
-@@ -3285,6 +3349,9 @@ public class MessagesStorage extends BaseController {
+@@ -3286,6 +3350,9 @@ public class MessagesStorage extends BaseController {
                  SparseArray<MessagesController.DialogFilter> filtersToDelete = new SparseArray<>();
                  for (int a = 0, N = dialogFilters.size(); a < N; a++) {
                      MessagesController.DialogFilter filter = dialogFilters.get(a);
@@ -434,7 +435,7 @@ index 0000000..0000000 100644
                      filtersToDelete.put(filter.id, filter);
                  }
                  ArrayList<Integer> filtersOrder = new ArrayList<>();
-@@ -3626,25 +3693,9 @@ public class MessagesStorage extends BaseController {
+@@ -3627,25 +3694,9 @@ public class MessagesStorage extends BaseController {
              anythingChanged = true;
          }
          FolderHelper.saveMeta(MessagesStorage.this, dialogFilters);
@@ -462,7 +463,7 @@ index 0000000..0000000 100644
              saveDialogFiltersOrderInternal();
          }
          int remote = anythingChanged ? 1 : 2;
-@@ -3713,6 +3764,10 @@ public class MessagesStorage extends BaseController {
+@@ -3714,6 +3765,10 @@ public class MessagesStorage extends BaseController {
  
      public void saveDialogFiltersOrder() {
          ArrayList<MessagesController.DialogFilter> filtersFinal = new ArrayList<>(getMessagesController().dialogFilters);
@@ -639,7 +640,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
-@@ -3646,9 +3646,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -3640,9 +3640,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                          builder.setMessage(LocaleController.getString(R.string.FilterDeleteAlert));
                          builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
                          builder.setPositiveButton(LocaleController.getString(R.string.Delete), (dialog2, which2) -> {
@@ -654,7 +655,7 @@ index 0000000..0000000 100644
                              getMessagesController().removeFilter(dialogFilter);
                              getMessagesStorage().deleteDialogFilter(dialogFilter);
                          });
-@@ -3865,7 +3867,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -3859,7 +3861,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                                  filterTabsView.setIsEditing(true);
                                  showDoneItem(true);
                              })

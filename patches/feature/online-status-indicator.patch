@@ -43,7 +43,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.j
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
-@@ -22228,6 +22228,17 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+@@ -22236,6 +22236,17 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                  avatarImage.setImageCoords(avatarX, ny + dp(13) * (1.0f - scale), dp(26) * scale, dp(26) * scale);
                  avatarImage.setAlpha(avatarAlpha);
                  avatarImage.draw(canvas);
@@ -139,7 +139,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMe
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
-@@ -6434,7 +6434,14 @@ public class ChatActivity extends BaseFragment implements
+@@ -6427,7 +6427,14 @@ public class ChatActivity extends BaseFragment implements
                              canvas.scale(1f - getSideMenuAlpha(), 1f - getSideMenuAlpha(), imageReceiver.getImageX2(), imageReceiver.getImageY2());
                              canvas.translate(dp(24) * getSideMenuAlpha(), 0f);
                          }

@@ -12,7 +12,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/VideoPlayer.java
-@@ -263,6 +263,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -264,6 +264,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
              }
              player = builder.build();
  
@@ -20,7 +20,7 @@ index 0000000..0000000 100644
              player.addAnalyticsListener(this);
              player.addListener(this);
              player.addVideoListener(this);
-@@ -1337,6 +1338,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -1338,6 +1339,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
          if (shouldPauseOther) {
              NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.playerDidStartPlaying);
          }
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
          playerCounter--;
      }
  
-@@ -1450,6 +1452,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -1451,6 +1453,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
              audioPlayer.setPlayWhenReady(false);
          }
  
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
          if (audioVisualizerDelegate != null) {
              audioUpdateHandler.removeCallbacksAndMessages(null);
              audioVisualizerDelegate.onVisualizerUpdate(false, true, null);
-@@ -1612,10 +1615,39 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -1613,10 +1616,39 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
  
  
      private boolean handleAudioFocus = false;
@@ -78,7 +78,7 @@ index 0000000..0000000 100644
          }
      }
  
-@@ -1654,8 +1686,13 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
+@@ -1655,8 +1687,13 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
      @Override
      public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
          maybeReportPlayerState();
@@ -98,7 +98,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java b/TMes
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
-@@ -10541,6 +10541,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+@@ -10540,6 +10540,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                      }
                  };
                  videoPlayer.setOnQualityChangeListener(this::updateQualityItems);
