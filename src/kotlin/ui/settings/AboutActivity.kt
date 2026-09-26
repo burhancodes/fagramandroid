@@ -24,6 +24,7 @@ import xie.fa.gram.helpers.update.UpdateHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader
+import org.telegram.messenger.BuildConfig
 import org.telegram.messenger.FileLoader
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController
@@ -54,6 +55,11 @@ class AboutActivity : SettingsPageActivity(), NotificationCenter.NotificationCen
 
     override fun fillItems(items: ArrayList<UItem>, adapter: UniversalAdapter) {
         items.add(UItem.asCustomShadow(getOrCreateLogoHeader()))
+
+        items.add(UItem.asHeader(LocaleController.getString(R.string.InuAbout)))
+        items.add(UItem.asCustom(getOrCreateAboutCard()))
+        items.add(UItem.asShadow(null))
+
         items.add(
             UItem.asButton(
                 BUTTON_GITHUB,
@@ -479,53 +485,91 @@ class AboutActivity : SettingsPageActivity(), NotificationCenter.NotificationCen
     private fun getOrCreateLogoHeader(): View {
         logoHeader?.let { return it }
         val ctx = context!!
-        val container = LinearLayout(ctx).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(0, dp(20f), 0, dp(16f))
+        val container = FrameLayout(ctx).apply {
+            setPadding(0, dp(14f), 0, dp(4f))
         }
-
-        // Layer the background + foreground manually to bypass the AdaptiveIconDrawable
-        // system mask, which would otherwise force a circle/squircle shape regardless
-        // of our outline clip. Negative inset scales the foreground glyph up beyond the
-        // adaptive-icon safe zone; the outline clip trims the overflow.
-        val bg = ctx.getDrawable(R.drawable.icon_background_inu)
-        val fg = ctx.getDrawable(R.drawable.icon_foreground_inu)
-        val layered = LayerDrawable(arrayOf(bg, fg))
-        val fgOverscan = -dp(18f)
-        layered.setLayerInset(1, fgOverscan, fgOverscan, fgOverscan, fgOverscan)
-        val icon = ImageView(ctx).apply {
-            setImageDrawable(layered)
-            clipToOutline = true
-            outlineProvider = object : ViewOutlineProvider() {
-                override fun getOutline(view: View, outline: Outline) {
-                    outline.setRoundRect(0, 0, view.width, view.height, dp(28f).toFloat())
-                }
+        val logoView = AboutLogoView(ctx).apply {
+            onLogoTouchDown = { x, y ->
+                rippleFrom(this, x, y)
             }
-            setOnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_DOWN) rippleFrom(v, event.x, event.y)
-                false
-            }
-        }
-        container.addView(icon, LinearLayout.LayoutParams(dp(120f), dp(120f)).apply {
-            gravity = Gravity.CENTER_HORIZONTAL
-            bottomMargin = dp(14f)
-        })
-        val version = TextView(ctx).apply {
-            text = UpdateHelper.getVersionInfoString()
-            setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-            gravity = Gravity.CENTER
-            setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText4))
         }
         container.addView(
-            version, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                leftMargin = dp(48f)
-                rightMargin = dp(48f)
-            })
+            logoView,
+            LayoutHelper.createFrame(
+                LayoutHelper.MATCH_PARENT,
+                180,
+                Gravity.CENTER,
+            ),
+        )
         logoHeader = container
         return container
+    }
+
+    private var aboutCard: View? = null
+    private fun getOrCreateAboutCard(): View {
+        aboutCard?.let { return it }
+        val ctx = context!!
+        val card = LinearLayout(ctx).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(22f), dp(16f), dp(22f), dp(18f))
+        }
+
+        val titleView = TextView(ctx).apply {
+            text = LocaleController.getString(R.string.InuAboutAppTitle)
+            setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18f)
+            typeface = AndroidUtilities.bold()
+            setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText))
+        }
+        card.addView(
+            titleView,
+            LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT),
+        )
+
+        val versionView = TextView(ctx).apply {
+            text = UpdateHelper.getAboutVersionString()
+            setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13.5f)
+            setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText2))
+        }
+        card.addView(
+            versionView,
+            LayoutHelper.createLinear(
+                LayoutHelper.MATCH_PARENT,
+                LayoutHelper.WRAP_CONTENT,
+                0f, 3f, 0f, 0f,
+            ),
+        )
+
+        val descView = TextView(ctx).apply {
+            text = LocaleController.getString(R.string.InuAboutDescription)
+            setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+            setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText))
+            setLineSpacing(dp(2f).toFloat(), 1.15f)
+        }
+        card.addView(
+            descView,
+            LayoutHelper.createLinear(
+                LayoutHelper.MATCH_PARENT,
+                LayoutHelper.WRAP_CONTENT,
+                0f, 12f, 0f, 0f,
+            ),
+        )
+
+        card.setOnLongClickListener {
+            AndroidUtilities.addToClipboard(UpdateHelper.getFullVersionInfo())
+            BulletinFactory.of(this).createCopyBulletin(
+                LocaleController.getString(R.string.InuLogsSystemInfoCopied),
+            ).show()
+            try {
+                card.performHapticFeedback(
+                    HapticFeedbackConstants.LONG_PRESS,
+                    HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING,
+                )
+            } catch (_: Exception) {}
+            true
+        }
+
+        aboutCard = card
+        return card
     }
 
     companion object {

@@ -437,6 +437,9 @@
     <string name="InuJumpToBeginning">最初へ移動</string>
 
     <string name="InuAbout">アプリについて</string>
+    <string name="InuAboutAppTitle">FAgram Android</string>
+    <string name="InuAboutVersionFormat">バージョン %1$s (ベース: %2$s, ビルド: %3$s)</string>
+    <string name="InuAboutDescription">Inugram パッチセットをベースにした、便利な機能満載の多機能 Telegram クライアント。</string>
     <string name="InuAboutGitHub">GitHub</string>
     <string name="InuAboutChannel">更新チャンネル</string>
     <string name="InuUpdates">アップデート</string>

@@ -436,6 +436,9 @@
     <string name="InuJumpToBeginning">跳到开头</string>
 
     <string name="InuAbout">关于</string>
+    <string name="InuAboutAppTitle">FAgram Android</string>
+    <string name="InuAboutVersionFormat">版本 %1$s (基于 %2$s, 构建 %3$s)</string>
+    <string name="InuAboutDescription">基于 Inugram 补丁集构建、拥有众多丰富特性的 Telegram 客户端。</string>
     <string name="InuAboutGitHub">GitHub</string>
     <string name="InuAboutChannel">更新频道</string>
     <string name="InuUpdates">更新</string>

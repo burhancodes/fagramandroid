@@ -49,6 +49,7 @@ most things are toggleable in `Settings → FAgram`, with sensible opinionated d
 - MapLibre-based map view
 - customizable map preview provider
 - in-app updater - *ported from [Nekogram](https://github.com/Nekogram/Nekogram)*
+- 🐶 redesigned About page matching FAgram Desktop (layered Material shape emblem with theme-adaptive colors and interactive ripple, and desktop-style About card)
 - 🐶 crash report sheet: catches uncaught exceptions, offers to share the log on next launch, posts a tap-to-restart notification
 - keep search query after picking a result in peer selection screens
 

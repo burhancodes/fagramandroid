@@ -530,6 +530,9 @@
     <string name="InuJumpToBeginning">En başa git</string>
 
     <string name="InuAbout">Hakkında</string>
+    <string name="InuAboutAppTitle">FAgram Android</string>
+    <string name="InuAboutVersionFormat">Sürüm %1$s (%2$s tabanlı, derleme %3$s)</string>
+    <string name="InuAboutDescription">Ekstra özelliklerle Inugram yama seti tabanlı, zengin özelliklere sahip bir Telegram istemcisi.</string>
     <string name="InuAboutGitHub">GitHub</string>
     <string name="InuAboutChannel">Güncelleme kanalı</string>
     <string name="InuUpdates">Güncellemeler</string>

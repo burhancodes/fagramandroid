@@ -48,6 +48,15 @@ object UpdateHelper {
         )
     }
 
+    fun getAboutVersionString(): String {
+        return LocaleController.formatString(
+            R.string.InuAboutVersionFormat,
+            pInfo.versionCode,
+            stockVersionName,
+            BuildConfig.STOCK_VERSION_CODE
+        )
+    }
+
     @JvmStatic
     fun getFullVersionInfo(): String {
         if (ParanoiaHelper.isDisguised()) {

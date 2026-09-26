@@ -548,6 +548,9 @@
     <string name="InuJumpToBeginning">Jump to the beginning</string>
 
     <string name="InuAbout">About</string>
+    <string name="InuAboutAppTitle">FAgram Android</string>
+    <string name="InuAboutVersionFormat">Version %1$s (based on %2$s, build %3$s)</string>
+    <string name="InuAboutDescription">A feature rich Telegram client based on Inugram patchset with extra goodies.</string>
     <string name="InuAboutGitHub">GitHub</string>
     <string name="InuAboutChannel">Updates channel</string>
     <string name="InuUpdates">Updates</string>
