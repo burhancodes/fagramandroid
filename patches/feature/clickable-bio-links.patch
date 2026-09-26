@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sat, 26 Sep 2026 10:03:00 +0530
+Subject: Make links in profile bios clickable for all users
+
+---
+ .../src/main/java/org/telegram/ui/ProfileActivity.java       | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -13813,6 +13813,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     if (position == userInfoRow) {
+                         TLRPC.User user = userInfo.user != null ? userInfo.user : getMessagesController().getUser(userInfo.id);
+                         boolean addlinks = isBot || (user != null && user.premium && userInfo.about != null);
++                        if (xie.fa.gram.InuConfig.CLICKABLE_BIO_LINKS.getValue()) {
++                            addlinks = isBot || (userInfo != null && userInfo.about != null);
++                        }
+                         aboutLinkCell.setTextAndValue(userInfo.about, LocaleController.getString(R.string.UserBio), addlinks);
+                     } else if (position == channelInfoRow) {
+                         String text = chatInfo.about;
+@@ -13824,7 +13827,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         String value;
+                         if (userInfo == null || !TextUtils.isEmpty(userInfo.about)) {
+                             value = userInfo == null ? LocaleController.getString(R.string.Loading) : userInfo.about;
+-                            aboutLinkCell.setTextAndValue(value, LocaleController.getString(R.string.UserBio), getUserConfig().isPremium());
++                            aboutLinkCell.setTextAndValue(value, LocaleController.getString(R.string.UserBio), getUserConfig().isPremium() || xie.fa.gram.InuConfig.CLICKABLE_BIO_LINKS.getValue());
+                             currentBio = userInfo != null ? userInfo.about : null;
+                         } else {
+                             aboutLinkCell.setTextAndValue(LocaleController.getString(R.string.UserBio), LocaleController.getString(R.string.UserBioDetail), false);

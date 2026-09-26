@@ -412,6 +412,8 @@
     <string name="InuReduceMenuMotionInfo">Skip context menu stagger and simplify message menu animations</string>
 
     <string name="InuProfilePhotoGradientFade">Disable profile photo blur</string>
+    <string name="InuClickableBioLinks">Clickable links in bio</string>
+    <string name="InuClickableBioLinksInfo">Make links in profile bios clickable.</string>
     <string name="InuNonIslandUI">Classic UI</string>
     <string name="InuTypographyAndIcons">Typography &amp; icons</string>
     <string name="InuMotion">Motion</string>

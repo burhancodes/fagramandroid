@@ -327,3 +327,4 @@ feature/lastfm-now-playing.patch
 feature/local-folders.patch
 feature/icon-branding.patch
 bugfix/bot-webview-container-npe.patch
+feature/clickable-bio-links.patch
