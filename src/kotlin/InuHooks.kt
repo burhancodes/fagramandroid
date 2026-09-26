@@ -53,6 +53,9 @@ object InuHooks {
         }
         UpdateHelper.clearPendingIfInstalled()
         ApkInstaller.dismissInstalledNotification()
+        if (InuConfig.DOWNLOAD_DIRECTORY.value == "Inugram") {
+            InuConfig.DOWNLOAD_DIRECTORY.value = "FAgram"
+        }
         CloudSettingsHelper.attachAutoSyncListener()
         ProxyVpnHelper.init(context)
         Utilities.globalQueue.postRunnable { UrlCleanerHelper.preload() }

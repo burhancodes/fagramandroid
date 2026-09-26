@@ -79,7 +79,7 @@ object SearchRegistry {
     }
 
     fun deepLinkForItemId(itemId: Int): String? =
-        slugByItemId[itemId]?.let { "tg://settings/inu/fa/$it" }
+        slugByItemId[itemId]?.let { "tg://settings/fa/$it" }
 
     @JvmStatic
     fun extendSearchArray(
@@ -97,7 +97,7 @@ object SearchRegistry {
                     pageTitle,
                     LocaleController.getString(R.string.InuSettings),
                     page.iconRes,
-                ) { f.presentFragment(page.factory().apply { setCurrentAccount(f.currentAccount) }) }.withLink("tg://settings/inu/fa/${page.slug}")
+                ) { f.presentFragment(page.factory().apply { setCurrentAccount(f.currentAccount) }) }.withLink("tg://settings/fa/${page.slug}")
             )
             for (entry in page.entries) {
                 val title = LocaleController.getString(entry.titleRes)
@@ -109,7 +109,7 @@ object SearchRegistry {
                         page.iconRes,
                     ) {
                         f.presentFragment(page.factory().apply { setCurrentAccount(f.currentAccount) }.withHighlight(entry.itemId))
-                    }.withLink("tg://settings/inu/fa/${entry.slug}")
+                    }.withLink("tg://settings/fa/${entry.slug}")
                 )
             }
         }
@@ -121,7 +121,7 @@ object SearchRegistry {
         if (ParanoiaHelper.shouldHideSettings()) return false
         val uri = intent?.data ?: return false
         if (uri.scheme != "tg") return false
-        // accept both `tg://settings/inu/<slug>` (host=settings) and `tg:settings/inu/<slug>` (opaque)
+        // accept both `tg://settings/fa/<slug>` (host=settings) and `tg:settings/fa/<slug>` (opaque), plus legacy inu prefix
         val segs = when (uri.host) {
             "settings" -> uri.pathSegments
             null -> uri.schemeSpecificPart?.removePrefix("//")
@@ -130,8 +130,8 @@ object SearchRegistry {
 
             else -> return false
         }
-        if (segs.size < 2 || segs[0] != "inu") return false
-        val slugIndex = if (segs.size > 2 && segs[1] == "fa") 2 else 1
+        if (segs.size < 2 || (segs[0] != "fa" && segs[0] != "inu")) return false
+        val slugIndex = if (segs.size > 2 && (segs[1] == "fa" || segs[1] == "inu")) 2 else 1
         if (segs.size < slugIndex + 1) return false
         val target = targetBySlug[segs[slugIndex]] ?: return false
         val fragment = target.page.factory()

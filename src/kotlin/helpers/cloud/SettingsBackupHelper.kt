@@ -215,7 +215,11 @@ object SettingsBackupHelper {
         }.show()
     }
 
-    const val FILENAME_SUFFIX = ".inu-settings.json"
+    const val FILENAME_SUFFIX = ".fa-settings.json"
+    const val LEGACY_FILENAME_SUFFIX = ".inu-settings.json"
+
+    fun isSettingsFileName(name: String): Boolean =
+        name.endsWith(FILENAME_SUFFIX) || name.endsWith(LEGACY_FILENAME_SUFFIX)
 
     fun startImportFromFile(fragment: BaseFragment, file: File) {
         Utilities.globalQueue.postRunnable {

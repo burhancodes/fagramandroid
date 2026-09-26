@@ -23,7 +23,7 @@ await fs.access(apkPath)
 const apiId = Number(process.env.TELEGRAM_API_ID)
 const apiHash = process.env.TELEGRAM_API_HASH
 const botToken = process.env.TELEGRAM_BOT_TOKEN
-const channel = process.env.TELEGRAM_CHANNEL ?? 'InugramCI'
+const channel = process.env.TELEGRAM_CHANNEL ?? 'fagramci'
 
 if (!apiId || !apiHash || !botToken) {
   throw new Error('TELEGRAM_API_ID, TELEGRAM_API_HASH and TELEGRAM_BOT_TOKEN must be set')

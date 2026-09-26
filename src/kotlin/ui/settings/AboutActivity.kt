@@ -58,7 +58,7 @@ class AboutActivity : SettingsPageActivity(), NotificationCenter.NotificationCen
             UItem.asButton(
                 BUTTON_GITHUB,
                 LocaleController.getString(R.string.InuAboutGitHub),
-                "burhancodes/fagramandroid",
+                "fagram/android",
             )
         )
         items.add(
@@ -153,7 +153,7 @@ class AboutActivity : SettingsPageActivity(), NotificationCenter.NotificationCen
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
         val ctx = context ?: return
         when (item.id) {
-            BUTTON_GITHUB -> Browser.openUrl(ctx, "https://github.com/burhancodes/fagramandroid")
+            BUTTON_GITHUB -> Browser.openUrl(ctx, "https://github.com/fagramdesktop/android")
             BUTTON_CHANNEL_LINK -> Browser.openUrl(ctx, "https://t.me/" + UpdateHelper.USERNAME)
             TOGGLE_UPDATES_ENABLED -> {
                 val new = InuConfig.UPDATES_ENABLED.toggle()

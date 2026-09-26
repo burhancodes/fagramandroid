@@ -91,7 +91,7 @@ jobs:
 
   upload:
     needs: [build, sign]
-    if: github.repository == 'burhancodes/fagramandroid'
+    if: github.repository == 'fagramdesktop/android'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

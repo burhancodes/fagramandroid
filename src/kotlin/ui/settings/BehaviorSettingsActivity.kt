@@ -229,7 +229,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
             BUTTON_DOWNLOAD_DIRECTORY -> RadioItemOptions.show(
                 this, view,
                 DOWNLOAD_DIRECTORIES,
-                DOWNLOAD_DIRECTORIES.indexOf(InuConfig.DOWNLOAD_DIRECTORY.value),
+                DOWNLOAD_DIRECTORIES.indexOf(InuConfig.DOWNLOAD_DIRECTORY.value).coerceAtLeast(0),
             ) { which ->
                 InuConfig.DOWNLOAD_DIRECTORY.value = DOWNLOAD_DIRECTORIES[which]
                 BulletinFactory.of(this)
@@ -406,7 +406,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
         private val BUTTON_DOWNLOAD_DIRECTORY = InuUtils.generateId()
         private val TOGGLE_LOCAL_PREMIUM = InuUtils.generateId()
 
-        private val DOWNLOAD_DIRECTORIES = listOf("Inugram", "Telegram")
+        private val DOWNLOAD_DIRECTORIES = listOf("FAgram", "Telegram")
         private val BUTTON_TEXT_CLASSIFIER_MODE = InuUtils.generateId()
         private val TOGGLE_CALL_CONFIRMATION = InuUtils.generateId()
         private val TOGGLE_HD_BLUETOOTH_CALL_AUDIO = InuUtils.generateId()

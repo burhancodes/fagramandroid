@@ -75,7 +75,7 @@ object LogsHelper {
     private fun stageCurrentLog(): File? {
         val src = currentLogFile() ?: return null
         val cacheDir = AndroidUtilities.getCacheDir().apply { mkdirs() }
-        val dst = File(cacheDir, "inugram-log.txt").apply { if (exists()) delete() }
+        val dst = File(cacheDir, "fagram-log.txt").apply { if (exists()) delete() }
         FileOutputStream(dst).buffered().use { out ->
             out.write(SystemInfo.build().toByteArray(Charsets.UTF_8))
             out.write("\n\n".toByteArray(Charsets.UTF_8))
@@ -95,7 +95,7 @@ object LogsHelper {
     private fun stageZip(): File? {
         val dir = AndroidUtilities.getLogsDir() ?: return null
         val cacheDir = AndroidUtilities.getCacheDir().apply { mkdirs() }
-        val dst = File(cacheDir, "inugram-logs.zip").apply { if (exists()) delete() }
+        val dst = File(cacheDir, "fagram-logs.zip").apply { if (exists()) delete() }
         ZipOutputStream(FileOutputStream(dst).buffered()).use { out ->
             out.putNextEntry(ZipEntry("system_info.txt"))
             out.write(SystemInfo.build().toByteArray(Charsets.UTF_8))

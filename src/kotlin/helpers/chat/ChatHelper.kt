@@ -1071,7 +1071,7 @@ object ChatHelper {
     @JvmStatic
     fun maybeHandleFileClick(activity: ChatActivity, message: MessageObject): Boolean {
         val name = message.documentName ?: return false
-        val isSettings = name.endsWith(SettingsBackupHelper.FILENAME_SUFFIX)
+        val isSettings = SettingsBackupHelper.isSettingsFileName(name)
         val isFont = !isSettings && FontImportHelper.isFontFileName(name)
         if (!isSettings && !isFont) return false
         val attach = message.messageOwner?.attachPath?.takeIf { it.isNotEmpty() }?.let { File(it) }

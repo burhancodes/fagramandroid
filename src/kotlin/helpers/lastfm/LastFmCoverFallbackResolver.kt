@@ -143,7 +143,7 @@ object LastFmCoverFallbackResolver {
 
             conn = (URL(url).openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
-                setRequestProperty("User-Agent", "Inugram/" + BuildVars.BUILD_VERSION_STRING)
+                setRequestProperty("User-Agent", "FAgramAndroid/" + BuildVars.BUILD_VERSION_STRING)
                 connectTimeout = 4000
                 readTimeout = 4000
             }
