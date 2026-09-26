@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Burhanverse <contact@burhanverse.eu.org>
+Date: Sat, 26 Sep 2026 09:46:54 +0530
+Subject: Fix NPE when opening external links with detached BotWebViewContainer
+
+---
+ .../main/java/org/telegram/ui/web/BotWebViewContainer.java  | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/web/BotWebViewContainer.java b/TMessagesProj/src/main/java/org/telegram/ui/web/BotWebViewContainer.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/web/BotWebViewContainer.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/web/BotWebViewContainer.java
+@@ -4267,7 +4267,7 @@ public abstract class BotWebViewContainer extends FrameLayout implements Notific
+                     }
+                     if (url.trim().startsWith("tel:")) {
+                         if (opener != null) {
+-                            if (botWebViewContainer.delegate != null) {
++                            if (botWebViewContainer != null && botWebViewContainer.delegate != null) {
+                                 botWebViewContainer.delegate.onInstantClose();
+                             } else if (onCloseListener != null) {
+                                 onCloseListener.run();
+@@ -4282,7 +4282,7 @@ public abstract class BotWebViewContainer extends FrameLayout implements Notific
+                         if (Browser.openInExternalApp(context, url, true)) {
+                             d("shouldOverrideUrlLoading("+url+") = true (openInExternalBrowser)");
+                             if (!isPageLoaded && !canGoBack()) {
+-                                if (botWebViewContainer.delegate != null) {
++                                if (botWebViewContainer != null && botWebViewContainer.delegate != null) {
+                                     botWebViewContainer.delegate.onInstantClose();
+                                 } else if (onCloseListener != null) {
+                                     onCloseListener.run();
+@@ -4688,7 +4688,7 @@ public abstract class BotWebViewContainer extends FrameLayout implements Notific
+                                             .setMessage(AndroidUtilities.replaceSingleTag(getString(R.string.ChromeCrashMessage), () -> Browser.openUrl(getContext(), "https://play.google.com/store/apps/details?id=com.google.android.webview")))
+                                             .setPositiveButton(getString(R.string.OK), null)
+                                             .setOnDismissListener(d -> {
+-                                                if (botWebViewContainer.delegate != null) {
++                                                if (botWebViewContainer != null && botWebViewContainer.delegate != null) {
+                                                     botWebViewContainer.delegate.onCloseRequested(null);
+                                                 }
+                                             })
